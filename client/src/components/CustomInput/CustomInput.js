@@ -45,7 +45,7 @@ export default function CustomInput(props) {
     <FormControl
       {...formControlProps}
       className={formControlProps.className + ' ' + classes.formControl}
-      style={{ margin: 0 }}
+      style={{ marginLeft: '0.5em', marginTop: 0, marginBottom: 0 }}
     >
       {labelText !== undefined ? (
         <InputLabel

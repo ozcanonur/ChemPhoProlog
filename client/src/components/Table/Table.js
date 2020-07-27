@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
+import Search from '@material-ui/icons/Search';
+import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
 import { Link } from 'react-router-dom';
@@ -19,13 +21,16 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
 
+import CustomInput from 'components/CustomInput/CustomInput';
+
 const useStyles = makeStyles(styles);
 
 const Row = (props) => {
   const { row, collapsible, rowHeight } = props;
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
   const [phosphosites, setPhosphosites] = useState([]);
+
+  const classes = useStyles();
 
   const callApi = async (kinase) => {
     const response = await axios.get('/api/api', {
@@ -48,7 +53,7 @@ const Row = (props) => {
           return (
             <React.Fragment key={key}>
               {collapsible && key === 0 ? (
-                <TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
                   <IconButton
                     aria-label='expand row'
                     size='small'
@@ -87,11 +92,6 @@ const Row = (props) => {
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               <Table size='small'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Phosphosites</TableCell>
-                  </TableRow>
-                </TableHead>
                 <TableBody>
                   {phosphosites.map((phosphosite) => (
                     <TableRow key={phosphosite}>
@@ -114,8 +114,12 @@ const Row = (props) => {
 
 export default function CustomTable(props) {
   const classes = useStyles();
+
+  const { tableHead, tableData, tableHeaderColor, rowHeight, collapsible } = props;
+
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
   const [page, setPage] = useState(0);
+  const [filteredList, setFilteredList] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -126,35 +130,56 @@ export default function CustomTable(props) {
     setPage(0);
   };
 
-  const { tableHead, tableData, tableHeaderColor, rowHeight, collapsible } = props;
+  useEffect(() => {
+    setFilteredList(tableData);
+  }, [tableData]);
+
+  const handleSearchTermOnChange = (event) => {
+    const filtered = tableData.filter((row) =>
+      new RegExp(event.target.value, 'i').test(row[0])
+    );
+
+    setFilteredList(filtered);
+  };
 
   return (
     <div className={classes.tableResponsive}>
+      <CustomInput
+        formControlProps={{
+          className: classes.search,
+        }}
+        inputProps={{
+          placeholder: 'Search',
+          inputProps: {
+            'aria-label': 'Search',
+          },
+        }}
+        onChange={(event) => handleSearchTermOnChange(event)}
+      />
+      <Button color='white' aria-label='edit' justIcon round>
+        <Search />
+      </Button>
       <Table className={classes.table}>
-        {tableHead !== undefined ? (
-          <TableHead
-            className={classes[tableHeaderColor + 'TableHeader']}
-            style={{ margin: 0 }}
-          ></TableHead>
-        ) : null}
-        {tableHead !== undefined ? (
-          <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
-            <TableRow className={classes.tableHeadRow}>
-              {tableHead.map((prop, key) => {
-                return (
-                  <TableCell
-                    className={classes.tableCell + ' ' + classes.tableHeadCell}
-                    key={key}
-                  >
-                    {prop}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-        ) : null}
+        <TableHead
+          className={classes[tableHeaderColor + 'TableHeader']}
+          style={{ margin: 0 }}
+        ></TableHead>
+        <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
+          <TableRow className={classes.tableHeadRow}>
+            {tableHead.map((prop, key) => {
+              return (
+                <TableCell
+                  className={classes.tableCell + ' ' + classes.tableHeadCell}
+                  key={key}
+                >
+                  {prop}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        </TableHead>
         <TableBody>
-          {tableData
+          {filteredList
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((prop, key) => {
               return (
@@ -172,7 +197,7 @@ export default function CustomTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50, 100]}
           component='div'
-          count={props.tableData.length}
+          count={filteredList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

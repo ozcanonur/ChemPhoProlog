@@ -7,16 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Table from 'components/Table/Table';
-import CustomInput from 'components/CustomInput/CustomInput';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-import TablePagination from '@material-ui/core/TablePagination';
 import CardBody from 'components/Card/CardBody.js';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import { Link } from 'react-router-dom';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { Typography } from '@material-ui/core';
@@ -55,18 +48,6 @@ export default function KinaseList() {
     return () => (subscribed = false);
   }, []);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [page, setPage] = useState(0);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   return (
     <div>
       <GridContainer
@@ -99,7 +80,13 @@ export default function KinaseList() {
               <div>
                 <Table
                   tableHeaderColor='warning'
-                  tableHead={['', 'Name', 'Expressed', 'Uniprot ID', 'Description']}
+                  tableHead={[
+                    'Phosphosites',
+                    'Name',
+                    'Expressed',
+                    'Uniprot ID',
+                    'Description',
+                  ]}
                   tableData={kinaseTableData}
                   rowsPerPage={5}
                   rowHeight={'120px'}
