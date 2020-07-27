@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Navbar from 'components/Navbars/Navbar.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
 
-import routes from 'routesHome.js';
+import routes from 'routesKinase.js';
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 
 import bgImage from 'assets/img/dna.jpg';
@@ -17,20 +17,23 @@ import logo from 'assets/img/reactlogo.png';
 
 let ps;
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      return (
-        <Route path={prop.layout + prop.path} component={prop.component} key={key} />
-      );
-    })}
-    <Redirect from='/' to='/home/welcome' />
-  </Switch>
-);
-
 const useStyles = makeStyles(styles);
 
 export default function Home({ ...rest }) {
+  const switchRoutes = (
+    <Switch>
+      {routes(window.location.pathname.split('/')[2]).map((prop, key) => {
+        return (
+          <Route path={prop.layout + prop.path} key={key} component={prop.component} />
+        );
+      })}
+      <Redirect
+        from={`/kinase/${window.location.pathname.split('/')[2]}`}
+        to={`/kinase/${window.location.pathname.split('/')[2]}/description`}
+      />
+    </Switch>
+  );
+
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -70,8 +73,8 @@ export default function Home({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes}
-        logoText={'ChemPhoProlog'}
+        routes={routes(window.location.pathname.split('/')[2])}
+        logoText={'Chemphoprolog'}
         logo={logo}
         image={bgImage}
         handleDrawerToggle={handleDrawerToggle}
@@ -80,7 +83,12 @@ export default function Home({ ...rest }) {
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
+        <Navbar
+          routes={routes(window.location.pathname.split('/')[2])}
+          handleDrawerToggle={handleDrawerToggle}
+          {...rest}
+          term={window.location.pathname.split('/')[2]}
+        />
         <div className={classes.map}>{switchRoutes}</div>
       </div>
     </div>

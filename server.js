@@ -28,13 +28,3 @@ router.get('/api/api/', (req, res) => {
     res.send(rows);
   });
 });
-
-// router.get('/api/perturbagenList/', (req, res) => {
-//   let queryString = 'Select * from Perturbagen group by name order by name';
-
-//   db.all(queryString, [], (err, rows) => {
-//     if (err) throw err;
-
-//     res.send(rows);
-//   });
-// });
