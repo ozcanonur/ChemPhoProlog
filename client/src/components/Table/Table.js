@@ -111,17 +111,17 @@ const Row = (props) => {
     const PhosphositesRows = (dividedPhosphosites) => {
       return dividedPhosphosites.map((phosphosites) => (
         <TableRow key={phosphosites}>
-          <TableCell scope='row'>
+          <TableCell scope='row' className={classes.tableCell}>
             <Link to='#' style={{ color: '#0066CC' }}>
               {phosphosites[0]}
             </Link>
           </TableCell>
-          <TableCell scope='row'>
+          <TableCell scope='row' className={classes.tableCell}>
             <Link to='#' style={{ color: '#0066CC' }}>
               {phosphosites[1]}
             </Link>
           </TableCell>
-          <TableCell scope='row'>
+          <TableCell scope='row' className={classes.tableCell}>
             <Link to='#' style={{ color: '#0066CC' }}>
               {phosphosites[2]}
             </Link>
@@ -143,7 +143,6 @@ const Row = (props) => {
                         <TableCell
                           className={classes.tableCell + ' ' + classes.tableHeadCell}
                           key={key}
-                          style={{ paddingLeft: '1em' }}
                         >
                           {prop}
                         </TableCell>
