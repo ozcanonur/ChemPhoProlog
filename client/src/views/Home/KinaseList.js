@@ -80,16 +80,10 @@ export default function KinaseList() {
               <div>
                 <Table
                   tableHeaderColor='warning'
-                  tableHead={[
-                    'Phosphosites',
-                    'Name',
-                    'Expressed',
-                    'Uniprot ID',
-                    'Description',
-                  ]}
+                  tableHead={['', 'Name', 'Expressed', 'Uniprot ID', 'Description']}
                   tableData={kinaseTableData}
                   rowsPerPage={5}
-                  rowHeight={'120px'}
+                  rowHeight={'100px'}
                   collapsible={true}
                 />
               </div>

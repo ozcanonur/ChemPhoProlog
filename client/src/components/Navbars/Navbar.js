@@ -28,7 +28,8 @@ export default function Header(props) {
       }
       return null;
     });
-    return `${name} for ${props.term}`;
+
+    return props.term ? `${name} for ${props.term}` : name;
   }
 
   const { color } = props;
