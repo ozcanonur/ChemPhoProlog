@@ -97,7 +97,9 @@ const Row = (props) => {
                   <IconButton
                     aria-label='expand row'
                     size='small'
-                    onClick={() => handleKinaseSelection(prop)}
+                    onClick={() => {
+                      handleKinaseSelection(prop);
+                    }}
                   >
                     <KeyboardArrowRightIcon />
                   </IconButton>

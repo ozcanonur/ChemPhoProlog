@@ -1,0 +1,17 @@
+.kinaseInfoTransition-enter {
+    opacity: 0;
+}
+
+.kinaseInfoTransition-enter-active {
+    opacity: 1;
+    transition: opacity 400ms;
+}
+
+.kinaseInfoTransition-exit {
+    opacity: 1;
+}
+
+.kinaseInfoTransition-exit-active {
+    opacity: 0;
+    transition: opacity;
+}

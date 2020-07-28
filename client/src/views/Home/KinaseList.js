@@ -10,7 +10,6 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardIcon from 'components/Card/CardIcon';
-import Icon from '@material-ui/core/Icon';
 import CardFooter from 'components/Card/CardFooter.js';
 import Danger from 'components/Typography/Danger.js';
 import Warning from '@material-ui/icons/Warning';
@@ -19,6 +18,11 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { Typography } from '@material-ui/core';
+
+import { CSSTransition } from 'react-transition-group';
+import './animation.css';
+
+import { pick } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
@@ -30,7 +34,6 @@ export default function KinaseList() {
   const [kinaseTableData, setKinaseTableData] = useState([]);
 
   // Selected kinase info and description dictionary per Uniprot ID
-  const [kinaseInfoOpen, setKinaseInfoOpen] = useState(false);
   const [selectedKinase, setSelectedKinase] = useState('');
   const [kinaseInfo, setKinaseInfo] = useState('');
   const [kinaseDescDict, setKinaseDescDict] = useState({});
@@ -39,8 +42,7 @@ export default function KinaseList() {
   const callApi = async () => {
     const response = await axios.get('/api/api', {
       params: {
-        query:
-          'select kinase_name, expressed_in, uniprot_id, description from Protein where kinase_name <> "" order by kinase_name',
+        query: 'select * from Protein where kinase_name <> "" order by kinase_name',
       },
     });
 
@@ -57,10 +59,22 @@ export default function KinaseList() {
 
     callApi().then((res) => {
       if (subscribed) {
-        const resultWithoutDesc = res.map(({ description, ...keep }) => keep);
-        setKinaseTableData(resultWithoutDesc.map(Object.values));
+        const kinaseTable = res.map((obj) =>
+          pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id'])
+        );
+        setKinaseTableData(kinaseTable.map(Object.values));
 
-        const descriptionDict = res.map(({ expressed_in, ...keep }) => keep);
+        const descriptionDict = res.map((obj) =>
+          pick(obj, [
+            'kinase_name',
+            'expressed_in',
+            'uniprot_id',
+            'gene_synonyms',
+            'families',
+            'length',
+            'description',
+          ])
+        );
         setKinaseDescDict(descriptionDict);
       }
     });
@@ -69,9 +83,6 @@ export default function KinaseList() {
   }, []);
 
   const handleKinaseSelection = (selection) => {
-    // Open info panel
-    setKinaseInfoOpen(true);
-
     const selectedKinaseName = kinaseDescDict.filter(
       (item) => item['uniprot_id'] === selection
     );
@@ -81,24 +92,36 @@ export default function KinaseList() {
       (item) => item['uniprot_id'] === selection
     );
 
-    setKinaseInfo(selectedKinaseDesc[0].description);
+    setKinaseInfo(selectedKinaseDesc[0]);
   };
 
   const KinaseInfo = () => {
     return (
       <Card>
-        <CardHeader color='primary' style={{ marginTop: '2em' }}>
+        <CardHeader color='primary'>
           <h4 className={classes.cardTitleWhite}>Kinase Specification</h4>
-          <p className={classes.cardCategoryWhite} style={{ fontWeight: 1000 }}>
-            {`For ${selectedKinase}`}{' '}
-          </p>
         </CardHeader>
         <CardBody>
           <GridContainer direction='column'>
             <GridItem>
               <Card>
+                <CardHeader color='primary' style={{ marginLeft: 0, marginRight: 0 }}>
+                  <h4 className={classes.cardTitleWhite}>{kinaseInfo.kinase_name}</h4>
+                </CardHeader>
                 <CardBody>
-                  <Typography>{kinaseInfo}</Typography>
+                  <p>{kinaseInfo.description}</p>
+                  <p>
+                    <strong>Families: </strong>
+                    {kinaseInfo.families}{' '}
+                  </p>
+                  <p>
+                    <strong>Alternative names: </strong>
+                    {kinaseInfo.gene_synonyms}
+                  </p>
+                  <p>
+                    <strong>Detected in: </strong>
+                    {kinaseInfo.expressed_in}
+                  </p>
                 </CardBody>
               </Card>
             </GridItem>
@@ -157,7 +180,7 @@ export default function KinaseList() {
         justify='space-between'
         style={{ padding: '2em' }}
       >
-        <GridItem>
+        <GridItem md>
           <Card>
             <CardBody>
               <Typography variant='body1'>
@@ -172,16 +195,17 @@ export default function KinaseList() {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem>
+        <GridItem md>
           <GridContainer direction='row'>
             <GridItem md>
               <Card>
-                <CardHeader color='warning' style={{ marginTop: '2em' }}>
+                <CardHeader color='warning'>
                   <h4 className={classes.cardTitleWhite}>Kinases</h4>
                   <p className={classes.cardCategoryWhite}>Select a kinase</p>
                 </CardHeader>
                 <CardBody>
                   <Table
+                    className='my-node'
                     tableHeaderColor='warning'
                     tableHead={['', 'Name', 'Expressed', 'Uniprot ID', '']}
                     tableData={kinaseTableData}
@@ -194,11 +218,9 @@ export default function KinaseList() {
                 </CardBody>
               </Card>
             </GridItem>
-            {kinaseInfoOpen ? (
-              <GridItem md>
-                <KinaseInfo />
-              </GridItem>
-            ) : undefined}
+            <GridItem md>
+              <KinaseInfo />
+            </GridItem>
           </GridContainer>
         </GridItem>
       </GridContainer>
