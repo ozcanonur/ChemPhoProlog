@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -19,6 +19,8 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
 
@@ -26,13 +28,17 @@ import { zip } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
+// Each row on the table body
 const Row = (props) => {
-  const { row, collapsible, rowHeight } = props;
+  const { row, collapsible, rowHeight, rowEndArrow, handleKinaseSelection } = props;
+  // Collapsible open or not
   const [open, setOpen] = useState(false);
+  // Phosphosites for each kinase
   const [phosphosites, setPhosphosites] = useState([]);
 
   const classes = useStyles();
 
+  // Get the phosphosite list for the selected kinase
   const callApi = async (kinase) => {
     const response = await axios.get('/api/api', {
       params: {
@@ -45,6 +51,7 @@ const Row = (props) => {
     return await response.data;
   };
 
+  // Expand > calls API and sets collapsible phosphosites state
   const handleExpandButton = (prop) => {
     setOpen(!open);
     if (collapsible) {
@@ -54,6 +61,7 @@ const Row = (props) => {
     }
   };
 
+  // Actual rows
   const MainTableBody = () => {
     return (
       <TableRow key={row} className={classes.tableBodyRow}>
@@ -74,7 +82,7 @@ const Row = (props) => {
               <TableCell
                 className={classes.tableCell}
                 key={key}
-                style={{ height: rowHeight }}
+                style={{ height: rowHeight, minWidth: 100 }}
               >
                 {key === 0 ? (
                   <Link to={`/kinase/${prop}`} style={{ color: '#0066CC' }}>
@@ -84,6 +92,17 @@ const Row = (props) => {
                   <React.Fragment>{prop}</React.Fragment>
                 )}
               </TableCell>
+              {rowEndArrow && key === row.length - 1 ? (
+                <TableCell style={{ textAlign: 'center' }}>
+                  <IconButton
+                    aria-label='expand row'
+                    size='small'
+                    onClick={() => handleKinaseSelection(prop)}
+                  >
+                    <KeyboardArrowRightIcon />
+                  </IconButton>
+                </TableCell>
+              ) : null}
             </React.Fragment>
           );
         })}
@@ -91,23 +110,30 @@ const Row = (props) => {
     );
   };
 
+  // Collapsible phosphosites
   const CollapsibleSubTable = () => {
     const headers = ['Serine', 'Threonine', 'Tyrosine'];
 
-    const phosphosites_S = phosphosites.filter((phosphosite) => {
-      return phosphosite[0].includes('(S');
-    });
+    const getPhosphositeBySite = (phosphosites, aminoacid) => {
+      return phosphosites
+        .filter((phosphosite) => {
+          return phosphosite[0].includes(`(${aminoacid}`);
+        })
+        .map((phosphosite) => {
+          return phosphosite[0].substring(
+            phosphosite[0].indexOf('(') + 1,
+            phosphosite[0].length - 1
+          );
+        });
+    };
 
-    const phosphosites_T = phosphosites.filter((phosphosite) => {
-      return phosphosite[0].includes('(T');
-    });
-
-    const phosphosites_Y = phosphosites.filter((phosphosite) => {
-      return phosphosite[0].includes('(Y');
-    });
-
+    // Divide and CONQUER the phosphosites into categories
+    const phosphosites_S = getPhosphositeBySite(phosphosites, 'S');
+    const phosphosites_T = getPhosphositeBySite(phosphosites, 'T');
+    const phosphosites_Y = getPhosphositeBySite(phosphosites, 'Y');
     const dividedPhosphosites = zip(phosphosites_S, phosphosites_T, phosphosites_Y);
 
+    // Collapsible phosphosites rows, divided into categories as JSX
     const PhosphositesRows = (dividedPhosphosites) => {
       return dividedPhosphosites.map((phosphosites) => (
         <TableRow key={phosphosites}>
@@ -170,26 +196,38 @@ const Row = (props) => {
 export default function CustomTable(props) {
   const classes = useStyles();
 
-  const { tableHead, tableData, tableHeaderColor, rowHeight, collapsible } = props;
+  const {
+    tableHead,
+    tableData,
+    tableHeaderColor,
+    rowHeight,
+    collapsible,
+    rowEndArrow,
+    handleKinaseSelection,
+  } = props;
 
+  // Pagination options
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
   const [page, setPage] = useState(0);
+  // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
+  // Mount > display all values
   useEffect(() => {
     setFilteredList(tableData);
   }, [tableData]);
 
+  // Pagination options
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleSearchTermOnChange = (event) => {
+  // Filter the values by the search term and set the state
+  const filterByTermAndSetTableData = (event) => {
     const filtered = tableData.filter((row) =>
       new RegExp(event.target.value, 'i').test(row[0])
     );
@@ -197,6 +235,7 @@ export default function CustomTable(props) {
     setFilteredList(filtered);
   };
 
+  // Table head
   const TableHeadContent = () => {
     return (
       <TableRow className={classes.tableHeadRow}>
@@ -214,16 +253,25 @@ export default function CustomTable(props) {
     );
   };
 
+  // Table body
   const TableBodyContent = () => {
     return filteredList
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((prop, key) => {
         return (
-          <Row key={prop} row={prop} collapsible={collapsible} rowHeight={rowHeight} />
+          <Row
+            key={prop}
+            row={prop}
+            collapsible={collapsible}
+            rowHeight={rowHeight}
+            rowEndArrow={rowEndArrow}
+            handleKinaseSelection={handleKinaseSelection}
+          />
         );
       });
   };
 
+  // Pagination
   const TablePaginationContent = () => {
     return (
       <TablePagination
@@ -250,12 +298,12 @@ export default function CustomTable(props) {
             'aria-label': 'Search',
           },
         }}
-        onChange={(event) => handleSearchTermOnChange(event)}
+        onChange={(event) => filterByTermAndSetTableData(event)}
       />
       <Button color='white' aria-label='edit' justIcon round>
         <Search />
       </Button>
-      <Table className={classes.table}>
+      <Table stickyHeader className={classes.table}>
         <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
           <TableHeadContent />
         </TableHead>

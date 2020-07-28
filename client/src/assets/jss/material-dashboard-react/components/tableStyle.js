@@ -48,7 +48,7 @@ const tableStyle = (theme) => ({
   },
   tableCell: {
     ...defaultFont,
-    lineHeight: '1.42857143',
+    minHeight: '1.72857143',
     padding: '12px 8px',
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
@@ -67,6 +67,7 @@ const tableStyle = (theme) => ({
     verticalAlign: 'middle',
   },
   tableBodyRow: {
+    minHeight: '1.72857143',
     height: '48px',
     color: 'inherit',
     display: 'table-row',

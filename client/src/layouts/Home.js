@@ -31,7 +31,6 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Home({ ...rest }) {
-  // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = createRef();
