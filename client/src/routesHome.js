@@ -1,7 +1,7 @@
 // core components/views for Admin layout
 import WelcomePage from 'views/Home/Welcome.js';
-import KinaseList from 'views/Home/KinaseList';
-import PerturbagenList from 'views/Home/PerturbagenList';
+import KinaseList from 'views/Home/KinaseList/KinaseList';
+import PerturbagenList from 'views/Home/PerturbagenList/PerturbagenList';
 
 import AboutUs from 'views/Home/AboutUs';
 

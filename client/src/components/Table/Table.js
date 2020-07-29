@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -20,7 +20,6 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
 
@@ -30,7 +29,7 @@ const useStyles = makeStyles(styles);
 
 // Each row on the table body
 const Row = (props) => {
-  const { row, collapsible, rowHeight, rowEndArrow, handleKinaseSelection } = props;
+  const { row, collapsible, rowEndArrow, handleSelection } = props;
   // Collapsible open or not
   const [open, setOpen] = useState(false);
   // Phosphosites for each kinase
@@ -69,7 +68,7 @@ const Row = (props) => {
           return (
             <React.Fragment key={key}>
               {collapsible && key === 0 ? (
-                <TableCell style={{ textAlign: 'center' }}>
+                <TableCell className={classes.tableCell}>
                   <IconButton
                     aria-label='expand row'
                     size='small'
@@ -82,7 +81,7 @@ const Row = (props) => {
               <TableCell
                 className={classes.tableCell}
                 key={key}
-                style={{ height: rowHeight, minWidth: 100 }}
+                style={{ minWidth: 100 }}
               >
                 {key === 0 ? (
                   <Link to={`/kinase/${prop}`} style={{ color: '#0066CC' }}>
@@ -98,7 +97,7 @@ const Row = (props) => {
                     aria-label='expand row'
                     size='small'
                     onClick={() => {
-                      handleKinaseSelection(prop);
+                      handleSelection(row[0]);
                     }}
                   >
                     <KeyboardArrowRightIcon />
@@ -202,10 +201,9 @@ export default function CustomTable(props) {
     tableHead,
     tableData,
     tableHeaderColor,
-    rowHeight,
     collapsible,
     rowEndArrow,
-    handleKinaseSelection,
+    handleSelection,
   } = props;
 
   // Pagination options
@@ -265,9 +263,8 @@ export default function CustomTable(props) {
             key={prop}
             row={prop}
             collapsible={collapsible}
-            rowHeight={rowHeight}
             rowEndArrow={rowEndArrow}
-            handleKinaseSelection={handleKinaseSelection}
+            handleSelection={handleSelection}
           />
         );
       });
