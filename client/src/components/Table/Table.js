@@ -84,7 +84,7 @@ const Row = (props) => {
                 style={{ minWidth: 100 }}
               >
                 {key === 0 ? (
-                  <Link to={`/kinase/${prop}`} style={{ color: '#0066CC' }}>
+                  <Link to='#' style={{ color: '#0066CC' }}>
                     {prop}
                   </Link>
                 ) : (

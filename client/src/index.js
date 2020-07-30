@@ -4,7 +4,6 @@ import { createBrowserHistory } from 'history';
 import { Router, Route, Switch } from 'react-router-dom';
 
 import Home from 'layouts/Home';
-import Kinase from 'layouts/Kinase';
 
 import 'assets/css/material-dashboard-react.css?v=1.9.0';
 
@@ -18,7 +17,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path='/' component={Home} />
         <Route path='/home' component={Home} />
-        <Route path='/kinase' component={Kinase} />
       </Switch>
     </Router>
     <ParticlesBg type='cobweb' bg={true} />

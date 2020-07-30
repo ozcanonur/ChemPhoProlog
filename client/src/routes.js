@@ -1,9 +1,8 @@
 // core components/views for Admin layout
-import WelcomePage from 'views/Home/Welcome.js';
-import KinaseList from 'views/Home/KinaseList/KinaseList';
-import PerturbagenList from 'views/Home/PerturbagenList/PerturbagenList';
-
-import AboutUs from 'views/Home/AboutUs';
+import WelcomePage from 'views/Welcome/Welcome';
+import KinaseList from 'views/Lists/KinaseList/KinaseList';
+import PerturbagenList from 'views/Lists/PerturbagenList/PerturbagenList';
+import AboutUs from 'views/AboutUs/AboutUs.js';
 
 import HomeIcon from '@material-ui/icons/Home';
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';

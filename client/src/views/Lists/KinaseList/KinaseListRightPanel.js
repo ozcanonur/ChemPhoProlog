@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import CardIcon from 'components/Card/CardIcon';
 import CardFooter from 'components/Card/CardFooter.js';
@@ -11,13 +11,14 @@ import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
+import ListRightPanel from 'views/Lists/ListRightPanel';
+
 const useStyles = makeStyles(styles);
 
-const InfoPane = () => {
+const NewFindingsCard = () => {
   const classes = useStyles();
 
   const [newPerturbagensHovered, setNewPerturbagensHovered] = useState(false);
@@ -47,7 +48,6 @@ const InfoPane = () => {
                 <NewReleasesIcon />
               )}
             </CardIcon>
-
             <p className={classes.cardCategory}>New perturbagens</p>
             <h3 className={classes.cardTitle}>12</h3>
           </CardHeader>
@@ -100,49 +100,36 @@ const InfoPane = () => {
   );
 };
 
-const KinaseListRightPanel = ({ kinaseInfo }) => {
-  const classes = useStyles();
-
+const KinaseDescriptionBody = ({ kinaseInfo }) => {
   return (
-    <Card>
-      <CardHeader color='primary'>
-        <h4 className={classes.cardTitleWhite}>Kinase Specification</h4>
-        <p className={classes.cardCategoryWhite}>Details</p>
-      </CardHeader>
-      <CardBody>
-        <GridContainer direction='column'>
-          <GridItem md>
-            <Card>
-              <CardHeader color='primary' style={{ marginLeft: 0, marginRight: 0 }}>
-                <h4 className={classes.cardTitleWhite}>{kinaseInfo.kinase_name}</h4>
-              </CardHeader>
-              <CardBody>
-                <p>{kinaseInfo.description}</p>
-                <p>
-                  <strong>Families: </strong>
-                  {kinaseInfo.families}{' '}
-                </p>
-                <p>
-                  <strong>Alternative names: </strong>
-                  {kinaseInfo.gene_synonyms}
-                </p>
-                <p>
-                  <strong>Detected in: </strong>
-                  {kinaseInfo.expressed_in}
-                </p>
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem md>
-            <InfoPane />
-          </GridItem>
-          {/* <GridItem md style={{ height: 200 }}>
-            <Chart kinaseInfo={kinaseInfo} />
-          </GridItem> */}
-        </GridContainer>
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      <p>{kinaseInfo.description}</p>
+      <p>
+        <strong>Families: </strong>
+        {kinaseInfo.families}
+      </p>
+      <p>
+        <strong>Alternative names: </strong>
+        {kinaseInfo.gene_synonyms}{' '}
+      </p>
+      <p>
+        <strong>Detected in: </strong>
+        {kinaseInfo.expressed_in}{' '}
+      </p>
+    </React.Fragment>
   );
+};
+
+const KinaseListRightPanel = ({ kinaseInfo }) => {
+  const props = {
+    topHeaderTitle: 'Kinase Specification',
+    topHeaderSubTitle: 'Details',
+    selectedEleTitle: kinaseInfo.kinase_name,
+    selectedEleDetailsBody: <KinaseDescriptionBody kinaseInfo={kinaseInfo} />,
+    selectedEleDetailsBottomBody: <NewFindingsCard />,
+  };
+
+  return <ListRightPanel {...props} />;
 };
 
 export default KinaseListRightPanel;

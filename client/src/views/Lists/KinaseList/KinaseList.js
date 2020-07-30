@@ -8,21 +8,18 @@ import CardBody from 'components/Card/CardBody.js';
 import { Typography } from '@material-ui/core';
 import { pick } from 'lodash';
 
-import KinaseListRightPanel from './KinaseListRightPanel';
-import KinaseListLeftPanel from './KinaseListLeftPanel';
-import CallApi from 'api/api';
+import KinaseListLeftPanel from 'views/Lists/KinaseList/KinaseListLeftPanel';
+import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 
-// import { CSSTransition } from 'react-transition-group';
-// import './animation.css';
+import CallApi from 'api/api';
 
 // Kinase List on the Home page
 export default function KinaseList() {
   // List of the data to be displayed on kinase table
-  const [kinaseTableData, setKinaseTableData] = useState([]);
+  const [kinaseData, setKinaseData] = useState([]);
   // Selected kinase info and description dictionary per Uniprot ID
   const [kinaseInfo, setKinaseInfo] = useState('');
-  const [kinaseDescDict, setKinaseDescDict] = useState({});
-
+  // Right panel open or not
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
   // Only run on first mount
@@ -35,27 +32,8 @@ export default function KinaseList() {
     // Get all kinases from DB
     CallApi(apiQuery).then((res) => {
       if (needCleanUp) {
-        // Keep only 3 fields from the response
-        const kinaseTable = res.map((obj) =>
-          pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id'])
-        );
         // Set the main table body data
-        setKinaseTableData(kinaseTable.map(Object.values));
-
-        // We also need more details for each kinase
-        const descriptionDict = res.map((obj) =>
-          pick(obj, [
-            'kinase_name',
-            'expressed_in',
-            'uniprot_id',
-            'gene_synonyms',
-            'families',
-            'length',
-            'description',
-          ])
-        );
-        // Set the kinase details data
-        setKinaseDescDict(descriptionDict);
+        setKinaseData(res);
       }
     });
 
@@ -65,12 +43,16 @@ export default function KinaseList() {
 
   const handleSelection = (selection) => {
     setRightPanelOpen(true);
-    const selectedKinaseDesc = kinaseDescDict.filter(
+    const selectedKinaseDesc = kinaseData.filter(
       (item) => item['kinase_name'] === selection
     );
 
     setKinaseInfo(selectedKinaseDesc[0]);
   };
+
+  const tableData = kinaseData
+    .map((obj) => pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id']))
+    .map(Object.values);
 
   return (
     <div>
@@ -98,7 +80,7 @@ export default function KinaseList() {
           <GridContainer direction='row'>
             <GridItem md>
               <KinaseListLeftPanel
-                kinaseTableData={kinaseTableData}
+                kinaseTableData={tableData}
                 handleSelection={handleSelection}
               />
             </GridItem>

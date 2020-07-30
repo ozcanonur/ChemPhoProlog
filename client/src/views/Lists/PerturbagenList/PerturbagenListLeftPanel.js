@@ -23,7 +23,7 @@ const PerturbagenListLeftPanel = ({ perturbagenTableData, handleSelection }) => 
         <Table
           className='my-node'
           tableHeaderColor='warning'
-          tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
+          tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
           tableData={perturbagenTableData}
           rowsPerPage={10}
           collapsible={false}
