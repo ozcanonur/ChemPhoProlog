@@ -6,8 +6,6 @@ import AboutUs from 'views/AboutUs/AboutUs.js';
 import HomeIcon from '@material-ui/icons/Home';
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
-import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import InfoIcon from '@material-ui/icons/Info';
 import WebIcon from '@material-ui/icons/Web';
 

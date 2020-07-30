@@ -28,3 +28,21 @@ router.get('/api/api/', (req, res) => {
     res.send(rows);
   });
 });
+
+//const mongo = require('mongodb');
+// const MongoClient = mongo.MongoClient;
+
+// const url = 'mongodb://localhost:27017/';
+
+// MongoClient.connect(url, (err, db) => {
+//   if (err) throw err;
+//   console.log('Connected to Mongo');
+//   const chemphoprologDB = db.db('chemphoprolog');
+
+//   const query = { kinase: 'AKT1' };
+//   chemphoprologDB.collection('KS_relationship').find(query, function (err, result) {
+//     if (err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });

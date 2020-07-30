@@ -72,24 +72,19 @@ export default function Home({ ...rest }) {
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
   useEffect(() => {
-    let needCleanUp = true;
-
     // Get all kinases from DB
     const kinaseQuery =
       'select * from Protein where kinase_name <> "" order by kinase_name';
-    CallApi(kinaseQuery).then((res) => {
-      if (needCleanUp) {
-        // Set the main table body data
-        setKinaseData(res);
-      }
-    });
 
-    // Clean-up
-    return () => (needCleanUp = false);
+    CallApi(kinaseQuery).then((res) => {
+      // Set the main table body data
+      setKinaseData(res);
+    });
   }, []);
 
   const handleSelection = (selection) => {
     setRightPanelOpen(true);
+
     const selectedKinaseDesc = kinaseData.filter(
       (item) => item['kinase_name'] === selection
     );

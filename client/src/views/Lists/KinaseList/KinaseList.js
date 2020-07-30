@@ -10,6 +10,8 @@ import { Typography } from '@material-ui/core';
 import KinaseListLeftPanel from 'views/Lists/KinaseList/KinaseListLeftPanel';
 import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 
+import { Slide } from '@material-ui/core';
+
 // Kinase List on the Home page
 export default function KinaseList({
   tableData,
@@ -48,9 +50,11 @@ export default function KinaseList({
               />
             </GridItem>
             <GridItem md>
-              {rightPanelOpen ? (
-                <KinaseListRightPanel kinaseInfo={kinaseInfo} />
-              ) : undefined}
+              <Slide in={rightPanelOpen} direction='left'>
+                <div>
+                  <KinaseListRightPanel kinaseInfo={kinaseInfo} />
+                </div>
+              </Slide>
             </GridItem>
           </GridContainer>
         </GridItem>

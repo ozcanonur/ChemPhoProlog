@@ -10,6 +10,8 @@ import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenLi
 
 import CallApi from 'api/api';
 
+import { Slide } from '@material-ui/core';
+
 export default function PerturbagenList() {
   // List of the data to be displayed on kinase table
   const [perturbagenData, setperturbagenData] = useState([]);
@@ -21,21 +23,14 @@ export default function PerturbagenList() {
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
   useEffect(() => {
-    let needCleanUp = true;
-
     const apiQuery = 'select * from Perturbagen group by name order by name';
 
     // Get all kinases from DB
     CallApi(apiQuery).then((res) => {
-      if (needCleanUp) {
-        // Set the main table body data
+      // Set the main table body data
 
-        setperturbagenData(res);
-      }
+      setperturbagenData(res);
     });
-
-    // Clean-up
-    return () => (needCleanUp = false);
   }, []);
 
   const handleSelection = (selection) => {
@@ -80,9 +75,11 @@ export default function PerturbagenList() {
               />
             </GridItem>
             <GridItem md>
-              {rightPanelOpen ? (
-                <PerturbagenListRightPanel perturbagenInfo={perturbagenInfo} />
-              ) : undefined}
+              <Slide in={rightPanelOpen} direction='left'>
+                <div>
+                  <PerturbagenListRightPanel perturbagenInfo={perturbagenInfo} />
+                </div>
+              </Slide>
             </GridItem>
           </GridContainer>
         </GridItem>

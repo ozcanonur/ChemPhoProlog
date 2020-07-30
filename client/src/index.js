@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import reducers from './reducers';
 
 import Home from 'layouts/Home';
 
@@ -12,7 +16,7 @@ import ParticlesBg from 'particles-bg';
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <React.Fragment>
+  <Provider store={createStore(reducers)}>
     <Router history={hist}>
       <Switch>
         <Route exact path='/' component={Home} />
@@ -20,6 +24,6 @@ ReactDOM.render(
       </Switch>
     </Router>
     <ParticlesBg type='cobweb' bg={true} />
-  </React.Fragment>,
+  </Provider>,
   document.getElementById('root')
 );

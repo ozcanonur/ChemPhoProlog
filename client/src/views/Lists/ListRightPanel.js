@@ -10,7 +10,7 @@ import CardBody from 'components/Card/CardBody';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
-import { Typography, Link } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Button from 'components/CustomButtons/Button';
 
 const useStyles = makeStyles(styles);
