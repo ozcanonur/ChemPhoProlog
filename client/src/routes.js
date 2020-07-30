@@ -1,4 +1,3 @@
-// core components/views for Admin layout
 import WelcomePage from 'views/Welcome/Welcome';
 import KinaseList from 'views/Lists/KinaseList/KinaseList';
 import PerturbagenList from 'views/Lists/PerturbagenList/PerturbagenList';
@@ -34,20 +33,7 @@ const dashboardRoutes = [
     component: PerturbagenList,
     layout: '/home',
   },
-  {
-    path: '/observationData',
-    name: 'Observation Data',
-    icon: ZoomInIcon,
-    component: WelcomePage,
-    layout: '/home',
-  },
-  {
-    path: '/omnipathData',
-    name: 'Omnipath Data',
-    icon: AccountTreeIcon,
-    component: WelcomePage,
-    layout: '/home',
-  },
+
   {
     path: '/aboutUs',
     name: 'About Us',

@@ -15,26 +15,20 @@ import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 import bgImage from 'assets/img/dna.jpg';
 import logo from 'assets/img/reactlogo.png';
 
-let ps;
+import WelcomePage from 'views/Welcome/Welcome';
+import KinaseList from 'views/Lists/KinaseList/KinaseList';
+import PerturbagenList from 'views/Lists/PerturbagenList/PerturbagenList';
+import AboutUs from 'views/AboutUs/AboutUs.js';
+import CallApi from 'api/api';
+import { pick } from 'lodash';
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      return (
-        <Route path={prop.layout + prop.path} component={prop.component} key={key} />
-      );
-    })}
-    <Redirect from='/' to='/home/welcome' />
-  </Switch>
-);
+let ps;
 
 const useStyles = makeStyles(styles);
 
 export default function Home({ ...rest }) {
+  //#region BASE THINGS
   const classes = useStyles();
-  // ref to help us initialize PerfectScrollbar on windows devices
-  const mainPanel = createRef();
-
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -47,6 +41,8 @@ export default function Home({ ...rest }) {
     }
   };
 
+  // ref to help us initialize PerfectScrollbar on windows devices
+  const mainPanel = createRef();
   // initialize and destroy the PerfectScrollbar plugin
   useEffect(() => {
     if (navigator.platform.indexOf('Win') > -1) {
@@ -57,7 +53,7 @@ export default function Home({ ...rest }) {
       document.body.style.overflow = 'hidden';
     }
     window.addEventListener('resize', resizeFunction);
-    // Specify how to clean up after this effect:
+
     return function cleanup() {
       if (navigator.platform.indexOf('Win') > -1) {
         ps.destroy();
@@ -65,6 +61,45 @@ export default function Home({ ...rest }) {
       window.removeEventListener('resize', resizeFunction);
     };
   }, [mainPanel]);
+  //#endregion BASE THINGS
+
+  const [kinaseData, setKinaseData] = useState([]);
+  // Selected kinase info and description dictionary per Uniprot ID
+  const [kinaseInfo, setKinaseInfo] = useState('');
+  // Right panel open or not
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+
+  // Only run on first mount
+  // Gets the kinases and details and sets the states for them
+  useEffect(() => {
+    let needCleanUp = true;
+
+    // Get all kinases from DB
+    const kinaseQuery =
+      'select * from Protein where kinase_name <> "" order by kinase_name';
+    CallApi(kinaseQuery).then((res) => {
+      if (needCleanUp) {
+        // Set the main table body data
+        setKinaseData(res);
+      }
+    });
+
+    // Clean-up
+    return () => (needCleanUp = false);
+  }, []);
+
+  const handleSelection = (selection) => {
+    setRightPanelOpen(true);
+    const selectedKinaseDesc = kinaseData.filter(
+      (item) => item['kinase_name'] === selection
+    );
+
+    setKinaseInfo(selectedKinaseDesc[0]);
+  };
+
+  const kinaseTableData = kinaseData
+    .map((obj) => pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id']))
+    .map(Object.values);
 
   return (
     <div className={classes.wrapper}>
@@ -80,7 +115,44 @@ export default function Home({ ...rest }) {
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
-        <div className={classes.map}>{switchRoutes}</div>
+        <div className={classes.map}>
+          <Switch>
+            <Route
+              path='/home/welcome'
+              render={(routeProps) => <WelcomePage {...routeProps} {...rest} />}
+              key='/home/welcome'
+            />
+            <Route
+              path='/home/kinaseList'
+              render={() => (
+                <KinaseList
+                  {...rest}
+                  tableData={kinaseTableData}
+                  kinaseInfo={kinaseInfo}
+                  handleSelection={handleSelection}
+                  rightPanelOpen={rightPanelOpen}
+                />
+              )}
+              key='/home/kinaseList'
+            />
+            <Route
+              path='/home/perturbagenList'
+              render={(routeProps) => <PerturbagenList {...routeProps} {...rest} />}
+              key='/home/welcoperturbagenListme'
+            />
+            <Route
+              path='/home/aboutUs'
+              render={(routeProps) => <AboutUs {...routeProps} {...rest} />}
+              key='/home/aboutUs'
+            />
+            <Route
+              path='/home/api'
+              render={(routeProps) => <AboutUs {...routeProps} {...rest} />}
+              key='/home/api'
+            />
+            <Redirect from='/' to='/home/welcome' />
+          </Switch>
+        </div>
       </div>
     </div>
   );

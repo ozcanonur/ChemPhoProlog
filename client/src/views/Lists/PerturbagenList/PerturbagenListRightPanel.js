@@ -19,6 +19,7 @@ const PerturbagenListRightPanel = ({ perturbagenInfo }) => {
       <div style={{ textAlign: 'center' }}>
         <img
           src={`http://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`}
+          alt=''
         />
       </div>
     ),

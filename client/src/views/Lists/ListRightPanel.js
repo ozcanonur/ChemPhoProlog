@@ -10,6 +10,9 @@ import CardBody from 'components/Card/CardBody';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
+import { Typography, Link } from '@material-ui/core';
+import Button from 'components/CustomButtons/Button';
+
 const useStyles = makeStyles(styles);
 
 const ListRightPanel = (props) => {
@@ -31,7 +34,7 @@ const ListRightPanel = (props) => {
       </CardHeader>
       <CardBody>
         <GridContainer direction='column'>
-          <GridItem md>
+          <GridItem>
             <Card>
               <CardHeader color='primary'>
                 <h4 className={classes.cardTitleWhite}>{selectedEleTitle}</h4>
@@ -39,7 +42,16 @@ const ListRightPanel = (props) => {
               <CardBody>{selectedEleDetailsBody}</CardBody>
             </Card>
           </GridItem>
-          <GridItem md>{selectedEleDetailsBottomBody}</GridItem>
+          <GridItem>{selectedEleDetailsBottomBody}</GridItem>
+          <GridItem>
+            <GridContainer justify='center'>
+              <GridItem>
+                <Button color='primary'>
+                  <Typography>BROWSE</Typography>
+                </Button>
+              </GridItem>
+            </GridContainer>
+          </GridItem>
         </GridContainer>
       </CardBody>
     </Card>
