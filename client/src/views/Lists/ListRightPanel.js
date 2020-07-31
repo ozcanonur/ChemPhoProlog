@@ -43,15 +43,6 @@ const ListRightPanel = (props) => {
             </Card>
           </GridItem>
           <GridItem>{selectedEleDetailsBottomBody}</GridItem>
-          <GridItem>
-            <GridContainer justify='center'>
-              <GridItem>
-                <Button color='primary'>
-                  <Typography>BROWSE</Typography>
-                </Button>
-              </GridItem>
-            </GridContainer>
-          </GridItem>
         </GridContainer>
       </CardBody>
     </Card>

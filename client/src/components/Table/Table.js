@@ -28,8 +28,7 @@ import { zip } from 'lodash';
 const useStyles = makeStyles(styles);
 
 // Each row on the table body
-const Row = (props) => {
-  const { row, collapsible, rowEndArrow, handleSelection } = props;
+const Row = ({ row, collapsible, rowEndArrow, handleSelection, selectedInfo }) => {
   // Collapsible open or not
   const [open, setOpen] = useState(false);
   // Phosphosites for each kinase
@@ -53,7 +52,7 @@ const Row = (props) => {
   // Expand > calls API and sets collapsible phosphosites state
   const handleExpandButton = (prop) => {
     setOpen(!open);
-    if (collapsible) {
+    if (!open && collapsible) {
       callApi(prop).then((res) => {
         setPhosphosites(res.map(Object.values));
       });
@@ -204,6 +203,7 @@ export default function CustomTable(props) {
     collapsible,
     rowEndArrow,
     handleSelection,
+    selectedInfo,
   } = props;
 
   // Pagination options
@@ -265,6 +265,7 @@ export default function CustomTable(props) {
             collapsible={collapsible}
             rowEndArrow={rowEndArrow}
             handleSelection={handleSelection}
+            selectedInfo={selectedInfo}
           />
         );
       });

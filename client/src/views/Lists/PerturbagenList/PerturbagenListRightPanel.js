@@ -3,7 +3,7 @@ import React from 'react';
 import NewFindingsCard from 'views/Lists/NewFindingsCard';
 import ListRightPanel from 'views/Lists/ListRightPanel';
 
-const PerturbagenListRightPanel = ({ perturbagenInfo }) => {
+const PerturbagenListRightPanel = ({ selectedInfo }) => {
   const findingsProps = {
     leftIconTitle: 'New Perturbagens',
     leftIconText: '12',
@@ -14,11 +14,11 @@ const PerturbagenListRightPanel = ({ perturbagenInfo }) => {
   const props = {
     topHeaderTitle: 'Perturbagen Specification',
     topHeaderSubTitle: 'Details',
-    selectedEleTitle: perturbagenInfo.name,
+    selectedEleTitle: selectedInfo.name,
     selectedEleDetailsBody: (
       <div style={{ textAlign: 'center' }}>
         <img
-          src={`http://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`}
+          src={`http://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`}
           alt=''
         />
       </div>

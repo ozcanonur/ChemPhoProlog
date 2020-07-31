@@ -12,6 +12,8 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Link } from '@material-ui/core';
+
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 import ListRightPanel from 'views/Lists/ListRightPanel';
@@ -48,6 +50,7 @@ const NewFindingsCard = () => {
                 <NewReleasesIcon />
               )}
             </CardIcon>
+
             <p className={classes.cardCategory}>New perturbagens</p>
             <h3 className={classes.cardTitle}>12</h3>
           </CardHeader>
@@ -100,32 +103,32 @@ const NewFindingsCard = () => {
   );
 };
 
-const KinaseDescriptionBody = ({ kinaseInfo }) => {
+const KinaseDescriptionBody = ({ selectedInfo }) => {
   return (
     <React.Fragment>
-      <p>{kinaseInfo.description}</p>
+      <p>{selectedInfo.description}</p>
       <p>
         <strong>Families: </strong>
-        {kinaseInfo.families}
+        {selectedInfo.families}
       </p>
       <p>
         <strong>Alternative names: </strong>
-        {kinaseInfo.gene_synonyms}{' '}
+        {selectedInfo.gene_synonyms}{' '}
       </p>
       <p>
         <strong>Detected in: </strong>
-        {kinaseInfo.expressed_in}{' '}
+        {selectedInfo.expressed_in}{' '}
       </p>
     </React.Fragment>
   );
 };
 
-const KinaseListRightPanel = ({ kinaseInfo }) => {
+const KinaseListRightPanel = ({ selectedInfo }) => {
   const props = {
     topHeaderTitle: 'Kinase Specification',
     topHeaderSubTitle: 'Details',
-    selectedEleTitle: kinaseInfo.kinase_name,
-    selectedEleDetailsBody: <KinaseDescriptionBody kinaseInfo={kinaseInfo} />,
+    selectedEleTitle: selectedInfo.kinase_name,
+    selectedEleDetailsBody: <KinaseDescriptionBody selectedInfo={selectedInfo} />,
     selectedEleDetailsBottomBody: <NewFindingsCard />,
   };
 

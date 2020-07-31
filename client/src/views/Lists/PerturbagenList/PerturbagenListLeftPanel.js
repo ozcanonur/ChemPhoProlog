@@ -10,7 +10,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const PerturbagenListLeftPanel = ({ perturbagenTableData, handleSelection }) => {
+const PerturbagenListLeftPanel = ({ tableData, handleSelection }) => {
   const classes = useStyles();
 
   return (
@@ -24,7 +24,7 @@ const PerturbagenListLeftPanel = ({ perturbagenTableData, handleSelection }) => 
           className='my-node'
           tableHeaderColor='warning'
           tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
-          tableData={perturbagenTableData}
+          tableData={tableData}
           rowsPerPage={10}
           collapsible={false}
           rowEndArrow={true}

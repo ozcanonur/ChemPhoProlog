@@ -10,7 +10,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const KinaseListLeftPanel = ({ kinaseTableData, handleSelection }) => {
+const KinaseListLeftPanel = ({ tableData, handleSelection, selectedInfo }) => {
   const classes = useStyles();
 
   return (
@@ -24,11 +24,12 @@ const KinaseListLeftPanel = ({ kinaseTableData, handleSelection }) => {
           className='my-node'
           tableHeaderColor='warning'
           tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
-          tableData={kinaseTableData}
+          tableData={tableData}
           rowsPerPage={10}
           collapsible={true}
           rowEndArrow={true}
           handleSelection={handleSelection}
+          selectedInfo={selectedInfo}
         />
       </CardBody>
     </Card>

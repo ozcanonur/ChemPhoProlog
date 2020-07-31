@@ -11,6 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 
@@ -24,8 +25,10 @@ export default function Sidebar(props) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
 
-  const { color, logo, image, logoText, routes } = props;
+  const { color, logo, image, logoText, routes, handleSelectedTabRemove } = props;
 
+  // Key % 6 is for removing details tabs which spawn after you click on kinase/perturbagen
+  // Depends on how many routes each create
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -40,14 +43,31 @@ export default function Sidebar(props) {
           [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
         });
 
-        return (
+        return key % 6 === 5 ? (
+          <ListItem key={key} style={{ marginTop: '1em', textAlign: 'center' }}>
+            <ListItemText
+              primary={prop.name}
+              className={classNames(classes.itemText, whiteFontClasses)}
+            />
+            <RemoveCircleOutlineIcon
+              style={{ color: 'white', cursor: 'pointer' }}
+              onClick={() => handleSelectedTabRemove(key)}
+            />
+          </ListItem>
+        ) : (
           <NavLink
             to={prop.layout + prop.path}
             className={activePro + classes.item}
             activeClassName='active'
             key={key}
           >
-            <ListItem button className={classes.itemLink + listItemClasses}>
+            <ListItem
+              button
+              className={classes.itemLink + listItemClasses}
+              style={{
+                border: key > 5 ? '2px solid white' : 'inherit',
+              }}
+            >
               {typeof prop.icon === 'string' ? (
                 <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
                   {prop.icon}
@@ -90,7 +110,7 @@ export default function Sidebar(props) {
           }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
         >
           {brand}

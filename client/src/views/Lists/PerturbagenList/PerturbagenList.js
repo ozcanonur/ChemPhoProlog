@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -8,42 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import PerturbagenListLeftPanel from 'views/Lists/PerturbagenList/PerturbagenListLeftPanel';
 import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
 
-import CallApi from 'api/api';
-
 import { Slide } from '@material-ui/core';
 
-export default function PerturbagenList() {
-  // List of the data to be displayed on kinase table
-  const [perturbagenData, setperturbagenData] = useState([]);
-  // Selected kinase info and description dictionary per Uniprot ID
-  const [perturbagenInfo, setperturbagenInfo] = useState('');
-  // Right panel open or not
-  const [rightPanelOpen, setRightPanelOpen] = useState(false);
-
-  // Only run on first mount
-  // Gets the kinases and details and sets the states for them
-  useEffect(() => {
-    const apiQuery = 'select * from Perturbagen group by name order by name';
-
-    // Get all kinases from DB
-    CallApi(apiQuery).then((res) => {
-      // Set the main table body data
-
-      setperturbagenData(res);
-    });
-  }, []);
-
-  const handleSelection = (selection) => {
-    setRightPanelOpen(true);
-    const selectedPerturbagenDesc = perturbagenData.filter(
-      (item) => item['name'] === selection
-    );
-
-    setperturbagenInfo(selectedPerturbagenDesc[0]);
-  };
-
-  const tableData = perturbagenData.map(Object.values);
-
+export default function PerturbagenList({
+  tableData,
+  selectedInfo,
+  handleSelection,
+  rightPanelOpen,
+}) {
   return (
     <div>
       <GridContainer
@@ -70,14 +42,14 @@ export default function PerturbagenList() {
           <GridContainer direction='row'>
             <GridItem md>
               <PerturbagenListLeftPanel
-                perturbagenTableData={tableData}
+                tableData={tableData}
                 handleSelection={handleSelection}
               />
             </GridItem>
             <GridItem md>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
-                  <PerturbagenListRightPanel perturbagenInfo={perturbagenInfo} />
+                  <PerturbagenListRightPanel selectedInfo={selectedInfo} />
                 </div>
               </Slide>
             </GridItem>
