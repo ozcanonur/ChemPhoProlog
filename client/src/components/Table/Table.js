@@ -228,11 +228,13 @@ export default function CustomTable(props) {
     tableData,
     selectedInfo,
     handleAdd,
+    currentPage,
+    handleChangePage,
   } = props;
 
   // Pagination options
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
-  const [page, setPage] = useState(0);
+
   // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
@@ -241,13 +243,8 @@ export default function CustomTable(props) {
     setFilteredList(tableData);
   }, [tableData]);
 
-  // Pagination options
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   // Filter the values by the search term and set the state
@@ -280,7 +277,7 @@ export default function CustomTable(props) {
   // Table body
   const TableBodyContent = () => {
     return filteredList
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
       .map((prop, key) => {
         return (
           <Row
@@ -324,11 +321,11 @@ export default function CustomTable(props) {
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        rowsPerPageOptions={[5, 10, 25, 50]}
         component='div'
         count={filteredList.length}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={currentPage}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

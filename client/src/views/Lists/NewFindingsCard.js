@@ -29,7 +29,7 @@ const NewFindingsCard = ({
 
   return (
     <GridContainer direction='row' justify='space-evenly'>
-      <GridItem>
+      <GridItem md>
         <Card>
           <CardHeader color='primary' stats icon>
             <CardIcon
@@ -64,7 +64,7 @@ const NewFindingsCard = ({
           </CardFooter>
         </Card>
       </GridItem>
-      <GridItem>
+      <GridItem md>
         <Card>
           <CardHeader color='primary' stats icon>
             <CardIcon

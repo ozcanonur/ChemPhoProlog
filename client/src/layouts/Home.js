@@ -68,6 +68,8 @@ const Home = ({ ...rest }) => {
   const [kinaseInfo, setKinaseInfo] = useState('');
   // Right panel open or not
   const [kinaseRightPanelOpen, setKinaseRightPanelOpen] = useState(false);
+  // Current page the table is at
+  const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
@@ -107,12 +109,18 @@ const Home = ({ ...rest }) => {
     setRoutes(newRoutes);
   };
 
+  const kinaseHandleChangePage = (event, newPage) => {
+    setKinaseCurrentPage(newPage);
+  };
+
   const kinaseListContext = {
     tableData: kinaseTableData,
     selectedInfo: kinaseInfo,
     rightPanelOpen: kinaseRightPanelOpen,
     handleSelection: handleKinaseSelection,
     handleAdd: handleKinaseAdd,
+    currentPage: kinaseCurrentPage,
+    handleChangePage: kinaseHandleChangePage,
   };
   //#endregion KINASE TABLE THINGS
 
@@ -123,6 +131,8 @@ const Home = ({ ...rest }) => {
   const [perturbagenInfo, setperturbagenInfo] = useState('');
   // Right panel open or not
   const [perturbagenRightPanelOpen, setPerturbagenRightPanelOpen] = useState(false);
+  // Current page the table is at
+  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
@@ -156,12 +166,18 @@ const Home = ({ ...rest }) => {
     setRoutes(newRoutes);
   };
 
+  const perturbagenHandlePageChange = (event, newPage) => {
+    setPerturbagenCurrentPage(newPage);
+  };
+
   const perturbagenListContext = {
     tableData: perturbagenTableData,
     selectedInfo: perturbagenInfo,
     rightPanelOpen: perturbagenRightPanelOpen,
     handleSelection: handlePerturbagenSelection,
     handleAdd: handlePerturbagenAdd,
+    currentPage: perturbagenCurrentPage,
+    handleChangePage: perturbagenHandlePageChange,
   };
   //#endregion PERTURBAGEN TABLE THINGS
 

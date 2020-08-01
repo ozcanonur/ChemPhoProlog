@@ -19,6 +19,8 @@ const KinaseListLeftPanel = () => {
   const handleSelection = useContext(HomeContext).kinaseListContext.handleSelection;
   const handleAdd = useContext(HomeContext).kinaseListContext.handleAdd;
   const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
+  const currentPage = useContext(HomeContext).kinaseListContext.currentPage;
+  const handleChangePage = useContext(HomeContext).kinaseListContext.handleChangePage;
 
   return (
     <Card>
@@ -38,6 +40,8 @@ const KinaseListLeftPanel = () => {
           handleSelection={handleSelection}
           selectedInfo={selectedInfo}
           handleAdd={handleAdd}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
         />
       </CardBody>
     </Card>

@@ -19,6 +19,9 @@ const PerturbagenListLeftPanel = () => {
   const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
   const handleSelection = useContext(HomeContext).perturbagenListContext.handleSelection;
   const handleAdd = useContext(HomeContext).perturbagenListContext.handleAdd;
+  const currentPage = useContext(HomeContext).perturbagenListContext.currentPage;
+  const handleChangePage = useContext(HomeContext).perturbagenListContext
+    .handleChangePage;
 
   return (
     <Card>
@@ -38,6 +41,8 @@ const PerturbagenListLeftPanel = () => {
           handleSelection={handleSelection}
           handleAdd={handleAdd}
           selectedInfo={selectedInfo}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
         />
       </CardBody>
     </Card>
