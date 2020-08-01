@@ -28,7 +28,7 @@ const NewFindingsCard = () => {
   const [newPDTsHovered, setNewPDTsHovered] = useState(false);
 
   return (
-    <GridContainer direction='row'>
+    <GridContainer direction='row' justify='space-evenly'>
       <GridItem md>
         <Card>
           <CardHeader color='primary' stats icon>
@@ -60,7 +60,7 @@ const NewFindingsCard = () => {
               <Danger>
                 <Warning />
               </Danger>
-              Previously reported: 24
+              Previously reported upstream perturbagens: 24
             </div>
           </CardFooter>
         </Card>

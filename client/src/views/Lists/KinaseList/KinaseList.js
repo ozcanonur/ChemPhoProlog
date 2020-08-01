@@ -15,7 +15,7 @@ import { Slide } from '@material-ui/core';
 import { HomeContext } from 'layouts/Home';
 
 // Kinase List on the Home page
-export default function KinaseList() {
+const KinaseList = () => {
   const rightPanelOpen = useContext(HomeContext).kinaseListContext.rightPanelOpen;
 
   return (
@@ -42,10 +42,10 @@ export default function KinaseList() {
         </GridItem>
         <GridItem>
           <GridContainer direction='row' alignItems='stretch'>
-            <GridItem md>
+            <GridItem sm={12} lg={6}>
               <KinaseListLeftPanel />
             </GridItem>
-            <GridItem md>
+            <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
                   <KinaseListRightPanel />
@@ -57,4 +57,6 @@ export default function KinaseList() {
       </GridContainer>
     </div>
   );
-}
+};
+
+export default KinaseList;

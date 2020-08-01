@@ -9,7 +9,7 @@ const PerturbagenListRightPanel = () => {
   const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
 
   const findingsProps = {
-    leftIconTitle: 'New Perturbagens',
+    leftIconTitle: 'New Targets',
     leftIconText: '12',
     rightIconTitle: 'New PDTs',
     rightIconText: '34',

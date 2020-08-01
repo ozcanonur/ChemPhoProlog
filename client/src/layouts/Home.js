@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect, createContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { pick, range, uniqWith, isEqual, uniqBy } from 'lodash';
+import { pick, range, uniqWith } from 'lodash';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
@@ -93,7 +93,9 @@ const Home = ({ ...rest }) => {
       (item) => item['kinase_name'] === selection
     );
     setKinaseInfo(selectedKinaseDesc[0]);
+  };
 
+  const handleKinaseAdd = (selection) => {
     // Details sidebar/routes
     const detailsRoutes = additionalRoutes(selection).kinaseDetailsRoutes;
 
@@ -102,8 +104,6 @@ const Home = ({ ...rest }) => {
       (x, y) => x.path === y.path
     );
 
-    console.log(routes);
-    console.log(newRoutes);
     setRoutes(newRoutes);
   };
 
@@ -112,6 +112,7 @@ const Home = ({ ...rest }) => {
     selectedInfo: kinaseInfo,
     rightPanelOpen: kinaseRightPanelOpen,
     handleSelection: handleKinaseSelection,
+    handleAdd: handleKinaseAdd,
   };
   //#endregion KINASE TABLE THINGS
 
@@ -143,7 +144,9 @@ const Home = ({ ...rest }) => {
       (item) => item['name'] === selection
     );
     setperturbagenInfo(selectedPerturbagenDesc[0]);
+  };
 
+  const handlePerturbagenAdd = (selection) => {
     const detailsRoutes = additionalRoutes(selection).perturbagenDetailsRoutes;
     const newRoutes = uniqWith(
       [...routes, ...detailsRoutes],
@@ -158,6 +161,7 @@ const Home = ({ ...rest }) => {
     selectedInfo: perturbagenInfo,
     rightPanelOpen: perturbagenRightPanelOpen,
     handleSelection: handlePerturbagenSelection,
+    handleAdd: handlePerturbagenAdd,
   };
   //#endregion PERTURBAGEN TABLE THINGS
 

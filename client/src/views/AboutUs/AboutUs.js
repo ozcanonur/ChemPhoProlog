@@ -14,7 +14,7 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export default function AboutUs() {
+const AboutUs = () => {
   const classes = useStyles();
 
   return (
@@ -51,4 +51,6 @@ export default function AboutUs() {
       </GridContainer>
     </div>
   );
-}
+};
+
+export default AboutUs;

@@ -20,15 +20,23 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
 
-import { zip } from 'lodash';
+import { zip, has } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
 // Each row on the table body
-const Row = ({ row, collapsible, rowEndArrow, handleSelection, selectedInfo }) => {
+const Row = ({
+  row,
+  collapsible,
+  rowEndArrow,
+  handleSelection,
+  handleAdd,
+  selectedInfo,
+}) => {
   // Collapsible open or not
   const [open, setOpen] = useState(false);
   // Phosphosites for each kinase
@@ -59,10 +67,24 @@ const Row = ({ row, collapsible, rowEndArrow, handleSelection, selectedInfo }) =
     }
   };
 
+  let currentSelectedEle;
+  if (has(selectedInfo, 'kinase_name')) {
+    currentSelectedEle = selectedInfo.kinase_name;
+  } else if (has(selectedInfo, 'name')) {
+    currentSelectedEle = selectedInfo.name;
+  }
+
   // Actual rows
   const MainTableBody = () => {
     return (
-      <TableRow key={row} className={classes.tableBodyRow}>
+      <TableRow
+        key={row}
+        className={classes.tableBodyRow}
+        style={{
+          backgroundColor:
+            row[0] === currentSelectedEle ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
+        }}
+      >
         {row.map((prop, key) => {
           return (
             <React.Fragment key={key}>
@@ -77,11 +99,7 @@ const Row = ({ row, collapsible, rowEndArrow, handleSelection, selectedInfo }) =
                   </IconButton>
                 </TableCell>
               ) : null}
-              <TableCell
-                className={classes.tableCell}
-                key={key}
-                style={{ minWidth: 100 }}
-              >
+              <TableCell className={classes.tableCell} key={key}>
                 {key === 0 ? (
                   <Link to='#' style={{ color: '#0066CC' }}>
                     {prop}
@@ -95,9 +113,14 @@ const Row = ({ row, collapsible, rowEndArrow, handleSelection, selectedInfo }) =
                   <IconButton
                     aria-label='expand row'
                     size='small'
-                    onClick={() => {
-                      handleSelection(row[0]);
-                    }}
+                    onClick={() => handleAdd(row[0])}
+                  >
+                    <AddCircleOutlineIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label='expand row'
+                    size='small'
+                    onClick={() => handleSelection(row[0])}
                   >
                     <KeyboardArrowRightIcon />
                   </IconButton>
@@ -204,6 +227,7 @@ export default function CustomTable(props) {
     handleSelection,
     tableData,
     selectedInfo,
+    handleAdd,
   } = props;
 
   // Pagination options
@@ -260,20 +284,45 @@ export default function CustomTable(props) {
       .map((prop, key) => {
         return (
           <Row
-            key={prop}
+            key={key}
             row={prop}
             collapsible={collapsible}
             rowEndArrow={rowEndArrow}
             handleSelection={handleSelection}
             selectedInfo={selectedInfo}
+            handleAdd={handleAdd}
           />
         );
       });
   };
 
-  // Pagination
-  const TablePaginationContent = () => {
-    return (
+  return (
+    <div className={classes.tableResponsive}>
+      <div style={{ textAlign: 'right' }}>
+        <CustomInput
+          formControlProps={{
+            className: classes.search,
+          }}
+          inputProps={{
+            placeholder: 'Search',
+            inputProps: {
+              'aria-label': 'Search',
+            },
+          }}
+          onChange={(event) => filterByTermAndSetTableData(event)}
+        />
+        <Button color='white' aria-label='edit' justIcon round>
+          <Search />
+        </Button>
+      </div>
+      <Table stickyHeader className={classes.table}>
+        <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
+          <TableHeadContent />
+        </TableHead>
+        <TableBody>
+          <TableBodyContent />
+        </TableBody>
+      </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 50, 100]}
         component='div'
@@ -283,35 +332,6 @@ export default function CustomTable(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    );
-  };
-
-  return (
-    <div className={classes.tableResponsive}>
-      <CustomInput
-        formControlProps={{
-          className: classes.search,
-        }}
-        inputProps={{
-          placeholder: 'Search',
-          inputProps: {
-            'aria-label': 'Search',
-          },
-        }}
-        onChange={(event) => filterByTermAndSetTableData(event)}
-      />
-      <Button color='white' aria-label='edit' justIcon round>
-        <Search />
-      </Button>
-      <Table stickyHeader className={classes.table}>
-        <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
-          <TableHeadContent />
-        </TableHead>
-        <TableBody>
-          <TableBodyContent />
-        </TableBody>
-      </Table>
-      <TablePaginationContent />
     </div>
   );
 }

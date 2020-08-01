@@ -1,5 +1,7 @@
 import React from 'react';
 import WelcomePage from 'views/Welcome/Welcome';
+import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
+import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
@@ -63,14 +65,14 @@ export const additionalRoutes = (selection) => {
         path: `/${selection}/description`,
         name: 'Description',
         icon: InfoIcon,
-        component: WelcomePage,
+        component: KinaseDetailsDescription,
         layout: '/home',
       },
       {
         path: `/${selection}/knownPerturbagens`,
         name: 'Known Perturbagens',
         icon: PerturbagenIcon,
-        component: WelcomePage,
+        component: KinaseDetailsKnownPerturbagens,
         layout: '/home',
       },
       {

@@ -28,8 +28,8 @@ const NewFindingsCard = ({
   const [rightIconHovered, setRightIconHovered] = useState(false);
 
   return (
-    <GridContainer direction='row'>
-      <GridItem md>
+    <GridContainer direction='row' justify='space-evenly'>
+      <GridItem>
         <Card>
           <CardHeader color='primary' stats icon>
             <CardIcon
@@ -59,12 +59,12 @@ const NewFindingsCard = ({
               <Danger>
                 <Warning />
               </Danger>
-              Previously reported: 24
+              Previously reported direct targets: 24
             </div>
           </CardFooter>
         </Card>
       </GridItem>
-      <GridItem md>
+      <GridItem>
         <Card>
           <CardHeader color='primary' stats icon>
             <CardIcon

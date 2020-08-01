@@ -17,6 +17,7 @@ const KinaseListLeftPanel = () => {
 
   const tableData = useContext(HomeContext).kinaseListContext.tableData;
   const handleSelection = useContext(HomeContext).kinaseListContext.handleSelection;
+  const handleAdd = useContext(HomeContext).kinaseListContext.handleAdd;
   const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
 
   return (
@@ -36,6 +37,7 @@ const KinaseListLeftPanel = () => {
           rowEndArrow={true}
           handleSelection={handleSelection}
           selectedInfo={selectedInfo}
+          handleAdd={handleAdd}
         />
       </CardBody>
     </Card>

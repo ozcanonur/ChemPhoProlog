@@ -16,7 +16,9 @@ const PerturbagenListLeftPanel = () => {
   const classes = useStyles();
 
   const tableData = useContext(HomeContext).perturbagenListContext.tableData;
+  const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
   const handleSelection = useContext(HomeContext).perturbagenListContext.handleSelection;
+  const handleAdd = useContext(HomeContext).perturbagenListContext.handleAdd;
 
   return (
     <Card>
@@ -34,6 +36,8 @@ const PerturbagenListLeftPanel = () => {
           collapsible={false}
           rowEndArrow={true}
           handleSelection={handleSelection}
+          handleAdd={handleAdd}
+          selectedInfo={selectedInfo}
         />
       </CardBody>
     </Card>

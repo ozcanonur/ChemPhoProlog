@@ -12,7 +12,7 @@ import { Slide } from '@material-ui/core';
 
 import { HomeContext } from 'layouts/Home';
 
-export default function PerturbagenList() {
+const PerturbagenList = () => {
   const rightPanelOpen = useContext(HomeContext).perturbagenListContext.rightPanelOpen;
 
   return (
@@ -39,10 +39,10 @@ export default function PerturbagenList() {
         </GridItem>
         <GridItem md>
           <GridContainer direction='row'>
-            <GridItem md>
+            <GridItem sm={12} lg={6}>
               <PerturbagenListLeftPanel />
             </GridItem>
-            <GridItem md>
+            <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
                   <PerturbagenListRightPanel />
@@ -54,4 +54,6 @@ export default function PerturbagenList() {
       </GridContainer>
     </div>
   );
-}
+};
+
+export default PerturbagenList;

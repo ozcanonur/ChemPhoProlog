@@ -14,7 +14,7 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export default function Welcome() {
+const Welcome = () => {
   const classes = useStyles();
 
   return (
@@ -71,8 +71,9 @@ export default function Welcome() {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem></GridItem>
       </GridContainer>
     </div>
   );
-}
+};
+
+export default Welcome;
