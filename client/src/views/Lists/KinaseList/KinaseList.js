@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -12,13 +12,12 @@ import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 
 import { Slide } from '@material-ui/core';
 
+import { HomeContext } from 'layouts/Home';
+
 // Kinase List on the Home page
-export default function KinaseList({
-  tableData,
-  selectedInfo,
-  handleSelection,
-  rightPanelOpen,
-}) {
+export default function KinaseList() {
+  const rightPanelOpen = useContext(HomeContext).kinaseListContext.rightPanelOpen;
+
   return (
     <div>
       <GridContainer
@@ -44,16 +43,12 @@ export default function KinaseList({
         <GridItem>
           <GridContainer direction='row' alignItems='stretch'>
             <GridItem md>
-              <KinaseListLeftPanel
-                tableData={tableData}
-                handleSelection={handleSelection}
-                selectedInfo={selectedInfo}
-              />
+              <KinaseListLeftPanel />
             </GridItem>
             <GridItem md>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
-                  <KinaseListRightPanel selectedInfo={selectedInfo} />
+                  <KinaseListRightPanel />
                 </div>
               </Slide>
             </GridItem>

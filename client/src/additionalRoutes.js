@@ -12,7 +12,7 @@ export const additionalRoutes = (selection) => {
         path: '',
         name: selection,
         icon: '',
-        component: <React.Fragment></React.Fragment>,
+        component: () => <React.Fragment></React.Fragment>,
         layout: '/home/null',
       },
       {
@@ -56,7 +56,7 @@ export const additionalRoutes = (selection) => {
         path: '',
         name: selection,
         icon: '',
-        component: <React.Fragment></React.Fragment>,
+        component: () => <React.Fragment></React.Fragment>,
         layout: '/home/null',
       },
       {

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import NewFindingsCard from 'views/Lists/NewFindingsCard';
 import ListRightPanel from 'views/Lists/ListRightPanel';
 
-const PerturbagenListRightPanel = ({ selectedInfo }) => {
+import { HomeContext } from 'layouts/Home';
+
+const PerturbagenListRightPanel = () => {
+  const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
+
   const findingsProps = {
     leftIconTitle: 'New Perturbagens',
     leftIconText: '12',

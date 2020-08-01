@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -198,11 +198,11 @@ export default function CustomTable(props) {
 
   const {
     tableHead,
-    tableData,
     tableHeaderColor,
     collapsible,
     rowEndArrow,
     handleSelection,
+    tableData,
     selectedInfo,
   } = props;
 

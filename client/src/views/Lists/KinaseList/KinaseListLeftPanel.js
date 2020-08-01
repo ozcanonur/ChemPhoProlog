@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from 'components/Card/Card.js';
@@ -8,10 +8,16 @@ import Table from 'components/Table/Table';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
+import { HomeContext } from 'layouts/Home';
+
 const useStyles = makeStyles(styles);
 
-const KinaseListLeftPanel = ({ tableData, handleSelection, selectedInfo }) => {
+const KinaseListLeftPanel = () => {
   const classes = useStyles();
+
+  const tableData = useContext(HomeContext).kinaseListContext.tableData;
+  const handleSelection = useContext(HomeContext).kinaseListContext.handleSelection;
+  const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
 
   return (
     <Card>

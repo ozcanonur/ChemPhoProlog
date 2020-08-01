@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -10,12 +10,11 @@ import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenLi
 
 import { Slide } from '@material-ui/core';
 
-export default function PerturbagenList({
-  tableData,
-  selectedInfo,
-  handleSelection,
-  rightPanelOpen,
-}) {
+import { HomeContext } from 'layouts/Home';
+
+export default function PerturbagenList() {
+  const rightPanelOpen = useContext(HomeContext).perturbagenListContext.rightPanelOpen;
+
   return (
     <div>
       <GridContainer
@@ -41,15 +40,12 @@ export default function PerturbagenList({
         <GridItem md>
           <GridContainer direction='row'>
             <GridItem md>
-              <PerturbagenListLeftPanel
-                tableData={tableData}
-                handleSelection={handleSelection}
-              />
+              <PerturbagenListLeftPanel />
             </GridItem>
             <GridItem md>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
-                  <PerturbagenListRightPanel selectedInfo={selectedInfo} />
+                  <PerturbagenListRightPanel />
                 </div>
               </Slide>
             </GridItem>

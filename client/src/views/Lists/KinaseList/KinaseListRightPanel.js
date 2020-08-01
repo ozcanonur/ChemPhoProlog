@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import CardIcon from 'components/Card/CardIcon';
 import CardFooter from 'components/Card/CardFooter.js';
@@ -12,11 +12,12 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { Link } from '@material-ui/core';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 import ListRightPanel from 'views/Lists/ListRightPanel';
+
+import { HomeContext } from 'layouts/Home';
 
 const useStyles = makeStyles(styles);
 
@@ -123,7 +124,9 @@ const KinaseDescriptionBody = ({ selectedInfo }) => {
   );
 };
 
-const KinaseListRightPanel = ({ selectedInfo }) => {
+const KinaseListRightPanel = () => {
+  const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
+
   const props = {
     topHeaderTitle: 'Kinase Specification',
     topHeaderSubTitle: 'Details',

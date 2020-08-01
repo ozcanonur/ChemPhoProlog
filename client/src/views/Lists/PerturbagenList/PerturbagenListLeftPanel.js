@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from 'components/Card/Card.js';
@@ -8,10 +8,15 @@ import Table from 'components/Table/Table';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
+import { HomeContext } from 'layouts/Home';
+
 const useStyles = makeStyles(styles);
 
-const PerturbagenListLeftPanel = ({ tableData, handleSelection }) => {
+const PerturbagenListLeftPanel = () => {
   const classes = useStyles();
+
+  const tableData = useContext(HomeContext).perturbagenListContext.tableData;
+  const handleSelection = useContext(HomeContext).perturbagenListContext.handleSelection;
 
   return (
     <Card>
