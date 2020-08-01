@@ -64,7 +64,10 @@ export default function Welcome() {
               <h4 className={classes.cardTitleWhite}>BezzLab</h4>
             </CardHeader>
             <CardBody>
-              <img src={require('../../assets/img/bezzlab_twitter.PNG')} />
+              <img
+                alt='bezzlab twitter'
+                src={require('../../assets/img/bezzlab_twitter.PNG')}
+              />
             </CardBody>
           </Card>
         </GridItem>

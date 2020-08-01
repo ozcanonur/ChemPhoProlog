@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -15,9 +15,42 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 
+let ps;
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  // Perfect Scrollbar solution
+  const resizeFunction = () => {
+    if (window.innerWidth >= 960) {
+      setMobileOpen(false);
+    }
+  };
+
+  // ref to help us initialize PerfectScrollbar on windows devices
+  const panel = createRef();
+  // initialize and destroy the PerfectScrollbar plugin
+  useEffect(() => {
+    if (navigator.platform.indexOf('Win') > -1) {
+      ps = new PerfectScrollbar(panel.current, {
+        suppressScrollX: true,
+        suppressScrollY: false,
+      });
+      document.body.style.overflow = 'hidden';
+    }
+    window.addEventListener('resize', resizeFunction);
+
+    return function cleanup() {
+      if (navigator.platform.indexOf('Win') > -1) {
+        ps.destroy();
+      }
+      window.removeEventListener('resize', resizeFunction);
+    };
+  }, [panel]);
+
   const classes = useStyles();
 
   // verifies if routeName is the one active (in browser input)
@@ -133,7 +166,9 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <div className={classes.sidebarWrapper} ref={panel}>
+            {links}
+          </div>
           {image !== undefined ? (
             <div
               className={classes.background}

@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect, createContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { pick, range, uniqWith, isEqual } from 'lodash';
+import { pick, range, uniqWith, isEqual, uniqBy } from 'lodash';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
@@ -96,8 +96,14 @@ const Home = ({ ...rest }) => {
 
     // Details sidebar/routes
     const detailsRoutes = additionalRoutes(selection).kinaseDetailsRoutes;
-    const newRoutes = uniqWith([...routes, ...detailsRoutes], isEqual);
 
+    const newRoutes = uniqWith(
+      [...routes, ...detailsRoutes],
+      (x, y) => x.path === y.path
+    );
+
+    console.log(routes);
+    console.log(newRoutes);
     setRoutes(newRoutes);
   };
 
@@ -139,7 +145,10 @@ const Home = ({ ...rest }) => {
     setperturbagenInfo(selectedPerturbagenDesc[0]);
 
     const detailsRoutes = additionalRoutes(selection).perturbagenDetailsRoutes;
-    const newRoutes = uniqWith([...routes, ...detailsRoutes], isEqual);
+    const newRoutes = uniqWith(
+      [...routes, ...detailsRoutes],
+      (x, y) => x.path === y.path
+    );
 
     setRoutes(newRoutes);
   };
@@ -152,11 +161,6 @@ const Home = ({ ...rest }) => {
   };
   //#endregion PERTURBAGEN TABLE THINGS
 
-  const combinedContext = {
-    kinaseListContext: kinaseListContext,
-    perturbagenListContext: perturbagenListContext,
-  };
-
   const [routes, setRoutes] = useState(baseRoutes);
 
   const handleSelectedTabRemove = (key) => {
@@ -167,6 +171,11 @@ const Home = ({ ...rest }) => {
       routesCopy.splice(rangeToBeDeleted.pop(), 1);
     }
     setRoutes(routesCopy);
+  };
+
+  const combinedContext = {
+    kinaseListContext: kinaseListContext,
+    perturbagenListContext: perturbagenListContext,
   };
 
   return (

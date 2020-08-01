@@ -9,7 +9,7 @@ export const additionalRoutes = (selection) => {
   return {
     perturbagenDetailsRoutes: [
       {
-        path: '',
+        path: `/${selection}`,
         name: selection,
         icon: '',
         component: () => <React.Fragment></React.Fragment>,
@@ -44,7 +44,7 @@ export const additionalRoutes = (selection) => {
         layout: '/home',
       },
       {
-        path: `/${selection}/observationData`,
+        path: `/${selection}/placeholder`,
         name: 'Placeholder',
         icon: PanoramaHorizontalIcon,
         component: WelcomePage,
@@ -53,7 +53,7 @@ export const additionalRoutes = (selection) => {
     ],
     kinaseDetailsRoutes: [
       {
-        path: '',
+        path: `/${selection}`,
         name: selection,
         icon: '',
         component: () => <React.Fragment></React.Fragment>,
