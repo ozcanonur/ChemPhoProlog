@@ -202,7 +202,6 @@ const Home = ({ ...rest }) => {
     setCurrentlyInspecting(currentlyInspecting.filter((e) => e.name !== name));
   };
 
-  console.log('rendered');
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -212,24 +211,22 @@ const Home = ({ ...rest }) => {
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={'blue'}
-        {...rest}
         routes={routes}
         currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
         handleSelectedTabRemove={handleSelectedTabRemove}
+        {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
         <div className={classes.map}>
           <HomeContext.Provider value={combinedContext}>
             <Switch>
-              {routes.map((prop, key) => {
-                return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-              })}
-              {[...extraKinaseRoutes, ...extraPerturbagenRoutes].map((ele) =>
-                ele.map((prop, key) => (
-                  <Route path={prop.layout + prop.path} component={prop.component} key={key} />
-                ))
-              )}
+              {routes.map((prop, key) => (
+                <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+              ))}
+              {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
+                <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+              ))}
               <Redirect from='/' to='/home/welcome' />
             </Switch>
           </HomeContext.Provider>

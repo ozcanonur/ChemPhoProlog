@@ -115,12 +115,7 @@ export default function Sidebar(props) {
         const currentTitle = prop.path.split('/')[1];
 
         return (
-          <NavLink
-            to={prop.layout + prop.path}
-            className={activePro + classes.item}
-            activeClassName='active'
-            key={key}
-          >
+          <div key={key}>
             {key === 0 ? (
               <ListItem key={currentTitle} style={{ marginTop: '1em', textAlign: 'center' }}>
                 <ListItemText
@@ -133,19 +128,25 @@ export default function Sidebar(props) {
                 />
               </ListItem>
             ) : undefined}
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              {typeof prop.icon === 'string' ? (
-                <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
-              ) : (
-                <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
-              )}
-              <ListItemText
-                primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
-                disableTypography={true}
-              />
-            </ListItem>
-          </NavLink>
+            <NavLink
+              to={prop.layout + prop.path}
+              className={activePro + classes.item}
+              activeClassName='active'
+            >
+              <ListItem button className={classes.itemLink + listItemClasses}>
+                {typeof prop.icon === 'string' ? (
+                  <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
+                ) : (
+                  <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
+                )}
+                <ListItemText
+                  primary={prop.name}
+                  className={classNames(classes.itemText, whiteFontClasses)}
+                  disableTypography={true}
+                />
+              </ListItem>
+            </NavLink>
+          </div>
         );
       })
     );
