@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect, createContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { pick, uniqWith, range } from 'lodash';
+import { pick, uniqWith } from 'lodash';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
@@ -63,10 +63,7 @@ const Home = ({ ...rest }) => {
   //#endregion BASE THINGS
 
   // Currently added kinases/perturbagens to the sidebar
-  const [currentlyInspecting, setCurrentlyInspecting] = useState({
-    kinaseRoutes: [],
-    perturbagenRoutes: [],
-  });
+  const [currentlyInspecting, setCurrentlyInspecting] = useState([]);
 
   //#region KINASE TABLE THINGS
   // All kinase data
@@ -82,8 +79,7 @@ const Home = ({ ...rest }) => {
   // Gets the kinases and details and sets the states for them
   useEffect(() => {
     // Get all kinases from DB
-    const kinaseQuery =
-      'select * from Protein where kinase_name <> "" order by kinase_name';
+    const kinaseQuery = 'select * from Protein where kinase_name <> "" order by kinase_name';
 
     CallApi(kinaseQuery).then((res) => {
       // Set the main table body data
@@ -93,16 +89,14 @@ const Home = ({ ...rest }) => {
 
   // Only keep these three columns, map to array for table component to interpret
   const kinaseTableData = kinaseData
-    .map((obj) => pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id']))
+    .map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id']))
     .map(Object.values);
 
   // Handle when a kinase is selected
   const handleKinaseSelection = (selection) => {
     setKinaseRightPanelOpen(true);
 
-    const selectedKinaseDesc = kinaseData.filter(
-      (item) => item['kinase_name'] === selection
-    );
+    const selectedKinaseDesc = kinaseData.filter((item) => item['kinase_name'] === selection);
     setKinaseInfo(selectedKinaseDesc[0]);
   };
 
@@ -115,14 +109,11 @@ const Home = ({ ...rest }) => {
   const handleKinaseAdd = (selection) => {
     // Only keep unique
     const uniqCurrentlyInspecting = uniqWith(
-      [...currentlyInspecting.kinase, selection],
-      (x, y) => x === y
+      [...currentlyInspecting, { type: 'kinase', name: selection }],
+      (x, y) => x.type === y.type && x.name === y.name
     );
 
-    setCurrentlyInspecting({
-      perturbagenRoutes: currentlyInspecting.perturbagenRoutes,
-      kinaseRoutes: uniqCurrentlyInspecting,
-    });
+    setCurrentlyInspecting(uniqCurrentlyInspecting);
   };
 
   // Context related to the kinase list
@@ -163,9 +154,7 @@ const Home = ({ ...rest }) => {
 
   const handlePerturbagenSelection = (selection) => {
     setPerturbagenRightPanelOpen(true);
-    const selectedPerturbagenDesc = perturbagenData.filter(
-      (item) => item['name'] === selection
-    );
+    const selectedPerturbagenDesc = perturbagenData.filter((item) => item['name'] === selection);
     setperturbagenInfo(selectedPerturbagenDesc[0]);
   };
 
@@ -176,14 +165,11 @@ const Home = ({ ...rest }) => {
   const handlePerturbagenAdd = (selection) => {
     // Only keep unique
     const uniqCurrentlyInspecting = uniqWith(
-      [...currentlyInspecting.perturbagen, selection],
-      (x, y) => x === y
+      [...currentlyInspecting, { type: 'perturbagen', name: selection }],
+      (x, y) => x.type === y.type && x.name === y.name
     );
 
-    setCurrentlyInspecting({
-      perturbagenRoutes: uniqCurrentlyInspecting,
-      kinaseRoutes: uniqCurrentlyInspecting.kinaseRoutes,
-    });
+    setCurrentlyInspecting(uniqCurrentlyInspecting);
   };
 
   const perturbagenListContext = {
@@ -197,36 +183,39 @@ const Home = ({ ...rest }) => {
   };
   //#endregion PERTURBAGEN TABLE THINGS
 
-  const handleSelectedTabRemove = (key) => {
-    const rangeToBeDeleted = range(key, key + 6, 1);
-    const routesCopy = routes.slice();
-
-    while (rangeToBeDeleted.length) {
-      routesCopy.splice(rangeToBeDeleted.pop(), 1);
-    }
-    //setRoutes(routesCopy);
-  };
-
-  const extraRoutes = currentlyInspecting.kinaseRoutes.map(additionalRoutes);
-
   const combinedContext = {
     kinaseListContext: kinaseListContext,
     perturbagenListContext: perturbagenListContext,
   };
 
+  const extraKinaseRoutes = currentlyInspecting
+    .filter((e) => e.type === 'kinase')
+    .map((e) => e.name)
+    .map((e) => additionalRoutes('kinase', e));
+
+  const extraPerturbagenRoutes = currentlyInspecting
+    .filter((e) => e.type === 'perturbagen')
+    .map((e) => e.name)
+    .map((e) => additionalRoutes('perturbagen', e));
+
+  const handleSelectedTabRemove = (name) => {
+    setCurrentlyInspecting(currentlyInspecting.filter((e) => e.name !== name));
+  };
+
+  console.log('rendered');
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        extraRoutes={extraRoutes}
-        routes={routes}
         logoText={'ChemPhoProlog'}
         logo={logo}
         image={bgImage}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={'blue'}
-        handleSelectedTabRemove={handleSelectedTabRemove}
         {...rest}
+        routes={routes}
+        currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
+        handleSelectedTabRemove={handleSelectedTabRemove}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
@@ -234,21 +223,11 @@ const Home = ({ ...rest }) => {
           <HomeContext.Provider value={combinedContext}>
             <Switch>
               {routes.map((prop, key) => {
-                return (
-                  <Route
-                    path={prop.layout + prop.path}
-                    component={prop.component}
-                    key={key}
-                  />
-                );
+                return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
               })}
-              {extraRoutes.map((ele) =>
+              {[...extraKinaseRoutes, ...extraPerturbagenRoutes].map((ele) =>
                 ele.map((prop, key) => (
-                  <Route
-                    path={prop.layout + prop.path}
-                    component={prop.component}
-                    key={key}
-                  />
+                  <Route path={prop.layout + prop.path} component={prop.component} key={key} />
                 ))
               )}
               <Redirect from='/' to='/home/welcome' />

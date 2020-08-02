@@ -21,8 +21,6 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const useStyles = makeStyles(styles);
 
-import { additionalRoutes } from 'additionalRoutes';
-
 export default function Sidebar(props) {
   //#region BASE THINGS
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -62,17 +60,8 @@ export default function Sidebar(props) {
   }
   //#endregion BASE THINGS
 
-  const {
-    color,
-    logo,
-    image,
-    logoText,
-    routes,
-    handleSelectedTabRemove,
-    extraRoutes,
-  } = props;
-
-  const extraRoutesRoutes = extraRoutes.map(additionalRoutes);
+  const { color, logo, image, logoText, routes, currentlyInspecting, handleSelectedTabRemove } = props;
+  //const [currentlyInspecting, setCurrentlyInspecting] = useState(props.currentlyInspecting);
 
   const StandardRoutes = () =>
     routes.map((prop, key) => {
@@ -95,9 +84,7 @@ export default function Sidebar(props) {
         >
           <ListItem button className={classes.itemLink + listItemClasses}>
             {typeof prop.icon === 'string' ? (
-              <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
-                {prop.icon}
-              </Icon>
+              <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
             ) : (
               <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
             )}
@@ -111,8 +98,8 @@ export default function Sidebar(props) {
       );
     });
 
-  const ExtraRoutes = () =>
-    extraRoutesRoutes.map((ele) =>
+  const ExtraRoutes = ({ extraRoutes }) =>
+    extraRoutes.map((ele) =>
       ele.map((prop, key) => {
         var activePro = ' ';
         var listItemClasses;
@@ -124,6 +111,7 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
         });
+
         const currentTitle = prop.path.split('/')[1];
 
         return (
@@ -134,25 +122,20 @@ export default function Sidebar(props) {
             key={key}
           >
             {key === 0 ? (
-              <ListItem
-                key={currentTitle}
-                style={{ marginTop: '1em', textAlign: 'center' }}
-              >
+              <ListItem key={currentTitle} style={{ marginTop: '1em', textAlign: 'center' }}>
                 <ListItemText
                   primary={currentTitle}
                   className={classNames(classes.itemText, whiteFontClasses)}
                 />
                 <RemoveCircleOutlineIcon
                   style={{ color: 'white', cursor: 'pointer' }}
-                  onClick={() => handleSelectedTabRemove(key)}
+                  onClick={() => handleSelectedTabRemove(currentTitle)}
                 />
               </ListItem>
             ) : undefined}
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === 'string' ? (
-                <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
-                  {prop.icon}
-                </Icon>
+                <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
               ) : (
                 <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
               )}
@@ -197,14 +180,12 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
               <StandardRoutes key={'standardRoutes'} />
-              <ExtraRoutes key={'extraRoutes'} />
+              <ExtraRoutes key={'extraKinaseRoutes'} extraRoutes={currentlyInspecting.kinase} />
+              <ExtraRoutes key={'extraPerturbagenRoutes'} extraRoutes={currentlyInspecting.perturbagen} />
             </List>
           </div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: 'url(' + image + ')' }}
-            />
+            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
           ) : null}
         </Drawer>
       </Hidden>
@@ -221,14 +202,12 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes key={'standardRoutes'} />
-              <ExtraRoutes key={'extraRoutes'} />
+              <ExtraRoutes key={'extraKinaseRoutes'} extraRoutes={currentlyInspecting.kinase} />
+              <ExtraRoutes key={'extraPerturbagenRoutes'} extraRoutes={currentlyInspecting.perturbagen} />
             </List>
           </div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: 'url(' + image + ')' }}
-            />
+            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
           ) : null}
         </Drawer>
       </Hidden>
