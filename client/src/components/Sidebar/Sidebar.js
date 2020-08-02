@@ -121,6 +121,7 @@ export default function Sidebar(props) {
                 <ListItemText
                   primary={currentTitle}
                   className={classNames(classes.itemText, whiteFontClasses)}
+                  style={{ textAlign: 'left', marginLeft: '3.7em' }}
                 />
                 <RemoveCircleOutlineIcon
                   style={{ color: 'white', cursor: 'pointer' }}
@@ -151,13 +152,13 @@ export default function Sidebar(props) {
       })
     );
 
-  var brand = (
+  var brand = (text) => (
     <div className={classes.logo}>
       <a href={'/'} className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>
-        {logoText}
+        {text}
       </a>
     </div>
   );
@@ -177,10 +178,11 @@ export default function Sidebar(props) {
             keepMounted: true,
           }}
         >
-          {brand}
+          {brand(logoText)}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
               <StandardRoutes key={'standardRoutes'} />
+
               <ExtraRoutes key={'extraKinaseRoutes'} extraRoutes={currentlyInspecting.kinase} />
               <ExtraRoutes key={'extraPerturbagenRoutes'} extraRoutes={currentlyInspecting.perturbagen} />
             </List>
@@ -199,11 +201,17 @@ export default function Sidebar(props) {
             paper: classNames(classes.drawerPaper),
           }}
         >
-          {brand}
+          {brand(logoText)}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes key={'standardRoutes'} />
-              <ExtraRoutes key={'extraKinaseRoutes'} extraRoutes={currentlyInspecting.kinase} />
+              {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
+              <ExtraRoutes
+                key={'extraKinaseRoutes'}
+                extraRoutes={currentlyInspecting.kinase}
+                style={{ border: '2px solid white' }}
+              />
+              {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
               <ExtraRoutes key={'extraPerturbagenRoutes'} extraRoutes={currentlyInspecting.perturbagen} />
             </List>
           </div>

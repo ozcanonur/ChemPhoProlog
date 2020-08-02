@@ -75,13 +75,6 @@ export const additionalRoutes = (type, selection) => {
         component: WelcomePage,
         layout: '/home',
       },
-      {
-        path: `/${selection}/placeholder`,
-        name: 'Placeholder',
-        icon: PanoramaHorizontalIcon,
-        component: WelcomePage,
-        layout: '/home',
-      },
     ];
   }
 };
