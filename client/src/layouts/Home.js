@@ -1,13 +1,13 @@
 import React, { useState, createRef, useEffect, createContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { pick, range, uniqWith } from 'lodash';
+import { pick, uniqWith, range } from 'lodash';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 import Navbar from 'components/Navbars/Navbar.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
-import baseRoutes from 'routes.js';
+import routes from 'routes.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
@@ -62,14 +62,21 @@ const Home = ({ ...rest }) => {
 
   //#endregion BASE THINGS
 
+  // Currently added kinases/perturbagens to the sidebar
+  const [currentlyInspecting, setCurrentlyInspecting] = useState({
+    kinaseRoutes: [],
+    perturbagenRoutes: [],
+  });
+
   //#region KINASE TABLE THINGS
+  // All kinase data
   const [kinaseData, setKinaseData] = useState([]);
+  // Current page the kinase table is at
+  const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [kinaseInfo, setKinaseInfo] = useState('');
   // Right panel open or not
   const [kinaseRightPanelOpen, setKinaseRightPanelOpen] = useState(false);
-  // Current page the table is at
-  const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
@@ -84,10 +91,12 @@ const Home = ({ ...rest }) => {
     });
   }, []);
 
+  // Only keep these three columns, map to array for table component to interpret
   const kinaseTableData = kinaseData
     .map((obj) => pick(obj, ['kinase_name', 'expressed_in', 'uniprot_id']))
     .map(Object.values);
 
+  // Handle when a kinase is selected
   const handleKinaseSelection = (selection) => {
     setKinaseRightPanelOpen(true);
 
@@ -97,22 +106,26 @@ const Home = ({ ...rest }) => {
     setKinaseInfo(selectedKinaseDesc[0]);
   };
 
-  const handleKinaseAdd = (selection) => {
-    // Details sidebar/routes
-    const detailsRoutes = additionalRoutes(selection).kinaseDetailsRoutes;
-
-    const newRoutes = uniqWith(
-      [...routes, ...detailsRoutes],
-      (x, y) => x.path === y.path
-    );
-
-    setRoutes(newRoutes);
-  };
-
+  // Handle when switched to another page on the table
   const kinaseHandleChangePage = (event, newPage) => {
     setKinaseCurrentPage(newPage);
   };
 
+  // Handle when the user adds a kinase to the sidebar for inspection
+  const handleKinaseAdd = (selection) => {
+    // Only keep unique
+    const uniqCurrentlyInspecting = uniqWith(
+      [...currentlyInspecting.kinase, selection],
+      (x, y) => x === y
+    );
+
+    setCurrentlyInspecting({
+      perturbagenRoutes: currentlyInspecting.perturbagenRoutes,
+      kinaseRoutes: uniqCurrentlyInspecting,
+    });
+  };
+
+  // Context related to the kinase list
   const kinaseListContext = {
     tableData: kinaseTableData,
     selectedInfo: kinaseInfo,
@@ -127,12 +140,12 @@ const Home = ({ ...rest }) => {
   //#region PERTURBAGEN TABLE THINGS
   // List of the data to be displayed on kinase table
   const [perturbagenData, setperturbagenData] = useState([]);
+  // Current page the table is at
+  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [perturbagenInfo, setperturbagenInfo] = useState('');
   // Right panel open or not
   const [perturbagenRightPanelOpen, setPerturbagenRightPanelOpen] = useState(false);
-  // Current page the table is at
-  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
@@ -156,18 +169,21 @@ const Home = ({ ...rest }) => {
     setperturbagenInfo(selectedPerturbagenDesc[0]);
   };
 
-  const handlePerturbagenAdd = (selection) => {
-    const detailsRoutes = additionalRoutes(selection).perturbagenDetailsRoutes;
-    const newRoutes = uniqWith(
-      [...routes, ...detailsRoutes],
-      (x, y) => x.path === y.path
-    );
-
-    setRoutes(newRoutes);
-  };
-
   const perturbagenHandlePageChange = (event, newPage) => {
     setPerturbagenCurrentPage(newPage);
+  };
+
+  const handlePerturbagenAdd = (selection) => {
+    // Only keep unique
+    const uniqCurrentlyInspecting = uniqWith(
+      [...currentlyInspecting.perturbagen, selection],
+      (x, y) => x === y
+    );
+
+    setCurrentlyInspecting({
+      perturbagenRoutes: uniqCurrentlyInspecting,
+      kinaseRoutes: uniqCurrentlyInspecting.kinaseRoutes,
+    });
   };
 
   const perturbagenListContext = {
@@ -181,8 +197,6 @@ const Home = ({ ...rest }) => {
   };
   //#endregion PERTURBAGEN TABLE THINGS
 
-  const [routes, setRoutes] = useState(baseRoutes);
-
   const handleSelectedTabRemove = (key) => {
     const rangeToBeDeleted = range(key, key + 6, 1);
     const routesCopy = routes.slice();
@@ -190,8 +204,10 @@ const Home = ({ ...rest }) => {
     while (rangeToBeDeleted.length) {
       routesCopy.splice(rangeToBeDeleted.pop(), 1);
     }
-    setRoutes(routesCopy);
+    //setRoutes(routesCopy);
   };
+
+  const extraRoutes = currentlyInspecting.kinaseRoutes.map(additionalRoutes);
 
   const combinedContext = {
     kinaseListContext: kinaseListContext,
@@ -201,6 +217,7 @@ const Home = ({ ...rest }) => {
   return (
     <div className={classes.wrapper}>
       <Sidebar
+        extraRoutes={extraRoutes}
         routes={routes}
         logoText={'ChemPhoProlog'}
         logo={logo}
@@ -225,6 +242,15 @@ const Home = ({ ...rest }) => {
                   />
                 );
               })}
+              {extraRoutes.map((ele) =>
+                ele.map((prop, key) => (
+                  <Route
+                    path={prop.layout + prop.path}
+                    component={prop.component}
+                    key={key}
+                  />
+                ))
+              )}
               <Redirect from='/' to='/home/welcome' />
             </Switch>
           </HomeContext.Provider>

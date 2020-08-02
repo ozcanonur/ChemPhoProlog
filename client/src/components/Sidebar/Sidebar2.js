@@ -21,10 +21,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const useStyles = makeStyles(styles);
 
-import { additionalRoutes } from 'additionalRoutes';
-
 export default function Sidebar(props) {
-  //#region BASE THINGS
   const [mobileOpen, setMobileOpen] = useState(false);
   // Perfect Scrollbar solution
   const resizeFunction = () => {
@@ -60,60 +57,14 @@ export default function Sidebar(props) {
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
-  //#endregion BASE THINGS
 
-  const {
-    color,
-    logo,
-    image,
-    logoText,
-    routes,
-    handleSelectedTabRemove,
-    extraRoutes,
-  } = props;
+  const { color, logo, image, logoText, routes, handleSelectedTabRemove } = props;
 
-  const extraRoutesRoutes = extraRoutes.map(additionalRoutes);
-
-  const StandardRoutes = () =>
-    routes.map((prop, key) => {
-      var activePro = ' ';
-      var listItemClasses;
-
-      listItemClasses = classNames({
-        [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
-      });
-
-      const whiteFontClasses = classNames({
-        [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
-      });
-      return (
-        <NavLink
-          to={prop.layout + prop.path}
-          className={activePro + classes.item}
-          activeClassName='active'
-          key={key}
-        >
-          <ListItem button className={classes.itemLink + listItemClasses}>
-            {typeof prop.icon === 'string' ? (
-              <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
-                {prop.icon}
-              </Icon>
-            ) : (
-              <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
-            )}
-            <ListItemText
-              primary={prop.name}
-              className={classNames(classes.itemText, whiteFontClasses)}
-              disableTypography={true}
-            />
-          </ListItem>
-        </NavLink>
-      );
-    });
-
-  const ExtraRoutes = () =>
-    extraRoutesRoutes.map((ele) =>
-      ele.map((prop, key) => {
+  // Key % 6 is for removing details tabs which spawn after you click on kinase/perturbagen
+  // Depends on how many routes each create
+  var links = (
+    <List className={classes.list}>
+      {routes.map((prop, key) => {
         var activePro = ' ';
         var listItemClasses;
 
@@ -124,31 +75,32 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
         });
-        const currentTitle = prop.path.split('/')[1];
 
-        return (
+        return key % 6 === 5 ? (
+          <ListItem key={key} style={{ marginTop: '1em', textAlign: 'center' }}>
+            <ListItemText
+              primary={prop.name}
+              className={classNames(classes.itemText, whiteFontClasses)}
+            />
+            <RemoveCircleOutlineIcon
+              style={{ color: 'white', cursor: 'pointer' }}
+              onClick={() => handleSelectedTabRemove(key)}
+            />
+          </ListItem>
+        ) : (
           <NavLink
             to={prop.layout + prop.path}
             className={activePro + classes.item}
             activeClassName='active'
             key={key}
           >
-            {key === 0 ? (
-              <ListItem
-                key={currentTitle}
-                style={{ marginTop: '1em', textAlign: 'center' }}
-              >
-                <ListItemText
-                  primary={currentTitle}
-                  className={classNames(classes.itemText, whiteFontClasses)}
-                />
-                <RemoveCircleOutlineIcon
-                  style={{ color: 'white', cursor: 'pointer' }}
-                  onClick={() => handleSelectedTabRemove(key)}
-                />
-              </ListItem>
-            ) : undefined}
-            <ListItem button className={classes.itemLink + listItemClasses}>
+            <ListItem
+              button
+              className={classes.itemLink + listItemClasses}
+              style={{
+                border: key > 5 ? '2px solid white' : 'inherit',
+              }}
+            >
               {typeof prop.icon === 'string' ? (
                 <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
                   {prop.icon}
@@ -164,8 +116,9 @@ export default function Sidebar(props) {
             </ListItem>
           </NavLink>
         );
-      })
-    );
+      })}
+    </List>
+  );
 
   var brand = (
     <div className={classes.logo}>
@@ -194,12 +147,7 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>
-            <List className={classes.list}>
-              <StandardRoutes key={'standardRoutes'} />
-              <ExtraRoutes key={'extraRoutes'} />
-            </List>
-          </div>
+          <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
             <div
               className={classes.background}
@@ -208,6 +156,7 @@ export default function Sidebar(props) {
           ) : null}
         </Drawer>
       </Hidden>
+
       <Hidden smDown implementation='css'>
         <Drawer
           anchor='left'
@@ -219,10 +168,7 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper} ref={panel}>
-            <List className={classes.list}>
-              <StandardRoutes key={'standardRoutes'} />
-              <ExtraRoutes key={'extraRoutes'} />
-            </List>
+            {links}
           </div>
           {image !== undefined ? (
             <div
