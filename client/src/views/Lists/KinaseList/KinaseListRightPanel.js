@@ -16,93 +16,11 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 import ListRightPanel from 'views/Lists/ListRightPanel';
+import NewFindingsCard from 'views/Lists/NewFindingsCard';
 
 import { HomeContext } from 'layouts/Home';
 
 const useStyles = makeStyles(styles);
-
-const NewFindingsCard = () => {
-  const classes = useStyles();
-
-  const [newPerturbagensHovered, setNewPerturbagensHovered] = useState(false);
-  const [newPDTsHovered, setNewPDTsHovered] = useState(false);
-
-  return (
-    <GridContainer direction='row' justify='space-evenly'>
-      <GridItem md>
-        <Card>
-          <CardHeader color='primary' stats icon>
-            <CardIcon
-              color='primary'
-              onMouseOver={() => setNewPerturbagensHovered(true)}
-              onMouseOut={() => setNewPerturbagensHovered(false)}
-              style={{
-                transform: `${newPerturbagensHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
-                cursor: 'pointer',
-              }}
-            >
-              {newPerturbagensHovered ? (
-                <ArrowForwardIcon
-                  style={{
-                    pointerEvents: `${newPerturbagensHovered ? 'none' : 'inherit'}`,
-                  }}
-                />
-              ) : (
-                <NewReleasesIcon />
-              )}
-            </CardIcon>
-
-            <p className={classes.cardCategory}>New perturbagens</p>
-            <h3 className={classes.cardTitle}>12</h3>
-          </CardHeader>
-          <CardFooter stats>
-            <div className={classes.stats}>
-              <Danger>
-                <Warning />
-              </Danger>
-              Previously reported upstream perturbagens: 24
-            </div>
-          </CardFooter>
-        </Card>
-      </GridItem>
-      <GridItem md>
-        <Card>
-          <CardHeader color='primary' stats icon>
-            <CardIcon
-              color='primary'
-              onMouseOver={() => setNewPDTsHovered(true)}
-              onMouseOut={() => setNewPDTsHovered(false)}
-              style={{
-                transform: `${newPDTsHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
-                cursor: 'pointer',
-              }}
-            >
-              {newPDTsHovered ? (
-                <ArrowForwardIcon
-                  style={{
-                    pointerEvents: `${newPDTsHovered ? 'none' : 'inherit'}`,
-                  }}
-                />
-              ) : (
-                <TrendingDownIcon />
-              )}
-            </CardIcon>
-            <p className={classes.cardCategory}>New PDTs</p>
-            <h3 className={classes.cardTitle}>51</h3>
-          </CardHeader>
-          <CardFooter stats>
-            <div className={classes.stats}>
-              <Danger>
-                <Warning />
-              </Danger>
-              Previously reported direct substrates: 14
-            </div>
-          </CardFooter>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
-};
 
 const KinaseDescriptionBody = ({ selectedInfo }) => {
   return (
@@ -127,12 +45,19 @@ const KinaseDescriptionBody = ({ selectedInfo }) => {
 const KinaseListRightPanel = () => {
   const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
 
+  const newFindingsProps = {
+    leftIconTitle: 'New Perturbagens',
+    leftIconText: 6,
+    rightIconTitle: 'New PDTs',
+    rightIconText: 24,
+  };
+
   const props = {
     topHeaderTitle: 'Kinase Specification',
     topHeaderSubTitle: 'Details',
     selectedEleTitle: selectedInfo.kinase_name,
     selectedEleDetailsBody: <KinaseDescriptionBody selectedInfo={selectedInfo} />,
-    selectedEleDetailsBottomBody: <NewFindingsCard />,
+    selectedEleDetailsBottomBody: <NewFindingsCard {...newFindingsProps} />,
   };
 
   return <ListRightPanel {...props} />;
