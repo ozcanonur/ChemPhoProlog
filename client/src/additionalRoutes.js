@@ -3,7 +3,6 @@ import WelcomePage from 'views/Welcome/Welcome';
 import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
 import KinaseDetailsKnownSubstrates from 'views/KinaseDetails/KnownSubstrates/KnownSubstrates';
-import KinaseDetailsPDTs from 'views/KinaseDetails/PDTs/PDTs';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
@@ -20,6 +19,13 @@ export const additionalRoutes = (type, selection) => {
         layout: '/home',
       },
       {
+        path: `/${selection}/substrates`,
+        name: 'Substrates',
+        icon: PanoramaHorizontalIcon,
+        component: KinaseDetailsKnownSubstrates,
+        layout: '/home',
+      },
+      {
         path: `/${selection}/knownPerturbagens`,
         name: 'Known Perturbagens',
         icon: PerturbagenIcon,
@@ -31,20 +37,6 @@ export const additionalRoutes = (type, selection) => {
         name: 'New Perturbagens',
         icon: PerturbagenIcon,
         component: WelcomePage,
-        layout: '/home',
-      },
-      {
-        path: `/${selection}/knownSubstrates`,
-        name: 'Known Substrates',
-        icon: PanoramaHorizontalIcon,
-        component: KinaseDetailsKnownSubstrates,
-        layout: '/home',
-      },
-      {
-        path: `/${selection}/PDTs`,
-        name: 'PDTs',
-        icon: PanoramaHorizontalIcon,
-        component: KinaseDetailsPDTs,
         layout: '/home',
       },
     ];

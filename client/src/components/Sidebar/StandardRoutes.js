@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { ListItem, ListItemText, Icon, Collapse, Slide } from '@material-ui/core';
+import { ListItem, ListItemText, Icon } from '@material-ui/core';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 

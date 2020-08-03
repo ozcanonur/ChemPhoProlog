@@ -9,9 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // core components
-import Card from 'views/Welcome/node_modules/components/Card/Card.js.js';
-import CardBody from 'views/Welcome/node_modules/components/Card/CardBody.js.js';
-import CardHeader from 'views/Welcome/node_modules/components/Card/CardHeader.js.js';
+import Card from 'components/Card/Card.js';
+import CardBody from 'components/Card/CardBody.js';
+import CardHeader from 'components/Card/CardHeader.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/customTabsStyle.js';
 
@@ -22,11 +22,13 @@ export default function CustomTabs(props) {
   const handleChange = (event, value) => {
     setValue(value);
   };
+
   const classes = useStyles();
   const { headerColor, plainTabs, tabs, title } = props;
   const cardTitle = classNames({
     [classes.cardTitle]: true,
   });
+
   return (
     <Card plain={plainTabs}>
       <CardHeader color={headerColor} plain={plainTabs}>
@@ -39,7 +41,7 @@ export default function CustomTabs(props) {
             indicator: classes.displayNone,
             scrollButtons: classes.displayNone,
           }}
-          variant='scrollable'
+          variant='fullWidth'
           scrollButtons='auto'
         >
           {tabs.map((prop, key) => {
@@ -77,14 +79,7 @@ export default function CustomTabs(props) {
 }
 
 CustomTabs.propTypes = {
-  headerColor: PropTypes.oneOf([
-    'warning',
-    'success',
-    'danger',
-    'info',
-    'primary',
-    'rose',
-  ]),
+  headerColor: PropTypes.oneOf(['warning', 'success', 'danger', 'info', 'primary', 'rose']),
   title: PropTypes.string,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
