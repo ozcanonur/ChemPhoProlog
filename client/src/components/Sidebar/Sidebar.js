@@ -57,7 +57,16 @@ export default function Sidebar(props) {
   }
   //#endregion BASE THINGS
 
-  const { color, logo, image, logoText, routes, currentlyInspecting, handleSelectedTabRemove } = props;
+  const {
+    color,
+    logo,
+    image,
+    logoText,
+    routes,
+    currentlyInspecting,
+    currentlyInspectingNames,
+    handleSelectedTabRemove,
+  } = props;
 
   const StandardRoutes = () =>
     routes.map((prop, key) => {
@@ -93,7 +102,7 @@ export default function Sidebar(props) {
     });
 
   const ExtraRoute = ({ ele }) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(currentlyInspectingNames.includes(ele[0].path.split('/')[1]));
 
     const handleOpen = () => {
       setOpen(!open);
