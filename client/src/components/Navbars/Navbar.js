@@ -21,15 +21,20 @@ export default function Header(props) {
   const classes = useStyles();
 
   function makeBrand() {
-    var name;
+    let name;
+    let term = '';
+
     props.routes.map((prop) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
         name = prop.name;
       }
+      if (window.location.href.split('/').length > 5) {
+        term = window.location.href.split('/')[4];
+      }
       return null;
     });
 
-    return props.term ? `${name} for ${props.term}` : name;
+    return term !== '' ? `${name} for ${term}` : name;
   }
 
   const { color } = props;
@@ -51,11 +56,7 @@ export default function Header(props) {
           {<AdminNavbarLinks />}
         </Hidden>
         <Hidden mdUp implementation='css'>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={props.handleDrawerToggle}
-          >
+          <IconButton color='inherit' aria-label='open drawer' onClick={props.handleDrawerToggle}>
             <Menu />
           </IconButton>
         </Hidden>

@@ -203,6 +203,8 @@ const Home = ({ ...rest }) => {
     setCurrentlyInspecting(currentlyInspecting.filter((e) => e.name !== name));
   };
 
+  const allRoutes = [...[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat(), ...routes];
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -218,7 +220,7 @@ const Home = ({ ...rest }) => {
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
+        <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} {...rest} />
         <div className={classes.map}>
           <HomeContext.Provider value={combinedContext}>
             <Switch>
