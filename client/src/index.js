@@ -8,6 +8,11 @@ import ParticlesBg from 'particles-bg';
 
 import 'assets/css/material-dashboard-react.css?v=1.9.0';
 
+// const whyDidYouRender = require('@welldone-software/why-did-you-render');
+// whyDidYouRender(React, {
+//   include: [/Table/],
+// });
+
 const hist = createBrowserHistory();
 
 ReactDOM.render(

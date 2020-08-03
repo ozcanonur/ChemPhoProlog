@@ -216,6 +216,7 @@ const Home = ({ ...rest }) => {
         color={'blue'}
         routes={routes}
         currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
+        currentlyInspectingNames={currentlyInspecting.map((e) => e.name)}
         handleSelectedTabRemove={handleSelectedTabRemove}
         {...rest}
       />

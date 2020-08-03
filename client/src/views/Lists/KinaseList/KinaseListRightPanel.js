@@ -26,9 +26,9 @@ const KinaseDescriptionBody = ({ selectedInfo }) => {
 const KinaseListRightPanel = ({ selectedInfo }) => {
   const newFindingsProps = {
     leftIconTitle: 'New Perturbagens',
-    leftIconText: 6,
+    leftIconText: '6',
     rightIconTitle: 'New PDTs',
-    rightIconText: 24,
+    rightIconText: '24',
   };
 
   const props = {
