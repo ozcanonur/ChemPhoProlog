@@ -2,15 +2,15 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { Typography } from '@material-ui/core';
+
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
-
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
@@ -19,11 +19,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      <GridContainer
-        direction='column'
-        justify='space-between'
-        style={{ padding: '2em' }}
-      >
+      <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
         <GridItem>
           <Card>
             <CardHeader color='warning' style={{ marginTop: '2em' }}>
@@ -31,9 +27,8 @@ const AboutUs = () => {
             </CardHeader>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
           </Card>
