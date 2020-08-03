@@ -10,7 +10,7 @@ import 'assets/css/material-dashboard-react.css?v=1.9.0';
 
 // const whyDidYouRender = require('@welldone-software/why-did-you-render');
 // whyDidYouRender(React, {
-//   include: [/Table/],
+//   include: [/[A-Z][a-z]/],
 // });
 
 const hist = createBrowserHistory();

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -16,8 +16,19 @@ import { HomeContext } from 'layouts/Home';
 
 // Kinase List on the Home page
 const KinaseList = () => {
-  const rightPanelOpen = useContext(HomeContext).kinaseListContext.rightPanelOpen;
   const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
+
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+
+  useEffect(() => {
+    setRightPanelOpen(false);
+
+    if (selectedInfo !== '') {
+      setTimeout(() => {
+        setRightPanelOpen(true);
+      }, 200);
+    }
+  }, [selectedInfo]);
 
   return (
     <div>
@@ -41,7 +52,7 @@ const KinaseList = () => {
               <KinaseListLeftPanel />
             </GridItem>
             <GridItem sm={12} lg={6}>
-              <Slide in={rightPanelOpen} direction='left'>
+              <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
                   <KinaseListRightPanel selectedInfo={selectedInfo} />
                 </div>

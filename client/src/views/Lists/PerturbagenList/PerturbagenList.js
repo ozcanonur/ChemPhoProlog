@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -13,8 +13,18 @@ import { Slide } from '@material-ui/core';
 import { HomeContext } from 'layouts/Home';
 
 const PerturbagenList = () => {
-  const rightPanelOpen = useContext(HomeContext).perturbagenListContext.rightPanelOpen;
+  const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
+  useEffect(() => {
+    setRightPanelOpen(false);
+
+    if (selectedInfo !== '') {
+      setTimeout(() => {
+        setRightPanelOpen(true);
+      }, 200);
+    }
+  }, [selectedInfo]);
   return (
     <div>
       <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
@@ -39,7 +49,7 @@ const PerturbagenList = () => {
             <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
-                  <PerturbagenListRightPanel />
+                  <PerturbagenListRightPanel selectedInfo={selectedInfo} />
                 </div>
               </Slide>
             </GridItem>

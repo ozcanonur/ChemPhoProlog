@@ -16,12 +16,7 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 const useStyles = makeStyles(styles);
 
-const NewFindingsCard = ({
-  leftIconTitle,
-  leftIconText,
-  rightIconTitle,
-  rightIconText,
-}) => {
+const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIconText }) => {
   const classes = useStyles();
 
   const [leftIconHovered, setLeftIconHovered] = useState(false);

@@ -17,7 +17,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 const useStyles = makeStyles(styles);
 
-export default function Sidebar(props) {
+const Sidebar = (props) => {
   //#region BASE THINGS
   const [mobileOpen, setMobileOpen] = useState(false);
   // Perfect Scrollbar solution
@@ -133,7 +133,7 @@ export default function Sidebar(props) {
       </Hidden>
     </div>
   );
-}
+};
 
 Sidebar.propTypes = {
   handleDrawerToggle: PropTypes.func,
@@ -144,3 +144,5 @@ Sidebar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object),
   open: PropTypes.bool,
 };
+
+export default Sidebar;
