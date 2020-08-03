@@ -6,9 +6,9 @@ import { NavLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, Hidden, List, ListItem, ListItemText, Icon, Collapse, Slide } from '@material-ui/core';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+
+import StandardRoutes from 'components/Sidebar/StandardRoutes';
+import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 
@@ -50,126 +50,9 @@ export default function Sidebar(props) {
   }, [panel]);
 
   const classes = useStyles();
-
-  // verifies if routeName is the one active (in browser input)
-  function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
-  }
   //#endregion BASE THINGS
 
-  const {
-    color,
-    logo,
-    image,
-    logoText,
-    routes,
-    currentlyInspecting,
-    currentlyInspectingNames,
-    handleSelectedTabRemove,
-  } = props;
-
-  const StandardRoutes = () =>
-    routes.map((prop, key) => {
-      var activePro = ' ';
-      var listItemClasses;
-
-      listItemClasses = classNames({
-        [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
-      });
-
-      const whiteFontClasses = classNames({
-        [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
-      });
-
-      return (
-        <div key={key}>
-          <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              {typeof prop.icon === 'string' ? (
-                <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
-              ) : (
-                <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
-              )}
-              <ListItemText
-                primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
-                disableTypography={true}
-              />
-            </ListItem>
-          </NavLink>
-        </div>
-      );
-    });
-
-  const ExtraRoute = ({ ele }) => {
-    const [open, setOpen] = useState(currentlyInspectingNames.includes(ele[0].path.split('/')[1]));
-
-    const handleOpen = () => {
-      setOpen(!open);
-    };
-
-    return ele.map((prop, key) => {
-      var activePro = ' ';
-      var listItemClasses;
-
-      listItemClasses = classNames({
-        [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
-      });
-
-      const whiteFontClasses = classNames({
-        [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
-      });
-
-      const currentTitle = prop.path.split('/')[1];
-
-      return (
-        <div key={key}>
-          {key === 0 ? (
-            <ListItem key={currentTitle} style={{ marginTop: '1em', textAlign: 'center' }}>
-              <RemoveCircleOutlineIcon
-                style={{ color: 'white', cursor: 'pointer' }}
-                onClick={() => handleSelectedTabRemove(currentTitle)}
-              />
-              <ListItemText
-                primary={currentTitle}
-                className={classNames(classes.itemText, whiteFontClasses)}
-                style={{ textAlign: 'left', marginLeft: '3.7em' }}
-              />
-              {open ? (
-                <ExpandLessIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
-              ) : (
-                <ExpandMoreIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
-              )}
-            </ListItem>
-          ) : undefined}
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <NavLink
-              to={prop.layout + prop.path}
-              className={activePro + classes.item}
-              activeClassName='active'
-            >
-              <ListItem button className={classes.itemLink + listItemClasses}>
-                {typeof prop.icon === 'string' ? (
-                  <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
-                ) : (
-                  <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
-                )}
-                <ListItemText
-                  primary={prop.name}
-                  className={classNames(classes.itemText, whiteFontClasses)}
-                  disableTypography={true}
-                />
-              </ListItem>
-            </NavLink>
-          </Collapse>
-        </div>
-      );
-    });
-  };
-
-  const ExtraRoutes = ({ extraRoutes }) => {
-    return extraRoutes.map((ele, key) => <ExtraRoute ele={ele} key={key} />);
-  };
+  const { logo, image, logoText, routes, currentlyInspecting } = props;
 
   var brand = (text) => (
     <div className={classes.logo}>
@@ -200,11 +83,11 @@ export default function Sidebar(props) {
           {brand(logoText)}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
-              <StandardRoutes key={'standardRoutes'} />
+              <StandardRoutes routes={routes} {...props} />
               {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
-              <ExtraRoutes key={'extraKinaseRoutes'} extraRoutes={currentlyInspecting.kinase} />
+              <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
               {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
-              <ExtraRoutes key={'extraPerturbagenRoutes'} extraRoutes={currentlyInspecting.perturbagen} />
+              <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
             </List>
           </div>
           {image !== undefined ? (
@@ -224,17 +107,17 @@ export default function Sidebar(props) {
           {brand(logoText)}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
-              <StandardRoutes />
+              <StandardRoutes routes={routes} {...props} />
               <Slide in={currentlyInspecting.kinase.length !== 0} direction='left'>
                 <div>
                   {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
-                  <ExtraRoutes extraRoutes={currentlyInspecting.kinase} />
+                  <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
                 </div>
               </Slide>
               <Slide in={currentlyInspecting.perturbagen.length !== 0} direction='left'>
                 <div>
                   {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
-                  <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} />
+                  <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
                 </div>
               </Slide>
             </List>
