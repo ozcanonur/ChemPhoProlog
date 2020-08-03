@@ -84,7 +84,11 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
 
 const ExtraRoutes = ({ extraRoutes, color, handleSelectedTabRemove }) => {
   return extraRoutes.map((ele, key) => (
-    <ExtraRoute ele={ele} key={key} color={color} handleSelectedTabRemove={handleSelectedTabRemove} />
+    <Slide in={true} direction='left' key={key} mountOnEnter unmountOnExit>
+      <div>
+        <ExtraRoute ele={ele} color={color} handleSelectedTabRemove={handleSelectedTabRemove} />
+      </div>
+    </Slide>
   ));
 };
 

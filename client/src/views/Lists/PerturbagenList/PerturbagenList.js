@@ -17,22 +17,16 @@ const PerturbagenList = () => {
 
   return (
     <div>
-      <GridContainer
-        direction='column'
-        justify='space-between'
-        style={{ padding: '2em' }}
-      >
+      <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
         <GridItem md>
           <Card>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff. ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff. ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of
+                results and related information obtained from chemical phosphoproteomics experiments. And some
+                other stuff. ChemPhoPro provides a compendium of results and related information obtained from
+                chemical phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
           </Card>

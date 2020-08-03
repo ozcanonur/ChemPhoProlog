@@ -2,10 +2,9 @@
 import React, { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, Hidden, List, ListItem, ListItemText, Icon, Collapse, Slide } from '@material-ui/core';
+import { Drawer, Hidden, List, Slide } from '@material-ui/core';
 
 import StandardRoutes from 'components/Sidebar/StandardRoutes';
 import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
@@ -108,13 +107,18 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes routes={routes} {...props} />
-              <Slide in={currentlyInspecting.kinase.length !== 0} direction='left'>
+              <Slide in={currentlyInspecting.kinase.length !== 0} direction='left' mountOnEnter unmountOnExit>
                 <div>
                   {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
                 </div>
               </Slide>
-              <Slide in={currentlyInspecting.perturbagen.length !== 0} direction='left'>
+              <Slide
+                in={currentlyInspecting.perturbagen.length !== 0}
+                direction='left'
+                mountOnEnter
+                unmountOnExit
+              >
                 <div>
                   {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
