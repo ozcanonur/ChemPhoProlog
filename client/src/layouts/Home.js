@@ -118,6 +118,7 @@ const Home = ({ ...rest }) => {
 
   // Context related to the kinase list
   const kinaseListContext = {
+    kinaseData: kinaseData,
     tableData: kinaseTableData,
     selectedInfo: kinaseInfo,
     rightPanelOpen: kinaseRightPanelOpen,

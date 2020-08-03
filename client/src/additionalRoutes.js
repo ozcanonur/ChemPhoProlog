@@ -1,6 +1,7 @@
 import WelcomePage from 'views/Welcome/Welcome';
 import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
+import KinaseDetailsKnownSubstrates from 'views/KinaseDetails/KnownSubstrates/KnownSubstrates';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
@@ -34,7 +35,7 @@ export const additionalRoutes = (type, selection) => {
         path: `/${selection}/knownSubstrates`,
         name: 'Known Substrates',
         icon: PanoramaHorizontalIcon,
-        component: WelcomePage,
+        component: KinaseDetailsKnownSubstrates,
         layout: '/home',
       },
       {

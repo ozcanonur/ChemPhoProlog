@@ -17,25 +17,20 @@ import { HomeContext } from 'layouts/Home';
 // Kinase List on the Home page
 const KinaseList = () => {
   const rightPanelOpen = useContext(HomeContext).kinaseListContext.rightPanelOpen;
+  const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
 
   return (
     <div>
-      <GridContainer
-        direction='column'
-        justify='space-between'
-        style={{ padding: '2em' }}
-      >
+      <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
         <GridItem>
           <Card>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff. ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff. ChemPhoPro provides a compendium of results and related information
-                obtained from chemical phosphoproteomics experiments. And some other
-                stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of
+                results and related information obtained from chemical phosphoproteomics experiments. And some
+                other stuff. ChemPhoPro provides a compendium of results and related information obtained from
+                chemical phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
           </Card>
@@ -48,7 +43,7 @@ const KinaseList = () => {
             <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left'>
                 <div>
-                  <KinaseListRightPanel />
+                  <KinaseListRightPanel selectedInfo={selectedInfo} />
                 </div>
               </Slide>
             </GridItem>

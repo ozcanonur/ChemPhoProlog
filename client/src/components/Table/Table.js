@@ -29,14 +29,7 @@ import { zip, has } from 'lodash';
 const useStyles = makeStyles(styles);
 
 // Each row on the table body
-const Row = ({
-  row,
-  collapsible,
-  rowEndArrow,
-  handleSelection,
-  handleAdd,
-  selectedInfo,
-}) => {
+const Row = ({ row, collapsible, rowEndArrow, handleSelection, handleAdd, selectedInfo }) => {
   // Collapsible open or not
   const [open, setOpen] = useState(false);
   // Phosphosites for each kinase
@@ -81,8 +74,7 @@ const Row = ({
         key={row}
         className={classes.tableBodyRow}
         style={{
-          backgroundColor:
-            row[0] === currentSelectedEle ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
+          backgroundColor: row[0] === currentSelectedEle ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
         }}
       >
         {row.map((prop, key) => {
@@ -90,11 +82,7 @@ const Row = ({
             <React.Fragment key={key}>
               {collapsible && key === 0 ? (
                 <TableCell className={classes.tableCell}>
-                  <IconButton
-                    aria-label='expand row'
-                    size='small'
-                    onClick={() => handleExpandButton(prop)}
-                  >
+                  <IconButton aria-label='expand row' size='small' onClick={() => handleExpandButton(prop)}>
                     {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                   </IconButton>
                 </TableCell>
@@ -110,18 +98,10 @@ const Row = ({
               </TableCell>
               {rowEndArrow && key === row.length - 1 ? (
                 <TableCell style={{ textAlign: 'center' }}>
-                  <IconButton
-                    aria-label='expand row'
-                    size='small'
-                    onClick={() => handleAdd(row[0])}
-                  >
+                  <IconButton aria-label='expand row' size='small' onClick={() => handleAdd(row[0])}>
                     <AddCircleOutlineIcon />
                   </IconButton>
-                  <IconButton
-                    aria-label='expand row'
-                    size='small'
-                    onClick={() => handleSelection(row[0])}
-                  >
+                  <IconButton aria-label='expand row' size='small' onClick={() => handleSelection(row[0])}>
                     <KeyboardArrowRightIcon />
                   </IconButton>
                 </TableCell>
@@ -143,10 +123,7 @@ const Row = ({
           return phosphosite[0].includes(`(${aminoacid}`);
         })
         .map((phosphosite) => {
-          return phosphosite[0].substring(
-            phosphosite[0].indexOf('(') + 1,
-            phosphosite[0].length - 1
-          );
+          return phosphosite[0].substring(phosphosite[0].indexOf('(') + 1, phosphosite[0].length - 1);
         });
     };
 
@@ -189,10 +166,7 @@ const Row = ({
                   <TableRow className={classes.tableHeadRow}>
                     {headers.map((prop, key) => {
                       return (
-                        <TableCell
-                          className={classes.tableCell + ' ' + classes.tableHeadCell}
-                          key={key}
-                        >
+                        <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell} key={key}>
                           {prop}
                         </TableCell>
                       );
@@ -249,9 +223,7 @@ export default function CustomTable(props) {
 
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (event) => {
-    const filtered = tableData.filter((row) =>
-      new RegExp(event.target.value, 'i').test(row[0])
-    );
+    const filtered = tableData.filter((row) => new RegExp(event.target.value, 'i').test(row[0]));
 
     setFilteredList(filtered);
   };
@@ -262,10 +234,7 @@ export default function CustomTable(props) {
       <TableRow className={classes.tableHeadRow}>
         {tableHead.map((prop, key) => {
           return (
-            <TableCell
-              className={classes.tableCell + ' ' + classes.tableHeadCell}
-              key={key}
-            >
+            <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell} key={key}>
               {prop}
             </TableCell>
           );
@@ -321,7 +290,7 @@ export default function CustomTable(props) {
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50]}
+        rowsPerPageOptions={[5, 10, 25]}
         component='div'
         count={filteredList.length}
         rowsPerPage={rowsPerPage}
@@ -338,14 +307,6 @@ CustomTable.defaultProps = {
 };
 
 CustomTable.propTypes = {
-  tableHeaderColor: PropTypes.oneOf([
-    'warning',
-    'primary',
-    'danger',
-    'success',
-    'info',
-    'rose',
-    'gray',
-  ]),
+  tableHeaderColor: PropTypes.oneOf(['warning', 'primary', 'danger', 'success', 'info', 'rose', 'gray']),
   tableHead: PropTypes.arrayOf(PropTypes.string),
 };
