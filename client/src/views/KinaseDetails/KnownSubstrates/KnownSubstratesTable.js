@@ -10,7 +10,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import { Typography } from '@material-ui/core';
 
-import CallApi from 'api/api';
+import { CallApi } from 'api/api';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 

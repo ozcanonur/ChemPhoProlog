@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const CallApi = async (query) => {
+export const CallApi = async (query) => {
   const response = await axios.get('/api/api', {
     params: {
       query: query,
@@ -14,4 +14,14 @@ const CallApi = async (query) => {
   return body;
 };
 
-export default CallApi;
+export const CallApiForProteinSubstrates = async (protein) => {
+  const response = await axios.get('/api/substrates_for_protein', {
+    params: {
+      protein: protein,
+    },
+  });
+
+  if (response.status !== 200) throw Error(response.statusText);
+
+  return await response.data;
+};

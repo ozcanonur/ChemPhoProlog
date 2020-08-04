@@ -20,9 +20,24 @@ const db = new sqlite3.Database('./chemphopro.db', sqlite3.OPEN_READONLY, (err) 
 
 // Kinase List API end-point
 router.get('/api/api/', (req, res) => {
-  let queryString = req.query.query;
+  const queryString = req.query.query;
 
   db.all(queryString, [], (err, rows) => {
+    if (err) throw err;
+
+    res.send(rows);
+  });
+});
+
+// Kinase List API end-point
+router.get('/api/substrates_for_protein/', (req, res) => {
+  const protein = req.query.protein;
+
+  const reported_substrate_of_query =
+    `select location, residue, detected_in, reported_substrate_of, ` +
+    `reported_pdt_of from substrates_detailed where gene_name = "${protein}"`;
+
+  db.all(reported_substrate_of_query, [], (err, rows) => {
     if (err) throw err;
 
     res.send(rows);

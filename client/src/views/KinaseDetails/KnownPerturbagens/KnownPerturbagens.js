@@ -9,7 +9,7 @@ import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import { Typography } from '@material-ui/core';
 
-import CallApi from 'api/api';
+import { CallApi } from 'api/api';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 

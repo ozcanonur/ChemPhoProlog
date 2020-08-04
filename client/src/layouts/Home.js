@@ -14,7 +14,7 @@ import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 import bgImage from 'assets/img/dna.jpg';
 import logo from 'assets/img/reactlogo.png';
 
-import CallApi from 'api/api';
+import { CallApi } from 'api/api';
 
 import { additionalRoutes } from 'additionalRoutes';
 

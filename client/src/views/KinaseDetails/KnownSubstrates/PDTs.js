@@ -11,7 +11,7 @@ import { Typography } from '@material-ui/core';
 import BugReport from '@material-ui/icons/BugReport';
 
 import PDTTable from 'views/KinaseDetails/KnownSubstrates/PDTTable';
-import CallApi from 'api/api';
+import { CallApi } from 'api/api';
 
 import { pick } from 'lodash';
 
@@ -51,17 +51,17 @@ const PDTs = ({ match }) => {
           headerColor='rose'
           tabs={[
             {
-              tabName: 'MCF-7',
+              tabName: `MCF-7 (${tableData_MCF7.length})`,
               tabIcon: BugReport,
               tabContent: <PDTTable tableData={tableData_MCF7} />,
             },
             {
-              tabName: 'HL-60',
+              tabName: `HL-60 (${tableData_HL60.length})`,
               tabIcon: BugReport,
               tabContent: <PDTTable tableData={tableData_HL60} />,
             },
             {
-              tabName: 'NTERA-2 clone D1',
+              tabName: `NTERA-2 clone (${tableData_NTERA.length})`,
               tabIcon: BugReport,
               tabContent: <PDTTable tableData={tableData_NTERA} />,
             },

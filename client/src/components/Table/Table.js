@@ -224,7 +224,7 @@ export default function CustomTable(props) {
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (event) => {
     const filtered = tableData.filter((row) => new RegExp(event.target.value, 'i').test(row[0]));
-
+    handleChangePage(null, 0);
     setFilteredList(filtered);
   };
 
