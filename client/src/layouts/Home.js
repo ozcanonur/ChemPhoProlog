@@ -72,8 +72,6 @@ const Home = ({ ...rest }) => {
   const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [kinaseInfo, setKinaseInfo] = useState('');
-  // Right panel open or not
-  const [kinaseRightPanelOpen, setKinaseRightPanelOpen] = useState(false);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
@@ -94,8 +92,6 @@ const Home = ({ ...rest }) => {
 
   // Handle when a kinase is selected
   const handleKinaseSelection = (selection) => {
-    setKinaseRightPanelOpen(true);
-
     const selectedKinaseDesc = kinaseData.filter((item) => item['kinase_name'] === selection);
     setKinaseInfo(selectedKinaseDesc[0]);
   };
@@ -121,7 +117,6 @@ const Home = ({ ...rest }) => {
     kinaseData: kinaseData,
     tableData: kinaseTableData,
     selectedInfo: kinaseInfo,
-    rightPanelOpen: kinaseRightPanelOpen,
     handleSelection: handleKinaseSelection,
     handleAdd: handleKinaseAdd,
     currentPage: kinaseCurrentPage,
@@ -136,14 +131,11 @@ const Home = ({ ...rest }) => {
   const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [perturbagenInfo, setperturbagenInfo] = useState('');
-  // Right panel open or not
-  const [perturbagenRightPanelOpen, setPerturbagenRightPanelOpen] = useState(false);
 
   // Only run on first mount
   // Gets the kinases and details and sets the states for them
   useEffect(() => {
     const apiQuery = 'select * from Perturbagen group by name order by name';
-
     // Get all kinases from DB
     CallApi(apiQuery).then((res) => {
       // Set the main table body data
@@ -154,7 +146,6 @@ const Home = ({ ...rest }) => {
   const perturbagenTableData = perturbagenData.map(Object.values);
 
   const handlePerturbagenSelection = (selection) => {
-    setPerturbagenRightPanelOpen(true);
     const selectedPerturbagenDesc = perturbagenData.filter((item) => item['name'] === selection);
     setperturbagenInfo(selectedPerturbagenDesc[0]);
   };
@@ -176,7 +167,6 @@ const Home = ({ ...rest }) => {
   const perturbagenListContext = {
     tableData: perturbagenTableData,
     selectedInfo: perturbagenInfo,
-    rightPanelOpen: perturbagenRightPanelOpen,
     handleSelection: handlePerturbagenSelection,
     handleAdd: handlePerturbagenAdd,
     currentPage: perturbagenCurrentPage,
@@ -216,7 +206,6 @@ const Home = ({ ...rest }) => {
         color={'blue'}
         routes={routes}
         currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
-        currentlyInspectingNames={currentlyInspecting.map((e) => e.name)}
         handleSelectedTabRemove={handleSelectedTabRemove}
         {...rest}
       />

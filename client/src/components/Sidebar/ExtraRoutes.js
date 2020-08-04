@@ -45,7 +45,10 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
     return (
       <div key={key}>
         {key === 0 ? (
-          <ListItem key={currentTitle} style={{ marginTop: '1em', textAlign: 'center' }}>
+          <ListItem
+            key={currentTitle}
+            style={{ marginTop: '1em', textAlign: 'center', backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+          >
             <RemoveCircleOutlineIcon
               style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
               onClick={() => handleSelectedTabRemove(currentTitle)}
@@ -53,6 +56,7 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
             <ListItemText
               primary={currentTitle}
               className={classNames(classes.itemText, whiteFontClasses)}
+              disableTypography={true}
               style={{ textAlign: 'left', marginLeft: '1em' }}
             />
             {open ? (

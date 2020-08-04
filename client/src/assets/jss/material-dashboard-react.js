@@ -152,7 +152,7 @@ const primaryCardHeader = {
   ...primaryBoxShadow,
 };
 const roseCardHeader = {
-  background: 'linear-gradient(60deg, ' + roseColor[1] + ', ' + roseColor[2] + ')',
+  background: 'linear-gradient(60deg, #000, ' + roseColor[2] + ')',
   ...roseBoxShadow,
 };
 

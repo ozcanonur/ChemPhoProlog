@@ -2,7 +2,7 @@ import React from 'react';
 
 import CustomTabs from 'components/CustomTabs/CustomTabs.js';
 
-import Misc from 'views/KinaseDetails/KnownSubstrates/Misc';
+import PDTs from 'views/KinaseDetails/KnownSubstrates/PDTs';
 import KnownSubstratesTable from 'views/KinaseDetails/KnownSubstrates/KnownSubstratesTable';
 
 import BugReport from '@material-ui/icons/BugReport';
@@ -22,7 +22,7 @@ const KnownPerturbagens = ({ match }) => {
           {
             tabName: 'PDTs',
             tabIcon: Code,
-            tabContent: <Misc />,
+            tabContent: <PDTs match={match} />,
           },
         ]}
       />
@@ -31,5 +31,3 @@ const KnownPerturbagens = ({ match }) => {
 };
 
 export default KnownPerturbagens;
-
-// warning', 'success', 'danger', 'info', 'primary', 'rose

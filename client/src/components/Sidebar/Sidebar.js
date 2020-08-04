@@ -53,9 +53,9 @@ const Sidebar = (props) => {
 
   const { logo, image, logoText, routes, currentlyInspecting } = props;
 
-  var brand = (text) => (
+  const brand = (text) => (
     <div className={classes.logo}>
-      <a href={'/'} className={classNames(classes.logoLink)}>
+      <a href={'#'} className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>
@@ -108,7 +108,7 @@ const Sidebar = (props) => {
             <List className={classes.list}>
               <StandardRoutes routes={routes} {...props} />
               <Slide in={currentlyInspecting.kinase.length !== 0} direction='left' mountOnEnter unmountOnExit>
-                <div>
+                <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
                   {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
                 </div>
@@ -119,7 +119,7 @@ const Sidebar = (props) => {
                 mountOnEnter
                 unmountOnExit
               >
-                <div>
+                <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
                   {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
                 </div>

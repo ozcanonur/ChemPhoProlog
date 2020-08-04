@@ -1,66 +1,72 @@
 import React, { useEffect, useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
-import Table from 'components/Table/Table';
-
+import CustomTabs from 'components/CustomTabs/CustomTabs';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import { Typography } from '@material-ui/core';
 
+import { Typography } from '@material-ui/core';
+import BugReport from '@material-ui/icons/BugReport';
+
+import PDTTable from 'views/KinaseDetails/KnownSubstrates/PDTTable';
 import CallApi from 'api/api';
 
+import { pick } from 'lodash';
+
+import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
 
-const KnownSubstratesTable = ({ match }) => {
+const PDTs = ({ match }) => {
   const classes = useStyles();
 
   const kinase = match.url.split('/')[2];
 
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-
-  // const kinaseData = useContext(HomeContext).kinaseListContext.tableData;
-
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
 
   useEffect(() => {
-    const kinaseQuery = `select substrate, source from KS_relationship where kinase="${kinase}" and source="UniProt" order by substrate`;
+    const kinaseQuery = `select substrate, source, cell_line, confidence from KS_relationship where kinase="${kinase}" and source="PDT" order by substrate`;
 
     CallApi(kinaseQuery).then((res) => {
-      const tableData = res.map(Object.values);
-
-      setKnownSubstrateData(tableData);
+      setKnownSubstrateData(res);
     });
   }, [kinase]);
+
+  const createTableDataByCellLine = (data, cell_line) => {
+    const dataByCellLine = data.filter((e) => e.cell_line === cell_line);
+    return dataByCellLine.map((e) => pick(e, ['substrate', 'source', 'confidence'])).map(Object.values);
+  };
+
+  const tableData_MCF7 = createTableDataByCellLine(knownSubstrateData, 'MCF-7');
+  const tableData_HL60 = createTableDataByCellLine(knownSubstrateData, 'HL-60');
+  const tableData_NTERA = createTableDataByCellLine(knownSubstrateData, 'NTERA-2 clone D1');
 
   return (
     <GridContainer>
       <GridItem md>
-        <Card>
-          <CardHeader color='warning'>
-            <h4 className={classes.cardTitleWhite}>Known Substrates</h4>
-            <p className={classes.cardCategoryWhite}>Select a substrate</p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              className='my-node'
-              tableHeaderColor='warning'
-              tableHead={['Perturbagen', 'Source']}
-              tableData={knownSubstrateData}
-              rowsPerPage={10}
-              rowEndArrow={false}
-              currentPage={currentPage}
-              handleChangePage={handleChangePage}
-            />
-          </CardBody>
-        </Card>
+        <CustomTabs
+          headerColor='rose'
+          tabs={[
+            {
+              tabName: 'MCF-7',
+              tabIcon: BugReport,
+              tabContent: <PDTTable tableData={tableData_MCF7} />,
+            },
+            {
+              tabName: 'HL-60',
+              tabIcon: BugReport,
+              tabContent: <PDTTable tableData={tableData_HL60} />,
+            },
+            {
+              tabName: 'NTERA-2 clone D1',
+              tabIcon: BugReport,
+              tabContent: <PDTTable tableData={tableData_NTERA} />,
+            },
+          ]}
+        />
       </GridItem>
       <GridItem md>
         <Card>
@@ -88,4 +94,4 @@ const KnownSubstratesTable = ({ match }) => {
   );
 };
 
-export default KnownSubstratesTable;
+export default PDTs;

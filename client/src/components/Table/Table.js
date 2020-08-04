@@ -228,13 +228,27 @@ export default function CustomTable(props) {
     setFilteredList(filtered);
   };
 
+  // const handleSort = (key) => {
+  //   const sortedList = filteredList.sort((x, y) => {
+  //     if (x[key - 1] < y[key - 1]) return -1;
+  //     if (x[key - 1] < y[key - 1]) return 1;
+  //     return 0;
+  //   });
+  //   console.log(key);
+  //   console.log(sortedList);
+  // };
+
   // Table head
   const TableHeadContent = () => {
     return (
       <TableRow className={classes.tableHeadRow}>
         {tableHead.map((prop, key) => {
           return (
-            <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell} key={key}>
+            <TableCell
+              className={classes.tableCell + ' ' + classes.tableHeadCell}
+              key={key}
+              // onClick={() => handleSort(key)}
+            >
               {prop}
             </TableCell>
           );
