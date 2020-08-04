@@ -30,11 +30,11 @@ const Description = ({ match }) => {
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
         <GridContainer direction='row'>
-          <GridItem xs={6}>
+          <GridItem lg={6}>
             <KinaseListRightPanel selectedInfo={kinaseDesc} />
           </GridItem>
-          <GridItem xs={3}>
-            <Card style={{ height: '45em' }}>
+          <GridItem lg={3}>
+            <Card>
               <CardHeader color='rose'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>
                 <p className={classes.cardCategoryWhite}>placeholder</p>
@@ -51,8 +51,8 @@ const Description = ({ match }) => {
               </CardBody>
             </Card>
           </GridItem>
-          <GridItem xs={3}>
-            <Card style={{ height: '45em' }}>
+          <GridItem lg={3}>
+            <Card>
               <CardHeader color='rose'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>
                 <p className={classes.cardCategoryWhite}>placeholder</p>
@@ -73,10 +73,10 @@ const Description = ({ match }) => {
       </GridItem>
       <GridItem>
         <GridContainer direction='row'>
-          <GridItem xs={8}>
+          <GridItem xs={12} lg={8}>
             <PhosphositesOfInterest protein={kinase} />
           </GridItem>
-          <GridItem xs={4}>
+          <GridItem xs={12} lg={4}>
             <Card>
               <CardHeader color='rose'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>

@@ -37,12 +37,13 @@ const PhosphositesOfInterest = ({ protein }) => {
         <Table
           className='my-node'
           tableHeaderColor='warning'
-          tableHead={['Location', 'Residue', 'Detected in', 'Reported Substrate of', 'Reported PDT of']}
+          tableHead={['', 'Location', 'Residue', 'Detected in', 'Reported Substrate of', 'Reported PDT of']}
           tableData={tableData}
           rowsPerPage={10}
           rowEndArrow={false}
           currentPage={currentPage}
           handleChangePage={handleChangePage}
+          collapsible={true}
         />
       </CardBody>
     </Card>

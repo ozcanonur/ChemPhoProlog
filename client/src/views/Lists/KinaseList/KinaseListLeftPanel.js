@@ -35,7 +35,8 @@ const KinaseListLeftPanel = () => {
           tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
           tableData={tableData}
           rowsPerPage={10}
-          collapsible={true}
+          expandable={true}
+          expandFor={'kinaseList'}
           rowEndArrow={true}
           handleSelection={handleSelection}
           selectedInfo={selectedInfo}
