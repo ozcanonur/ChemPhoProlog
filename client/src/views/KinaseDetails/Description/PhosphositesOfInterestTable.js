@@ -11,7 +11,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const PhosphositesOfInterestTable = ({ protein, match }) => {
+const PhosphositesOfInterestTable = ({ protein }) => {
   const classes = useStyles();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -25,7 +25,7 @@ const PhosphositesOfInterestTable = ({ protein, match }) => {
     CallApiForProteinSubstrates(protein).then((res) => {
       setTableData(res.map(Object.values));
     });
-  }, []);
+  }, [protein]);
 
   return (
     <Card>

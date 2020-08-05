@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { CallApi } from 'api/api';
+import * as d3 from 'd3';
 
-const MyResponsiveHeatMap = ({ data, indexBy, keys }) => (
+import { perturbagenNames } from './perturbagenNames';
+
+const HeatMap = ({ data, indexBy, keys }) => (
   <ResponsiveHeatMap
     data={data}
     indexBy={indexBy}
@@ -44,9 +47,10 @@ const MyResponsiveHeatMap = ({ data, indexBy, keys }) => (
     cellHoverOthersOpacity={0.25}
     enableLabels={false}
     margin={{ top: 60, right: 60, bottom: 60, left: 120 }}
-    minValue={-17}
-    maxValue={17}
-    colors='RdYlGn'
+    minValue={-15}
+    maxValue={15}
+    colors={d3.scaleSequential(d3.interpolatePiYG)}
+    padding={3}
   />
 );
 
@@ -75,10 +79,10 @@ const PhosphositesOfInterest = ({ location }) => {
   }, [location, protein]);
 
   const createHeatmapObject = (cell_line, data) => {
-    data.filter((e) => e[1] === cell_line);
+    const filtered = data.filter((e) => e[1] === cell_line);
 
     let result = { cell_line: cell_line };
-    for (const observation of data) {
+    for (const observation of filtered) {
       result[observation[0]] = observation[2];
     }
 
@@ -89,16 +93,16 @@ const PhosphositesOfInterest = ({ location }) => {
   const obsHL = createHeatmapObject('HL-60', observationData);
   const obsNTERA = createHeatmapObject('NTERA-2 clone D1', observationData);
 
-  const heatmapData = [obsMCF, obsHL, obsNTERA];
-  const keys = heatmapData.map((e) => Object.keys(e))[0].filter((e) => e !== 'cell_line');
-  console.log('rendered');
+  const heatmapData = [obsNTERA, obsHL, obsMCF];
+  const keys = perturbagenNames;
+
   return (
     <div>
       {observationData.length === 0 ? (
         <div>No observation data for this site</div>
       ) : (
         <div style={{ height: '20em' }}>
-          <MyResponsiveHeatMap data={heatmapData} indexBy={'cell_line'} keys={keys} />
+          <HeatMap data={heatmapData} indexBy={'cell_line'} keys={keys} />
         </div>
       )}
     </div>

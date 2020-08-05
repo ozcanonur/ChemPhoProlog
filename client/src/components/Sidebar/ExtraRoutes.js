@@ -16,8 +16,7 @@ const useStyles = makeStyles(styles);
 const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
   const classes = useStyles();
 
-  // TODO MAKE IT FALSE
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
@@ -47,8 +46,11 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
         {key === 0 ? (
           <ListItem
             key={currentTitle}
-            style={{ marginTop: '1em', textAlign: 'center', backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-          >
+            style={{
+              marginTop: '1em',
+              textAlign: 'center',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            }}>
             <RemoveCircleOutlineIcon
               style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
               onClick={() => handleSelectedTabRemove(currentTitle)}
@@ -67,7 +69,10 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
           </ListItem>
         ) : undefined}
         <Collapse in={open} timeout='auto' unmountOnExit>
-          <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
+          <NavLink
+            to={prop.layout + prop.path}
+            className={activePro + classes.item}
+            activeClassName='active'>
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === 'string' ? (
                 <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
