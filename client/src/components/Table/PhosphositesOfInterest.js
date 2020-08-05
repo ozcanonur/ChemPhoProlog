@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { ResponsiveHeatMap } from '@nivo/heatmap';
+
 import { CallApi } from 'api/api';
 import * as d3 from 'd3';
 
@@ -25,32 +26,17 @@ const HeatMap = ({ data, indexBy, keys }) => (
       tickPadding: 5,
       tickRotation: 0,
     }}
-    cellOpacity={1}
-    cellBorderColor={{ from: 'color', modifiers: [['darker', 0.4]] }}
     labelTextColor={{ from: 'color', modifiers: [['darker', 1.8]] }}
-    defs={[
-      {
-        id: 'lines',
-        type: 'patternLines',
-        background: 'inherit',
-        color: 'rgba(0, 0, 0, 0.1)',
-        rotation: -45,
-        lineWidth: 4,
-        spacing: 7,
-      },
-    ]}
-    fill={[{ id: 'lines' }]}
     animate={true}
-    motionStiffness={80}
-    motionDamping={9}
     hoverTarget='cell'
     cellHoverOthersOpacity={0.25}
     enableLabels={false}
     margin={{ top: 60, right: 60, bottom: 60, left: 120 }}
-    minValue={-15}
-    maxValue={15}
+    minValue={-16}
+    maxValue={16}
     colors={d3.scaleSequential(d3.interpolatePiYG)}
     padding={3}
+    nanColor={'#D3D3D3'}
   />
 );
 

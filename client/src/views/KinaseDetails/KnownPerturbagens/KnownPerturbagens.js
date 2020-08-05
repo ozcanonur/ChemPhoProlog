@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from 'components/Card/Card.js';
@@ -13,8 +13,6 @@ import { CallApi } from 'api/api';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
-// import { HomeContext } from 'layouts/Home';
-
 const useStyles = makeStyles(styles);
 
 const KnownPerturbagens = ({ match }) => {
@@ -24,8 +22,6 @@ const KnownPerturbagens = ({ match }) => {
 
   const [knownPerturbagenData, setKnownPerturbagenData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // const kinaseData = useContext(HomeContext).kinaseListContext.tableData;
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);

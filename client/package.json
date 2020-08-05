@@ -7,6 +7,7 @@
   "dependencies": {
     "@material-ui/core": "4.10.0",
     "@material-ui/icons": "4.9.1",
+    "@nivo/core": "^0.62.0",
     "@nivo/pie": "^0.62.0",
     "@welldone-software/why-did-you-render": "^4.2.7",
     "axios": "^0.19.2",

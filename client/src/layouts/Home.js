@@ -220,7 +220,7 @@ const Home = ({ ...rest }) => {
               {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
                 <Route path={prop.layout + prop.path} component={prop.component} key={key} />
               ))}
-              <Redirect from='/' to='/home/welcome' />
+              <Redirect from='/' to='/home/kinaseList' />
             </Switch>
           </HomeContext.Provider>
         </div>
