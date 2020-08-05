@@ -22,9 +22,17 @@ const PhosphositesOfInterestTable = ({ protein }) => {
   };
 
   useEffect(() => {
+    let mounted = true;
+
     CallApiForProteinSubstrates(protein).then((res) => {
-      setTableData(res.map(Object.values));
+      if (mounted) {
+        setTableData(res.map(Object.values));
+      }
     });
+
+    return function cleanUp() {
+      mounted = false;
+    };
   }, [protein]);
 
   return (

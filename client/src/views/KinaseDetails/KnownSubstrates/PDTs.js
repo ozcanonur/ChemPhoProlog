@@ -22,11 +22,19 @@ const PDTs = ({ match }) => {
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
+
     const kinaseQuery = `select substrate, source, cell_line, confidence from KS_relationship where kinase="${kinase}" and source="PDT" order by substrate`;
 
     CallApi(kinaseQuery).then((res) => {
-      setKnownSubstrateData(res);
+      if (mounted) {
+        setKnownSubstrateData(res);
+      }
     });
+
+    return function cleanUp() {
+      mounted = false;
+    };
   }, [kinase]);
 
   const createTableDataByCellLine = (data, cell_line) => {

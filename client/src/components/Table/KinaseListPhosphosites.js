@@ -15,11 +15,19 @@ const KinaseListPhosphosites = ({ kinase }) => {
   const [phosphosites, setPhosphosites] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
+
     const query = `select distinct substrate_id from Substrate where substrate_id like "%${kinase}(%"`;
 
     CallApi(query).then((res) => {
-      setPhosphosites(res.map(Object.values));
+      if (mounted) {
+        setPhosphosites(res.map(Object.values));
+      }
     });
+
+    return function cleanUp() {
+      mounted = false;
+    };
   }, [kinase]);
 
   const getPhosphositeBySite = (phosphosites, aminoacid) => {
