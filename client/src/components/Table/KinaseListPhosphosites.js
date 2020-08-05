@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { zip } from 'lodash';
 import { CallApi } from 'api/api';
 
-import { Table, TableHead, TableRow, TableBody, TableCell, Box } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
 const useStyles = makeStyles(styles);
 
-const CollapsiblePhosphosites = ({ kinase }) => {
+const KinaseListPhosphosites = ({ kinase }) => {
   const classes = useStyles();
 
   const [phosphosites, setPhosphosites] = useState([]);
@@ -41,37 +41,35 @@ const CollapsiblePhosphosites = ({ kinase }) => {
   const headers = ['Serine', 'Threonine', 'Tyrosine'];
 
   return (
-    <Box margin={1}>
-      <Table size='small'>
-        <TableHead className={classes['warningTableHeader']}>
-          <TableRow className={classes.tableHeadRow}>
-            {headers.map((prop, key) => {
-              return (
-                <TableCell key={key} className={classes.tableCell + ' ' + classes.tableHeadCell}>
-                  {prop}
-                </TableCell>
-              );
-            })}
+    <Table size='small'>
+      <TableHead className={classes['warningTableHeader']}>
+        <TableRow className={classes.tableHeadRow}>
+          {headers.map((prop, key) => {
+            return (
+              <TableCell key={key} className={classes.tableCell + ' ' + classes.tableHeadCell}>
+                {prop}
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {dividedPhosphosites.map((phosphosites, key) => (
+          <TableRow key={key}>
+            {phosphosites.map((phosphosite, key) => (
+              <TableCell
+                scope='row'
+                key={key}
+                className={classes.tableCell}
+                style={{ color: '#0066CC' }}>
+                {phosphosite}
+              </TableCell>
+            ))}
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {dividedPhosphosites.map((phosphosites, key) => (
-            <TableRow key={key}>
-              {phosphosites.map((phosphosite, key) => (
-                <TableCell
-                  scope='row'
-                  key={key}
-                  className={classes.tableCell}
-                  style={{ color: '#0066CC' }}>
-                  {phosphosite}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Box>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 
-export default CollapsiblePhosphosites;
+export default KinaseListPhosphosites;

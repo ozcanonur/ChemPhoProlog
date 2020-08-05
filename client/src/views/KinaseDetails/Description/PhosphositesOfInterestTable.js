@@ -11,7 +11,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const PhosphositesOfInterest = ({ protein }) => {
+const PhosphositesOfInterestTable = ({ protein, match }) => {
   const classes = useStyles();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -37,17 +37,25 @@ const PhosphositesOfInterest = ({ protein }) => {
         <Table
           className='my-node'
           tableHeaderColor='warning'
-          tableHead={['', 'Location', 'Residue', 'Detected in', 'Reported Substrate of', 'Reported PDT of']}
+          tableHead={[
+            '',
+            'Location',
+            'Residue',
+            'Detected in',
+            'Reported Substrate of',
+            'Reported PDT of',
+          ]}
           tableData={tableData}
           rowsPerPage={10}
           rowEndArrow={false}
           currentPage={currentPage}
           handleChangePage={handleChangePage}
-          collapsible={true}
+          expandable={true}
+          expandFor={'phosphositesOfInterest'}
         />
       </CardBody>
     </Card>
   );
 };
 
-export default PhosphositesOfInterest;
+export default PhosphositesOfInterestTable;

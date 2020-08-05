@@ -11,6 +11,7 @@ import {
   TablePagination,
   IconButton,
   Collapse,
+  Box,
 } from '@material-ui/core';
 
 import {
@@ -23,7 +24,8 @@ import {
 
 import Button from 'components/CustomButtons/Button.js';
 import CustomInput from 'components/CustomInput/CustomInput';
-import CollapsiblePhosphosites from 'components/Table/CollapsiblePhosphosites';
+import KinaseListPhosphosites from 'components/Table/KinaseListPhosphosites';
+import PhosphositesOfInterest from 'components/Table/PhosphositesOfInterest';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
@@ -102,7 +104,12 @@ const Row = (props) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-            {expandFor === 'kinaseList' ? <CollapsiblePhosphosites kinase={row[0]} /> : null}
+            <Box margin={1}>
+              {expandFor === 'kinaseList' ? <KinaseListPhosphosites kinase={row[0]} /> : null}
+              {expandFor === 'phosphositesOfInterest' ? (
+                <PhosphositesOfInterest location={{ loc: row[0], res: row[1] }} />
+              ) : null}
+            </Box>
           </Collapse>
         </TableCell>
       </TableRow>
