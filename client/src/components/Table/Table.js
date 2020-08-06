@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { has } from 'lodash';
+import { has, range } from 'lodash';
 
 import {
   Table,
@@ -139,6 +139,21 @@ const CustomTable = (props) => {
   // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
+  const createSortState = (tableData) => {
+    let obj = {};
+    let rangeLen = range(0, tableData[0].length + 1);
+    for (const x of rangeLen) {
+      if (x === 0) obj[x] = true;
+      else obj[x] = false;
+    }
+    return obj;
+  };
+
+  // Sort state
+  const [sortedAsc, setSortedAsc] = useState(
+    tableData[0] !== undefined ? createSortState(tableData) : {}
+  );
+
   useEffect(() => {
     setFilteredList(tableData);
   }, [tableData]);
@@ -154,10 +169,38 @@ const CustomTable = (props) => {
     setFilteredList(filtered);
   };
 
+  const handleSort = (key) => {
+    if (expandable) {
+      key = key - 1;
+    }
+
+    let sortedList = [];
+    if (!sortedAsc[key]) {
+      sortedList = filteredList.sort((x, y) => {
+        if (x[key] < y[key]) return -1;
+        if (x[key] > y[key]) return 1;
+        return 0;
+      });
+    } else {
+      sortedList = filteredList.sort((x, y) => {
+        if (x[key] > y[key]) return -1;
+        if (x[key] < y[key]) return 1;
+        return 0;
+      });
+    }
+
+    setFilteredList([...sortedList]);
+    setSortedAsc({ ...sortedAsc, [key]: !sortedAsc[key] });
+  };
+
   const TableHeadContent = () => (
     <TableRow className={classes.tableHeadRow}>
       {tableHead.map((prop, key) => (
-        <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell} key={key}>
+        <TableCell
+          className={classes.tableCell + ' ' + classes.tableHeadCell}
+          style={{ cursor: 'pointer' }}
+          key={key}
+          onClick={() => handleSort(key)}>
           {prop}
         </TableCell>
       ))}

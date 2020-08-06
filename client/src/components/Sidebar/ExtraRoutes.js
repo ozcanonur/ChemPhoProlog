@@ -59,7 +59,8 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
               primary={currentTitle}
               className={classNames(classes.itemText, whiteFontClasses)}
               disableTypography={true}
-              style={{ textAlign: 'left', marginLeft: '1em' }}
+              style={{ textAlign: 'left', marginLeft: '1em', cursor: 'pointer' }}
+              onClick={handleOpen}
             />
             {open ? (
               <ExpandLessIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />

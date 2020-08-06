@@ -2,7 +2,7 @@ import WelcomePage from 'views/Welcome/Welcome';
 
 import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
-import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/KnownSubstrates/KnownSubstrates';
+import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/Substrates';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';

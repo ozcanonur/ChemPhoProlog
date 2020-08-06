@@ -35,7 +35,6 @@ const PDTTabContent = ({ cell_line }) => {
     };
   }, [kinase, cell_line]);
 
-  console.log(PDTs);
   let sharedWithList = [];
   for (const entry of PDTs) {
     const shared = entry.shared_with;
@@ -43,12 +42,12 @@ const PDTTabContent = ({ cell_line }) => {
   }
 
   sharedWithList = sharedWithList.flat();
-  console.log(sharedWithList);
+
   let sharedWithCount = {};
   for (const shared of sharedWithList) {
     sharedWithCount[shared] = (sharedWithCount[shared] || 0) + 1;
   }
-  console.log(sharedWithCount);
+
   let chartData = Object.entries(sharedWithCount).map((e) => {
     return {
       Kinase: e[0],
@@ -57,13 +56,13 @@ const PDTTabContent = ({ cell_line }) => {
   });
 
   chartData = chartData.sort((x, y) => y.Count - x.Count);
-  console.log(chartData);
+
   return (
     <GridContainer direction='row'>
-      <GridItem xs={7}>
+      <GridItem xs={12} lg={7}>
         <PDTTable tableData={PDTs.map(Object.values)} />
       </GridItem>
-      <GridItem xs={5}>
+      <GridItem xs={12} lg={5}>
         <Card>
           <CardHeader color='info'>
             <h4 className={classes.cardTitleWhite}>{`PDT Commonality`}</h4>
