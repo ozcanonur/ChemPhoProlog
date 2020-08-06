@@ -36,7 +36,7 @@ const HeatMap = ({ data, indexBy, keys }) => (
     maxValue={16}
     colors={d3.scaleSequential(d3.interpolatePiYG)}
     padding={3}
-    nanColor={'#D3D3D3'}
+    nanColor={'hsla(210, 0%, 73%, 0.32)'}
   />
 );
 

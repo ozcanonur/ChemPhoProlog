@@ -2,8 +2,8 @@ import React from 'react';
 
 import CustomTabs from 'components/CustomTabs/CustomTabs.js';
 
-import PDTs from 'views/KinaseDetails/KnownSubstrates/PDTs';
-import KnownSubstratesTable from 'views/KinaseDetails/KnownSubstrates/KnownSubstratesTable';
+import PDTs from 'views/KinaseDetails/Substrates/PDTs/PDTs';
+import KnownSubstratesTable from 'views/KinaseDetails/Substrates/KnownSubstrates/KnownSubstratesTable';
 
 import BugReport from '@material-ui/icons/BugReport';
 import Code from '@material-ui/icons/Code';

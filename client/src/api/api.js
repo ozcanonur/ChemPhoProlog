@@ -25,3 +25,16 @@ export const CallApiForProteinSubstrates = async (protein) => {
 
   return await response.data;
 };
+
+export const CallApiForPDTs = async (kinase, cell_line) => {
+  const response = await axios.get('/api/pdts/', {
+    params: {
+      kinase: kinase,
+      cell_line: cell_line,
+    },
+  });
+
+  if (response.status !== 200) throw Error(response.statusText);
+
+  return await response.data;
+};

@@ -186,29 +186,25 @@ const CustomTable = (props) => {
     />
   );
 
-  const TableSearchContent = () => (
-    <div style={{ textAlign: 'right' }}>
-      <CustomInput
-        formControlProps={{
-          className: classes.search,
-        }}
-        inputProps={{
-          placeholder: 'Search',
-          inputProps: {
-            'aria-label': 'Search',
-          },
-        }}
-        onChange={(event) => filterByTermAndSetTableData(event)}
-      />
-      <Button color='white' aria-label='edit' justIcon round>
-        <Search />
-      </Button>
-    </div>
-  );
-
   return (
     <div className={classes.tableResponsive}>
-      <TableSearchContent />
+      <div style={{ textAlign: 'right' }}>
+        <CustomInput
+          formControlProps={{
+            className: classes.search,
+          }}
+          inputProps={{
+            placeholder: 'Search',
+            inputProps: {
+              'aria-label': 'Search',
+            },
+          }}
+          onChange={(event) => filterByTermAndSetTableData(event)}
+        />
+        <Button color='white' aria-label='edit' justIcon round>
+          <Search />
+        </Button>
+      </div>
       <Table stickyHeader className={classes.table}>
         <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
           <TableHeadContent />

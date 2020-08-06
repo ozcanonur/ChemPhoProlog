@@ -18,7 +18,7 @@ const db = new sqlite3.Database('./chemphopro.db', sqlite3.OPEN_READONLY, (err) 
   console.log('Connected to ChemphoproDB');
 });
 
-// Kinase List API end-point
+// General api
 router.get('/api/api/', (req, res) => {
   const queryString = req.query.query;
 
@@ -29,7 +29,7 @@ router.get('/api/api/', (req, res) => {
   });
 });
 
-// Kinase List API end-point
+// Substrates for protein @kinasedetails/description
 router.get('/api/substrates_for_protein/', (req, res) => {
   const protein = req.query.protein;
 
@@ -38,6 +38,28 @@ router.get('/api/substrates_for_protein/', (req, res) => {
     `reported_pdt_of from substrates_detailed where gene_name = "${protein}"`;
 
   db.all(reported_substrate_of_query, [], (err, rows) => {
+    if (err) throw err;
+
+    res.send(rows);
+  });
+});
+
+// Shared PDTs for kinase @kinasedetails/pdts
+router.get('/api/pdts/', (req, res) => {
+  const kinase = req.query.kinase;
+  const cell_line = req.query.cell_line;
+
+  const query =
+    `select main.substrate, substrate.uniprot_name, main.confidence, main.shared_with from ` +
+    `(select x.substrate, x.confidence, group_concat(y.kinase, ', ') as shared_with from ` +
+    `(select * from KS_relationship where kinase='${kinase}' and source='PDT' and cell_line='${cell_line}' ` +
+    `and confidence <> '0.0' and confidence <> '-1.0') as x ` +
+    `left join ` +
+    `(select * from KS_relationship where source='PDT' and cell_line='${cell_line}' and confidence <> '0.0' and confidence <> '-1.0') as y ` +
+    `on x.substrate = y.substrate and x.kinase <> y.kinase group by x.substrate) as main ` +
+    `left join substrate on main.substrate = substrate.substrate_id order by main.substrate`;
+
+  db.all(query, [], (err, rows) => {
     if (err) throw err;
 
     res.send(rows);
