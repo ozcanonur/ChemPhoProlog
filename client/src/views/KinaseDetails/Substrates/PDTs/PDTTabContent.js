@@ -65,8 +65,8 @@ const PDTTabContent = ({ cell_line }) => {
       </GridItem>
       <GridItem xs={5}>
         <Card>
-          <CardHeader color='primary'>
-            <h4 className={classes.cardTitleWhite}>{`PDT commonality`}</h4>
+          <CardHeader color='info'>
+            <h4 className={classes.cardTitleWhite}>{`PDT Commonality`}</h4>
             <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
           </CardHeader>
           <CardBody>
