@@ -26,6 +26,7 @@ import Button from 'components/CustomButtons/Button.js';
 import CustomInput from 'components/CustomInput/CustomInput';
 import KinaseListPhosphosites from 'components/Table/KinaseListPhosphosites';
 import PhosphositesOfInterest from 'components/Table/PhosphositesOfInterest';
+import ObsForPDTs from 'components/Table/ObsForPDTs';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
@@ -41,6 +42,7 @@ const Row = (props) => {
     handleSelection,
     handleAdd,
     selectedInfo,
+    cell_line,
   } = props;
 
   const classes = useStyles();
@@ -109,6 +111,9 @@ const Row = (props) => {
               {expandFor === 'phosphositesOfInterest' ? (
                 <PhosphositesOfInterest location={{ loc: row[0], res: row[1] }} />
               ) : null}
+              {expandFor === 'obsForPDTs' ? (
+                <ObsForPDTs PDT={row[0]} cell_line={cell_line} />
+              ) : null}
             </Box>
           </Collapse>
         </TableCell>
@@ -132,6 +137,7 @@ const CustomTable = (props) => {
     handleAdd,
     currentPage,
     handleChangePage,
+    cell_line,
   } = props;
 
   // Pagination options
@@ -159,9 +165,6 @@ const CustomTable = (props) => {
   useEffect(() => {
     setFilteredList(tableData);
   }, [tableData]);
-
-  console.log(sortedAsc);
-  console.log(filteredList);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -218,7 +221,16 @@ const CustomTable = (props) => {
       .map((row, key) => (
         <Row
           key={key}
-          {...{ row, expandable, expandFor, rowEndArrow, handleSelection, selectedInfo, handleAdd }}
+          {...{
+            row,
+            expandable,
+            expandFor,
+            rowEndArrow,
+            handleSelection,
+            selectedInfo,
+            handleAdd,
+            cell_line,
+          }}
         />
       ));
 

@@ -60,7 +60,7 @@ const PDTTabContent = ({ cell_line }) => {
   return (
     <GridContainer direction='row'>
       <GridItem xs={12} lg={7}>
-        <PDTTable tableData={PDTs.map(Object.values)} />
+        <PDTTable tableData={PDTs.map(Object.values)} cell_line={cell_line} />
       </GridItem>
       <GridItem xs={12} lg={5}>
         <Card>

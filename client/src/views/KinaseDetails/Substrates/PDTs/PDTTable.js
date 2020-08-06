@@ -10,7 +10,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const PDTTable = ({ tableData }) => {
+const PDTTable = ({ tableData, cell_line }) => {
   const classes = useStyles();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,13 +29,15 @@ const PDTTable = ({ tableData }) => {
         <Table
           className='my-node'
           tableHeaderColor='warning'
-          tableHead={['', 'Substrate', 'Protein Name', 'Confidence', 'Shared with']}
+          tableHead={['', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
           tableData={tableData}
           rowsPerPage={10}
           rowEndArrow={false}
           currentPage={currentPage}
           handleChangePage={handleChangePage}
           expandable={true}
+          expandFor={'obsForPDTs'}
+          cell_line={cell_line}
         />
       </CardBody>
     </Card>
