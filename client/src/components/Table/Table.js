@@ -139,24 +139,29 @@ const CustomTable = (props) => {
   // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
-  const createSortState = (tableData) => {
+  const createSortState = () => {
+    let length = tableHead.length;
+    if (expandable) length -= 1;
+    if (rowEndArrow) length -= 1;
+
     let obj = {};
-    let rangeLen = range(0, tableData[0].length + 1);
-    for (const x of rangeLen) {
+    for (const x of range(0, length)) {
       if (x === 0) obj[x] = true;
       else obj[x] = false;
     }
+
     return obj;
   };
 
   // Sort state
-  const [sortedAsc, setSortedAsc] = useState(
-    tableData[0] !== undefined ? createSortState(tableData) : {}
-  );
+  const [sortedAsc, setSortedAsc] = useState(createSortState());
 
   useEffect(() => {
     setFilteredList(tableData);
   }, [tableData]);
+
+  console.log(sortedAsc);
+  console.log(filteredList);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
