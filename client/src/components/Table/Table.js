@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import { has, range } from 'lodash';
 
 import {
@@ -76,11 +76,15 @@ const Row = (props) => {
     row.map((prop, key) => (
       <React.Fragment key={key}>
         {expandable && key === 0 ? <ExpandButton /> : null}
-        <TableCell
-          className={classes.tableCell}
-          key={key}
-          style={{ color: key === 0 ? '#0066CC' : 'inherit' }}>
-          {prop}
+        <TableCell className={classes.tableCell} key={key}>
+          <Link
+            style={{ color: key === 0 ? '#0066CC' : 'inherit', textDecoration: 'none' }}
+            to={`/home/${row[0]}/description`}
+            onClick={() => {
+              handleAdd(row[0]);
+            }}>
+            {prop}
+          </Link>
         </TableCell>
         {rowEndArrow && key === row.length - 1 ? <RightButton /> : null}
       </React.Fragment>

@@ -58,11 +58,8 @@ const PDTTabContent = ({ cell_line }) => {
   chartData = chartData.sort((x, y) => y.Count - x.Count);
 
   return (
-    <GridContainer direction='row'>
-      <GridItem xs={12} lg={7}>
-        <PDTTable tableData={PDTs.map(Object.values)} cell_line={cell_line} />
-      </GridItem>
-      <GridItem xs={12} lg={5}>
+    <GridContainer direction='column'>
+      <GridItem md>
         <Card>
           <CardHeader color='info'>
             <h4 className={classes.cardTitleWhite}>{`PDT Commonality`}</h4>
@@ -72,6 +69,9 @@ const PDTTabContent = ({ cell_line }) => {
             <CircularBarPlot data={chartData} />
           </CardBody>
         </Card>
+      </GridItem>
+      <GridItem md>
+        <PDTTable tableData={PDTs.map(Object.values)} cell_line={cell_line} />
       </GridItem>
     </GridContainer>
   );

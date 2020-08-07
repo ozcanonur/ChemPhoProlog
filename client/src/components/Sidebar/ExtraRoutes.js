@@ -16,7 +16,7 @@ const useStyles = makeStyles(styles);
 const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {

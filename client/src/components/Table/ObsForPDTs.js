@@ -9,7 +9,7 @@ const MyResponsiveBar = ({ data }) => (
     data={data}
     keys={['fold_change']}
     indexBy='perturbagen'
-    margin={{ top: 0, right: 0, bottom: 100, left: 65 }}
+    margin={{ top: 20, right: 0, bottom: 100, left: 65 }}
     padding={0.3}
     colors={{ scheme: 'nivo' }}
     borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
@@ -29,9 +29,7 @@ const MyResponsiveBar = ({ data }) => (
       legendPosition: 'middle',
       legendOffset: -50,
     }}
-    labelSkipWidth={12}
-    labelSkipHeight={12}
-    labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+    enableLabel={false}
     animate={true}
     motionStiffness={90}
     motionDamping={15}
@@ -65,7 +63,7 @@ const ObsForPDTs = ({ PDT, cell_line }) => {
   }, [PDT, cell_line]);
 
   return (
-    <div style={{ height: '300px' }}>
+    <div style={{ height: '400px' }}>
       {observationData !== [] ? <MyResponsiveBar data={observationData} /> : 'No observation data'}
     </div>
   );

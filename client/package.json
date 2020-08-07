@@ -29,9 +29,7 @@
     "react-scripts": "3.4.1",
     "react-swipeable-views": "0.13.9",
     "react-transition-group": "^4.4.1",
-    "recompose": "^0.30.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "react-scripts start",

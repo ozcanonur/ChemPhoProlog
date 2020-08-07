@@ -27,7 +27,7 @@ const Description = ({ match }) => {
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
-        <GridContainer direction='row'>
+        <GridContainer direction='row' alignItems='stretch'>
           <GridItem lg={6}>
             <RightPanel selectedInfo={kinaseDesc} />
           </GridItem>
