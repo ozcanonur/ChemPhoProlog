@@ -11,7 +11,6 @@ import { Typography } from '@material-ui/core';
 
 import KnownSubstratesTable from 'views/KinaseDetails/Substrates/KnownSubstrates/KnownSubstratesTable';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-
 const useStyles = makeStyles(styles);
 
 const KnownSubstrates = ({ match }) => {

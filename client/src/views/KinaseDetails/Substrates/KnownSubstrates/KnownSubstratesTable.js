@@ -26,7 +26,7 @@ const KnownSubstratesTable = ({ match }) => {
   useEffect(() => {
     let mounted = true;
 
-    const kinaseQuery = `select substrate, source from KS_relationship where kinase="${kinase}" and source="UniProt" order by substrate`;
+    const kinaseQuery = `select PsT, sources from known_target where KPa="${kinase}" order by PsT`;
 
     CallApi(kinaseQuery).then((res) => {
       const tableData = res.map(Object.values);
@@ -51,7 +51,7 @@ const KnownSubstratesTable = ({ match }) => {
         <Table
           className='my-node'
           tableHeaderColor='warning'
-          tableHead={['Perturbagen', 'Source']}
+          tableHead={['Substrate', 'Sources']}
           tableData={knownSubstrateData}
           rowsPerPage={10}
           rowEndArrow={false}

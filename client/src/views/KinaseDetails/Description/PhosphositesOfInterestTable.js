@@ -8,7 +8,6 @@ import { CallApiForProteinSubstrates } from 'api/api';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-
 const useStyles = makeStyles(styles);
 
 const PhosphositesOfInterestTable = ({ protein }) => {
