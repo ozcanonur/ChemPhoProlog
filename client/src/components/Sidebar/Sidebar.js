@@ -77,8 +77,7 @@ const Sidebar = (props) => {
           onClose={props.handleDrawerToggle}
           ModalProps={{
             keepMounted: true,
-          }}
-        >
+          }}>
           {brand(logoText)}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
@@ -101,13 +100,16 @@ const Sidebar = (props) => {
           open
           classes={{
             paper: classNames(classes.drawerPaper),
-          }}
-        >
+          }}>
           {brand(logoText)}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes routes={routes} {...props} />
-              <Slide in={currentlyInspecting.kinase.length !== 0} direction='left' mountOnEnter unmountOnExit>
+              <Slide
+                in={currentlyInspecting.kinase.length !== 0}
+                direction='left'
+                mountOnEnter
+                unmountOnExit>
                 <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
                   {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
@@ -117,8 +119,7 @@ const Sidebar = (props) => {
                 in={currentlyInspecting.perturbagen.length !== 0}
                 direction='left'
                 mountOnEnter
-                unmountOnExit
-              >
+                unmountOnExit>
                 <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
                   {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
                   <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />

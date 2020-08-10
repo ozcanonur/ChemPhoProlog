@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import Table from 'components/Table/Table';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import { CallApiForPDTs } from 'api/api';
 
+import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
-const PDTTable = ({ tableData, cell_line }) => {
+const PDTTable = ({ cell_line }) => {
   const classes = useStyles();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,6 +19,23 @@ const PDTTable = ({ tableData, cell_line }) => {
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
+
+  const [PDTs, setPDTs] = useState([]);
+  const kinase = window.location.href.split('/')[4];
+
+  useEffect(() => {
+    let mounted = true;
+
+    CallApiForPDTs(kinase, cell_line).then((res) => {
+      if (mounted) {
+        setPDTs(res);
+      }
+    });
+
+    return function cleanUp() {
+      mounted = false;
+    };
+  }, [kinase, cell_line]);
 
   return (
     <Card>
@@ -30,7 +48,7 @@ const PDTTable = ({ tableData, cell_line }) => {
           className='my-node'
           tableHeaderColor='warning'
           tableHead={['', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
-          tableData={tableData}
+          tableData={PDTs.map(Object.values)}
           rowsPerPage={10}
           rowEndArrow={false}
           currentPage={currentPage}

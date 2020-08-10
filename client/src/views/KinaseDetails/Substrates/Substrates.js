@@ -21,7 +21,7 @@ const Substrates = ({ match }) => {
           {
             tabName: 'PDTs',
             tabIcon: Code,
-            tabContent: <PDTs match={match} />,
+            tabContent: <PDTs />,
           },
         ]}
       />

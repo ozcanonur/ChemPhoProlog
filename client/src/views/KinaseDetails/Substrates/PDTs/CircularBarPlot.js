@@ -1,8 +1,49 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const CircularBarPlot = ({ data }) => {
+import { CallApiForPDTs } from 'api/api';
+
+const CircularBarPlot = ({ cell_line }) => {
   const chart = useRef();
+
+  const [PDTs, setPDTs] = useState([]);
+  const kinase = window.location.href.split('/')[4];
+
+  useEffect(() => {
+    let mounted = true;
+
+    CallApiForPDTs(kinase, cell_line).then((res) => {
+      if (mounted) {
+        setPDTs(res);
+      }
+    });
+
+    return function cleanUp() {
+      mounted = false;
+    };
+  }, [kinase, cell_line]);
+
+  let sharedWithList = [];
+  for (const entry of PDTs) {
+    const shared = entry.shared_with;
+    if (shared !== null) sharedWithList.push(shared.split(', '));
+  }
+
+  sharedWithList = sharedWithList.flat();
+
+  let sharedWithCount = {};
+  for (const shared of sharedWithList) {
+    sharedWithCount[shared] = (sharedWithCount[shared] || 0) + 1;
+  }
+
+  let chartData = Object.entries(sharedWithCount).map((e) => {
+    return {
+      Kinase: e[0],
+      Count: e[1],
+    };
+  });
+
+  const data = chartData.sort((x, y) => y.Count - x.Count);
 
   function square(x) {
     return x * x;
@@ -37,9 +78,9 @@ const CircularBarPlot = ({ data }) => {
 
   // set the dimensions and margins of the graph
   var margin = { top: 100, right: 0, bottom: 0, left: 0 },
-    width = 460 - margin.left - margin.right,
-    height = 460 - margin.top - margin.bottom,
-    innerRadius = 90,
+    width = 400 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom,
+    innerRadius = 70,
     outerRadius = Math.min(width, height) / 2;
 
   // append the svg object
