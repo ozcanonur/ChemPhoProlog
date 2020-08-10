@@ -34,8 +34,13 @@ router.get('/api/substrates_for_protein/', (req, res) => {
   const protein = req.query.protein;
 
   const reported_substrate_of_query =
-    `select location, residue, detected_in, reported_substrate_of, ` +
-    `reported_pdt_of from substrates_detailed where gene_name = "${protein}"`;
+    `select distinct x.location, x.residue, x.detected_in, coalesce(y.PsT_effect, 'unknown') as pst_effect, ` +
+    `x.reported_substrate_of, x.reported_pdt_of from ` +
+    `(select gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of ` +
+    `from substrates_detailed where gene_name='${protein}') as x ` +
+    `left join ` +
+    `(select TProtein, PsT_effect, residue_type, residue_offset from known_sign where TProtein = '${protein}') as y ` +
+    `on x.residue = y.residue_type and x.location = y.residue_offset`;
 
   db.all(reported_substrate_of_query, [], (err, rows) => {
     if (err) throw err;

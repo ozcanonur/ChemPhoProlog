@@ -50,6 +50,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             'Location',
             'Residue',
             'Detected in',
+            'Pst_effect',
             'Reported Substrate of',
             'Reported PDT of',
           ]}
