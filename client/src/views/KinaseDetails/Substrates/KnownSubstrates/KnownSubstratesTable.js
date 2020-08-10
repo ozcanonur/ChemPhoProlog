@@ -42,24 +42,30 @@ const KnownSubstratesTable = ({ match }) => {
   }, [kinase]);
 
   return (
-    <Card>
-      <CardHeader color='warning'>
-        <h4 className={classes.cardTitleWhite}>Known Substrates</h4>
-        <p className={classes.cardCategoryWhite}>Select a substrate</p>
-      </CardHeader>
-      <CardBody>
-        <Table
-          className='my-node'
-          tableHeaderColor='warning'
-          tableHead={['Substrate', 'Sources']}
-          tableData={knownSubstrateData}
-          rowsPerPage={10}
-          rowEndArrow={false}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-        />
-      </CardBody>
-    </Card>
+    <React.Fragment>
+      {knownSubstrateData.length === 0 ? (
+        <div>No entries found.</div>
+      ) : (
+        <Card>
+          <CardHeader color='warning'>
+            <h4 className={classes.cardTitleWhite}>Known Substrates</h4>
+            <p className={classes.cardCategoryWhite}>Select a substrate</p>
+          </CardHeader>
+          <CardBody>
+            <Table
+              className='my-node'
+              tableHeaderColor='warning'
+              tableHead={['Substrate', 'Sources']}
+              tableData={knownSubstrateData}
+              rowsPerPage={10}
+              rowEndArrow={false}
+              currentPage={currentPage}
+              handleChangePage={handleChangePage}
+            />
+          </CardBody>
+        </Card>
+      )}
+    </React.Fragment>
   );
 };
 

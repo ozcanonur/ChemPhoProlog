@@ -44,19 +44,23 @@ const PDTTable = ({ cell_line }) => {
         <p className={classes.cardCategoryWhite}>Select a substrate</p>
       </CardHeader>
       <CardBody>
-        <Table
-          className='my-node'
-          tableHeaderColor='warning'
-          tableHead={['', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
-          tableData={PDTs.map(Object.values)}
-          rowsPerPage={10}
-          rowEndArrow={false}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-          expandable={true}
-          expandFor={'obsForPDTs'}
-          cell_line={cell_line}
-        />
+        {PDTs.length === 0 ? (
+          <div>No entries found.</div>
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='warning'
+            tableHead={['', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
+            tableData={PDTs.map(Object.values)}
+            rowsPerPage={10}
+            rowEndArrow={false}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+            expandable={true}
+            expandFor={'obsForPDTs'}
+            cell_line={cell_line}
+          />
+        )}
       </CardBody>
     </Card>
   );

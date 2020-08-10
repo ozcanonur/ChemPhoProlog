@@ -20,8 +20,7 @@ const PerturbagenListLeftPanel = () => {
   const handleSelection = useContext(HomeContext).perturbagenListContext.handleSelection;
   const handleAdd = useContext(HomeContext).perturbagenListContext.handleAdd;
   const currentPage = useContext(HomeContext).perturbagenListContext.currentPage;
-  const handleChangePage = useContext(HomeContext).perturbagenListContext
-    .handleChangePage;
+  const handleChangePage = useContext(HomeContext).perturbagenListContext.handleChangePage;
 
   return (
     <Card>
@@ -30,20 +29,24 @@ const PerturbagenListLeftPanel = () => {
         <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
       </CardHeader>
       <CardBody>
-        <Table
-          className='my-node'
-          tableHeaderColor='warning'
-          tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
-          tableData={tableData}
-          rowsPerPage={10}
-          collapsible={false}
-          rowEndArrow={true}
-          handleSelection={handleSelection}
-          handleAdd={handleAdd}
-          selectedInfo={selectedInfo}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-        />
+        {tableData === [] ? (
+          <div>Loading...</div>
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='warning'
+            tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+            tableData={tableData}
+            rowsPerPage={10}
+            collapsible={false}
+            rowEndArrow={true}
+            handleSelection={handleSelection}
+            handleAdd={handleAdd}
+            selectedInfo={selectedInfo}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+          />
+        )}
       </CardBody>
     </Card>
   );

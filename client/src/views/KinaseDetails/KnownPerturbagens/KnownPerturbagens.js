@@ -53,16 +53,20 @@ const KnownPerturbagens = ({ match }) => {
             <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
           </CardHeader>
           <CardBody>
-            <Table
-              className='my-node'
-              tableHeaderColor='warning'
-              tableHead={['Perturbagen', 'Source', 'Score']}
-              tableData={knownPerturbagenData}
-              rowsPerPage={10}
-              rowEndArrow={false}
-              currentPage={currentPage}
-              handleChangePage={handleChangePage}
-            />
+            {knownPerturbagenData.length === 0 ? (
+              <div>No entries found.</div>
+            ) : (
+              <Table
+                className='my-node'
+                tableHeaderColor='warning'
+                tableHead={['Perturbagen', 'Source', 'Score']}
+                tableData={knownPerturbagenData}
+                rowsPerPage={10}
+                rowEndArrow={false}
+                currentPage={currentPage}
+                handleChangePage={handleChangePage}
+              />
+            )}
           </CardBody>
         </Card>
       </GridItem>

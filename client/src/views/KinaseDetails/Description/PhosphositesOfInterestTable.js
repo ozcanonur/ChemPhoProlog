@@ -41,26 +41,30 @@ const PhosphositesOfInterestTable = ({ protein }) => {
         <p className={classes.cardCategoryWhite}>Select a phosphosite</p>
       </CardHeader>
       <CardBody>
-        <Table
-          className='my-node'
-          tableHeaderColor='warning'
-          tableHead={[
-            '',
-            'Location',
-            'Residue',
-            'Detected in',
-            'Pst_effect',
-            'Reported Substrate of',
-            'Reported PDT of',
-          ]}
-          tableData={tableData}
-          rowsPerPage={10}
-          rowEndArrow={false}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-          expandable={true}
-          expandFor={'phosphositesOfInterest'}
-        />
+        {tableData.length === 0 ? (
+          <div>No entries found.</div>
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='warning'
+            tableHead={[
+              '',
+              'Location',
+              'Residue',
+              'Detected in',
+              'Pst_effect',
+              'Reported Substrate of',
+              'Reported PDT of',
+            ]}
+            tableData={tableData}
+            rowsPerPage={10}
+            rowEndArrow={false}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+            expandable={true}
+            expandFor={'phosphositesOfInterest'}
+          />
+        )}
       </CardBody>
     </Card>
   );

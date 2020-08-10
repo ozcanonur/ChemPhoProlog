@@ -31,21 +31,25 @@ const KinaseListLeftPanel = () => {
         <p className={classes.cardCategoryWhite}>Select a kinase</p>
       </CardHeader>
       <CardBody>
-        <Table
-          className='my-node'
-          tableHeaderColor='warning'
-          tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
-          tableData={tableData}
-          rowsPerPage={10}
-          expandable={true}
-          expandFor={'kinaseList'}
-          rowEndArrow={true}
-          handleSelection={handleSelection}
-          selectedInfo={selectedInfo}
-          handleAdd={handleAdd}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-        />
+        {tableData === [] ? (
+          <div>Loading...</div>
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='warning'
+            tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
+            tableData={tableData}
+            rowsPerPage={10}
+            expandable={true}
+            expandFor={'kinaseList'}
+            rowEndArrow={true}
+            handleSelection={handleSelection}
+            selectedInfo={selectedInfo}
+            handleAdd={handleAdd}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+          />
+        )}
       </CardBody>
     </Card>
   );
