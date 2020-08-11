@@ -6,4 +6,4 @@ yarn.lock
 .dist/
 client/documentation/
 .vscode/
-build/
+client/build/
