@@ -5,6 +5,8 @@ const sqlite3 = require('sqlite3').verbose();
 const router = express();
 const port = process.env.PORT || 5000;
 
+path = require('path');
+
 router.use(express.static('../client/build'));
 
 router.use(bodyParser.json());
@@ -70,6 +72,14 @@ router.get('/api/pdts/', (req, res) => {
     if (err) throw err;
 
     res.send(rows);
+  });
+});
+
+router.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
   });
 });
 
