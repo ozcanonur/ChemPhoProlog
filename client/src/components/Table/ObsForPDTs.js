@@ -4,7 +4,7 @@ import { CallApi } from 'api/api';
 
 import { ResponsiveBar } from '@nivo/bar';
 
-const MyResponsiveBar = ({ data, min, max }) => (
+const MyResponsiveBar = ({ data }) => (
   <ResponsiveBar
     data={data}
     keys={['fold_change']}
@@ -33,8 +33,8 @@ const MyResponsiveBar = ({ data, min, max }) => (
     animate={true}
     motionStiffness={90}
     motionDamping={15}
-    minValue={min}
-    maxValue={max}
+    minValue={-20}
+    maxValue={20}
   />
 );
 
@@ -64,25 +64,9 @@ const ObsForPDTs = ({ PDT, cell_line }) => {
     };
   }, [PDT, cell_line]);
 
-  const min = Math.min.apply(
-    Math,
-    observationData.map((e) => e.fold_change)
-  );
-
-  const max = Math.max.apply(
-    Math,
-    observationData.map((e) => e.fold_change)
-  );
-
-  console.log(min);
-  console.log(max);
   return (
     <div style={{ height: '400px' }}>
-      {observationData !== [] ? (
-        <MyResponsiveBar data={observationData} min={min} max={max} />
-      ) : (
-        'No observation data'
-      )}
+      {observationData !== [] ? <MyResponsiveBar data={observationData} /> : 'No observation data'}
     </div>
   );
 };
