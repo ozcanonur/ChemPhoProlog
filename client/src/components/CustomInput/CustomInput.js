@@ -16,15 +16,7 @@ const useStyles = makeStyles(styles);
 
 export default function CustomInput(props) {
   const classes = useStyles();
-  const {
-    formControlProps,
-    labelText,
-    id,
-    labelProps,
-    inputProps,
-    error,
-    success,
-  } = props;
+  const { formControlProps, labelText, id, labelProps, inputProps, error, success } = props;
 
   const labelClasses = classNames({
     [' ' + classes.labelRootError]: error,
@@ -45,14 +37,9 @@ export default function CustomInput(props) {
     <FormControl
       {...formControlProps}
       className={formControlProps.className + ' ' + classes.formControl}
-      style={{ marginLeft: '0.5em', marginTop: 0, marginBottom: 0 }}
-    >
+      style={{ marginLeft: '0.5em', marginTop: 0, marginBottom: 0 }}>
       {labelText !== undefined ? (
-        <InputLabel
-          className={classes.labelRoot + labelClasses}
-          htmlFor={id}
-          {...labelProps}
-        >
+        <InputLabel className={classes.labelRoot + labelClasses} htmlFor={id} {...labelProps}>
           {labelText}
         </InputLabel>
       ) : null}
@@ -64,6 +51,8 @@ export default function CustomInput(props) {
         id={id}
         {...inputProps}
         onChange={props.onChange}
+        onBlur={props.onBlur}
+        onFocus={props.onFocus}
       />
       {error ? (
         <Clear className={classes.feedback + ' ' + classes.labelRootError} />
