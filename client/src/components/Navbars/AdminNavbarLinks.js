@@ -6,8 +6,9 @@ import Search from '@material-ui/icons/Search';
 import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import { FixedSizeList } from 'react-window';
+import { Healing, PanoramaHorizontal, TrendingDown } from '@material-ui/icons';
 
 import { CallApi } from 'api/api';
 
@@ -15,11 +16,23 @@ const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
   const item = data[index];
+  const itemName = item[Object.keys(item)[0]];
+  const itemType = Object.keys(item)[0];
+
+  let itemIcon;
+  if (itemType === 'kinase') {
+    itemIcon = <PanoramaHorizontal />;
+  } else if (itemType === 'perturbagen') {
+    itemIcon = <Healing />;
+  } else {
+    itemIcon = <TrendingDown />;
+  }
 
   return (
     <div style={style}>
       <ListItem button>
-        <ListItemText primary={item} />
+        <ListItemIcon>{itemIcon}</ListItemIcon>
+        <ListItemText primary={itemName} />
       </ListItem>
     </div>
   );
@@ -33,20 +46,26 @@ export default function AdminNavbarLinks() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
-    const query =
-      'select distinct substrate_id as item from substrate UNION ' +
-      'select distinct kinase_name as item from protein where kinase_name not null UNION ' +
-      'select distinct name as item from perturbagen';
+    const query1 = 'select distinct substrate_id as substrate from substrate';
+    const query2 = 'select distinct kinase_name as kinase from protein where kinase_name not null';
+    const query3 = 'select distinct name as perturbagen from perturbagen';
 
-    CallApi(query).then((res) => {
-      setSearchResults(res.map((e) => e.item));
+    CallApi(query1).then((res1) => {
+      CallApi(query2).then((res2) => {
+        CallApi(query3).then((res3) => {
+          setSearchResults([...res1, ...res2, ...res3]);
+        });
+      });
     });
   }, []);
 
   const handleChange = useCallback((value) => {
     if (value === '') setSearchOpen(false);
     else {
-      const filteredSearchResults = searchResults.filter((e) => new RegExp(value, 'i').test(e));
+      const filteredSearchResults = searchResults.filter((e) =>
+        new RegExp(value, 'i').test(e[Object.keys(e)[0]])
+      );
+
       setFilteredSearchResults(filteredSearchResults);
       setSearchOpen(true);
     }
@@ -76,7 +95,7 @@ export default function AdminNavbarLinks() {
             dense
             itemData={filteredSearchResults}
             height={300}
-            width={200}
+            width={'20em'}
             itemSize={46}
             itemCount={filteredSearchResults.length}
             style={{ backgroundColor: 'white', color: 'black' }}>
