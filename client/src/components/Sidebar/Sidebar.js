@@ -1,10 +1,12 @@
 /*eslint-disable*/
 import React, { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, Hidden, List, Slide } from '@material-ui/core';
+
+import image from 'assets/img/dna.jpg';
+import logo from 'assets/img/reactlogo.png';
 
 import StandardRoutes from 'components/Sidebar/StandardRoutes';
 import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
@@ -51,7 +53,7 @@ const Sidebar = (props) => {
   const classes = useStyles();
   //#endregion BASE THINGS
 
-  const { logo, image, logoText, routes, currentlyInspecting } = props;
+  const { routes, currentlyInspecting } = props;
 
   const brand = (text) => (
     <div className={classes.logo}>
@@ -78,7 +80,7 @@ const Sidebar = (props) => {
           ModalProps={{
             keepMounted: true,
           }}>
-          {brand(logoText)}
+          {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
               <StandardRoutes routes={routes} {...props} />
@@ -101,7 +103,7 @@ const Sidebar = (props) => {
           classes={{
             paper: classNames(classes.drawerPaper),
           }}>
-          {brand(logoText)}
+          {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes routes={routes} {...props} />
@@ -134,16 +136,6 @@ const Sidebar = (props) => {
       </Hidden>
     </div>
   );
-};
-
-Sidebar.propTypes = {
-  handleDrawerToggle: PropTypes.func,
-  bgColor: PropTypes.oneOf(['purple', 'blue', 'green', 'orange', 'red']),
-  logo: PropTypes.string,
-  image: PropTypes.string,
-  logoText: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool,
 };
 
 export default Sidebar;

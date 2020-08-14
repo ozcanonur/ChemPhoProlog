@@ -34,7 +34,6 @@ const dropdownStyle = theme => ({
     fontSize: "14px"
   },
   popperClose: {
-    pointerEvents: "none"
   },
   popperResponsive: {
     [theme.breakpoints.down("md")]: {

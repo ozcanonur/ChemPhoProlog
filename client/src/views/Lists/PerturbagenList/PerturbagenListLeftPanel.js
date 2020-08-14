@@ -8,19 +8,19 @@ import Table from 'components/Table/Table';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
-import { HomeContext } from 'layouts/Home';
+import { AppContext } from 'views/App';
 
 const useStyles = makeStyles(styles);
 
 const PerturbagenListLeftPanel = () => {
   const classes = useStyles();
 
-  const tableData = useContext(HomeContext).perturbagenListContext.tableData;
-  const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
-  const handleSelection = useContext(HomeContext).perturbagenListContext.handleSelection;
-  const handleAdd = useContext(HomeContext).perturbagenListContext.handleAdd;
-  const currentPage = useContext(HomeContext).perturbagenListContext.currentPage;
-  const handleChangePage = useContext(HomeContext).perturbagenListContext.handleChangePage;
+  const tableData = useContext(AppContext).perturbagenListContext.tableData;
+  const selectedInfo = useContext(AppContext).perturbagenListContext.selectedInfo;
+  const handleSelection = useContext(AppContext).perturbagenListContext.handleSelection;
+  const handleAdd = useContext(AppContext).perturbagenListContext.handleAdd;
+  const currentPage = useContext(AppContext).perturbagenListContext.currentPage;
+  const handleChangePage = useContext(AppContext).perturbagenListContext.handleChangePage;
 
   return (
     <Card>

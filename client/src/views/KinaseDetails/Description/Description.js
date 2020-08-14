@@ -6,7 +6,7 @@ import Card from 'components/Card/Card.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardHeader from 'components/Card/CardHeader.js';
 
-import { HomeContext } from 'layouts/Home';
+import { AppContext } from 'views/App';
 
 import RightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 import PhosphositesOfInterestTable from 'views/KinaseDetails/Description/PhosphositesOfInterestTable';
@@ -20,7 +20,7 @@ const Description = ({ match }) => {
   const classes = useStyles();
 
   const kinase = match.path.split('/')[2];
-  const kinaseData = useContext(HomeContext).kinaseListContext.kinaseData;
+  const kinaseData = useContext(AppContext).kinaseListContext.kinaseData;
 
   const kinaseDesc = kinaseData.filter((item) => item['kinase_name'] === kinase)[0];
 

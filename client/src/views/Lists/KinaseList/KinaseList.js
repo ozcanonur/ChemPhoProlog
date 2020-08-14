@@ -12,11 +12,11 @@ import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 
 import { Slide } from '@material-ui/core';
 
-import { HomeContext } from 'layouts/Home';
+import { AppContext } from 'views/App';
 
 // Kinase List on the Home page
 const KinaseList = () => {
-  const selectedInfo = useContext(HomeContext).kinaseListContext.selectedInfo;
+  const selectedInfo = useContext(AppContext).kinaseListContext.selectedInfo;
 
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
@@ -49,10 +49,10 @@ const KinaseList = () => {
         </GridItem>
         <GridItem>
           <GridContainer direction='row' alignItems='stretch'>
-            <GridItem sm={12} lg={6}>
+            <GridItem xs={12} lg={6}>
               <KinaseListLeftPanel />
             </GridItem>
-            <GridItem sm={12} lg={6}>
+            <GridItem xs={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
                   <KinaseListRightPanel selectedInfo={selectedInfo} />

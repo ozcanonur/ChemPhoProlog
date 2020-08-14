@@ -10,10 +10,10 @@ import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenLi
 
 import { Slide } from '@material-ui/core';
 
-import { HomeContext } from 'layouts/Home';
+import { AppContext } from 'views/App';
 
 const PerturbagenList = () => {
-  const selectedInfo = useContext(HomeContext).perturbagenListContext.selectedInfo;
+  const selectedInfo = useContext(AppContext).perturbagenListContext.selectedInfo;
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
   useEffect(() => {
@@ -32,11 +32,12 @@ const PerturbagenList = () => {
           <Card>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information obtained from chemical
-                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of
-                results and related information obtained from chemical phosphoproteomics experiments. And some
-                other stuff. ChemPhoPro provides a compendium of results and related information obtained from
-                chemical phosphoproteomics experiments. And some other stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from
+                chemical phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
+                compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
+                compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
           </Card>

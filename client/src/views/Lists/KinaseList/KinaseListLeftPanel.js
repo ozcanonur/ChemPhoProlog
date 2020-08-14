@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 
-import { HomeContext } from 'layouts/Home';
-
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
@@ -10,6 +8,7 @@ import Table from 'components/Table/Table';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { AppContext } from 'views/App';
 const useStyles = makeStyles(styles);
 
 const KinaseListLeftPanel = () => {
@@ -22,7 +21,7 @@ const KinaseListLeftPanel = () => {
     selectedInfo,
     currentPage,
     handleChangePage,
-  } = useContext(HomeContext).kinaseListContext;
+  } = useContext(AppContext).kinaseListContext;
 
   return (
     <Card>
