@@ -80,9 +80,12 @@ export default function AdminNavbarLinks() {
   const handleChange = (value) => {
     if (value === '') setSearchOpen(false);
     else {
-      const filteredSearchResults = searchResults.filter((e) =>
-        new RegExp(`^${value}`, 'i').test(e[Object.keys(e)[0]])
-      );
+      const filteredSearchResults = searchResults.filter((e) => {
+        return (
+          e[Object.keys(e)[0]].indexOf(value.toLowerCase()) === 0 ||
+          e[Object.keys(e)[0]].indexOf(value.toUpperCase()) === 0
+        );
+      });
 
       setFilteredSearchResults(filteredSearchResults);
       setSearchOpen(true);
