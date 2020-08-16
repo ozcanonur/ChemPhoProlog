@@ -79,7 +79,7 @@ export default function AdminNavbarLinks() {
     if (value === '') setSearchOpen(false);
     else {
       const filteredSearchResults = searchResults.filter((e) => {
-        return e[Object.keys(e)[0]].toLowerCase().indexOf(value.toLowerCase()) === 0;
+        return e[Object.keys(e)[0]].toString().toLowerCase().indexOf(value.toLowerCase()) === 0;
       });
 
       setFilteredSearchResults(filteredSearchResults);

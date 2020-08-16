@@ -43,6 +43,7 @@ const Row = (props) => {
     handleAdd,
     selectedInfo,
     cell_line,
+    firstRowOnClick,
   } = props;
 
   const classes = useStyles();
@@ -77,14 +78,18 @@ const Row = (props) => {
       <React.Fragment key={key}>
         {expandable && key === 0 ? <ExpandButton /> : null}
         <TableCell className={classes.tableCell} key={key}>
-          <Link
-            style={{ color: key === 0 ? '#0066CC' : 'inherit', textDecoration: 'none' }}
-            to={`/home/${row[0]}/description`}
-            onClick={() => {
-              handleAdd(row[0]);
-            }}>
-            {prop}
-          </Link>
+          {firstRowOnClick ? (
+            <Link
+              style={{ color: key === 0 ? '#0066CC' : 'inherit', textDecoration: 'none' }}
+              to={`/home/${row[0]}/description`}
+              onClick={() => {
+                handleAdd(row[0]);
+              }}>
+              {prop}
+            </Link>
+          ) : (
+            <div>{prop}</div>
+          )}
         </TableCell>
         {rowEndArrow && key === row.length - 1 ? <RightButton /> : null}
       </React.Fragment>
@@ -108,7 +113,7 @@ const Row = (props) => {
         <RowBody />
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               {expandFor === 'kinaseList' ? <KinaseListPhosphosites kinase={row[0]} /> : null}
@@ -142,6 +147,7 @@ const CustomTable = (props) => {
     currentPage,
     handleChangePage,
     cell_line,
+    firstRowOnClick,
   } = props;
 
   // Pagination options
@@ -177,7 +183,7 @@ const CustomTable = (props) => {
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (event) => {
     const filtered = tableData.filter(
-      (row) => row[0].toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
+      (row) => row[0].toString().toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
     );
     handleChangePage(null, 0);
     setFilteredList(filtered);
@@ -236,6 +242,7 @@ const CustomTable = (props) => {
             selectedInfo,
             handleAdd,
             cell_line,
+            firstRowOnClick,
           }}
         />
       ));

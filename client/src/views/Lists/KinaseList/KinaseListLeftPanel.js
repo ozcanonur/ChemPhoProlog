@@ -47,6 +47,7 @@ const KinaseListLeftPanel = () => {
             handleAdd={handleAdd}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
+            firstRowOnClick={true}
           />
         )}
       </CardBody>

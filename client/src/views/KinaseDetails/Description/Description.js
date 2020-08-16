@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -6,9 +6,6 @@ import Card from 'components/Card/Card.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardHeader from 'components/Card/CardHeader.js';
 
-import { AppContext } from 'views/App';
-
-import RightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 import PhosphositesOfInterestTable from 'views/KinaseDetails/Description/PhosphositesOfInterestTable';
 
 import { makeStyles } from '@material-ui/core/styles';

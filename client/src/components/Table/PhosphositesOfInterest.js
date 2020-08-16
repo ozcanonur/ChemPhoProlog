@@ -31,7 +31,7 @@ const HeatMap = ({ data, indexBy, keys }) => (
     hoverTarget='cell'
     cellHoverOthersOpacity={0.25}
     enableLabels={false}
-    margin={{ top: 60, right: 60, bottom: 60, left: 120 }}
+    margin={{ top: 80, right: 10, bottom: 10, left: 120 }}
     minValue={-16}
     maxValue={16}
     colors={d3.scaleSequential(d3.interpolatePiYG)}

@@ -10,6 +10,7 @@ import { CallApi } from 'api/api';
 export const AppContext = createContext();
 
 const App = () => {
+  // Allows to store the current app state on page refresh
   const useLocalStorage = (key, initialValue) => {
     // State to store our value
     // Pass initial state function to useState so logic is only executed once
@@ -52,7 +53,7 @@ const App = () => {
   // All kinase data
   const [kinaseData, setKinaseData] = useState([]);
   // Current page the kinase table is at
-  const [kinaseCurrentPage, setKinaseCurrentPage] = useLocalStorage('kinaseCurrentPage', 0);
+  const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [kinaseInfo, setKinaseInfo] = useState('');
 
@@ -111,10 +112,7 @@ const App = () => {
   // List of the data to be displayed on kinase table
   const [perturbagenData, setperturbagenData] = useState([]);
   // Current page the table is at
-  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useLocalStorage(
-    'perturbagenCurrentPage',
-    0
-  );
+  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
   // Selected kinase info and description dictionary per Uniprot ID
   const [perturbagenInfo, setperturbagenInfo] = useState('');
 

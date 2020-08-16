@@ -63,6 +63,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             handleChangePage={handleChangePage}
             expandable={true}
             expandFor={'phosphositesOfInterest'}
+            firstRowOnClick={false}
           />
         )}
       </CardBody>

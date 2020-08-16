@@ -45,6 +45,7 @@ const PerturbagenListLeftPanel = () => {
             selectedInfo={selectedInfo}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
+            firstRowOnClick={true}
           />
         )}
       </CardBody>
