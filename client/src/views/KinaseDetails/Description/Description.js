@@ -20,18 +20,12 @@ const Description = ({ match }) => {
   const classes = useStyles();
 
   const kinase = match.path.split('/')[2];
-  const kinaseData = useContext(AppContext).kinaseListContext.kinaseData;
-
-  const kinaseDesc = kinaseData.filter((item) => item['kinase_name'] === kinase)[0];
 
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
         <GridContainer direction='row' alignItems='stretch'>
           <GridItem lg={6}>
-            <RightPanel selectedInfo={kinaseDesc} />
-          </GridItem>
-          <GridItem lg={3}>
             <Card>
               <CardHeader color='rose'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>
@@ -49,7 +43,7 @@ const Description = ({ match }) => {
               </CardBody>
             </Card>
           </GridItem>
-          <GridItem lg={3}>
+          <GridItem lg={6}>
             <Card>
               <CardHeader color='rose'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>

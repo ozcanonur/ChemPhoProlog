@@ -177,9 +177,7 @@ const CustomTable = (props) => {
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (event) => {
     const filtered = tableData.filter(
-      (row) =>
-        row[0].indexOf(event.target.value.toLowerCase()) === 0 ||
-        row[0].indexOf(event.target.value.toUpperCase()) === 0
+      (row) => row[0].toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
     );
     handleChangePage(null, 0);
     setFilteredList(filtered);

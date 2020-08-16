@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-// @material-ui/core components
+
 import { makeStyles } from '@material-ui/core/styles';
 import Search from '@material-ui/icons/Search';
-// core components
+
 import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
@@ -68,23 +68,18 @@ export default function AdminNavbarLinks() {
       'select distinct kinase_name as kinase from protein where kinase_name not null';
     const substrateQuery = 'select distinct substrate_id as substrate from substrate';
 
-    CallApi(perturbagenQuery).then((res1) => {
-      CallApi(kinaseQuery).then((res2) => {
-        CallApi(substrateQuery).then((res3) => {
-          setSearchResults([...res1, ...res2, ...res3]);
-        });
-      });
-    });
+    Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]).then(
+      (results) => {
+        setSearchResults(results.flat());
+      }
+    );
   }, []);
 
   const handleChange = (value) => {
     if (value === '') setSearchOpen(false);
     else {
       const filteredSearchResults = searchResults.filter((e) => {
-        return (
-          e[Object.keys(e)[0]].indexOf(value.toLowerCase()) === 0 ||
-          e[Object.keys(e)[0]].indexOf(value.toUpperCase()) === 0
-        );
+        return e[Object.keys(e)[0]].toLowerCase().indexOf(value.toLowerCase()) === 0;
       });
 
       setFilteredSearchResults(filteredSearchResults);

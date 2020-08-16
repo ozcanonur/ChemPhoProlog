@@ -4,11 +4,14 @@ import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-
 import CardIcon from 'components/Card/CardIcon';
 import CardFooter from 'components/Card/CardFooter.js';
 import Danger from 'components/Typography/Danger.js';
-import { ArrowForward, Warning, NewReleases, TrendingDown } from '@material-ui/icons';
+
+import ArrowForward from '@material-ui/icons/ArrowForward';
+import Warning from '@material-ui/icons/Warning';
+import NewReleases from '@material-ui/icons/NewReleases';
+import TrendingDown from '@material-ui/icons/TrendingDown';
 
 import { PieChart } from 'views/Lists/PieChart';
 

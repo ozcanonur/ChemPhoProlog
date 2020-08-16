@@ -7,6 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+
 import Menu from '@material-ui/icons/Menu';
 
 import AdminNavbarLinks from './AdminNavbarLinks.js';
@@ -45,19 +48,28 @@ export default function Header(props) {
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
-        <div className={classes.flex}>
-          <Button color='transparent' href='#' className={classes.title}>
-            {makeBrand() ? makeBrand() : ''}
-          </Button>
-        </div>
-        <Hidden smDown implementation='css'>
-          {<AdminNavbarLinks />}
-        </Hidden>
-        <Hidden mdUp implementation='css'>
-          <IconButton color='inherit' aria-label='open drawer' onClick={props.handleDrawerToggle}>
-            <Menu />
-          </IconButton>
-        </Hidden>
+        <GridContainer direction='row' justify='space-between' style={{ width: '100%' }}>
+          <GridItem>
+            <div className={classes.flex}>
+              <Button color='transparent' href='#' className={classes.title}>
+                {makeBrand() ? makeBrand() : ''}
+              </Button>
+            </div>
+          </GridItem>
+          <GridItem>
+            <Hidden smDown implementation='css'>
+              {<AdminNavbarLinks />}
+            </Hidden>
+            <Hidden mdUp implementation='css'>
+              <IconButton
+                color='inherit'
+                aria-label='open drawer'
+                onClick={props.handleDrawerToggle}>
+                <Menu />
+              </IconButton>
+            </Hidden>
+          </GridItem>
+        </GridContainer>
       </Toolbar>
     </AppBar>
   );
