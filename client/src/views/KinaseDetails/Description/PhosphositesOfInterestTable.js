@@ -48,7 +48,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             className='my-node'
             tableHeaderColor='warning'
             tableHead={[
-              '',
+              'Obs. Data',
               'Location',
               'Residue',
               'Detected in',

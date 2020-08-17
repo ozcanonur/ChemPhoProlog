@@ -1,6 +1,5 @@
 node_modules/
 chemphopro.db
-package-lock.json
 .history/
 .dist/
 client/documentation/
