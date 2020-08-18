@@ -38,3 +38,11 @@ export const CallApiForPDTs = async (kinase, cell_line) => {
 
   return await response.data;
 };
+
+export const CallApiForPathway = async () => {
+  const response = await axios.get('/api/pathway');
+
+  if (response.status !== 200) throw Error(response.statusText);
+
+  return await response.data;
+};

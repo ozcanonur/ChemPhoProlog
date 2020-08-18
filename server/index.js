@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
+const parse = require('csv-parse');
+const fs = require('fs').promises;
+const _ = require('lodash');
 
 const router = express();
 const port = process.env.PORT || 5000;
@@ -73,6 +76,66 @@ router.get('/api/pdts/', (req, res) => {
 
     res.send(rows);
   });
+});
+
+String.prototype.replaceAll = function (search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
+
+const parsePathway = (rows) => {
+  let relations = {}; // KPa affects phosphosites
+  let leftOvers = []; // Phosphosites that exist, but not affected by KPa
+  let regulatory = {}; // Regulatory effect of phosphosites
+  let stoppingReasons = {}; // Why we stopped
+  for (const row of rows) {
+    let path = row.Path;
+    path = path.substring(1, path.length - 1);
+    path = path.split(/\[(.+?)\]/);
+
+    for (let i = 1; i < path.length - 1; i += 2) {
+      let step = path[i].split(', ');
+      step = step.map((e) => e.replaceAll("'", ''));
+
+      const affected = step[0];
+      const affecting = step[3];
+      // If we are at the last node
+      if (i === path.length - 2) {
+        // na ending without KPa
+        if (step[4] === 'na' && step[3] === 'na') {
+          leftOvers.push(step[0]);
+          regulatory[step[0]] = step[2];
+          stoppingReasons[step[0]] = row.Explanation;
+          continue;
+        } else if (step[4].includes('(')) {
+          // regular phosphosite ending
+          leftOvers.push(step[4]);
+          regulatory[step[4]] = step[6];
+          stoppingReasons[step[4]] = row.Explanation;
+        } else {
+          stoppingReasons[step[3]] = row.Explanation;
+        }
+      }
+
+      if (!(affecting in relations)) relations[affecting] = [affected];
+      else if (!relations[affecting].includes(affected)) relations[affecting].push(affected);
+      regulatory[step[0]] = step[2];
+    }
+  }
+  // Remove phosphosites already in relations, also duplicates
+  leftOvers = _.uniqWith(leftOvers, (e) => Object.values(relations).flat().includes(e));
+  leftOvers = _.uniq(leftOvers);
+
+  return { relations, leftOvers, regulatory, stoppingReasons };
+};
+
+router.get('/api/pathway', (req, res) => {
+  (async () => {
+    const fileData = await fs.readFile('../toydata.csv');
+    parse(fileData, { columns: true, trim: true }, (err, rows) => {
+      res.send(parsePathway(rows));
+    });
+  })();
 });
 
 router.get('/*', function (req, res) {

@@ -2,6 +2,7 @@ import WelcomePage from 'views/Welcome/Welcome';
 import KinaseList from 'views/Lists/KinaseList/KinaseList';
 import PerturbagenList from 'views/Lists/PerturbagenList/PerturbagenList';
 import AboutUs from 'views/AboutUs/AboutUs.js';
+import Pathway from 'views/Pathway/Pathway';
 
 import Home from '@material-ui/icons/Home';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
@@ -44,6 +45,13 @@ export const routes = [
     name: 'API',
     icon: Web,
     component: WelcomePage,
+    layout: '/home',
+  },
+  {
+    path: '/pathway',
+    name: 'Pathway',
+    icon: Web,
+    component: Pathway,
     layout: '/home',
   },
 ];
