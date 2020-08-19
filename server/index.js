@@ -28,7 +28,6 @@ const db = new sqlite3.Database('../chemphopro.db', sqlite3.OPEN_READONLY, (err)
 // General api
 router.get('/api/api/', (req, res) => {
   const queryString = req.query.query;
-
   db.all(queryString, [], (err, rows) => {
     if (err) throw err;
 
@@ -88,6 +87,7 @@ const parsePathway = (rows) => {
   let phosphosites = []; // Phosphosites that exist
   let regulatory = {}; // Regulatory effect of phosphosites
   let stoppingReasons = {}; // Why we stopped
+
   for (const row of rows) {
     let path = row.Path;
     path = path.substring(1, path.length - 1);
@@ -107,8 +107,8 @@ const parsePathway = (rows) => {
           regulatory[step[0]] = step[2];
           stoppingReasons[step[0]] = row.Explanation;
           continue;
-        } else if (step[4].includes('(')) {
           // regular phosphosite ending
+        } else if (step[4].includes('(')) {
           phosphosites.push(step[4]);
           regulatory[step[4]] = step[6];
           stoppingReasons[step[4]] = row.Explanation;
@@ -143,21 +143,3 @@ router.get('/*', function (req, res) {
     if (err) res.status(500).send(err);
   });
 });
-
-//const mongo = require('mongodb');
-// const MongoClient = mongo.MongoClient;
-
-// const url = 'mongodb://localhost:27017/';
-
-// MongoClient.connect(url, (err, db) => {
-//   if (err) throw err;
-//   console.log('Connected to Mongo');
-//   const chemphoprologDB = db.db('chemphoprolog');
-
-//   const query = { kinase: 'AKT1' };
-//   chemphoprologDB.collection('KS_relationship').find(query, function (err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     db.close();
-//   });
-// });
