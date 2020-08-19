@@ -85,7 +85,7 @@ String.prototype.replaceAll = function (search, replacement) {
 
 const parsePathway = (rows) => {
   let relations = {}; // KPa affects phosphosites
-  let leftOvers = []; // Phosphosites that exist, but not affected by KPa
+  let phosphosites = []; // Phosphosites that exist
   let regulatory = {}; // Regulatory effect of phosphosites
   let stoppingReasons = {}; // Why we stopped
   for (const row of rows) {
@@ -103,13 +103,13 @@ const parsePathway = (rows) => {
       if (i === path.length - 2) {
         // na ending without KPa
         if (step[4] === 'na' && step[3] === 'na') {
-          leftOvers.push(step[0]);
+          phosphosites.push(step[0]);
           regulatory[step[0]] = step[2];
           stoppingReasons[step[0]] = row.Explanation;
           continue;
         } else if (step[4].includes('(')) {
           // regular phosphosite ending
-          leftOvers.push(step[4]);
+          phosphosites.push(step[4]);
           regulatory[step[4]] = step[6];
           stoppingReasons[step[4]] = row.Explanation;
         } else {
@@ -122,27 +122,25 @@ const parsePathway = (rows) => {
       regulatory[step[0]] = step[2];
     }
   }
-  // Remove phosphosites already in relations, also duplicates
-  leftOvers = _.uniqWith(leftOvers, (e) => Object.values(relations).flat().includes(e));
-  leftOvers = _.uniq(leftOvers);
+  // Combine all phosphosites (from relations and leftovers)
+  phosphosites = _.union(phosphosites, Object.values(relations).flat());
 
-  return { relations, leftOvers, regulatory, stoppingReasons };
+  return { relations, phosphosites, regulatory, stoppingReasons };
 };
 
 router.get('/api/pathway', (req, res) => {
   (async () => {
     const fileData = await fs.readFile('../toydata.csv');
     parse(fileData, { columns: true, trim: true }, (err, rows) => {
-      res.send(parsePathway(rows));
+      const pathwayData = parsePathway(rows);
+      res.send(pathwayData);
     });
   })();
 });
 
 router.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
-    if (err) {
-      res.status(500).send(err);
-    }
+    if (err) res.status(500).send(err);
   });
 });
 
