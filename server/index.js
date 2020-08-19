@@ -130,7 +130,7 @@ const parsePathway = (rows) => {
 
 router.get('/api/pathway', (req, res) => {
   (async () => {
-    const fileData = await fs.readFile('../fulldata.csv');
+    const fileData = await fs.readFile('../toydata.csv');
     parse(fileData, { columns: true, trim: true }, (err, rows) => {
       const pathwayData = parsePathway(rows);
       res.send(pathwayData);
