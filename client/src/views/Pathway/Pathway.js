@@ -14,8 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
-Cytoscape.use(COSEBilkent);
-
 const buildCy = (pathwayData) => {
   const stylesheet = [
     {
@@ -29,10 +27,10 @@ const buildCy = (pathwayData) => {
       selector: 'edge',
       style: {
         'curve-style': 'bezier',
-        'target-arrow-shape': 'triangle',
+        'source-arrow-shape': 'triangle',
         width: 4,
         'line-color': '#ddd',
-        'target-arrow-color': 'red',
+        'source-arrow-color': 'red',
       },
     },
     {
@@ -40,13 +38,6 @@ const buildCy = (pathwayData) => {
       style: {
         backgroundColor: 'orange',
         content: 'data(id)',
-      },
-    },
-    {
-      selector: '.phosphositeAndKPa',
-      style: {
-        'line-color': 'orange',
-        'source-arrow-shape': 'none',
       },
     },
     {
@@ -59,20 +50,20 @@ const buildCy = (pathwayData) => {
 
   const layout = {
     name: 'cose-bilkent',
-    quality: 'draft',
+    quality: 'default',
     randomize: false,
     // Whether to include labels in node dimensions. Useful for avoiding label overlap
     nodeDimensionsIncludeLabels: true,
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 30000,
+    nodeRepulsion: 10000,
     // Ideal (intra-graph) edge length
     idealEdgeLength: 50,
     // Divisor to compute edge forces
     edgeElasticity: 0.1,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
-    nestingFactor: 0.1,
+    nestingFactor: 0.5,
     // Gravity force (constant)
     gravity: 0.25,
     // Maximum number of iterations to perform
@@ -94,7 +85,6 @@ const buildCy = (pathwayData) => {
     gravityRange: 10,
     // Initial cooling factor for incremental layout
     initialEnergyOnIncremental: 0.5,
-    randomize: false,
   };
 
   // KPa s
@@ -141,6 +131,8 @@ const Pathway = () => {
 
   const { stylesheet, layout, elements } = buildCy(pathwayData);
 
+  Cytoscape.use(COSEBilkent);
+
   return (
     <div style={{ padding: '2em' }}>
       <Card>
@@ -154,6 +146,7 @@ const Pathway = () => {
               cy={(cy) =>
                 cy.on('resize', (_evt) => {
                   cy.layout(layout).run();
+                  cy.fit();
                 })
               }
               elements={elements}
