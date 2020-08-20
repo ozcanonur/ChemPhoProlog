@@ -7,6 +7,9 @@ import { routes } from 'routes.js';
 import { additionalRoutes } from 'additionalRoutes';
 import { CallApi } from 'api/api';
 
+import { store } from 'store';
+import { Provider } from 'react-redux';
+
 export const AppContext = createContext();
 
 const App = () => {
@@ -62,7 +65,6 @@ const App = () => {
   useEffect(() => {
     // Get all kinases from DB
     const kinaseQuery = 'select * from Protein where kinase_name <> "" order by kinase_name';
-
     CallApi(kinaseQuery).then((res) => {
       // Set the main table body data
       setKinaseData(res);
@@ -188,9 +190,11 @@ const App = () => {
   };
 
   return (
-    <AppContext.Provider value={combinedContext}>
-      <Home {...props} />
-    </AppContext.Provider>
+    <Provider store={store}>
+      <AppContext.Provider value={combinedContext}>
+        <Home {...props} />
+      </AppContext.Provider>
+    </Provider>
   );
 };
 

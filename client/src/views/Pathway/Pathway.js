@@ -57,7 +57,7 @@ const buildCy = (pathwayData) => {
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 10000,
+    nodeRepulsion: 20000,
     // Ideal (intra-graph) edge length
     idealEdgeLength: 50,
     // Divisor to compute edge forces
@@ -130,8 +130,15 @@ const Pathway = () => {
   }, []);
 
   const { stylesheet, layout, elements } = buildCy(pathwayData);
-
   Cytoscape.use(COSEBilkent);
+
+  // Additional tweaks
+  const extras = (cy) => {
+    cy.on('resize', (_evt) => {
+      cy.layout(layout).run();
+      cy.fit();
+    });
+  };
 
   return (
     <div style={{ padding: '2em' }}>
@@ -143,12 +150,7 @@ const Pathway = () => {
         <CardBody>
           {elements.length !== 0 ? (
             <CytoscapeComponent
-              cy={(cy) =>
-                cy.on('resize', (_evt) => {
-                  cy.layout(layout).run();
-                  cy.fit();
-                })
-              }
+              cy={(cy) => extras(cy)}
               elements={elements}
               style={{ height: '800px' }}
               stylesheet={stylesheet}

@@ -50,7 +50,7 @@ const PDTTable = ({ cell_line }) => {
           <Table
             className='my-node'
             tableHeaderColor='warning'
-            tableHead={['', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
+            tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
             tableData={PDTs.map(Object.values)}
             rowsPerPage={10}
             rowEndArrow={false}
