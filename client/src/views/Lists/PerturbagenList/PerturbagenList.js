@@ -1,30 +1,68 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardBody from 'components/Card/CardBody.js';
 import Typography from '@material-ui/core/Typography';
-import PerturbagenListLeftPanel from 'views/Lists/PerturbagenList/PerturbagenListLeftPanel';
+import CardHeader from 'components/Card/CardHeader.js';
+import Table from 'components/Table/Table';
+
 import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
 
 import { Slide } from '@material-ui/core';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPerturbagenData } from 'actions/PerturbagenList/fetchPerturbagenData';
+import { changeSelectedPerturbagen } from 'actions/PerturbagenList/changeSelectedPerturbagen';
+import { changeCurrentPagePerturbagen } from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
+
 import { AppContext } from 'views/App';
 
-const PerturbagenList = () => {
-  const selectedInfo = useContext(AppContext).perturbagenListContext.selectedInfo;
-  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+const useStyles = makeStyles(styles);
 
+const PerturbagenList = () => {
+  const classes = useStyles();
+  // Table data
+  const data = useSelector((state) => state.perturbagenData);
+  const tableData = data.map(Object.values);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data.length === 0) {
+      const query = 'select * from Perturbagen group by name order by name';
+      dispatch(fetchPerturbagenData(query));
+    }
+  }, []);
+
+  // Currently selected item
+  const selectedItem = useSelector((state) => state.selectedPerturbagen);
+  const handleSelection = (selection) => {
+    dispatch(changeSelectedPerturbagen(selection));
+  };
+  const selectedInfo = data.filter((item) => item['name'] === selectedItem)[0];
+
+  // Current page
+  const currentPage = useSelector((state) => state.currentPagePerturbagen);
+  const handlePageChange = (event, page) => {
+    dispatch(changeCurrentPagePerturbagen(page));
+  };
+
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
   useEffect(() => {
     setRightPanelOpen(false);
 
-    if (selectedInfo !== '') {
+    if (selectedItem !== '') {
       setTimeout(() => {
         setRightPanelOpen(true);
-      }, 200);
+      }, 300);
     }
-  }, [selectedInfo]);
+  }, [selectedItem]);
+
+  const handleAdd = useContext(AppContext).perturbagenListContext.handleAdd;
+
   return (
     <div>
       <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
@@ -45,10 +83,36 @@ const PerturbagenList = () => {
         <GridItem md>
           <GridContainer direction='row'>
             <GridItem sm={12} lg={6}>
-              <PerturbagenListLeftPanel />
+              <Card>
+                <CardHeader color='warning'>
+                  <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
+                  <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
+                </CardHeader>
+                <CardBody>
+                  {tableData === [] ? (
+                    <div>Loading...</div>
+                  ) : (
+                    <Table
+                      className='my-node'
+                      tableHeaderColor='warning'
+                      tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+                      tableData={tableData}
+                      rowsPerPage={10}
+                      collapsible={false}
+                      rowEndArrow={true}
+                      handleSelection={handleSelection}
+                      handleAdd={handleAdd}
+                      selectedInfo={selectedInfo}
+                      currentPage={currentPage}
+                      handleChangePage={handlePageChange}
+                      firstRowOnClick={true}
+                    />
+                  )}
+                </CardBody>
+              </Card>
             </GridItem>
             <GridItem sm={12} lg={6}>
-              <Slide in={rightPanelOpen} direction='left'>
+              <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
                   <PerturbagenListRightPanel selectedInfo={selectedInfo} />
                 </div>

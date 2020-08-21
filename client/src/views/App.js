@@ -52,41 +52,6 @@ const App = () => {
   // Currently added kinases/perturbagens to the sidebar
   const [currentlyInspecting, setCurrentlyInspecting] = useLocalStorage('currentlyInspecting', []);
 
-  //#region KINASE TABLE THINGS
-  // All kinase data
-  const [kinaseData, setKinaseData] = useState([]);
-  // Current page the kinase table is at
-  const [kinaseCurrentPage, setKinaseCurrentPage] = useState(0);
-  // Selected kinase info and description dictionary per Uniprot ID
-  const [kinaseInfo, setKinaseInfo] = useState('');
-
-  // Only run on first mount
-  // Gets the kinases and details and sets the states for them
-  useEffect(() => {
-    // Get all kinases from DB
-    const kinaseQuery = 'select * from Protein where kinase_name <> "" order by kinase_name';
-    CallApi(kinaseQuery).then((res) => {
-      // Set the main table body data
-      setKinaseData(res);
-    });
-  }, []);
-
-  // Only keep these three columns, map to array for table component to interpret
-  const kinaseTableData = kinaseData
-    .map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id']))
-    .map(Object.values);
-
-  // Handle when a kinase is selected
-  const handleKinaseSelection = (selection) => {
-    const selectedKinaseDesc = kinaseData.filter((item) => item['kinase_name'] === selection);
-    setKinaseInfo(selectedKinaseDesc[0]);
-  };
-
-  // Handle when switched to another page on the table
-  const kinaseHandleChangePage = (event, newPage) => {
-    setKinaseCurrentPage(newPage);
-  };
-
   // Handle when the user adds a kinase to the sidebar for inspection
   const handleKinaseAdd = (selection) => {
     // Only keep unique
@@ -100,44 +65,7 @@ const App = () => {
 
   // Context related to the kinase list
   const kinaseListContext = {
-    kinaseData: kinaseData,
-    tableData: kinaseTableData,
-    selectedInfo: kinaseInfo,
-    handleSelection: handleKinaseSelection,
     handleAdd: handleKinaseAdd,
-    currentPage: kinaseCurrentPage,
-    handleChangePage: kinaseHandleChangePage,
-  };
-  //#endregion KINASE TABLE THINGS
-
-  //#region PERTURBAGEN TABLE THINGS
-  // List of the data to be displayed on kinase table
-  const [perturbagenData, setperturbagenData] = useState([]);
-  // Current page the table is at
-  const [perturbagenCurrentPage, setPerturbagenCurrentPage] = useState(0);
-  // Selected kinase info and description dictionary per Uniprot ID
-  const [perturbagenInfo, setperturbagenInfo] = useState('');
-
-  // Only run on first mount
-  // Gets the kinases and details and sets the states for them
-  useEffect(() => {
-    const apiQuery = 'select * from Perturbagen group by name order by name';
-    // Get all kinases from DB
-    CallApi(apiQuery).then((res) => {
-      // Set the main table body data
-      setperturbagenData(res);
-    });
-  }, []);
-
-  const perturbagenTableData = perturbagenData.map(Object.values);
-
-  const handlePerturbagenSelection = (selection) => {
-    const selectedPerturbagenDesc = perturbagenData.filter((item) => item['name'] === selection);
-    setperturbagenInfo(selectedPerturbagenDesc[0]);
-  };
-
-  const perturbagenHandlePageChange = (event, newPage) => {
-    setPerturbagenCurrentPage(newPage);
   };
 
   const handlePerturbagenAdd = (selection) => {
@@ -151,14 +79,8 @@ const App = () => {
   };
 
   const perturbagenListContext = {
-    tableData: perturbagenTableData,
-    selectedInfo: perturbagenInfo,
-    handleSelection: handlePerturbagenSelection,
     handleAdd: handlePerturbagenAdd,
-    currentPage: perturbagenCurrentPage,
-    handleChangePage: perturbagenHandlePageChange,
   };
-  //#endregion PERTURBAGEN TABLE THINGS
 
   const combinedContext = {
     kinaseListContext: kinaseListContext,
