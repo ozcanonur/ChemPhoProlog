@@ -7,6 +7,8 @@ import perturbagenDataReducer from 'reducers/PerturbagenList/perturbagenDataRedu
 import selectedPerturbagenReducer from 'reducers/PerturbagenList/selectedPerturbagenReducer';
 import currentPagePerturbagenReducer from 'reducers/PerturbagenList/currentPagePerturbagenReducer';
 
+import sidebarRoutesReducer from 'reducers/Sidebar/sidebarRoutesReducer';
+
 export default combineReducers({
   kinaseData: kinaseDataReducer,
   selectedKinase: selectedKinaseReducer,
@@ -14,4 +16,5 @@ export default combineReducers({
   perturbagenData: perturbagenDataReducer,
   selectedPerturbagen: selectedPerturbagenReducer,
   currentPagePerturbagen: currentPagePerturbagenReducer,
+  sidebarRoutes: sidebarRoutesReducer,
 });

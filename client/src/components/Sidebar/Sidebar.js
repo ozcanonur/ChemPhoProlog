@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
@@ -13,9 +12,9 @@ import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 
-let ps;
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
+let ps;
 
 const useStyles = makeStyles(styles);
 
@@ -68,33 +67,6 @@ const Sidebar = (props) => {
 
   return (
     <div>
-      <Hidden mdUp implementation='css'>
-        <Drawer
-          variant='temporary'
-          anchor='right'
-          open={props.open}
-          classes={{
-            paper: classNames(classes.drawerPaper),
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}>
-          {brand('ChemPhoProlog')}
-          <div className={classes.sidebarWrapper}>
-            <List className={classes.list}>
-              <StandardRoutes routes={routes} {...props} />
-              {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
-              <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
-              {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
-              <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
-            </List>
-          </div>
-          {image !== undefined ? (
-            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
-          ) : null}
-        </Drawer>
-      </Hidden>
       <Hidden smDown implementation='css'>
         <Drawer
           anchor='left'
@@ -127,6 +99,33 @@ const Sidebar = (props) => {
                   <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
                 </div>
               </Slide>
+            </List>
+          </div>
+          {image !== undefined ? (
+            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
+          ) : null}
+        </Drawer>
+      </Hidden>
+      <Hidden mdUp implementation='css'>
+        <Drawer
+          variant='temporary'
+          anchor='right'
+          open={props.open}
+          classes={{
+            paper: classNames(classes.drawerPaper),
+          }}
+          onClose={props.handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}>
+          {brand('ChemPhoProlog')}
+          <div className={classes.sidebarWrapper}>
+            <List className={classes.list}>
+              <StandardRoutes routes={routes} {...props} />
+              {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
+              <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
+              {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
+              <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
             </List>
           </div>
           {image !== undefined ? (

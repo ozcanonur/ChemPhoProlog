@@ -1,123 +1,106 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { pick, uniqWith } from 'lodash';
+import React, { useState, createRef, useEffect } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Home from 'views/Home';
+import Navbar from 'components/Navbars/Navbar.js';
+import Sidebar from 'components/Sidebar/Sidebar.js';
+
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 import { routes } from 'routes.js';
 import { additionalRoutes } from 'additionalRoutes';
-import { CallApi } from 'api/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeSidebarRoute } from 'actions/Sidebar/removeSidebarRoute';
 
-import { store } from 'store';
-import { Provider } from 'react-redux';
+import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles(styles);
 
-export const AppContext = createContext();
+let ps;
 
-const App = () => {
-  // Allows to store the current app state on page refresh
-  const useLocalStorage = (key, initialValue) => {
-    // State to store our value
-    // Pass initial state function to useState so logic is only executed once
-    const [storedValue, setStoredValue] = useState(() => {
-      try {
-        // Get from local storage by key
-        const item = window.localStorage.getItem(key);
-        // Parse stored json or if none return initialValue
-        return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        // If error also return initialValue
-        console.log(error);
-        return initialValue;
+const Home = () => {
+  //#region Misc.
+  const classes = useStyles();
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const resizeFunction = () => {
+    if (window.innerWidth >= 960) {
+      setMobileOpen(false);
+    }
+  };
+
+  // ref to help us initialize PerfectScrollbar on windows devices
+  const mainPanel = createRef();
+  // initialize and destroy the PerfectScrollbar plugin
+  useEffect(() => {
+    if (navigator.platform.indexOf('Win') > -1) {
+      ps = new PerfectScrollbar(mainPanel.current, {
+        suppressScrollX: true,
+        suppressScrollY: false,
+      });
+      document.body.style.overflow = 'hidden';
+    }
+    window.addEventListener('resize', resizeFunction);
+
+    return function cleanup() {
+      if (navigator.platform.indexOf('Win') > -1) {
+        ps.destroy();
       }
-    });
-
-    // Return a wrapped version of useState's setter function that ...
-    // ... persists the new value to localStorage.
-    const setValue = (value) => {
-      try {
-        // Allow value to be a function so we have same API as useState
-        const valueToStore = value instanceof Function ? value(storedValue) : value;
-        // Save state
-        setStoredValue(valueToStore);
-        // Save to local storage
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      } catch (error) {
-        // A more advanced implementation would handle the error case
-        console.log(error);
-      }
+      window.removeEventListener('resize', resizeFunction);
     };
+  }, [mainPanel]);
+  //#endregion Misc.
 
-    return [storedValue, setValue];
+  const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
+
+  const getExtraRoutes = (type) => {
+    return currentlyInspecting
+      .filter((e) => e.type === type)
+      .map((e) => e.name)
+      .map((e) => additionalRoutes(type, e));
   };
 
-  // Currently added kinases/perturbagens to the sidebar
-  const [currentlyInspecting, setCurrentlyInspecting] = useLocalStorage('currentlyInspecting', []);
+  const extraKinaseRoutes = getExtraRoutes('kinase');
+  const extraPerturbagenRoutes = getExtraRoutes('perturbagen');
 
-  // Handle when the user adds a kinase to the sidebar for inspection
-  const handleKinaseAdd = (selection) => {
-    // Only keep unique
-    const uniqCurrentlyInspecting = uniqWith(
-      [...currentlyInspecting, { type: 'kinase', name: selection }],
-      (x, y) => x.type === y.type && x.name === y.name
-    );
-
-    setCurrentlyInspecting(uniqCurrentlyInspecting);
-  };
-
-  // Context related to the kinase list
-  const kinaseListContext = {
-    handleAdd: handleKinaseAdd,
-  };
-
-  const handlePerturbagenAdd = (selection) => {
-    // Only keep unique
-    const uniqCurrentlyInspecting = uniqWith(
-      [...currentlyInspecting, { type: 'perturbagen', name: selection }],
-      (x, y) => x.type === y.type && x.name === y.name
-    );
-
-    setCurrentlyInspecting(uniqCurrentlyInspecting);
-  };
-
-  const perturbagenListContext = {
-    handleAdd: handlePerturbagenAdd,
-  };
-
-  const combinedContext = {
-    kinaseListContext: kinaseListContext,
-    perturbagenListContext: perturbagenListContext,
-  };
-
-  const extraKinaseRoutes = currentlyInspecting
-    .filter((e) => e.type === 'kinase')
-    .map((e) => e.name)
-    .map((e) => additionalRoutes('kinase', e));
-
-  const extraPerturbagenRoutes = currentlyInspecting
-    .filter((e) => e.type === 'perturbagen')
-    .map((e) => e.name)
-    .map((e) => additionalRoutes('perturbagen', e));
-
-  const handleSelectedTabRemove = (name) => {
-    setCurrentlyInspecting(currentlyInspecting.filter((e) => e.name !== name));
+  const dispatch = useDispatch();
+  const handleSelectedTabRemove = (item) => {
+    dispatch(removeSidebarRoute(item));
   };
 
   const allRoutes = [...[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat(), ...routes];
 
-  const props = {
-    routes,
-    extraKinaseRoutes,
-    extraPerturbagenRoutes,
-    handleSelectedTabRemove,
-    allRoutes,
-  };
-
   return (
-    <Provider store={store}>
-      <AppContext.Provider value={combinedContext}>
-        <Home {...props} />
-      </AppContext.Provider>
-    </Provider>
+    <div className={classes.wrapper}>
+      <Sidebar
+        handleDrawerToggle={handleDrawerToggle}
+        open={mobileOpen}
+        color={'blue'}
+        routes={routes}
+        currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
+        handleSelectedTabRemove={handleSelectedTabRemove}
+      />
+      <div className={classes.mainPanel} ref={mainPanel}>
+        <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} />
+        <div className={classes.map}>
+          <Switch>
+            {routes.map((prop, key) => (
+              <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+            ))}
+            {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
+              <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+            ))}
+            <Redirect from='/' to='/home/kinaseList' />
+          </Switch>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default App;
+export default Home;

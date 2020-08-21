@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -18,8 +18,7 @@ import { pick } from 'lodash';
 import { fetchKinaseData } from 'actions/KinaseList/fetchKinaseData';
 import { changeSelectedKinase } from 'actions/KinaseList/changeSelectedKinase';
 import { changeCurrentPageKinase } from 'actions/KinaseList/changeCurrentPageKinase';
-
-import { AppContext } from 'views/App';
+import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,7 +40,7 @@ const KinaseList = () => {
       const query = 'select * from Protein where kinase_name <> "" order by kinase_name';
       dispatch(fetchKinaseData(query));
     }
-  }, []);
+  }, [data, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedKinase);
@@ -67,7 +66,9 @@ const KinaseList = () => {
     }
   }, [selectedItem]);
 
-  const { handleAdd } = useContext(AppContext).kinaseListContext;
+  const handleKinaseAdd = (selection) => {
+    dispatch(addSidebarRouteKinase(selection));
+  };
 
   return (
     <div>
@@ -109,7 +110,7 @@ const KinaseList = () => {
                       rowEndArrow={true}
                       handleSelection={handleSelection}
                       selectedInfo={selectedInfo}
-                      handleAdd={handleAdd}
+                      handleAdd={handleKinaseAdd}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
                       firstRowOnClick={true}

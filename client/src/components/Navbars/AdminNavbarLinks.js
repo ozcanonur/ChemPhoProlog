@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FixedSizeList } from 'react-window';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
+import { Healing, PanoramaHorizontal, TrendingDown } from '@material-ui/icons';
 
 import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
-import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
-import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import { FixedSizeList } from 'react-window';
-import { Healing, PanoramaHorizontal, TrendingDown } from '@material-ui/icons';
 
 import { CallApi } from 'api/api';
-import { AppContext } from 'views/App';
-import { Link } from 'react-router-dom';
+import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
+import { addSidebarRoutePerturbagen } from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
+import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
+import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
@@ -21,26 +23,21 @@ const ItemRenderer = ({ data, index, style }) => {
   const itemName = item[Object.keys(item)[0]];
   const itemType = Object.keys(item)[0];
 
-  const context = useContext(AppContext);
-
   let redirectTo = `/home/${itemName}/description`;
-  let selectCallBack = null;
   let itemIcon;
   if (itemType === 'kinase') {
     itemIcon = <PanoramaHorizontal />;
-    selectCallBack = context.kinaseListContext.handleAdd;
   } else if (itemType === 'perturbagen') {
     itemIcon = <Healing />;
-    selectCallBack = context.perturbagenListContext.handleAdd;
   } else {
     itemIcon = <TrendingDown />;
     redirectTo = '#';
   }
 
+  const dispatch = useDispatch();
   const handleSelect = () => {
-    if (itemType === 'kinase' || itemType === 'perturbagen') {
-      selectCallBack(itemName);
-    }
+    if (itemType === 'kinase') dispatch(addSidebarRouteKinase(itemName));
+    else if (itemType === 'perturbagen') dispatch(addSidebarRoutePerturbagen(itemName));
   };
   // TODO POINTER EVENTS DOESNT WORK (ONCLICK BECAUSE OF ONBLUR FALSE OR SMTH)
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -16,8 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPerturbagenData } from 'actions/PerturbagenList/fetchPerturbagenData';
 import { changeSelectedPerturbagen } from 'actions/PerturbagenList/changeSelectedPerturbagen';
 import { changeCurrentPagePerturbagen } from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
-
-import { AppContext } from 'views/App';
+import { addSidebarRoutePerturbagen } from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
@@ -35,7 +34,7 @@ const PerturbagenList = () => {
       const query = 'select * from Perturbagen group by name order by name';
       dispatch(fetchPerturbagenData(query));
     }
-  }, []);
+  }, [data, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedPerturbagen);
@@ -61,7 +60,9 @@ const PerturbagenList = () => {
     }
   }, [selectedItem]);
 
-  const handleAdd = useContext(AppContext).perturbagenListContext.handleAdd;
+  const handlePerturbagenAdd = (selection) => {
+    dispatch(addSidebarRoutePerturbagen(selection));
+  };
 
   return (
     <div>
@@ -101,7 +102,7 @@ const PerturbagenList = () => {
                       collapsible={false}
                       rowEndArrow={true}
                       handleSelection={handleSelection}
-                      handleAdd={handleAdd}
+                      handleAdd={handlePerturbagenAdd}
                       selectedInfo={selectedInfo}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
