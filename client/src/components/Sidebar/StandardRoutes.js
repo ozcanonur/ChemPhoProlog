@@ -1,16 +1,19 @@
 /*eslint-disable*/
 import React from 'react';
-import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Icon from '@material-ui/core/Icon';
+
+import classNames from 'classnames';
+import { routes } from 'routes';
+
 import { makeStyles } from '@material-ui/core/styles';
-import { ListItem, ListItemText, Icon } from '@material-ui/core';
-
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
-
 const useStyles = makeStyles(styles);
 
-const StandardRoutes = ({ routes, color }) => {
+const StandardRoutes = () => {
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
@@ -23,7 +26,7 @@ const StandardRoutes = ({ routes, color }) => {
     var listItemClasses;
 
     listItemClasses = classNames({
-      [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
+      [' ' + classes['blue']]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({
@@ -32,7 +35,10 @@ const StandardRoutes = ({ routes, color }) => {
 
     return (
       <div key={key}>
-        <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
+        <NavLink
+          to={prop.layout + prop.path}
+          className={activePro + classes.item}
+          activeClassName='active'>
           <ListItem button className={classes.itemLink + listItemClasses}>
             {typeof prop.icon === 'string' ? (
               <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>

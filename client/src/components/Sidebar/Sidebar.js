@@ -1,8 +1,7 @@
 import React, { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, Hidden, List, Slide } from '@material-ui/core';
+import { Drawer, Hidden, List } from '@material-ui/core';
 
 import image from 'assets/img/dna.jpg';
 import logo from 'assets/img/reactlogo.png';
@@ -11,14 +10,14 @@ import StandardRoutes from 'components/Sidebar/StandardRoutes';
 import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import { makeStyles } from '@material-ui/core/styles';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
+
 let ps;
-
 const useStyles = makeStyles(styles);
-
-const Sidebar = (props) => {
+const Sidebar = ({ open, handleDrawerToggle }) => {
   //#region BASE THINGS
   const [mobileOpen, setMobileOpen] = useState(false);
   // Perfect Scrollbar solution
@@ -52,8 +51,6 @@ const Sidebar = (props) => {
   const classes = useStyles();
   //#endregion BASE THINGS
 
-  const { routes, currentlyInspecting } = props;
-
   const brand = (text) => (
     <div className={classes.logo}>
       <a href={'#'} className={classNames(classes.logoLink)}>
@@ -78,27 +75,9 @@ const Sidebar = (props) => {
           {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
-              <StandardRoutes routes={routes} {...props} />
-              <Slide
-                in={currentlyInspecting.kinase.length !== 0}
-                direction='left'
-                mountOnEnter
-                unmountOnExit>
-                <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
-                  {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
-                  <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
-                </div>
-              </Slide>
-              <Slide
-                in={currentlyInspecting.perturbagen.length !== 0}
-                direction='left'
-                mountOnEnter
-                unmountOnExit>
-                <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
-                  {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
-                  <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
-                </div>
-              </Slide>
+              <StandardRoutes />
+              <ExtraRoutes type={'kinase'} />
+              <ExtraRoutes type={'perturbagen'} />
             </List>
           </div>
           {image !== undefined ? (
@@ -110,22 +89,20 @@ const Sidebar = (props) => {
         <Drawer
           variant='temporary'
           anchor='right'
-          open={props.open}
+          open={open}
           classes={{
             paper: classNames(classes.drawerPaper),
           }}
-          onClose={props.handleDrawerToggle}
+          onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true,
           }}>
           {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
-              <StandardRoutes routes={routes} {...props} />
-              {currentlyInspecting.kinase.length !== 0 ? brand('Kinases') : undefined}
-              <ExtraRoutes extraRoutes={currentlyInspecting.kinase} {...props} />
-              {currentlyInspecting.perturbagen.length !== 0 ? brand('Perturbagens') : undefined}
-              <ExtraRoutes extraRoutes={currentlyInspecting.perturbagen} {...props} />
+              <StandardRoutes />
+              <ExtraRoutes type={'kinase'} />
+              <ExtraRoutes type={'perturbagen'} />
             </List>
           </div>
           {image !== undefined ? (

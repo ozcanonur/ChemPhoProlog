@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -8,7 +8,11 @@ import CardBody from 'components/Card/CardBody.js';
 import CardIcon from 'components/Card/CardIcon';
 import Typography from '@material-ui/core/Typography';
 import NewReleases from '@material-ui/icons/NewReleases';
-import { KeyboardArrowRight } from '@material-ui/icons';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/DNA.json';
@@ -59,6 +63,15 @@ const Welcome = () => {
     autoplay: true,
     animationData: animationData,
   };
+
+  const navigationTexts = [
+    'The diverse and highly complex nature of modern phosphoproteomics research produces a',
+    ' High volume of data. Chemical phosphoproteomics especially, is amenable to a variety',
+    'Of analytical approaches. In this study we propose novel logic-based algorithms that',
+    'The diverse and highly complex nature of modern phosphoproteomics research produces a',
+    ' High volume of data. Chemical phosphoproteomics especially, is amenable to a variety',
+    'Of analytical approaches. In this study we propose novel logic-based algorithms that',
+  ];
 
   return (
     <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
@@ -117,31 +130,16 @@ const Welcome = () => {
             <h4 className={classes.cardTitleWhite}>How to navigate?</h4>
           </CardHeader>
           <CardBody>
-            <Typography variant='body1'>
-              <KeyboardArrowRight /> The diverse and highly complex nature of modern
-              phosphoproteomics research produces a
-              <br />
-              <KeyboardArrowRight /> High volume of data. Chemical phosphoproteomics especially, is
-              amenable to a variety
-              <br />
-              <KeyboardArrowRight /> Of analytical approaches. In this study we propose novel
-              logic-based algorithms that
-              <br />
-              <KeyboardArrowRight /> Overcome the limitations of existing tools used for analysis of
-              these types of
-              <br />
-              <KeyboardArrowRight /> Datasets. Initially we developed a first order deductive,
-              logic-based model and
-              <br />
-              <KeyboardArrowRight /> Populated it with a scoring system, with which we were able to
-              expand from its
-              <br />
-              <KeyboardArrowRight /> Initially Boolean nature. This allowed us to identify
-              previously unreported
-              <br />
-              <KeyboardArrowRight /> Inhibitor-kinase relationships which could offer novel
-              therapeutic targets for further
-            </Typography>
+            <List>
+              {navigationTexts.map((e, key) => (
+                <ListItem key={key}>
+                  <ListItemIcon>
+                    <KeyboardArrowRight />
+                  </ListItemIcon>
+                  <ListItemText primary={e} />
+                </ListItem>
+              ))}
+            </List>
           </CardBody>
         </Card>
       </GridItem>

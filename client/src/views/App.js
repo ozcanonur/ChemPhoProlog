@@ -9,8 +9,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 import { routes } from 'routes.js';
 import { additionalRoutes } from 'additionalRoutes';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeSidebarRoute } from 'actions/Sidebar/removeSidebarRoute';
+import { useSelector } from 'react-redux';
 
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
@@ -68,23 +67,11 @@ const Home = () => {
   const extraKinaseRoutes = getExtraRoutes('kinase');
   const extraPerturbagenRoutes = getExtraRoutes('perturbagen');
 
-  const dispatch = useDispatch();
-  const handleSelectedTabRemove = (item) => {
-    dispatch(removeSidebarRoute(item));
-  };
-
   const allRoutes = [...[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat(), ...routes];
 
   return (
     <div className={classes.wrapper}>
-      <Sidebar
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={'blue'}
-        routes={routes}
-        currentlyInspecting={{ kinase: extraKinaseRoutes, perturbagen: extraPerturbagenRoutes }}
-        handleSelectedTabRemove={handleSelectedTabRemove}
-      />
+      <Sidebar handleDrawerToggle={handleDrawerToggle} open={mobileOpen} />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} />
         <div className={classes.map}>
@@ -95,7 +82,7 @@ const Home = () => {
             {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
               <Route path={prop.layout + prop.path} component={prop.component} key={key} />
             ))}
-            <Redirect from='/' to='/home/kinaseList' />
+            <Redirect from='/' to='/home/welcome' />
           </Switch>
         </div>
       </div>

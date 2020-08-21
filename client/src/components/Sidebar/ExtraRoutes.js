@@ -1,19 +1,27 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
-import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { ListItem, ListItemText, Icon, Collapse, Slide } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Icon from '@material-ui/core/Icon';
+import Collapse from '@material-ui/core/Collapse';
+import Slide from '@material-ui/core/Slide';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import { removeSidebarRoute } from 'actions/Sidebar/removeSidebarRoute';
+import { useDispatch, useSelector } from 'react-redux';
+import { additionalRoutes } from 'additionalRoutes';
 
+import logo from 'assets/img/reactlogo.png';
+import classNames from 'classnames';
+import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 const useStyles = makeStyles(styles);
 
-const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
+const ExtraRoute = ({ route }) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(true);
@@ -27,12 +35,12 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
     setOpen(!open);
   };
 
-  return ele.map((prop, key) => {
+  return route.map((prop, key) => {
     var activePro = ' ';
     var listItemClasses;
 
     listItemClasses = classNames({
-      [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
+      [' ' + classes['blue']]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({
@@ -40,6 +48,11 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
     });
 
     const currentTitle = prop.path.split('/')[1];
+
+    const dispatch = useDispatch();
+    const handleSelectedTabRemove = (item) => {
+      dispatch(removeSidebarRoute(item));
+    };
 
     return (
       <div key={key}>
@@ -93,14 +106,45 @@ const ExtraRoute = ({ ele, color, handleSelectedTabRemove }) => {
   });
 };
 
-const ExtraRoutes = ({ extraRoutes, color, handleSelectedTabRemove }) => {
-  return extraRoutes.map((ele, key) => (
-    <Slide in={true} direction='left' key={key} mountOnEnter unmountOnExit>
-      <div>
-        <ExtraRoute ele={ele} color={color} handleSelectedTabRemove={handleSelectedTabRemove} />
+const ExtraRoutes = ({ type }) => {
+  const classes = useStyles();
+
+  const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
+
+  const getExtraRoutes = (type) => {
+    return currentlyInspecting
+      .filter((e) => e.type === type)
+      .map((e) => e.name)
+      .map((e) => additionalRoutes(type, e));
+  };
+
+  const extraRoutes = getExtraRoutes(type);
+
+  const brand = (type) => {
+    const text = type === 'kinase' ? 'Kinases' : 'Perturbagens';
+
+    return (
+      <div className={classes.logo}>
+        <a href={'#'} className={classNames(classes.logoLink)}>
+          <div className={classes.logoImage}>
+            <img src={logo} alt='logo' className={classes.img} />
+          </div>
+          {text}
+        </a>
+      </div>
+    );
+  };
+
+  return (
+    <Slide in={extraRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
+      <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
+        {brand(type)}
+        {extraRoutes.map((route, key) => (
+          <ExtraRoute route={route} key={key} />
+        ))}
       </div>
     </Slide>
-  ));
+  );
 };
 
 export default ExtraRoutes;
