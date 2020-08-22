@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import { store } from 'store';
+import { store, persistor } from 'store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import App from 'views/App';
 import ParticlesBg from 'particles-bg';
@@ -20,7 +21,7 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.Fragment>
+    <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
       <Router history={hist}>
         <Switch>
           <Route exact path='/' component={App} />
@@ -28,7 +29,7 @@ ReactDOM.render(
         </Switch>
       </Router>
       <ParticlesBg type='cobweb' bg={true} />
-    </React.Fragment>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

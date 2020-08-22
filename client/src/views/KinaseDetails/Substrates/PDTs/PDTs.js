@@ -21,42 +21,30 @@ const PDTs = () => {
 
   const kinase = window.location.href.split('/')[4];
 
+  const CircularCard = ({ cell_line }) => (
+    <Card>
+      <CardHeader color='info'>
+        <h4 className={classes.cardTitleWhite}>{`PDT Commonality in ${cell_line}`}</h4>
+        <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
+      </CardHeader>
+      <CardBody>
+        <CircularBarPlot cell_line={cell_line} />
+      </CardBody>
+    </Card>
+  );
+
   return (
     <GridContainer direction='column'>
       <GridItem md>
         <GridContainer direction='row'>
           <GridItem md>
-            <Card>
-              <CardHeader color='info'>
-                <h4 className={classes.cardTitleWhite}>{`PDT Commonality in MCF-7`}</h4>
-                <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
-              </CardHeader>
-              <CardBody>
-                <CircularBarPlot cell_line={'MCF-7'} />
-              </CardBody>
-            </Card>
+            <CircularCard cell_line={'MCF-7'} />
           </GridItem>
           <GridItem md>
-            <Card>
-              <CardHeader color='info'>
-                <h4 className={classes.cardTitleWhite}>{`PDT Commonality in HL-60`}</h4>
-                <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
-              </CardHeader>
-              <CardBody>
-                <CircularBarPlot cell_line={'HL-60'} />
-              </CardBody>
-            </Card>
+            <CircularCard cell_line={'HL-60'} />
           </GridItem>
           <GridItem md>
-            <Card>
-              <CardHeader color='info'>
-                <h4 className={classes.cardTitleWhite}>{`PDT Commonality in NTERA-2 clone D1`}</h4>
-                <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
-              </CardHeader>
-              <CardBody>
-                <CircularBarPlot cell_line={'NTERA-2 clone D1'} />
-              </CardBody>
-            </Card>
+            <CircularCard cell_line={'NTERA-2 clone D1'} />
           </GridItem>
         </GridContainer>
       </GridItem>

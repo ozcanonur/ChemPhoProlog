@@ -3,9 +3,13 @@ import { FixedSizeList } from 'react-window';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Search from '@material-ui/icons/Search';
-import { Healing, PanoramaHorizontal, TrendingDown } from '@material-ui/icons';
+import Healing from '@material-ui/icons/Healing';
+import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
+import TrendingDown from '@material-ui/icons/TrendingDown';
 
 import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';

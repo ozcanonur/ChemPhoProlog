@@ -17,9 +17,10 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 let ps;
 const useStyles = makeStyles(styles);
+
 const Sidebar = ({ open, handleDrawerToggle }) => {
   //#region BASE THINGS
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [, setMobileOpen] = useState(false);
   // Perfect Scrollbar solution
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -53,7 +54,7 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
 
   const brand = (text) => (
     <div className={classes.logo}>
-      <a href={'#'} className={classNames(classes.logoLink)}>
+      <a className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>

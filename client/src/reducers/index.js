@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import kinaseDataReducer from 'reducers/KinaseList/kinaseDataReducer';
 import selectedKinaseReducer from 'reducers/KinaseList/selectedKinaseReducer';
 import currentPageKinaseReducer from 'reducers/KinaseList/currentPageKinaseReducer';
