@@ -122,7 +122,9 @@ const KinaseList = () => {
             <GridItem xs={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
-                  <KinaseListRightPanel selectedInfo={selectedInfo} />
+                  {selectedInfo !== undefined ? (
+                    <KinaseListRightPanel selectedInfo={selectedInfo} />
+                  ) : null}
                 </div>
               </Slide>
             </GridItem>

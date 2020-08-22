@@ -4,6 +4,11 @@ import KinaseDetailsDescription from 'views/KinaseDetails/Description/Descriptio
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
 import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/Substrates';
 
+import PerturbagenDetailsDescription from 'views/PerturbagenDetails/Description';
+import PerturbagenDetailsKnownTargets from 'views/PerturbagenDetails/KnownTargets';
+import PerturbagenDetailsNewTargets from 'views/PerturbagenDetails/NewTargets';
+import PerturbagenDetailsObservationData from 'views/PerturbagenDetails/ObservationData';
+
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
 import InfoIcon from '@material-ui/icons/Info';
@@ -46,28 +51,28 @@ export const additionalRoutes = (type, selection) => {
         path: `/${selection}/description`,
         name: 'Description',
         icon: InfoIcon,
-        component: WelcomePage,
+        component: PerturbagenDetailsDescription,
         layout: '/home',
       },
       {
         path: `/${selection}/knownTargets`,
         name: 'Known Targets',
         icon: PerturbagenIcon,
-        component: WelcomePage,
+        component: PerturbagenDetailsKnownTargets,
         layout: '/home',
       },
       {
         path: `/${selection}/newTargets`,
         name: 'New Targets',
         icon: PerturbagenIcon,
-        component: WelcomePage,
+        component: PerturbagenDetailsNewTargets,
         layout: '/home',
       },
       {
         path: `/${selection}/observationData`,
         name: 'Observation data',
         icon: PanoramaHorizontalIcon,
-        component: WelcomePage,
+        component: PerturbagenDetailsObservationData,
         layout: '/home',
       },
     ];

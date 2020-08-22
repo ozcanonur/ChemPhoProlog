@@ -115,7 +115,9 @@ const PerturbagenList = () => {
             <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
-                  <PerturbagenListRightPanel selectedInfo={selectedInfo} />
+                  {selectedInfo !== undefined ? (
+                    <PerturbagenListRightPanel selectedInfo={selectedInfo} />
+                  ) : null}
                 </div>
               </Slide>
             </GridItem>
