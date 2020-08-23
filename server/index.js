@@ -83,6 +83,7 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 const parsePathway = (rows) => {
+  let pathways = []; // Legit paths Root > KPa > Ps on KPa > KPa...
   let relations = {}; // KPa affects phosphosites
   let phosphosites = []; // Phosphosites that exist
   let regulatory = {}; // Regulatory effect of phosphosites
@@ -93,6 +94,7 @@ const parsePathway = (rows) => {
     path = path.substring(1, path.length - 1);
     path = path.split(/\[(.+?)\]/);
 
+    let pathway = [];
     for (let i = 1; i < path.length - 1; i += 2) {
       let step = path[i].split(', ');
       step = step.map((e) => e.replaceAll("'", ''));
@@ -106,26 +108,34 @@ const parsePathway = (rows) => {
           phosphosites.push(step[0]);
           regulatory[step[0]] = step[2];
           stoppingReasons[step[0]] = row.Explanation;
+          pathway.push(step[0]);
           continue;
           // regular phosphosite ending
         } else if (step[4].includes('(')) {
           phosphosites.push(step[4]);
           regulatory[step[4]] = step[6];
           stoppingReasons[step[4]] = row.Explanation;
+          //pathway.push(step[4])
         } else {
           stoppingReasons[step[3]] = row.Explanation;
         }
       }
 
+      pathway.push(affected);
+      pathway.push(affecting);
+      // One off fix for regular phosphosite ending
+      if (i === path.length - 2 && step[4].includes('(')) pathway.push(step[4]);
+
       if (!(affecting in relations)) relations[affecting] = [affected];
       else if (!relations[affecting].includes(affected)) relations[affecting].push(affected);
       regulatory[step[0]] = step[2];
     }
+    pathways.push(pathway);
   }
   // Combine all phosphosites (from relations and leftovers)
   phosphosites = _.union(phosphosites, Object.values(relations).flat());
 
-  return { relations, phosphosites, regulatory, stoppingReasons };
+  return { pathways, relations, phosphosites, regulatory, stoppingReasons };
 };
 
 router.get('/api/pathway', (req, res) => {

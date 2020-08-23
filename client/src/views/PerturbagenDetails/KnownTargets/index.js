@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';

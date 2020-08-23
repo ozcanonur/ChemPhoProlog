@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
+Cytoscape.use(COSEBilkent);
+
 const buildCy = (pathwayData) => {
   const stylesheet = [
     {
@@ -46,6 +48,17 @@ const buildCy = (pathwayData) => {
         fontSize: 20,
       },
     },
+    {
+      selector: '.highlighted',
+      style: {
+        backgroundColor: 'green',
+        'background-opacity': 0.2,
+        lineColor: 'green',
+        'transition-property': 'background-color',
+        'transition-duration': '1s',
+        lineStyle: 'dashed',
+      },
+    },
   ];
 
   const layout = {
@@ -71,7 +84,7 @@ const buildCy = (pathwayData) => {
     // Whether to tile disconnected nodes
     tile: true,
     // Type of layout animation. The option set is {'during', 'end', false}
-    animate: 'end',
+    animate: false,
     // Duration for animate:end
     animationDuration: 500,
     // These paddings are space between nodes (phosphosites actually)
@@ -87,7 +100,7 @@ const buildCy = (pathwayData) => {
     initialEnergyOnIncremental: 0.5,
   };
 
-  // KPa s
+  // KPas
   const nodes = Object.keys(pathwayData.relations).map((e) => {
     return { data: { id: e }, classes: ['KPa'] };
   });
@@ -102,12 +115,12 @@ const buildCy = (pathwayData) => {
       pathwayData.relations[key]
         .filter((x) => x.indexOf(key) === -1)
         .map((e) => {
-          return { data: { source: key, target: e } };
+          return { data: { id: `${key}to${e}`, source: key, target: e } };
         })
     )
     .flat();
 
-  const elements = [...nodes, ...phosphosites, ...edges];
+  let elements = [...nodes, ...phosphosites, ...edges];
 
   return { stylesheet, layout, elements };
 };
@@ -116,6 +129,7 @@ const Pathway = () => {
   const classes = useStyles();
 
   const [pathwayData, setPathwayData] = useState({
+    pathways: [],
     relations: {},
     phosphosites: [],
     regulatory: {},
@@ -125,19 +139,57 @@ const Pathway = () => {
   useEffect(() => {
     CallApiForPathway().then((res) => {
       setPathwayData(res);
-      console.log(res);
     });
   }, []);
 
   const { stylesheet, layout, elements } = buildCy(pathwayData);
-  Cytoscape.use(COSEBilkent);
 
-  // Additional tweaks
-  const extras = (cy) => {
+  const layoutRun = (cy) => {
     cy.on('resize', (_evt) => {
       cy.layout(layout).run();
       cy.fit();
     });
+  };
+
+  const animatePath = (cy, pathway) => {
+    const getCollectionToAnimate = (path, cy) => {
+      let pathwayIds = [];
+      for (let i = 0; i < path.length; i++) {
+        const currNode = path[i];
+        if (i % 2 !== 0 || i === path.length - 1) {
+          pathwayIds.push(`${currNode}to${path[i - 1]}`);
+          pathwayIds.push(currNode);
+        } else {
+          pathwayIds.push(currNode);
+        }
+      }
+
+      let collection = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
+      return collection.sort(
+        (x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id)
+      );
+    };
+
+    const pathToAnimate = getCollectionToAnimate(pathway, cy);
+    let i = 0;
+    const highlightNextEle = () => {
+      if (i < pathToAnimate.length) {
+        pathToAnimate[i].addClass('highlighted');
+
+        i++;
+        setTimeout(highlightNextEle, 1000);
+      }
+    };
+
+    highlightNextEle();
+  };
+
+  // Additional tweaks
+  const extras = (cy) => {
+    layoutRun(cy);
+
+    const examplePathway = pathwayData.pathways[0];
+    animatePath(cy, examplePathway);
   };
 
   return (

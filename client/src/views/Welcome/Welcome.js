@@ -110,9 +110,8 @@ const Welcome = () => {
             <div
               style={{
                 background: 'rgb(0,0,0,0.8)',
-                marginTop: '32px',
               }}>
-              <Lottie options={defaultOptions} height={377} width={500} />
+              <Lottie options={defaultOptions} />
             </div>
           </GridItem>
           <GridItem md>
@@ -124,7 +123,7 @@ const Welcome = () => {
           </GridItem>
         </GridContainer>
       </GridItem>
-      <GridItem>
+      <GridItem style={{ marginTop: '20px' }}>
         <Card>
           <CardHeader color='warning'>
             <h4 className={classes.cardTitleWhite}>How to navigate?</h4>
