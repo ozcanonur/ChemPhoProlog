@@ -7,7 +7,7 @@ import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
 import Lottie from 'react-lottie';
-import animationData from 'assets/lottie/loading.json';
+import animationData from 'assets/lottie/loading2.json';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';

@@ -19,6 +19,7 @@
     "cytoscape": "^3.15.2",
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-fcose": "^1.2.3",
+    "cytoscape-popper": "^1.0.7",
     "d3": "^5.16.0",
     "d3-scale": "^3.2.1",
     "d3-scale-chromatic": "^1.5.0",
@@ -41,7 +42,8 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tippy.js": "5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
