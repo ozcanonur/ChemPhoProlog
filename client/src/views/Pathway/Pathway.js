@@ -10,6 +10,7 @@ import { CallApi } from 'api/api';
 import { runLayout } from 'views/Pathway/CytoscapeUtil';
 import { animatePath } from 'views/Pathway/CytoscapeAnimation';
 import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/CytoscapeBuild';
+import { hideAll } from 'tippy.js';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -20,6 +21,7 @@ import animationData from 'assets/lottie/loading2.json';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+
 const useStyles = makeStyles(styles);
 
 Cytoscape.use(COSEBilkent);
@@ -40,18 +42,27 @@ const Pathway = () => {
   useEffect(() => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
+
     Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
       const observationData = results[0].filter((e) =>
         results[1].phosphosites.includes(e.substrate)
       );
-      setPathwayData({ ...results[1], ...observationData });
+
+      const observation = {};
+      observationData.forEach(({ substrate, fold_change, p_value }) => {
+        observation[substrate] = {
+          fold_change: fold_change.toFixed(2),
+          p_value: p_value.toFixed(2),
+        };
+      });
+      setPathwayData({ ...results[1], observation });
     });
 
     return () => {
+      // Cleanup animation timeouts
       for (var i = 0; i < 100000; i++) clearTimeout(i);
-      for (const tooltip of document.getElementsByClassName('tippy-popper')) {
-        tooltip.parentNode.removeChild(tooltip);
-      }
+      // Clear tooltips
+      hideAll();
     };
   }, []);
 
@@ -64,7 +75,13 @@ const Pathway = () => {
     runLayout(cy, layout);
 
     const examplePathway = pathwayData.pathways[4];
-    animatePath(cy, examplePathway);
+    animatePath(
+      cy,
+      examplePathway,
+      pathwayData.regulatory,
+      pathwayData.stoppingReasons,
+      pathwayData.observation
+    );
   };
 
   return (

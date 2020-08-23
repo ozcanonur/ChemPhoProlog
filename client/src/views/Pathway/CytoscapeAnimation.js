@@ -21,45 +21,58 @@ const getCollectionToAnimate = (cy, path) => {
   );
 };
 
-const makeTippy = (node, text) => {
-  const ref = node.popperRef();
+const makeTippy = (element, content, placement) => {
+  const ref = element.popperRef();
 
   const dummyDomEle = document.createElement('div');
 
-  const tip = tippy(dummyDomEle, {
+  return tippy(dummyDomEle, {
     onCreate: (instance) => {
       instance.popperInstance.reference = ref;
     },
+    content: content,
+
     lazy: false, // mandatory
     trigger: 'manual', // mandatory
-
-    // dom element inside the tippy:
-    content: () => {
-      const div = document.createElement('div');
-
-      div.innerHTML = text;
-      return div;
-    },
-
-    // your own preferences:
     arrow: true,
-    placement: 'bottom',
+    placement: placement,
     hideOnClick: false,
     multiple: true,
     sticky: true,
     plugins: [sticky],
-
-    // if interactive:
+    allowHTML: true,
+    inertia: true,
     interactive: true,
     appendTo: document.body, // or append dummyDomEle to document.body
   });
-
-  return tip;
 };
 
-export const animatePath = (cy, pathway) => {
+const phosphositeTooltip = (fold_change, p_value, regulatory) => {
+  return (
+    '<div>' +
+    `Fold change: ${fold_change} <br/>` +
+    `p value: ${p_value} <br/>` +
+    `Reg: ${regulatory}` +
+    '</div>'
+  );
+};
+
+// TODO YOU NEED TO CHECK PHOSPHOTASE OR KINASE WHEN CHECKING ACTIVATED/INHIBITED
+const KPaTooltip = (foldChange, regulatory) => {
+  let activated = '';
+  if (foldChange > 0 && regulatory === 'p_inc') activated = 'Activated';
+  else if (foldChange < 0 && regulatory === 'p_dec') activated = 'Activated';
+  else if (regulatory === 'unknown') activated = 'Unknown';
+  else if (regulatory === 'conflicting') activated = 'Conflicting';
+  else activated = 'Inhibited';
+
+  return '<div>' + `${activated}` + '</div>';
+};
+
+export const animatePath = (cy, pathway, regulatory, stoppingReasons, observation) => {
   const pathToAnimate = getCollectionToAnimate(cy, pathway);
 
+  console.log(pathToAnimate);
   let i = 0;
   const highlightNextEle = () => {
     if (i < pathToAnimate.length) {
@@ -71,8 +84,22 @@ export const animatePath = (cy, pathway) => {
 
       // Tooltips
       if (element.data().parent !== undefined) {
-        const tippy = makeTippy(element, 'foo');
-        tippy.show();
+        // Phosphosite
+        const id = element.data().id;
+        const phosphoContent = phosphositeTooltip(
+          observation[id].fold_change,
+          observation[id].p_value,
+          regulatory[id]
+        );
+        makeTippy(element, phosphoContent, 'bottom').show();
+
+        // Don't add on first or last node
+        if (i !== 0 && i !== pathToAnimate.length - 1) {
+          // KPa
+          const parentKPa = element.parent()[0];
+          const KPaContent = KPaTooltip(observation[id].fold_change, regulatory[id]);
+          makeTippy(parentKPa, KPaContent, 'right-start').show();
+        }
       }
 
       i++;
