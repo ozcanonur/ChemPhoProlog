@@ -2,7 +2,7 @@ import WelcomePage from 'views/Welcome/Welcome';
 import KinaseList from 'views/Lists/KinaseList';
 import PerturbagenList from 'views/Lists/PerturbagenList';
 import AboutUs from 'views/AboutUs/AboutUs.js';
-import Pathway from 'views/Pathway/Pathway';
+import Pathway from 'views/Pathway/index';
 
 import Home from '@material-ui/icons/Home';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';

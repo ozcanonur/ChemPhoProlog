@@ -1,4 +1,4 @@
-import { addTooltip } from 'views/Pathway/tooltips';
+import { addTooltip } from 'views/Pathway/utils/tooltip';
 import { phosphatases } from 'views/Pathway/variables/phosphatases';
 
 const getCollections = (cy, path) => {
@@ -25,8 +25,11 @@ const getCollections = (cy, path) => {
 export const animatePath = (cy, path, regulatory, stoppingReasons, observation, duration) => {
   const collections = getCollections(cy, path);
 
-  const pathToFade = collections.fadeCollection;
-  pathToFade.addClass('fade');
+  // Fade ones not within the current path
+  if (path.length !== 0) {
+    const pathToFade = collections.fadeCollection;
+    pathToFade.addClass('fade');
+  }
 
   const pathToAnimate = collections.animateCollection;
   let i = 0;
@@ -35,15 +38,15 @@ export const animatePath = (cy, path, regulatory, stoppingReasons, observation, 
       const element = pathToAnimate[i];
 
       const isEdge = element.data().target !== undefined;
-      if (!isEdge) {
-        // Color animations
-        element.addClass('highlighted');
-        // Tooltips, don't add on edges
-        addTooltip(i, pathToAnimate, element, regulatory, stoppingReasons, observation);
-      } else {
+      if (isEdge) {
         const sourceIsPhosphatase = phosphatases.includes(element.data().source);
         if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
-        else element.addClass('highlighted');
+        else element.addClass('highlightedKinaseEdge');
+      } else {
+        const isPhosphosite = element.data().parent !== undefined;
+        if (isPhosphosite) element.addClass('highlightedPhosphosite');
+        else element.addClass('highlightedKPa');
+        addTooltip(i, pathToAnimate, element, regulatory, stoppingReasons, observation);
       }
 
       i++;

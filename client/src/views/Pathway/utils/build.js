@@ -10,7 +10,7 @@ export const cytoStylesheet = () => [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-      'source-arrow-shape': 'triangle',
+      'target-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',
     },
@@ -29,15 +29,30 @@ export const cytoStylesheet = () => [
     },
   },
   {
-    selector: '.highlighted',
+    selector: '.highlightedKPa',
     style: {
       backgroundColor: 'green',
       'background-opacity': 0.2,
-      lineColor: 'green',
       'transition-property': 'background-color',
       'transition-duration': '1s',
+    },
+  },
+  {
+    selector: '.highlightedPhosphosite',
+    style: {
+      backgroundColor: 'green',
+      'transition-property': 'background-color',
+      'transition-duration': '1s',
+      'background-opacity': 1,
+      opacity: 1,
+    },
+  },
+  {
+    selector: '.highlightedKinaseEdge',
+    style: {
+      lineColor: 'green',
       lineStyle: 'dashed',
-      'source-arrow-color': 'green',
+      'target-arrow-color': 'green',
     },
   },
   {
@@ -45,14 +60,14 @@ export const cytoStylesheet = () => [
     style: {
       lineColor: 'red',
       lineStyle: 'dashed',
-      'source-arrow-color': 'red',
+      'target-arrow-color': 'red',
     },
   },
   {
     selector: '.fade',
     style: {
-      'background-opacity': 0.5,
-      opacity: 0.5,
+      'background-opacity': 0.6,
+      opacity: 0.6,
     },
   },
 ];
