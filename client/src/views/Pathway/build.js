@@ -13,7 +13,6 @@ export const cytoStylesheet = () => [
       'source-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',
-      'source-arrow-color': 'red',
     },
   },
   {
@@ -38,6 +37,15 @@ export const cytoStylesheet = () => [
       'transition-property': 'background-color',
       'transition-duration': '1s',
       lineStyle: 'dashed',
+      'source-arrow-color': 'green',
+    },
+  },
+  {
+    selector: '.highlightedPhosphataseEdge',
+    style: {
+      lineColor: 'red',
+      lineStyle: 'dashed',
+      'source-arrow-color': 'red',
     },
   },
   {
@@ -59,11 +67,11 @@ export const cytoLayout = () => {
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 20000,
+    nodeRepulsion: 100000,
     // Ideal (intra-graph) edge length
     idealEdgeLength: 50,
     // Divisor to compute edge forces
-    edgeElasticity: 0.1,
+    edgeElasticity: 0.5,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
     nestingFactor: 0.5,
     // Gravity force (constant)
@@ -73,16 +81,16 @@ export const cytoLayout = () => {
     // Whether to tile disconnected nodes
     tile: true,
     // Type of layout animation. The option set is {'during', 'end', false}
-    animate: false,
+    animate: true,
     // Duration for animate:end
     animationDuration: 500,
     // These paddings are space between nodes (phosphosites actually)
     tilingPaddingVertical: 5,
     tilingPaddingHorizontal: 5,
     // Gravity range (constant) for compounds
-    gravityRangeCompound: 0.5,
+    gravityRangeCompound: 0.1,
     // Gravity force (constant) for compounds
-    gravityCompound: 0.5,
+    gravityCompound: 0.9,
     // Gravity range (constant)
     gravityRange: 10,
     // Initial cooling factor for incremental layout

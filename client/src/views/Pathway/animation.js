@@ -1,4 +1,5 @@
-import { addTooltips } from 'views/Pathway/tooltips';
+import { addTooltip } from 'views/Pathway/tooltips';
+import { phosphatases } from 'views/Pathway/variables/phosphatases';
 
 const getCollections = (cy, path) => {
   let pathwayIds = [];
@@ -21,8 +22,11 @@ const getCollections = (cy, path) => {
   return { animateCollection, fadeCollection };
 };
 
-export const animatePath = (cy, path, regulatory, stoppingReasons, observation) => {
+export const animatePath = (cy, path, regulatory, stoppingReasons, observation, duration) => {
   const collections = getCollections(cy, path);
+
+  const pathToFade = collections.fadeCollection;
+  pathToFade.addClass('fade');
 
   const pathToAnimate = collections.animateCollection;
   let i = 0;
@@ -30,15 +34,20 @@ export const animatePath = (cy, path, regulatory, stoppingReasons, observation) 
     if (i < pathToAnimate.length) {
       const element = pathToAnimate[i];
 
-      // Color animations
-      element.addClass('highlighted');
-
-      // Tooltips, don't add on edges
-      if (element.data().parent !== undefined)
-        addTooltips(i, pathToAnimate, element, regulatory, stoppingReasons, observation);
+      const isEdge = element.data().target !== undefined;
+      if (!isEdge) {
+        // Color animations
+        element.addClass('highlighted');
+        // Tooltips, don't add on edges
+        addTooltip(i, pathToAnimate, element, regulatory, stoppingReasons, observation);
+      } else {
+        const sourceIsPhosphatase = phosphatases.includes(element.data().source);
+        if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
+        else element.addClass('highlighted');
+      }
 
       i++;
-      setTimeout(highlightNextEle, 500);
+      setTimeout(highlightNextEle, duration);
     }
   };
 

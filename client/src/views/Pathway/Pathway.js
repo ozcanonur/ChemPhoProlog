@@ -10,7 +10,7 @@ import { CallApi } from 'api/api';
 import { runLayout } from 'views/Pathway/util';
 import { animatePath } from 'views/Pathway/animation';
 import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/build';
-import { hideAll } from 'tippy.js';
+import { hideAll as hideTooltips } from 'tippy.js';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -22,6 +22,8 @@ import animationData from 'assets/lottie/loading2.json';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 
 const useStyles = makeStyles(styles);
 
@@ -40,10 +42,13 @@ const Pathway = () => {
     observation: {},
   });
 
+  const cleanAllTimeouts = () => {
+    for (var i = 0; i < 100000; i++) clearTimeout(i);
+  };
+
   useEffect(() => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
-
     Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
       const observationData = results[0].filter((e) =>
         results[1].phosphosites.includes(e.substrate)
@@ -61,9 +66,9 @@ const Pathway = () => {
 
     return () => {
       // Cleanup animation timeouts
-      for (var i = 0; i < 100000; i++) clearTimeout(i);
+      cleanAllTimeouts();
       // Clear tooltips
-      hideAll();
+      hideTooltips();
     };
   }, []);
 
@@ -71,22 +76,42 @@ const Pathway = () => {
   const layout = cytoLayout();
   const elements = cytoElements(pathwayData);
 
+  let cyCore = null;
   let collectionToFade = [];
+  const examplePathway = pathwayData.pathways[8];
+
   const toggleFadeCollection = (collection) => {
     collection.toggleClass('fade');
   };
 
+  const toggleTooltips = () => {
+    if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
+    else {
+      const collections = animatePath(
+        cyCore,
+        examplePathway,
+        pathwayData.regulatory,
+        pathwayData.stoppingReasons,
+        pathwayData.observation,
+        0
+      );
+
+      collectionToFade = collections.fadeCollection;
+    }
+  };
+
   // Additional tweaks
   const extras = (cy) => {
+    cyCore = cy;
     runLayout(cy, layout);
 
-    const examplePathway = pathwayData.pathways[4];
     const collections = animatePath(
       cy,
       examplePathway,
       pathwayData.regulatory,
       pathwayData.stoppingReasons,
-      pathwayData.observation
+      pathwayData.observation,
+      200
     );
 
     collectionToFade = collections.fadeCollection;
@@ -116,12 +141,27 @@ const Pathway = () => {
           )}
         </CardBody>
       </Card>
-      <Button
-        onClick={() => toggleFadeCollection(collectionToFade)}
-        color={'warning'}
-        style={{ position: 'absolute', left: '50', bottom: '73' }}>
-        Fade
-      </Button>
+      <GridContainer direction='column' style={{ position: 'absolute', bottom: 75, left: 50 }}>
+        <GridItem md>
+          <Button
+            onClick={() => toggleFadeCollection(collectionToFade)}
+            color={'warning'}
+            style={{ width: '100%' }}>
+            Fade Nodes
+          </Button>
+        </GridItem>
+        <GridItem md>
+          <Button
+            onClick={() => {
+              cleanAllTimeouts();
+              toggleTooltips();
+            }}
+            color={'warning'}
+            style={{ width: '100%' }}>
+            Fade Tooltips
+          </Button>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 };
