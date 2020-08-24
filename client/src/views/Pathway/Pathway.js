@@ -7,14 +7,15 @@ import popper from 'cytoscape-popper';
 
 import { CallApiForPathway } from 'api/api';
 import { CallApi } from 'api/api';
-import { runLayout } from 'views/Pathway/CytoscapeUtil';
-import { animatePath } from 'views/Pathway/CytoscapeAnimation';
-import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/CytoscapeBuild';
+import { runLayout } from 'views/Pathway/util';
+import { animatePath } from 'views/Pathway/animation';
+import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/build';
 import { hideAll } from 'tippy.js';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
+import Button from 'components/CustomButtons/Button';
 
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
@@ -70,28 +71,35 @@ const Pathway = () => {
   const layout = cytoLayout();
   const elements = cytoElements(pathwayData);
 
+  let collectionToFade = [];
+  const toggleFadeCollection = (collection) => {
+    collection.toggleClass('fade');
+  };
+
   // Additional tweaks
   const extras = (cy) => {
     runLayout(cy, layout);
 
     const examplePathway = pathwayData.pathways[4];
-    animatePath(
+    const collections = animatePath(
       cy,
       examplePathway,
       pathwayData.regulatory,
       pathwayData.stoppingReasons,
       pathwayData.observation
     );
+
+    collectionToFade = collections.fadeCollection;
   };
 
   return (
-    <div style={{ padding: '2em' }}>
+    <div style={{ padding: '2em', position: 'relative' }}>
       <Card>
         <CardHeader color='warning' style={{ marginTop: '2em' }}>
           <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
           <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
         </CardHeader>
-        <CardBody>
+        <CardBody style={{ position: 'relative' }}>
           {elements.length !== 0 ? (
             <CytoscapeComponent
               cy={(cy) => extras(cy)}
@@ -108,6 +116,12 @@ const Pathway = () => {
           )}
         </CardBody>
       </Card>
+      <Button
+        onClick={() => toggleFadeCollection(collectionToFade)}
+        color={'warning'}
+        style={{ position: 'absolute', left: '50', bottom: '73' }}>
+        Fade
+      </Button>
     </div>
   );
 };

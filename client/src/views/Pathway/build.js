@@ -30,13 +30,6 @@ export const cytoStylesheet = () => [
     },
   },
   {
-    selector: '.startNode',
-    style: {
-      backgroundColor: 'blue',
-      'background-opacity': 0.5,
-    },
-  },
-  {
     selector: '.highlighted',
     style: {
       backgroundColor: 'green',
@@ -45,6 +38,13 @@ export const cytoStylesheet = () => [
       'transition-property': 'background-color',
       'transition-duration': '1s',
       lineStyle: 'dashed',
+    },
+  },
+  {
+    selector: '.fade',
+    style: {
+      'background-opacity': 0.5,
+      opacity: 0.5,
     },
   },
 ];
