@@ -39,6 +39,11 @@ export const cytoStylesheet = () => [
     selector: '.highlightedPhosphosite',
     style: {
       backgroundColor: 'green',
+      width: 40,
+      height: 40,
+      'transition-property': 'width height',
+      'transition-duration': '0.2s',
+      'transition-timing-function': 'ease-out',
     },
   },
   {

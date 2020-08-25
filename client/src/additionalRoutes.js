@@ -1,4 +1,4 @@
-import WelcomePage from 'views/Welcome/Welcome';
+import WelcomePage from 'views/Welcome';
 
 import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';

@@ -65,15 +65,21 @@ export default () => {
   };
 
   const SelectionList = () => {
-    const count = pathwayData.pathways.length;
-    const list = [...Array(count).keys()].map((num, key) => (
-      <ListItem button key={key} onClick={() => changeSelection(num)}>
-        <ListItemIcon>
-          <TimelineIcon />
-        </ListItemIcon>
-        <ListItemText primary={num} />
-      </ListItem>
-    ));
+    const list = pathwayData.pathways.map((path, key) => {
+      const endNode = path[path.length - 1];
+      const stopReason = pathwayData.stoppingReasons[endNode];
+      return (
+        <ListItem button key={key} onClick={() => changeSelection(key)}>
+          <ListItemIcon>
+            <TimelineIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={`${path.length} / ${endNode} / ${stopReason}`}
+            style={{ fontSize: 10 }}
+          />
+        </ListItem>
+      );
+    });
 
     return list;
   };

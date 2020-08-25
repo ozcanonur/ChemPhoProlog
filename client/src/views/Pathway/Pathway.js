@@ -9,7 +9,6 @@ import Button from 'components/CustomButtons/Button';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 
-import { runLayout } from 'views/Pathway/utils/misc';
 import { getCyElementsFromSelectedPath, animatePath } from 'views/Pathway/utils/animation';
 
 import { hideAll as hideTooltips } from 'tippy.js';
@@ -71,10 +70,14 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
     e.removeClass('highlightedPhosphosite');
     e.removeClass('highlightedKinaseEdge');
     e.removeClass('highlightedPhosphataseEdge');
+    e.removeClass('fade');
   });
 
-  // Run layout
-  runLayout(cy, layout);
+  // Run layout on resize
+  cy.on('resize', (_evt) => {
+    cy.layout(layout).run();
+    cy.fit();
+  });
 
   // Fade nodes outside the animation
   if (animateElements.animate.length !== 0) animateElements.fade.addClass('fade');
@@ -92,12 +95,25 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
   return (
     <div style={{ position: 'relative' }}>
       <CytoscapeComponent
-        cy={(cy) => setCy(cy)}
+        cy={(cy) => {
+          setCy(cy);
+        }}
         elements={elements}
         stylesheet={stylesheet}
         style={{ height: '800px' }}
       />
       <GridContainer direction='column' style={{ position: 'absolute', bottom: 0 }}>
+        <GridItem md>
+          <Button
+            onClick={() => {
+              cy.layout(layout).run();
+              cy.fit();
+            }}
+            color={'warning'}
+            style={{ width: '100%' }}>
+            Randomise positions
+          </Button>
+        </GridItem>
         <GridItem md>
           <Button onClick={() => toggleFade()} color={'warning'} style={{ width: '100%' }}>
             Toggle Nodes

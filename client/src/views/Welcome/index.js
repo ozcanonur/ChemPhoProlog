@@ -55,7 +55,7 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
   );
 };
 
-const Welcome = () => {
+export default () => {
   const classes = useStyles();
 
   const defaultOptions = {
@@ -155,5 +155,3 @@ const Welcome = () => {
     </GridContainer>
   );
 };
-
-export default Welcome;

@@ -1,7 +1,7 @@
-import WelcomePage from 'views/Welcome/Welcome';
+import WelcomePage from 'views/Welcome';
 import KinaseList from 'views/Lists/KinaseList';
 import PerturbagenList from 'views/Lists/PerturbagenList';
-import AboutUs from 'views/AboutUs/AboutUs.js';
+import AboutUs from 'views/AboutUs';
 import Pathway from 'views/Pathway/index';
 
 import Home from '@material-ui/icons/Home';
