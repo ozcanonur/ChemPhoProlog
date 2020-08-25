@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -10,7 +10,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 
 import { runLayout } from 'views/Pathway/utils/misc';
-import { animatePath } from 'views/Pathway/utils/animation';
+import { getCyElementsFromSelectedPath, animatePath } from 'views/Pathway/utils/animation';
 
 import { hideAll as hideTooltips } from 'tippy.js';
 
@@ -18,81 +18,94 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 
 const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) => {
-  const cleanAllTimeouts = () => {
+  const [cy, setCy] = useState(Cytoscape());
+  const [animateElements, setAnimateElements] = useState({
+    animate: cy.collection(),
+    fade: cy.collection(),
+  });
+
+  const clearAllTimeouts = () => {
     for (var i = 0; i < 100000; i++) clearTimeout(i);
   };
 
-  let cyCore = null;
-  let collectionToFade = [];
-
-  const toggleFadeCollection = (collection) => {
-    collection.toggleClass('fade');
+  const toggleFade = () => {
+    animateElements.fade.toggleClass('fade');
   };
 
   const toggleTooltips = () => {
+    clearAllTimeouts();
     if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
     else {
-      const collections = animatePath(
-        cyCore,
-        selectedPath,
-        pathwayData.regulatory,
-        pathwayData.stoppingReasons,
-        pathwayData.observation,
+      animatePath(
+        animateElements.animate,
+        {
+          regulatory: pathwayData.regulatory,
+          stoppingReasons: pathwayData.stoppingReasons,
+          observation: pathwayData.observation,
+        },
         0
       );
-
-      collectionToFade = collections.fadeCollection;
     }
   };
 
   useEffect(() => {
     return () => {
       // Cleanup animation timeouts
-      cleanAllTimeouts();
+      clearAllTimeouts();
       // Clear tooltips
       hideTooltips();
     };
   }, []);
 
-  // Additional tweaks
-  const extras = (cy) => {
-    cyCore = cy;
-    runLayout(cy, layout);
+  // Set currently animated elements
+  useEffect(() => {
+    const { animate, fade } = getCyElementsFromSelectedPath(cy, selectedPath);
+    setAnimateElements({ animate, fade });
+  }, [selectedPath]);
 
-    const collections = animatePath(
-      cy,
-      selectedPath,
-      pathwayData.regulatory,
-      pathwayData.stoppingReasons,
-      pathwayData.observation,
-      200
-    );
+  // Remove the previous highlighting/tooltips if any
+  hideTooltips();
+  clearAllTimeouts();
+  cy.elements().forEach((e) => {
+    e.removeClass('highlightedKPa');
+    e.removeClass('highlightedPhosphosite');
+    e.removeClass('highlightedKinaseEdge');
+    e.removeClass('highlightedPhosphataseEdge');
+  });
 
-    collectionToFade = collections.fadeCollection;
-  };
+  // Run layout
+  runLayout(cy, layout);
+
+  // Fade nodes outside the animation
+  if (animateElements.animate.length !== 0) animateElements.fade.addClass('fade');
+  // Animate
+  animatePath(
+    animateElements.animate,
+    {
+      regulatory: pathwayData.regulatory,
+      stoppingReasons: pathwayData.stoppingReasons,
+      observation: pathwayData.observation,
+    },
+    200
+  );
 
   return (
     <div style={{ position: 'relative' }}>
       <CytoscapeComponent
-        cy={(cy) => extras(cy)}
+        cy={(cy) => setCy(cy)}
         elements={elements}
-        style={{ height: '800px' }}
         stylesheet={stylesheet}
-        selectedPath={selectedPath}
+        style={{ height: '800px' }}
       />
       <GridContainer direction='column' style={{ position: 'absolute', bottom: 0 }}>
         <GridItem md>
-          <Button
-            onClick={() => toggleFadeCollection(collectionToFade)}
-            color={'warning'}
-            style={{ width: '100%' }}>
+          <Button onClick={() => toggleFade()} color={'warning'} style={{ width: '100%' }}>
             Toggle Nodes
           </Button>
         </GridItem>
         <GridItem md>
           <Button
             onClick={() => {
-              cleanAllTimeouts();
               toggleTooltips();
             }}
             color={'warning'}

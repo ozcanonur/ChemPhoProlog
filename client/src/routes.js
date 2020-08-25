@@ -9,6 +9,7 @@ import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
 import Healing from '@material-ui/icons/Healing';
 import Info from '@material-ui/icons/Info';
 import Web from '@material-ui/icons/Web';
+import TrendingDown from '@material-ui/icons/TrendingDown';
 
 export const routes = [
   {
@@ -50,7 +51,7 @@ export const routes = [
   {
     path: '/pathway',
     name: 'Pathway',
-    icon: Web,
+    icon: TrendingDown,
     component: Pathway,
     layout: '/home',
   },

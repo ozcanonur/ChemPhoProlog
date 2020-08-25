@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import Lottie from 'react-lottie';
+import animationData from 'assets/lottie/loading2.json';
+
 import Pathway from 'views/Pathway/Pathway';
 import { CallApiForPathway } from 'api/api';
 import { CallApi } from 'api/api';
 import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/utils/build';
 
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
-import { Button, Input } from '@material-ui/core';
-
-import Lottie from 'react-lottie';
-import animationData from 'assets/lottie/loading2.json';
-
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-
 const useStyles = makeStyles(styles);
 
 export default () => {
@@ -47,6 +51,7 @@ export default () => {
           p_value: p_value.toFixed(2),
         };
       });
+
       setPathwayData({ ...results[1], observation });
     });
   }, []);
@@ -55,37 +60,66 @@ export default () => {
   const layout = cytoLayout();
   const elements = cytoElements(pathwayData);
 
-  const changeSelected = () => {
-    setSelectedPath(pathwayData.pathways[8]);
+  const changeSelection = (num) => {
+    setSelectedPath(pathwayData.pathways[num]);
+  };
+
+  const SelectionList = () => {
+    const count = pathwayData.pathways.length;
+    const list = [...Array(count).keys()].map((num, key) => (
+      <ListItem button key={key} onClick={() => changeSelection(num)}>
+        <ListItemIcon>
+          <TimelineIcon />
+        </ListItemIcon>
+        <ListItemText primary={num} />
+      </ListItem>
+    ));
+
+    return list;
   };
 
   return (
     <div style={{ padding: '2em' }}>
-      <Card>
-        <CardHeader color='warning' style={{ marginTop: '2em' }}>
-          <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
-          <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
-        </CardHeader>
-        <CardBody style={{ position: 'relative' }}>
-          {elements.length !== 0 ? (
-            <Pathway
-              pathwayData={pathwayData}
-              stylesheet={stylesheet}
-              layout={layout}
-              elements={elements}
-              selectedPath={selectedPath}
-            />
-          ) : (
-            <Lottie
-              options={{ loop: true, autoplay: true, animationData: animationData }}
-              height={800}
-              width={800}
-            />
-          )}
-        </CardBody>
-      </Card>
-      <Input
-        onChange={(e) => setSelectedPath(pathwayData.pathways[parseInt(e.target.value)])}></Input>
+      <GridContainer direction='row'>
+        <GridItem xs={10}>
+          <Card>
+            <CardHeader color='warning'>
+              <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
+              <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
+            </CardHeader>
+            <CardBody style={{ position: 'relative' }}>
+              {elements.length !== 0 ? (
+                <Pathway
+                  pathwayData={pathwayData}
+                  stylesheet={stylesheet}
+                  layout={layout}
+                  elements={elements}
+                  selectedPath={selectedPath}
+                />
+              ) : (
+                <Lottie
+                  options={{ loop: true, autoplay: true, animationData: animationData }}
+                  height={500}
+                  width={500}
+                />
+              )}
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={2}>
+          <Card>
+            <CardHeader color='warning'>
+              <h4 className={classes.cardTitleWhite}>Select</h4>
+              <p className={classes.cardCategoryWhite}>Select</p>
+            </CardHeader>
+            <CardBody style={{ maxHeight: '800px', overflow: 'auto' }}>
+              <List>
+                <SelectionList />
+              </List>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 };

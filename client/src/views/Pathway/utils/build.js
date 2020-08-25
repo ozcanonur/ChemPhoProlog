@@ -10,7 +10,7 @@ export const cytoStylesheet = () => [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-      'target-arrow-shape': 'triangle',
+      'source-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',
     },
@@ -33,18 +33,12 @@ export const cytoStylesheet = () => [
     style: {
       backgroundColor: 'green',
       'background-opacity': 0.2,
-      'transition-property': 'background-color',
-      'transition-duration': '1s',
     },
   },
   {
     selector: '.highlightedPhosphosite',
     style: {
       backgroundColor: 'green',
-      'transition-property': 'background-color',
-      'transition-duration': '1s',
-      'background-opacity': 1,
-      opacity: 1,
     },
   },
   {
@@ -52,7 +46,7 @@ export const cytoStylesheet = () => [
     style: {
       lineColor: 'green',
       lineStyle: 'dashed',
-      'target-arrow-color': 'green',
+      'source-arrow-color': 'green',
     },
   },
   {
@@ -60,7 +54,7 @@ export const cytoStylesheet = () => [
     style: {
       lineColor: 'red',
       lineStyle: 'dashed',
-      'target-arrow-color': 'red',
+      'source-arrow-color': 'red',
     },
   },
   {
@@ -98,7 +92,7 @@ export const cytoLayout = () => {
     // Type of layout animation. The option set is {'during', 'end', false}
     animate: true,
     // Duration for animate:end
-    animationDuration: 500,
+    animationDuration: 300,
     // These paddings are space between nodes (phosphosites actually)
     tilingPaddingVertical: 5,
     tilingPaddingHorizontal: 5,
