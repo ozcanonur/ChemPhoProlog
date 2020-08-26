@@ -55,23 +55,6 @@ const addPhosphositeTooltip = (element, fold_change, p_value, regulatory, stoppi
   tooltip.show();
 };
 
-const addKPaTooltip = (element, foldChange, regulatory) => {
-  const parentKPa = element.parent()[0];
-
-  let activated = '';
-  if (foldChange > 0 && regulatory === 'p_inc') activated = 'Activated';
-  else if (foldChange < 0 && regulatory === 'p_dec') activated = 'Activated';
-  else if (regulatory === 'unknown') activated = 'Unknown';
-  else if (regulatory === 'conflicting') activated = 'Conflicting';
-  else activated = 'Inhibited';
-
-  const content = `<div>${activated}</div>`;
-
-  const tooltip = makeTippy(parentKPa, content, 'right-start');
-  parentKPa.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
-  tooltip.show();
-};
-
 const addEndKPaTooltip = (element, stoppingReason) => {
   const content = `<div>Stop: ${stoppingReason}</div>`;
   const tooltip = makeTippy(element, content, 'bottom');
@@ -99,7 +82,24 @@ export const addTooltip = (i, pathToAnimate, element, regulatory, stoppingReason
       addPhosphositeTooltip(element, observationValue, pValue, regulatory[id], stoppingReasons[id]);
     else {
       addPhosphositeTooltip(element, observationValue, pValue, regulatory[id]);
-      addKPaTooltip(element, observationValue, regulatory[id]);
+      //addKPaTooltip(element, observationValue, regulatory[id]);
     }
   }
 };
+
+// const addKPaTooltip = (element, foldChange, regulatory) => {
+//   const parentKPa = element.parent()[0];
+
+//   let activated = '';
+//   if (foldChange > 0 && regulatory === 'p_inc') activated = 'Activated';
+//   else if (foldChange < 0 && regulatory === 'p_dec') activated = 'Activated';
+//   else if (regulatory === 'unknown') activated = 'Unknown';
+//   else if (regulatory === 'conflicting') activated = 'Conflicting';
+//   else activated = 'Inhibited';
+
+//   const content = `<div>${activated}</div>`;
+
+//   const tooltip = makeTippy(parentKPa, content, 'right-start');
+//   parentKPa.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
+//   tooltip.show();
+// };

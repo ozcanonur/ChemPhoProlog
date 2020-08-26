@@ -1,4 +1,4 @@
-import { addTooltip } from 'views/Pathway/utils/tooltip';
+import { addTooltip } from 'views/Pathway/CytoscapeUtils/tooltip';
 import { phosphatases } from 'views/Pathway/variables/phosphatases';
 
 export const getCyElementsFromSelectedPath = (cy, selectedPath) => {
@@ -12,10 +12,12 @@ export const getCyElementsFromSelectedPath = (cy, selectedPath) => {
   }
 
   let animate = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
-  const fade = cy.elements().filter((e) => !pathwayIds.includes(e.data().id));
   animate = animate.sort(
     (x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id)
   );
+  let fade = cy.elements().filter((e) => !pathwayIds.includes(e.data().id));
+  // Exclude starting KPa (because looks better)
+  fade = fade.filter((e) => e.data().id !== animate[0].data().parent);
 
   return { animate, fade };
 };
@@ -47,6 +49,7 @@ export const animatePath = (animateElements, elementInfo, duration) => {
         else element.addClass('highlightedKinaseEdge');
       } else if (isPhosphosite) {
         element.addClass('highlightedPhosphosite');
+        console.log(element);
         const parentActivityClass = getParentActivityClass(element, observation, regulatory);
         element.parent().addClass(parentActivityClass);
       }

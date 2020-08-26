@@ -16,7 +16,7 @@ import animationData from 'assets/lottie/loading2.json';
 import Pathway from 'views/Pathway/Pathway';
 import { CallApiForPathway } from 'api/api';
 import { CallApi } from 'api/api';
-import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/utils/build';
+import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/CytoscapeUtils/build';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
@@ -33,7 +33,7 @@ export default () => {
     stoppingReasons: {},
     observation: {},
   });
-  console.log(pathwayData);
+
   const [selectedPath, setSelectedPath] = useState([]);
 
   useEffect(() => {

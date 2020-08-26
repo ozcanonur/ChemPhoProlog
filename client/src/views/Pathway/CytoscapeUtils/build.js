@@ -13,6 +13,7 @@ export const cytoStylesheet = (observation, regulatory) => [
       'target-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',
+      'curve-style': 'unbundled-bezier',
     },
   },
   {
@@ -31,14 +32,14 @@ export const cytoStylesheet = (observation, regulatory) => [
   {
     selector: '.highlightedKPaInhibited',
     style: {
-      backgroundColor: '#FE7272',
+      backgroundColor: 'green',
       'background-opacity': 0.2,
     },
   },
   {
     selector: '.highlightedKPaActivated',
     style: {
-      backgroundColor: 'green',
+      backgroundColor: '#FE7272',
       'background-opacity': 0.2,
     },
   },
@@ -59,7 +60,7 @@ export const cytoStylesheet = (observation, regulatory) => [
         const reg = regulatory[e.data().id];
         if (reg === 'p_inc') return '#006400';
         else if (reg === 'p_dec') return '#650000';
-        else return 'gray';
+        else return '#505050';
       },
       width: 40,
       height: 40,
@@ -74,6 +75,7 @@ export const cytoStylesheet = (observation, regulatory) => [
       lineColor: 'green',
       lineStyle: 'dashed',
       'target-arrow-color': 'green',
+      'arrow-scale': 2,
     },
   },
   {
@@ -82,6 +84,7 @@ export const cytoStylesheet = (observation, regulatory) => [
       lineColor: 'red',
       lineStyle: 'dashed',
       'target-arrow-color': 'red',
+      'arrow-scale': 2,
     },
   },
   {

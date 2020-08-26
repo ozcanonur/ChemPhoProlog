@@ -5,11 +5,9 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
 
-import Button from 'components/CustomButtons/Button';
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
+import ExtraOptions from 'views/Pathway/ExtraOptions';
 
-import { getCyElementsFromSelectedPath, animatePath } from 'views/Pathway/utils/animation';
+import { getCyElementsFromSelectedPath, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 
 import { hideAll as hideTooltips } from 'tippy.js';
 
@@ -22,6 +20,11 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
     animate: cy.collection(),
     fade: cy.collection(),
   });
+
+  const runLayout = () => {
+    cy.layout(layout).run();
+    cy.fit();
+  };
 
   const clearAllTimeouts = () => {
     for (var i = 0; i < 100000; i++) clearTimeout(i);
@@ -68,6 +71,7 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
   cy.elements().forEach((e) => {
     e.removeClass('highlightedKPaInhibited');
     e.removeClass('highlightedKPaActivated');
+    e.removeClass('highlightedKPaConflicting');
     e.removeClass('highlightedPhosphosite');
     e.removeClass('highlightedKinaseEdge');
     e.removeClass('highlightedPhosphataseEdge');
@@ -76,13 +80,11 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
 
   // Run layout on resize
   cy.on('resize', (_evt) => {
-    cy.layout(layout).run();
-    cy.fit();
+    runLayout();
   });
 
   // Fade nodes outside the animation
   animateElements.fade.addClass('fade');
-  // Animate
   animatePath(
     animateElements.animate,
     {
@@ -90,7 +92,7 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
       stoppingReasons: pathwayData.stoppingReasons,
       observation: pathwayData.observation,
     },
-    0
+    100
   );
 
   return (
@@ -103,34 +105,12 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
         stylesheet={stylesheet}
         style={{ height: '800px' }}
       />
-      <GridContainer direction='column' style={{ position: 'absolute', bottom: 0 }}>
-        <GridItem md>
-          <Button
-            onClick={() => {
-              cy.layout(layout).run();
-              cy.fit();
-            }}
-            color={'warning'}
-            style={{ width: '100%' }}>
-            Randomise positions
-          </Button>
-        </GridItem>
-        <GridItem md>
-          <Button onClick={() => toggleFade()} color={'warning'} style={{ width: '100%' }}>
-            Toggle Nodes
-          </Button>
-        </GridItem>
-        <GridItem md>
-          <Button
-            onClick={() => {
-              toggleTooltips();
-            }}
-            color={'warning'}
-            style={{ width: '100%' }}>
-            Toggle Tooltips
-          </Button>
-        </GridItem>
-      </GridContainer>
+      <ExtraOptions
+        cy={cy}
+        runLayout={runLayout}
+        toggleFade={toggleFade}
+        toggleTooltips={toggleTooltips}
+      />
     </div>
   );
 };
