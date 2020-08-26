@@ -1,4 +1,4 @@
-export const cytoStylesheet = () => [
+export const cytoStylesheet = (observation, regulatory) => [
   {
     selector: 'node',
     style: {
@@ -10,7 +10,7 @@ export const cytoStylesheet = () => [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-      'source-arrow-shape': 'triangle',
+      'target-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',
     },
@@ -29,19 +29,41 @@ export const cytoStylesheet = () => [
     },
   },
   {
-    selector: '.highlightedKPa',
+    selector: '.highlightedKPaInhibited',
+    style: {
+      backgroundColor: '#FE7272',
+      'background-opacity': 0.2,
+    },
+  },
+  {
+    selector: '.highlightedKPaActivated',
     style: {
       backgroundColor: 'green',
       'background-opacity': 0.2,
     },
   },
   {
+    selector: '.highlightedKPaConflicting',
+    style: {
+      backgroundColor: '#505050',
+      'background-opacity': 0.2,
+    },
+  },
+  {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: 'green',
+      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'green' : 'red'),
+      'border-width': 10,
+      'border-style': 'dashed',
+      'border-color': (e) => {
+        const reg = regulatory[e.data().id];
+        if (reg === 'p_inc') return '#006400';
+        else if (reg === 'p_dec') return '#650000';
+        else return 'gray';
+      },
       width: 40,
       height: 40,
-      'transition-property': 'width height',
+      'transition-property': 'width height border-width',
       'transition-duration': '0.2s',
       'transition-timing-function': 'ease-out',
     },
@@ -51,7 +73,7 @@ export const cytoStylesheet = () => [
     style: {
       lineColor: 'green',
       lineStyle: 'dashed',
-      'source-arrow-color': 'green',
+      'target-arrow-color': 'green',
     },
   },
   {
@@ -59,14 +81,14 @@ export const cytoStylesheet = () => [
     style: {
       lineColor: 'red',
       lineStyle: 'dashed',
-      'source-arrow-color': 'red',
+      'target-arrow-color': 'red',
     },
   },
   {
     selector: '.fade',
     style: {
-      'background-opacity': 0.6,
-      opacity: 0.6,
+      'background-opacity': 0.5,
+      opacity: 0.5,
     },
   },
 ];

@@ -20,6 +20,17 @@ export const getCyElementsFromSelectedPath = (cy, selectedPath) => {
   return { animate, fade };
 };
 
+const getParentActivityClass = (element, observation, regulatory) => {
+  const foldChange = observation[element.data().id].fold_change;
+  const reg = regulatory[element.data().id];
+  const KPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
+  const KPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
+
+  if (KPaActivated) return 'highlightedKPaActivated';
+  else if (KPaInhibited) return 'highlightedKPaInhibited';
+  else return 'highlightedKPaConflicting';
+};
+
 export const animatePath = (animateElements, elementInfo, duration) => {
   const { regulatory, stoppingReasons, observation } = elementInfo;
 
@@ -29,23 +40,22 @@ export const animatePath = (animateElements, elementInfo, duration) => {
       const element = animateElements[i];
 
       const isEdge = element.data().target !== undefined;
+      const isPhosphosite = element.data().parent !== undefined;
       if (isEdge) {
         const sourceIsPhosphatase = phosphatases.includes(element.data().source);
-
         if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
         else element.addClass('highlightedKinaseEdge');
-      } else {
-        const isPhosphosite = element.data().parent !== undefined;
-
-        if (isPhosphosite) element.addClass('highlightedPhosphosite');
-        else element.addClass('highlightedKPa');
-
-        addTooltip(i, animateElements, element, regulatory, stoppingReasons, observation);
+      } else if (isPhosphosite) {
+        element.addClass('highlightedPhosphosite');
+        const parentActivityClass = getParentActivityClass(element, observation, regulatory);
+        element.parent().addClass(parentActivityClass);
       }
 
-      i++;
-      setTimeout(highlightNextEle, duration);
+      addTooltip(i, animateElements, element, regulatory, stoppingReasons, observation);
     }
+
+    i++;
+    setTimeout(highlightNextEle, duration);
   };
 
   highlightNextEle();

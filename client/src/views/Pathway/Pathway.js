@@ -66,7 +66,8 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
   hideTooltips();
   clearAllTimeouts();
   cy.elements().forEach((e) => {
-    e.removeClass('highlightedKPa');
+    e.removeClass('highlightedKPaInhibited');
+    e.removeClass('highlightedKPaActivated');
     e.removeClass('highlightedPhosphosite');
     e.removeClass('highlightedKinaseEdge');
     e.removeClass('highlightedPhosphataseEdge');
@@ -80,7 +81,7 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
   });
 
   // Fade nodes outside the animation
-  if (animateElements.animate.length !== 0) animateElements.fade.addClass('fade');
+  animateElements.fade.addClass('fade');
   // Animate
   animatePath(
     animateElements.animate,
@@ -89,7 +90,7 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
       stoppingReasons: pathwayData.stoppingReasons,
       observation: pathwayData.observation,
     },
-    200
+    0
   );
 
   return (

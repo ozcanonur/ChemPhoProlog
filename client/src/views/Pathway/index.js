@@ -33,7 +33,7 @@ export default () => {
     stoppingReasons: {},
     observation: {},
   });
-
+  console.log(pathwayData);
   const [selectedPath, setSelectedPath] = useState([]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default () => {
     });
   }, []);
 
-  const stylesheet = cytoStylesheet();
+  const stylesheet = cytoStylesheet(pathwayData.observation, pathwayData.regulatory);
   const layout = cytoLayout();
   const elements = cytoElements(pathwayData);
 
