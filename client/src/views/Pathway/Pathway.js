@@ -5,14 +5,35 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
 
-import ExtraOptions from 'views/Pathway/ExtraOptions';
+import ExtraButtons from 'views/Pathway/ExtraButtons';
 
-import { getCyElementsFromSelectedPath, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
+import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 
 import { hideAll as hideTooltips } from 'tippy.js';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
+
+const getElementsToAnimate = (cy, selectedPath) => {
+  let pathwayIds = [];
+  selectedPath.forEach((node, index) => {
+    if (index % 2 !== 0 || index === selectedPath.length - 1) {
+      pathwayIds.push(`${node}to${selectedPath[index - 1]}`);
+      pathwayIds.push(node);
+    } else pathwayIds.push(node);
+  });
+
+  let animate = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
+  // Sort the animate list according to the pathway ID list (for sequential animation)
+  animate = animate.sort(
+    (x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id)
+  );
+  let fade = cy.elements().filter((e) => !pathwayIds.includes(e.data().id));
+  // Do not include the starting KPa in fade list (because looks better)
+  fade = fade.filter((e) => e.data().id !== animate[0].data().parent);
+
+  return { animate, fade };
+};
 
 const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) => {
   const [cy, setCy] = useState(Cytoscape());
@@ -61,39 +82,42 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
 
   // Set currently animated elements
   useEffect(() => {
-    const { animate, fade } = getCyElementsFromSelectedPath(cy, selectedPath);
-    setAnimateElements({ animate, fade });
+    setAnimateElements(getElementsToAnimate(cy, selectedPath));
   }, [selectedPath]);
 
-  // Remove the previous highlighting/tooltips if any
-  hideTooltips();
-  clearAllTimeouts();
-  cy.elements().forEach((e) => {
-    e.removeClass('highlightedKPaInhibited');
-    e.removeClass('highlightedKPaActivated');
-    e.removeClass('highlightedKPaConflicting');
-    e.removeClass('highlightedPhosphosite');
-    e.removeClass('highlightedKinaseEdge');
-    e.removeClass('highlightedPhosphataseEdge');
-    e.removeClass('fade');
-  });
+  // Run every render
+  useEffect(() => {
+    // Remove the previous highlighting/tooltips if any
+    hideTooltips();
+    clearAllTimeouts();
+    cy.elements().forEach((e) => {
+      e.removeClass('highlightedKPaInhibited');
+      e.removeClass('highlightedKPaActivated');
+      e.removeClass('highlightedKPaConflicting');
+      e.removeClass('highlightedPhosphosite');
+      e.removeClass('highlightedKinaseEdge');
+      e.removeClass('highlightedPhosphataseEdge');
+      e.removeClass('fade');
+    });
 
-  // Run layout on resize
-  cy.on('resize', (_evt) => {
-    runLayout();
-  });
+    // Resize event listener
+    cy.on('resize', (_evt) => {
+      runLayout();
+    });
 
-  // Fade nodes outside the animation
-  animateElements.fade.addClass('fade');
-  animatePath(
-    animateElements.animate,
-    {
-      regulatory: pathwayData.regulatory,
-      stoppingReasons: pathwayData.stoppingReasons,
-      observation: pathwayData.observation,
-    },
-    100
-  );
+    // Fade nodes outside the animation
+    animateElements.fade.addClass('fade');
+
+    animatePath(
+      animateElements.animate,
+      {
+        regulatory: pathwayData.regulatory,
+        stoppingReasons: pathwayData.stoppingReasons,
+        observation: pathwayData.observation,
+      },
+      100
+    );
+  });
 
   return (
     <div style={{ position: 'relative' }}>
@@ -105,12 +129,14 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
         stylesheet={stylesheet}
         style={{ height: '800px' }}
       />
-      <ExtraOptions
-        cy={cy}
-        runLayout={runLayout}
-        toggleFade={toggleFade}
-        toggleTooltips={toggleTooltips}
-      />
+      <div style={{ position: 'absolute', top: 0, right: 0 }}>
+        <ExtraButtons
+          cy={cy}
+          runLayout={runLayout}
+          toggleFade={toggleFade}
+          toggleTooltips={toggleTooltips}
+        />
+      </div>
     </div>
   );
 };

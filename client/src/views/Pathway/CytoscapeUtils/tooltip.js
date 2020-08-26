@@ -4,7 +4,7 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 import './tooltip.css';
 
-const makeTippy = (element, content, placement) => {
+const makeTooltip = (element, content, placement) => {
   const ref = element.popperRef();
 
   const dummyDomEle = document.createElement('div');
@@ -14,7 +14,6 @@ const makeTippy = (element, content, placement) => {
       instance.popperInstance.reference = ref;
     },
     content: content,
-
     lazy: false, // mandatory
     trigger: 'manual', // mandatory
     arrow: true,
@@ -32,12 +31,15 @@ const makeTippy = (element, content, placement) => {
   });
 };
 
-const addStartTooltip = (element, fold_change, p_value) => {
-  const content = `<div>Start <br/>FC: ${fold_change} <br/>p: ${p_value} <br/></div>`;
-
-  const tooltip = makeTippy(element, content, 'bottom');
+const setupTooltipAndShow = (element, content) => {
+  const tooltip = makeTooltip(element, content, 'bottom');
   element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
   tooltip.show();
+};
+
+const addStartTooltip = (element, fold_change, p_value) => {
+  const content = `<div>Start <br/>FC: ${fold_change} <br/>p: ${p_value} <br/></div>`;
+  setupTooltipAndShow(element, content);
 };
 
 const addPhosphositeTooltip = (element, fold_change, p_value, regulatory, stoppingReason) => {
@@ -50,43 +52,39 @@ const addPhosphositeTooltip = (element, fold_change, p_value, regulatory, stoppi
     `${stopReasonText}` +
     '</div>';
 
-  const tooltip = makeTippy(element, content, 'bottom');
-  element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
-  tooltip.show();
+  setupTooltipAndShow(element, content);
 };
 
 const addEndKPaTooltip = (element, stoppingReason) => {
   const content = `<div>Stop: ${stoppingReason}</div>`;
-  const tooltip = makeTippy(element, content, 'bottom');
-  element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
-  tooltip.show();
+  setupTooltipAndShow(element, content);
 };
 
-export const addTooltip = (i, pathToAnimate, element, regulatory, stoppingReasons, observation) => {
-  // Phosphosite id
+export const addTooltip = (i, element, animateElements, pathData) => {
+  const { regulatory, stoppingReasons, observation } = pathData;
+  // Phosphosite
   const id = element.data().id;
 
+  const isStartNode = i === 0;
+  const isLastNode = i === animateElements.length - 1;
   const isPhosphosite = element.data().parent !== undefined;
   const isKPa = element.data().parent === undefined;
-  const isLastNode = i === pathToAnimate.length - 1;
-  const isStartNode = i === 0;
 
   // At last node and it's a KPa
-  if (isLastNode && isKPa) {
-    addEndKPaTooltip(element, stoppingReasons[id]);
-  } else if (isPhosphosite) {
+  if (isLastNode && isKPa) addEndKPaTooltip(element, stoppingReasons[id]);
+  else if (isPhosphosite) {
     const observationValue = observation[id].fold_change;
     const pValue = observation[id].p_value;
+    const reg = regulatory[id];
+    const stopReason = stoppingReasons[id];
+
     if (isStartNode) addStartTooltip(element, observationValue, pValue);
-    else if (isLastNode)
-      addPhosphositeTooltip(element, observationValue, pValue, regulatory[id], stoppingReasons[id]);
-    else {
-      addPhosphositeTooltip(element, observationValue, pValue, regulatory[id]);
-      //addKPaTooltip(element, observationValue, regulatory[id]);
-    }
+    else if (isLastNode) addPhosphositeTooltip(element, observationValue, pValue, reg, stopReason);
+    else addPhosphositeTooltip(element, observationValue, pValue, reg);
   }
 };
 
+// addKPaTooltip(element, observationValue, regulatory[id]);
 // const addKPaTooltip = (element, foldChange, regulatory) => {
 //   const parentKPa = element.parent()[0];
 

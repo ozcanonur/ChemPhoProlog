@@ -5,22 +5,37 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TimelineIcon from '@material-ui/icons/Timeline';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
 import Pathway from 'views/Pathway/Pathway';
+import SelectionList from 'views/Pathway/SelectionList';
 import { CallApiForPathway } from 'api/api';
 import { CallApi } from 'api/api';
-import { cytoStylesheet, cytoLayout, cytoElements } from 'views/Pathway/CytoscapeUtils/build';
+import {
+  getCytoStylesheet,
+  getCytoLayout,
+  getCytoElements,
+} from 'views/Pathway/CytoscapeUtils/build';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
+
+const formatObservation = (phosphosites, fullObservationData) => {
+  const observationInCurrentPathway = fullObservationData.filter((e) =>
+    phosphosites.includes(e.substrate)
+  );
+
+  const formattedObservation = {};
+  observationInCurrentPathway.forEach(({ substrate, fold_change, p_value }) => {
+    formattedObservation[substrate] = {
+      fold_change: fold_change.toFixed(2),
+      p_value: p_value.toFixed(2),
+    };
+  });
+  return formattedObservation;
+};
 
 export default () => {
   const classes = useStyles();
@@ -40,48 +55,19 @@ export default () => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
     Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
-      const observationData = results[0].filter((e) =>
-        results[1].phosphosites.includes(e.substrate)
-      );
-
-      const observation = {};
-      observationData.forEach(({ substrate, fold_change, p_value }) => {
-        observation[substrate] = {
-          fold_change: fold_change.toFixed(2),
-          p_value: p_value.toFixed(2),
-        };
-      });
-
-      setPathwayData({ ...results[1], observation });
+      const pathwayResults = results[1];
+      const phosphosites = pathwayResults.phosphosites;
+      const formattedObservation = formatObservation(phosphosites, results[0]);
+      setPathwayData({ observation: formattedObservation, ...pathwayResults });
     });
   }, []);
 
-  const stylesheet = cytoStylesheet(pathwayData.observation, pathwayData.regulatory);
-  const layout = cytoLayout();
-  const elements = cytoElements(pathwayData);
+  const stylesheet = getCytoStylesheet(pathwayData.observation, pathwayData.regulatory);
+  const layout = getCytoLayout();
+  const elements = getCytoElements(pathwayData);
 
   const changeSelection = (num) => {
     setSelectedPath(pathwayData.pathways[num]);
-  };
-
-  const SelectionList = () => {
-    const list = pathwayData.pathways.map((path, key) => {
-      const endNode = path[path.length - 1];
-      const stopReason = pathwayData.stoppingReasons[endNode];
-      return (
-        <ListItem button key={key} onClick={() => changeSelection(key)}>
-          <ListItemIcon>
-            <TimelineIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={`${path.length} / ${endNode} / ${stopReason}`}
-            style={{ fontSize: 10 }}
-          />
-        </ListItem>
-      );
-    });
-
-    return list;
   };
 
   return (
@@ -93,7 +79,7 @@ export default () => {
               <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
               <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
             </CardHeader>
-            <CardBody style={{ position: 'relative' }}>
+            <CardBody>
               {elements.length !== 0 ? (
                 <Pathway
                   pathwayData={pathwayData}
@@ -113,17 +99,7 @@ export default () => {
           </Card>
         </GridItem>
         <GridItem xs={2}>
-          <Card>
-            <CardHeader color='warning'>
-              <h4 className={classes.cardTitleWhite}>Select</h4>
-              <p className={classes.cardCategoryWhite}>Select</p>
-            </CardHeader>
-            <CardBody style={{ maxHeight: '800px', overflow: 'auto' }}>
-              <List>
-                <SelectionList />
-              </List>
-            </CardBody>
-          </Card>
+          <SelectionList pathwayData={pathwayData} changeSelection={changeSelection} />
         </GridItem>
       </GridContainer>
     </div>

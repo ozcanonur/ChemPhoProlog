@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
+import Fade from '@material-ui/core/Fade';
 import Button from 'components/CustomButtons/Button';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Legend from 'views/Pathway/Legend/index.js';
 
-const ExtraOptions = ({ runLayout, toggleFade, toggleTooltips }) => {
+const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
   const [legendOpen, setLegendOpen] = useState(false);
 
   return (
-    <GridContainer direction='column' style={{ position: 'absolute', top: 0, right: 0 }}>
+    <GridContainer direction='column'>
       <GridItem>
         <Button
           onClick={() => {
@@ -19,7 +20,7 @@ const ExtraOptions = ({ runLayout, toggleFade, toggleTooltips }) => {
           style={{ width: '100px' }}>
           Legend
         </Button>
-        {legendOpen ? (
+        <Fade in={legendOpen}>
           <div
             style={{
               position: 'absolute',
@@ -31,7 +32,7 @@ const ExtraOptions = ({ runLayout, toggleFade, toggleTooltips }) => {
             }}>
             <Legend />
           </div>
-        ) : null}
+        </Fade>
       </GridItem>
       <GridItem>
         <Button
@@ -40,12 +41,12 @@ const ExtraOptions = ({ runLayout, toggleFade, toggleTooltips }) => {
           }}
           color={'warning'}
           style={{ width: '100px' }}>
-          Randomise
+          Layout
         </Button>
       </GridItem>
       <GridItem>
         <Button onClick={() => toggleFade()} color={'warning'} style={{ width: '100px' }}>
-          Nodes
+          Fade
         </Button>
       </GridItem>
       <GridItem>
@@ -62,4 +63,4 @@ const ExtraOptions = ({ runLayout, toggleFade, toggleTooltips }) => {
   );
 };
 
-export default ExtraOptions;
+export default ExtraButtons;

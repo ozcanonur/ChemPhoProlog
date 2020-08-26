@@ -1,4 +1,4 @@
-export const cytoStylesheet = (observation, regulatory) => [
+export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: 'node',
     style: {
@@ -96,7 +96,7 @@ export const cytoStylesheet = (observation, regulatory) => [
   },
 ];
 
-export const cytoLayout = () => {
+export const getCytoLayout = () => {
   return {
     name: 'cose-bilkent',
     quality: 'default',
@@ -137,7 +137,7 @@ export const cytoLayout = () => {
   };
 };
 
-export const cytoElements = (pathwayData) => {
+export const getCytoElements = (pathwayData) => {
   // KPas
   const nodes = Object.keys(pathwayData.relations).map((e) => {
     return { data: { id: e }, classes: ['KPa'] };
