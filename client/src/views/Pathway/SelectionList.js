@@ -29,15 +29,13 @@ const SelectionList = ({ pathwayData, changeSelection }) => {
           {pathways.map((path, key) => {
             const endNode = path[path.length - 1];
             const stopReason = stoppingReasons[endNode];
+            const text = `${path.length} / ${endNode} / ${stopReason}`;
             return (
               <ListItem button key={key} onClick={() => changeSelection(key)}>
                 <ListItemIcon>
                   <TimelineIcon />
                 </ListItemIcon>
-                <ListItemText
-                  primary={`${path.length} / ${endNode} / ${stopReason}`}
-                  style={{ fontSize: 10 }}
-                />
+                <ListItemText primary={text} style={{ fontSize: 10 }} />
               </ListItem>
             );
           })}
