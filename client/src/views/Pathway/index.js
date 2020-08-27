@@ -54,15 +54,26 @@ export default () => {
   useEffect(() => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
-    Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
-      const pathwayResults = results[1];
-      const phosphosites = pathwayResults.phosphosites;
-      const formattedObservation = formatObservation(phosphosites, results[0]);
-      setPathwayData({ observation: formattedObservation, ...pathwayResults });
-    });
+    Promise.all([CallApi(observationQuery), CallApiForPathway()]).then(
+      (results) => {
+        const pathwayResults = results[1];
+        const phosphosites = pathwayResults.phosphosites;
+        const formattedObservation = formatObservation(
+          phosphosites,
+          results[0]
+        );
+        setPathwayData({
+          observation: formattedObservation,
+          ...pathwayResults,
+        });
+      }
+    );
   }, []);
 
-  const stylesheet = getCytoStylesheet(pathwayData.observation, pathwayData.regulatory);
+  const stylesheet = getCytoStylesheet(
+    pathwayData.observation,
+    pathwayData.regulatory
+  );
   const layout = getCytoLayout();
   const elements = getCytoElements(pathwayData);
 
@@ -72,12 +83,15 @@ export default () => {
 
   return (
     <div style={{ padding: '2em' }}>
-      <GridContainer direction='row'>
+      <GridContainer direction="row">
         <GridItem xs={10}>
           <Card>
-            <CardHeader color='warning'>
+            <CardHeader color="warning">
               <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
-              <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
+              <p className={classes.cardCategoryWhite}>
+                {' '}
+                MCF-7 / Torin / AKT1(S473)
+              </p>
             </CardHeader>
             <CardBody>
               {elements.length !== 0 ? (
@@ -99,7 +113,10 @@ export default () => {
           </Card>
         </GridItem>
         <GridItem xs={2}>
-          <SelectionList pathwayData={pathwayData} changeSelection={changeSelection} />
+          <SelectionList
+            pathwayData={pathwayData}
+            changeSelection={changeSelection}
+          />
         </GridItem>
       </GridContainer>
     </div>
