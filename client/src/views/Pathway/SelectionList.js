@@ -10,7 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TimelineIcon from '@material-ui/icons/Timeline';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const SelectionList = ({ pathwayData, changeSelection }) => {
@@ -20,7 +21,7 @@ const SelectionList = ({ pathwayData, changeSelection }) => {
 
   return (
     <Card>
-      <CardHeader color='warning'>
+      <CardHeader color="warning">
         <h4 className={classes.cardTitleWhite}>Select</h4>
         <p className={classes.cardCategoryWhite}>Select</p>
       </CardHeader>

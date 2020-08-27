@@ -10,7 +10,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import App from 'views/App';
 import ParticlesBg from 'particles-bg';
 
-import 'assets/css/material-dashboard-react.css?v=1.9.0';
+import 'assets/css/material-dashboard-react.css';
 
 // const whyDidYouRender = require('@welldone-software/why-did-you-render');
 // whyDidYouRender(React, {
@@ -28,7 +28,7 @@ ReactDOM.render(
           <Route path='/home' component={App} />
         </Switch>
       </Router>
-      <ParticlesBg type='cobweb' bg={true} />
+      <ParticlesBg type='cobweb' bg />
     </PersistGate>
   </Provider>,
   document.getElementById('root')

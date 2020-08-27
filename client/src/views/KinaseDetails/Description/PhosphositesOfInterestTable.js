@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
-import CardHeader from 'components/Card/CardHeader.js';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
 
 import { CallApiForProteinSubstrates } from 'api/api';
 
-import PhosphositesOfInterest from './ObservationHeatMap';
+import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const PhosphositesOfInterestTable = ({ protein }) => {
@@ -63,9 +64,8 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
-            expandFor={'phosphositesOfInterest'}
             firstRowOnClick={false}
-            ExtraContent={PhosphositesOfInterest}
+            ExtraContent={ObservationHeatMap}
           />
         )}
       </CardBody>

@@ -13,7 +13,8 @@ import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
 import InfoIcon from '@material-ui/icons/Info';
 
-export const additionalRoutes = (type, selection) => {
+// eslint-disable-next-line consistent-return
+const additionalRoutes = (type, selection) => {
   if (type === 'kinase') {
     return [
       {
@@ -45,7 +46,8 @@ export const additionalRoutes = (type, selection) => {
         layout: '/home',
       },
     ];
-  } else if (type === 'perturbagen') {
+  }
+  if (type === 'perturbagen') {
     return [
       {
         path: `/${selection}/description`,
@@ -78,3 +80,5 @@ export const additionalRoutes = (type, selection) => {
     ];
   }
 };
+
+export default additionalRoutes;

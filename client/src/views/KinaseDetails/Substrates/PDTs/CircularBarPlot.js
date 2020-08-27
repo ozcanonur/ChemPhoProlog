@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable*/
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
@@ -25,19 +25,18 @@ const CircularBarPlot = ({ cell_line }) => {
   }, [kinase, cell_line]);
 
   let sharedWithList = [];
-  for (const entry of PDTs) {
-    const shared = entry.shared_with;
-    if (shared !== null) sharedWithList.push(shared.split(', '));
-  }
-
+  PDTs.forEach((entry) => {
+    const { shared_with } = entry;
+    if (shared_with !== null) sharedWithList.push(shared_with.split(', '));
+  });
   sharedWithList = sharedWithList.flat();
 
-  let sharedWithCount = {};
-  for (const shared of sharedWithList) {
+  const sharedWithCount = {};
+  sharedWithList.forEach((shared) => {
     sharedWithCount[shared] = (sharedWithCount[shared] || 0) + 1;
-  }
+  });
 
-  let chartData = Object.entries(sharedWithCount).map((e) => {
+  const chartData = Object.entries(sharedWithCount).map((e) => {
     return {
       Kinase: e[0],
       Count: e[1],
@@ -51,7 +50,7 @@ const CircularBarPlot = ({ cell_line }) => {
   }
 
   function radial() {
-    var linear = d3.scaleLinear();
+    const linear = d3.scaleLinear();
 
     function scale(x) {
       return Math.sqrt(linear(x));
@@ -66,9 +65,7 @@ const CircularBarPlot = ({ cell_line }) => {
     };
 
     scale.range = function (_) {
-      return arguments.length
-        ? (linear.range(_.map(square)), scale)
-        : linear.range().map(Math.sqrt);
+      return arguments.length ? (linear.range(_.map(square)), scale) : linear.range().map(Math.sqrt);
     };
 
     scale.ticks = linear.ticks;
@@ -91,10 +88,7 @@ const CircularBarPlot = ({ cell_line }) => {
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
-    .attr(
-      'transform',
-      'translate(' + (width / 2 + margin.left) + ',' + (height / 2 + margin.top) + ')'
-    );
+    .attr('transform', 'translate(' + (width / 2 + margin.left) + ',' + (height / 2 + margin.top) + ')');
 
   // Scales
   var x = d3
@@ -148,9 +142,7 @@ const CircularBarPlot = ({ cell_line }) => {
     .enter()
     .append('g')
     .attr('text-anchor', function (d) {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI
-        ? 'end'
-        : 'start';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'end' : 'start';
     })
     .attr('transform', function (d) {
       return (
@@ -167,9 +159,7 @@ const CircularBarPlot = ({ cell_line }) => {
       return d.Kinase;
     })
     .attr('transform', function (d) {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI
-        ? 'rotate(180)'
-        : 'rotate(0)';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)';
     })
     .style('font-size', '11px')
     .attr('alignment-baseline', 'middle');

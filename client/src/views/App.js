@@ -1,24 +1,25 @@
 import React, { useState, createRef, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Navbar from 'components/Navbars/Navbar.js';
-import Sidebar from 'components/Sidebar/Sidebar.js';
+import Navbar from 'components/Navbars/Navbar';
+import Sidebar from 'components/Sidebar/Sidebar';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
-import { routes } from 'routes.js';
-import { additionalRoutes } from 'additionalRoutes';
+import routes from 'routes';
+import additionalRoutes from 'additionalRoutes';
 import { useSelector } from 'react-redux';
 
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
+
 const useStyles = makeStyles(styles);
 
 let ps;
 
 const Home = () => {
-  //#region Misc.
+  // #region Misc.
   const classes = useStyles();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -53,7 +54,7 @@ const Home = () => {
       window.removeEventListener('resize', resizeFunction);
     };
   }, [mainPanel]);
-  //#endregion Misc.
+  // #endregion Misc.
 
   const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
 

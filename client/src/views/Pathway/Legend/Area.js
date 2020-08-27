@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export const Area = ({ color, text }) => (
+const Area = ({ color, text }) => (
   <Grid container direction='row'>
     <Grid item>
       <div style={{ width: '20px', height: '20px', backgroundColor: color, opacity: 0.4 }} />
@@ -11,3 +11,5 @@ export const Area = ({ color, text }) => (
     </Grid>
   </Grid>
 );
+
+export default Area;

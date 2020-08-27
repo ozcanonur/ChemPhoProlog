@@ -4,7 +4,7 @@ import Fade from '@material-ui/core/Fade';
 import Button from 'components/CustomButtons/Button';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import Legend from 'views/Pathway/Legend/index.js';
+import Legend from 'views/Pathway/Legend/';
 
 const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
   const [legendOpen, setLegendOpen] = useState(false);
@@ -32,7 +32,7 @@ const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
     <GridContainer direction='column'>
       {buttonList.map(({ text, onClick }, key) => (
         <GridItem key={key}>
-          <Button onClick={onClick} color={'warning'} style={{ width: '100px' }}>
+          <Button onClick={onClick} color='warning' style={{ width: '100px' }}>
             {text}
           </Button>
         </GridItem>
@@ -45,7 +45,8 @@ const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
             right: 130,
             pointerEvents: 'none',
             padding: '10px',
-          }}>
+          }}
+        >
           <Legend />
         </div>
       </Fade>

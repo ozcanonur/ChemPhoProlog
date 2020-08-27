@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
 import CardIcon from 'components/Card/CardIcon';
-import CardFooter from 'components/Card/CardFooter.js';
-import Danger from 'components/Typography/Danger.js';
+import CardFooter from 'components/Card/CardFooter';
+import Danger from 'components/Typography/Danger';
 
 import ArrowForward from '@material-ui/icons/ArrowForward';
 import Warning from '@material-ui/icons/Warning';
 import NewReleases from '@material-ui/icons/NewReleases';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import { PieChart } from 'views/Lists/PieChart';
+import PieChart from 'views/Lists/PieChart';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIconText }) => {
@@ -68,7 +69,8 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
                   style={{
                     transform: `${leftIconHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
                     cursor: 'pointer',
-                  }}>
+                  }}
+                >
                   {leftIconHovered ? (
                     <ArrowForward
                       style={{
@@ -111,7 +113,8 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
                   style={{
                     transform: `${rightIconHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
                     cursor: 'pointer',
-                  }}>
+                  }}
+                >
                   {rightIconHovered ? (
                     <ArrowForward
                       style={{

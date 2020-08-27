@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import tippy, { sticky } from 'tippy.js';
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
@@ -11,13 +12,14 @@ const makeTooltip = (element, content, placement) => {
 
   return tippy(dummyDomEle, {
     onCreate: (instance) => {
+      // eslint-disable-next-line no-param-reassign
       instance.popperInstance.reference = ref;
     },
-    content: content,
+    content,
+    placement,
     lazy: false, // mandatory
     trigger: 'manual', // mandatory
     arrow: true,
-    placement: placement,
     hideOnClick: false,
     multiple: true,
     sticky: true,
@@ -53,10 +55,10 @@ const addEndKPaTooltip = (element, stoppingReason) => {
   setupTooltipAndShow(element, content);
 };
 
-export const addTooltip = (i, element, animateElements, pathData) => {
+const addTooltip = (i, element, animateElements, pathData) => {
   const { stoppingReasons, observation } = pathData;
   // Phosphosite
-  const id = element.data().id;
+  const { id } = element.data();
 
   const isStartNode = i === 0;
   const isLastNode = i === animateElements.length - 1;
@@ -75,3 +77,5 @@ export const addTooltip = (i, element, animateElements, pathData) => {
     else addPhosphositeTooltip(element, foldChange, pValue);
   }
 };
+
+export default addTooltip;

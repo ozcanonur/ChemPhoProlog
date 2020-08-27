@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export const Border = ({ color, text }) => (
+const Border = ({ color, text }) => (
   <Grid container direction='row'>
     <Grid item>
       <span
@@ -22,3 +22,5 @@ export const Border = ({ color, text }) => (
     </Grid>
   </Grid>
 );
+
+export default Border;

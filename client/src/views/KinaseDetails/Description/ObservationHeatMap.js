@@ -1,12 +1,13 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 
 import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
 import { CallApi } from 'api/api';
 
-import { perturbagenNames } from 'views/KinaseDetails/Description/variables/perturbagenNames';
+import perturbagenNames from 'views/KinaseDetails/Description/variables/perturbagenNames';
 
-const PhosphositesOfInterest = ({ row }) => {
+const ObservationHeatMap = ({ row }) => {
   const [observationData, setObservationData] = useState([]);
 
   const protein = window.location.href.split('/')[4];
@@ -34,10 +35,13 @@ const PhosphositesOfInterest = ({ row }) => {
   const createHeatmapObject = (cell_line, data) => {
     const filtered = data.filter((e) => e[1] === cell_line);
 
-    let result = { cell_line: cell_line };
-    for (const observation of filtered) {
-      result[observation[0]] = observation[2];
-    }
+    const result = { cell_line };
+
+    filtered.forEach((observation) => {
+      const perturbagen = observation[0];
+      const foldChange = observation[2];
+      result[perturbagen] = foldChange;
+    });
 
     return result;
   };
@@ -55,11 +59,11 @@ const PhosphositesOfInterest = ({ row }) => {
         <div>No observation data for this site</div>
       ) : (
         <div style={{ height: '20em' }}>
-          <HeatMap data={heatmapData} indexBy={'cell_line'} keys={keys} />
+          <HeatMap data={heatmapData} indexBy='cell_line' keys={keys} />
         </div>
       )}
     </div>
   );
 };
 
-export default PhosphositesOfInterest;
+export default ObservationHeatMap;

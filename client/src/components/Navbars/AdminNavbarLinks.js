@@ -11,15 +11,16 @@ import Healing from '@material-ui/icons/Healing';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import CustomInput from 'components/CustomInput/CustomInput.js';
-import Button from 'components/CustomButtons/Button.js';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'components/CustomButtons/Button';
 
 import { CallApi } from 'api/api';
-import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
-import { addSidebarRoutePerturbagen } from 'actions/Sidebar/addSidebarRoutePerturbagen';
+import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
+import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
-import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
+
 const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
@@ -65,15 +66,12 @@ export default function AdminNavbarLinks() {
 
   useEffect(() => {
     const perturbagenQuery = 'select distinct name as perturbagen from perturbagen';
-    const kinaseQuery =
-      'select distinct kinase_name as kinase from protein where kinase_name not null';
+    const kinaseQuery = 'select distinct kinase_name as kinase from protein where kinase_name not null';
     const substrateQuery = 'select distinct substrate_id as substrate from substrate';
 
-    Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]).then(
-      (results) => {
-        setSearchResults(results.flat());
-      }
-    );
+    Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]).then((results) => {
+      setSearchResults(results.flat());
+    });
   }, []);
 
   const handleChange = (value) => {
@@ -92,7 +90,7 @@ export default function AdminNavbarLinks() {
     <div className={classes.searchWrapper}>
       <CustomInput
         formControlProps={{
-          className: classes.margin + ' ' + classes.search,
+          className: `${classes.margin} ${classes.search}`,
         }}
         inputProps={{
           placeholder: 'Search',
@@ -101,7 +99,7 @@ export default function AdminNavbarLinks() {
           },
         }}
         onChange={(e) => handleChange(e.target.value)}
-        //onBlur={() => setSearchOpen(false)}
+        // onBlur={() => setSearchOpen(false)}
       />
       <Button color='white' aria-label='edit' justIcon round>
         <Search />
@@ -111,10 +109,11 @@ export default function AdminNavbarLinks() {
           dense
           itemData={filteredSearchResults}
           height={300}
-          width={'20em'}
+          width='20em'
           itemSize={46}
           itemCount={filteredSearchResults.length}
-          style={{ backgroundColor: 'white', color: 'black' }}>
+          style={{ backgroundColor: 'white', color: 'black' }}
+        >
           {ItemRenderer}
         </FixedSizeList>
       ) : null}

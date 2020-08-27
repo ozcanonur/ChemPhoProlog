@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export const Node = ({ color, text }) => (
+const Node = ({ color, text }) => (
   <Grid container direction='row'>
     <Grid item>
       <span
@@ -19,3 +19,5 @@ export const Node = ({ color, text }) => (
     </Grid>
   </Grid>
 );
+
+export default Node;

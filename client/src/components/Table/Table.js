@@ -18,11 +18,12 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
-import Button from 'components/CustomButtons/Button.js';
+import Button from 'components/CustomButtons/Button';
 import CustomInput from 'components/CustomInput/CustomInput';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/tableStyle';
+
 const useStyles = makeStyles(styles);
 
 // Each row on the table body
@@ -76,7 +77,8 @@ const Row = (props) => {
               to={`/home/${row[0]}/description`}
               onClick={() => {
                 handleAdd(row[0]);
-              }}>
+              }}
+            >
               {prop}
             </Link>
           ) : (
@@ -95,25 +97,28 @@ const Row = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <TableRow
         key={row}
         className={classes.tableBodyRow}
         style={{
           backgroundColor: row[0] === currentSelectedEle ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
-        }}>
+        }}
+      >
         <RowBody />
       </TableRow>
       {ExtraContent !== undefined ? (
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
             <Collapse in={open} timeout='auto' mountOnEnter unmountOnExit>
-              <Box margin={1}>{<ExtraContent row={row} cell_line={cell_line} />}</Box>
+              <Box margin={1}>
+                <ExtraContent row={row} cell_line={cell_line} />
+              </Box>
             </Collapse>
           </TableCell>
         </TableRow>
       ) : null}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -136,20 +141,21 @@ const CustomTable = (props) => {
   } = props;
 
   // Pagination options
+  // eslint-disable-next-line react/destructuring-assignment
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
   // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
   const createSortState = () => {
-    let length = tableHead.length;
+    let { length } = tableHead;
     if (ExtraContent) length -= 1;
     if (rowEndArrow) length -= 1;
 
-    let obj = {};
-    for (const x of range(0, length)) {
+    const obj = {};
+    range(0, length).forEach((x) => {
       if (x === 0) obj[x] = true;
       else obj[x] = false;
-    }
+    });
 
     return obj;
   };
@@ -175,7 +181,8 @@ const CustomTable = (props) => {
   };
 
   const handleSort = (key) => {
-    if (ExtraContent) key = key - 1;
+    // eslint-disable-next-line no-param-reassign
+    if (ExtraContent) key -= 1;
 
     let sortedList = [];
     if (!sortedAsc[key]) {
@@ -200,10 +207,11 @@ const CustomTable = (props) => {
     <TableRow className={classes.tableHeadRow}>
       {tableHead.map((prop, key) => (
         <TableCell
-          className={classes.tableCell + ' ' + classes.tableHeadCell}
+          className={`${classes.tableCell} ${classes.tableHeadCell}`}
           style={{ cursor: 'pointer' }}
           key={key}
-          onClick={() => handleSort(key)}>
+          onClick={() => handleSort(key)}
+        >
           {prop}
         </TableCell>
       ))}
@@ -211,23 +219,21 @@ const CustomTable = (props) => {
   );
 
   const TableBodyContent = () =>
-    filteredList
-      .slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
-      .map((row, key) => (
-        <Row
-          key={key}
-          {...{
-            row,
-            rowEndArrow,
-            handleSelection,
-            selectedInfo,
-            handleAdd,
-            cell_line,
-            firstRowOnClick,
-            ExtraContent,
-          }}
-        />
-      ));
+    filteredList.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage).map((row, key) => (
+      <Row
+        key={key}
+        {...{
+          row,
+          rowEndArrow,
+          handleSelection,
+          selectedInfo,
+          handleAdd,
+          cell_line,
+          firstRowOnClick,
+          ExtraContent,
+        }}
+      />
+    ));
 
   const TablePaginationContent = () => (
     <TablePagination
@@ -261,7 +267,7 @@ const CustomTable = (props) => {
         </Button>
       </div>
       <Table stickyHeader className={classes.table}>
-        <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
+        <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
           <TableHeadContent />
         </TableHead>
         <TableBody>

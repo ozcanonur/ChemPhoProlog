@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from 'components/Card/CardHeader.js';
+import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
 
 import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
@@ -15,15 +15,16 @@ import { Slide } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { pick } from 'lodash';
 
-import { fetchKinaseData } from 'actions/KinaseList/fetchKinaseData';
-import { changeSelectedKinase } from 'actions/KinaseList/changeSelectedKinase';
-import { changeCurrentPageKinase } from 'actions/KinaseList/changeCurrentPageKinase';
-import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
+import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
+import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';
+import changeCurrentPageKinase from 'actions/KinaseList/changeCurrentPageKinase';
+import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
-import KinaseListPhosphosites from './KinaseListPhosphosites';
+import KinaseListPhosphosites from 'views/Lists/KinaseList/KinaseListPhosphosites';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 // Kinase List on the Home page
@@ -32,9 +33,7 @@ const KinaseList = () => {
 
   // Kinase table data
   const data = useSelector((state) => state.kinaseData);
-  const tableData = data
-    .map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id']))
-    .map(Object.values);
+  const tableData = data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])).map(Object.values);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -49,7 +48,7 @@ const KinaseList = () => {
   const handleSelection = (selection) => {
     dispatch(changeSelectedKinase(selection));
   };
-  const selectedInfo = data.filter((item) => item['kinase_name'] === selectedItem)[0];
+  const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPageKinase);
@@ -79,11 +78,10 @@ const KinaseList = () => {
           <Card>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information obtained from
-                chemical phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
-                compendium of results and related information obtained from chemical
-                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
-                compendium of results and related information obtained from chemical
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of results and
+                related information obtained from chemical phosphoproteomics experiments. And some other stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
                 phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
@@ -107,13 +105,13 @@ const KinaseList = () => {
                       tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
                       tableData={tableData}
                       rowsPerPage={10}
-                      rowEndArrow={true}
+                      rowEndArrow
                       handleSelection={handleSelection}
                       selectedInfo={selectedInfo}
                       handleAdd={handleKinaseAdd}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
-                      firstRowOnClick={true}
+                      firstRowOnClick
                       ExtraContent={KinaseListPhosphosites}
                     />
                   )}
@@ -122,11 +120,7 @@ const KinaseList = () => {
             </GridItem>
             <GridItem xs={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-                <div>
-                  {selectedInfo !== undefined ? (
-                    <KinaseListRightPanel selectedInfo={selectedInfo} />
-                  ) : null}
-                </div>
+                <div>{selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}</div>
               </Slide>
             </GridItem>
           </GridContainer>

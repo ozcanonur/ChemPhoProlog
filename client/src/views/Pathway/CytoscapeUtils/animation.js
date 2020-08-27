@@ -1,5 +1,5 @@
-import { addTooltip } from 'views/Pathway/CytoscapeUtils/tooltip';
-import { phosphatases } from 'views/Pathway/variables/phosphatases';
+import addTooltip from 'views/Pathway/CytoscapeUtils/tooltip';
+import phosphatases from 'views/Pathway/variables/phosphatases';
 
 const getParentActivityClass = (element, observation, regulatory) => {
   const foldChange = observation[element.data().id].fold_change;
@@ -8,8 +8,9 @@ const getParentActivityClass = (element, observation, regulatory) => {
   const KPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
 
   if (KPaActivated) return 'highlightedKPaActivated';
-  else if (KPaInhibited) return 'highlightedKPaInhibited';
-  else return 'highlightedKPaConflicting';
+  if (KPaInhibited) return 'highlightedKPaInhibited';
+
+  return 'highlightedKPaConflicting';
 };
 
 const addEdgeStyle = (element) => {
@@ -24,7 +25,7 @@ const addPhosphositeAndParentStyle = (element, observation, regulatory) => {
   element.parent().addClass(parentActivityClass);
 };
 
-export const animatePath = (animateElements, pathData, duration) => {
+const animatePath = (animateElements, pathData, duration) => {
   const { regulatory, observation } = pathData;
 
   let i = 0;
@@ -41,9 +42,11 @@ export const animatePath = (animateElements, pathData, duration) => {
       addTooltip(i, element, animateElements, pathData);
     }
 
-    i++;
+    i += 1;
     setTimeout(highlightNextEle, duration);
   };
 
   highlightNextEle();
 };
+
+export default animatePath;

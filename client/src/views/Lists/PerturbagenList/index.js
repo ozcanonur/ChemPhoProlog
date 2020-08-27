@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from 'components/Card/CardHeader.js';
+import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
 
 import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
@@ -13,13 +13,14 @@ import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenLi
 import { Slide } from '@material-ui/core';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPerturbagenData } from 'actions/PerturbagenList/fetchPerturbagenData';
-import { changeSelectedPerturbagen } from 'actions/PerturbagenList/changeSelectedPerturbagen';
-import { changeCurrentPagePerturbagen } from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
-import { addSidebarRoutePerturbagen } from 'actions/Sidebar/addSidebarRoutePerturbagen';
+import fetchPerturbagenData from 'actions/PerturbagenList/fetchPerturbagenData';
+import changeSelectedPerturbagen from 'actions/PerturbagenList/changeSelectedPerturbagen';
+import changeCurrentPagePerturbagen from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
+import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const PerturbagenList = () => {
@@ -41,7 +42,7 @@ const PerturbagenList = () => {
   const handleSelection = (selection) => {
     dispatch(changeSelectedPerturbagen(selection));
   };
-  const selectedInfo = data.filter((item) => item['name'] === selectedItem)[0];
+  const selectedInfo = data.filter((item) => item.name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPagePerturbagen);
@@ -71,11 +72,10 @@ const PerturbagenList = () => {
           <Card>
             <CardBody>
               <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information obtained from
-                chemical phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
-                compendium of results and related information obtained from chemical
-                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a
-                compendium of results and related information obtained from chemical
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
+                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of results and
+                related information obtained from chemical phosphoproteomics experiments. And some other stuff.
+                ChemPhoPro provides a compendium of results and related information obtained from chemical
                 phosphoproteomics experiments. And some other stuff.
               </Typography>
             </CardBody>
@@ -99,13 +99,13 @@ const PerturbagenList = () => {
                       tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
                       tableData={tableData}
                       rowsPerPage={10}
-                      rowEndArrow={true}
+                      rowEndArrow
                       handleSelection={handleSelection}
                       handleAdd={handlePerturbagenAdd}
                       selectedInfo={selectedInfo}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
-                      firstRowOnClick={true}
+                      firstRowOnClick
                     />
                   )}
                 </CardBody>
@@ -114,9 +114,7 @@ const PerturbagenList = () => {
             <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
                 <div>
-                  {selectedInfo !== undefined ? (
-                    <PerturbagenListRightPanel selectedInfo={selectedInfo} />
-                  ) : null}
+                  {selectedInfo !== undefined ? <PerturbagenListRightPanel selectedInfo={selectedInfo} /> : null}
                 </div>
               </Slide>
             </GridItem>

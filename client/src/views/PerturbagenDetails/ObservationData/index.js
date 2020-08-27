@@ -10,7 +10,8 @@ import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const ObservationData = () => {
@@ -47,7 +48,7 @@ const ObservationData = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: animationData,
+    animationData,
   };
 
   return (

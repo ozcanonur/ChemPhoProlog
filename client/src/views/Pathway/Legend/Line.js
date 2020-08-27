@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export const Line = ({ color, text }) => (
+const Line = ({ color, text }) => (
   <Grid container direction='row'>
     <Grid item>
       <hr
@@ -18,3 +18,5 @@ export const Line = ({ color, text }) => (
     </Grid>
   </Grid>
 );
+
+export default Line;

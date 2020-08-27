@@ -1,10 +1,10 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
-export const PieChart = ({ data, colors }) => (
+const PieChart = ({ data, colors }) => (
   <ResponsivePie
     data={data}
-    sortByValue={true}
+    sortByValue
     margin={{ top: 0, right: 0, bottom: 0, left: 15 }}
     innerRadius={0.35}
     padAngle={2}
@@ -21,8 +21,10 @@ export const PieChart = ({ data, colors }) => (
     radialLabelsLinkColor={{ from: 'color' }}
     slicesLabelsSkipAngle={10}
     slicesLabelsTextColor='#333333'
-    animate={true}
+    animate
     motionStiffness={90}
     motionDamping={15}
   />
 );
+
+export default PieChart;

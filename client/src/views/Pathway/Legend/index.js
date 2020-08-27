@@ -3,12 +3,12 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
 import { nodes, borders, areas, lines } from 'views/Pathway/Legend/variables';
-import { Node } from 'views/Pathway/Legend/Node';
-import { Border } from 'views/Pathway/Legend/Border';
-import { Area } from 'views/Pathway/Legend/Area';
-import { Line } from 'views/Pathway/Legend/Line';
+import Node from 'views/Pathway/Legend/Node';
+import Border from 'views/Pathway/Legend/Border';
+import Area from 'views/Pathway/Legend/Area';
+import Line from 'views/Pathway/Legend/Line';
 
-export default () => (
+const Legend = () => (
   <Grid container direction='column' spacing={1}>
     <Grid item>
       <Grid container direction='row' style={{ width: '400px' }}>
@@ -48,3 +48,5 @@ export default () => (
     </Grid>
   </Grid>
 );
+
+export default Legend;

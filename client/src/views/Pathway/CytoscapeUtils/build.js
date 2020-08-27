@@ -52,14 +52,15 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'green' : 'red'),
+      backgroundColor: (e) =>
+        observation[e.data().id].fold_change > 0 ? 'green' : 'red',
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e) => {
         const reg = regulatory[e.data().id];
         if (reg === 'p_inc') return '#006400';
-        else if (reg === 'p_dec') return '#650000';
-        else return '#505050';
+        if (reg === 'p_dec') return '#650000';
+        return '#505050';
       },
       width: 40,
       height: 40,
@@ -143,7 +144,10 @@ export const getCytoElements = (pathwayData) => {
   });
 
   const phosphosites = pathwayData.phosphosites.map((e) => {
-    return { data: { id: e, parent: e.split('(')[0] }, classes: ['phosphosite'] };
+    return {
+      data: { id: e, parent: e.split('(')[0] },
+      classes: ['phosphosite'],
+    };
   });
 
   // Avoiding loops with indexOf, messes up the layout for some reason?

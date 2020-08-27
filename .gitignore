@@ -5,6 +5,4 @@ chemphopro.db
 client/documentation/
 .vscode/
 client/build/
-HL-60_MYC(S62)_Trametinib.csv
-MCF-7_MYC(S62)_Trametinib.csv
-NTERA-2 clone D1_MYC(S62)_Trametinib.csv
+.eslintignore

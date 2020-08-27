@@ -7,10 +7,11 @@ import CardBody from 'components/Card/CardBody';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
-import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
+import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const KnownTargets = () => {
@@ -56,7 +57,7 @@ const KnownTargets = () => {
               rowsPerPage={10}
               collapsible={false}
               currentPage={currentPage}
-              firstRowOnClick={true}
+              firstRowOnClick
               handleChangePage={handleChangePage}
               handleAdd={handleKinaseAdd}
             />

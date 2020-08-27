@@ -1,18 +1,19 @@
 import React from 'react';
 
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
-import CardHeader from 'components/Card/CardHeader.js';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
 
 import PhosphositesOfInterestTable from 'views/KinaseDetails/Description/PhosphositesOfInterestTable';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
-export default () => {
+const Description = () => {
   const classes = useStyles();
 
   const kinase = window.location.href.split('/')[4];
@@ -28,14 +29,13 @@ export default () => {
                 <p className={classes.cardCategoryWhite}>placeholder</p>
               </CardHeader>
               <CardBody>
-                The diverse and highly complex nature of modern phosphoproteomics research produces
-                a high volume of data. Chemical phosphoproteomics especially, is amenable to a
-                variety of analytical approaches. In this study we propose novel logic-based
-                algorithms that overcome the limitations of existing tools used for analysis of
-                these types of datasets. Initially we developed a first order deductive, logic-based
-                model and populated it with a scoring system, with which we were able to expand from
-                its initially Boolean nature. This allowed us to identify 16 previously unreported
-                inhibitor-kinase relationships which could offer novel therapeutic targets for
+                The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of
+                data. Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this
+                study we propose novel logic-based algorithms that overcome the limitations of existing tools used for
+                analysis of these types of datasets. Initially we developed a first order deductive, logic-based model
+                and populated it with a scoring system, with which we were able to expand from its initially Boolean
+                nature. This allowed us to identify 16 previously unreported inhibitor-kinase relationships which could
+                offer novel therapeutic targets for
               </CardBody>
             </Card>
           </GridItem>
@@ -46,14 +46,13 @@ export default () => {
                 <p className={classes.cardCategoryWhite}>placeholder</p>
               </CardHeader>
               <CardBody>
-                The diverse and highly complex nature of modern phosphoproteomics research produces
-                a high volume of data. Chemical phosphoproteomics especially, is amenable to a
-                variety of analytical approaches. In this study we propose novel logic-based
-                algorithms that overcome the limitations of existing tools used for analysis of
-                these types of datasets. Initially we developed a first order deductive, logic-based
-                model and populated it with a scoring system, with which we were able to expand from
-                its initially Boolean nature. This allowed us to identify 16 previously unreported
-                inhibitor-kinase relationships which could offer novel therapeutic targets for
+                The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of
+                data. Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this
+                study we propose novel logic-based algorithms that overcome the limitations of existing tools used for
+                analysis of these types of datasets. Initially we developed a first order deductive, logic-based model
+                and populated it with a scoring system, with which we were able to expand from its initially Boolean
+                nature. This allowed us to identify 16 previously unreported inhibitor-kinase relationships which could
+                offer novel therapeutic targets for
               </CardBody>
             </Card>
           </GridItem>
@@ -65,3 +64,5 @@ export default () => {
     </GridContainer>
   );
 };
+
+export default Description;

@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -7,38 +6,35 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
 import classNames from 'classnames';
-import { routes } from 'routes';
+import routes from 'routes';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
+
 const useStyles = makeStyles(styles);
 
 const StandardRoutes = () => {
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
+    return window.location.href.indexOf(routeName) > -1;
   }
 
   const classes = useStyles();
 
   return routes.map((prop, key) => {
-    var activePro = ' ';
-    var listItemClasses;
+    const activePro = ' ';
 
-    listItemClasses = classNames({
-      [' ' + classes['blue']]: activeRoute(prop.layout + prop.path),
+    const listItemClasses = classNames({
+      [` ${classes.blue}`]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({
-      [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
+      [` ${classes.whiteFont}`]: activeRoute(prop.layout + prop.path),
     });
 
     return (
       <div key={key}>
-        <NavLink
-          to={prop.layout + prop.path}
-          className={activePro + classes.item}
-          activeClassName='active'>
+        <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
           <ListItem button className={classes.itemLink + listItemClasses}>
             {typeof prop.icon === 'string' ? (
               <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
@@ -48,7 +44,7 @@ const StandardRoutes = () => {
             <ListItemText
               primary={prop.name}
               className={classNames(classes.itemText, whiteFontClasses)}
-              disableTypography={true}
+              disableTypography
             />
           </ListItem>
         </NavLink>

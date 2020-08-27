@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 import Table from 'components/Table/Table';
 
 import { CallApiForPDTs } from 'api/api';
@@ -10,7 +10,8 @@ import { CallApiForPDTs } from 'api/api';
 import ObservationBarChart from 'views/KinaseDetails/Substrates/PDTs/ObservationBarChart';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const PDTTable = ({ cell_line }) => {
@@ -58,7 +59,6 @@ const PDTTable = ({ cell_line }) => {
             rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
-            expandFor={'obsForPDTs'}
             cell_line={cell_line}
             ExtraContent={ObservationBarChart}
           />

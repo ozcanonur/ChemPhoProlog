@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const KnownSubstratesTable = () => {
@@ -42,7 +43,7 @@ const KnownSubstratesTable = () => {
   }, [kinase]);
 
   return (
-    <React.Fragment>
+    <>
       {knownSubstrateData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
@@ -65,7 +66,7 @@ const KnownSubstratesTable = () => {
           </CardBody>
         </Card>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

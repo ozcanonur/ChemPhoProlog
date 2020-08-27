@@ -4,7 +4,7 @@ import { ResponsiveHeatMap } from '@nivo/heatmap';
 
 import * as d3 from 'd3';
 
-export default ({ data, indexBy, keys }) => (
+const HeatMap = ({ data, indexBy, keys }) => (
   <ResponsiveHeatMap
     data={data}
     indexBy={indexBy}
@@ -24,7 +24,7 @@ export default ({ data, indexBy, keys }) => (
       tickRotation: 0,
     }}
     labelTextColor={{ from: 'color', modifiers: [['darker', 1.8]] }}
-    animate={true}
+    animate
     hoverTarget='cell'
     cellHoverOthersOpacity={0.25}
     enableLabels={false}
@@ -33,6 +33,8 @@ export default ({ data, indexBy, keys }) => (
     maxValue={16}
     colors={d3.scaleSequential(d3.interpolatePiYG)}
     padding={3}
-    nanColor={'rgb(235, 237, 240)'}
+    nanColor='rgb(235, 237, 240)'
   />
 );
+
+export default HeatMap;

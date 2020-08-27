@@ -10,14 +10,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
+  storage,
   stateReconciler: autoMergeLevel2,
   blacklist: ['kinaseData', 'perturbagenData'],
 };
 
-export const store = createStore(
-  persistReducer(persistConfig, reducers),
-  composeEnhancers(applyMiddleware(thunk))
-);
+export const store = createStore(persistReducer(persistConfig, reducers), composeEnhancers(applyMiddleware(thunk)));
 
 export const persistor = persistStore(store);

@@ -1,4 +1,4 @@
-export const perturbagenNames = [
+const perturbagenNames = [
   'AC220',
   'Amuvatinib',
   'AT13148',
@@ -61,3 +61,5 @@ export const perturbagenNames = [
   'Ulixertinib',
   'Vemurafenib',
 ];
+
+export default perturbagenNames;

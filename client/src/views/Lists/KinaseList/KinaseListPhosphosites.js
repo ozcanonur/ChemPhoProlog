@@ -6,7 +6,8 @@ import { CallApi } from 'api/api';
 import { Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/tableStyle';
+
 const useStyles = makeStyles(styles);
 
 const KinaseListPhosphosites = ({ row }) => {
@@ -52,11 +53,11 @@ const KinaseListPhosphosites = ({ row }) => {
 
   return (
     <Table size='small'>
-      <TableHead className={classes['warningTableHeader']}>
+      <TableHead className={classes.warningTableHeader}>
         <TableRow className={classes.tableHeadRow}>
           {headers.map((prop, key) => {
             return (
-              <TableCell key={key} className={classes.tableCell + ' ' + classes.tableHeadCell}>
+              <TableCell key={key} className={`${classes.tableCell} ${classes.tableHeadCell}`}>
                 {prop}
               </TableCell>
             );
@@ -67,11 +68,7 @@ const KinaseListPhosphosites = ({ row }) => {
         {dividedPhosphosites.map((phosphosites, key) => (
           <TableRow key={key}>
             {phosphosites.map((phosphosite, key) => (
-              <TableCell
-                scope='row'
-                key={key}
-                className={classes.tableCell}
-                style={{ color: '#0066CC' }}>
+              <TableCell scope='row' key={key} className={classes.tableCell} style={{ color: '#0066CC' }}>
                 {phosphosite}
               </TableCell>
             ))}

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 import CardIcon from 'components/Card/CardIcon';
 import Typography from '@material-ui/core/Typography';
 import NewReleases from '@material-ui/icons/NewReleases';
@@ -16,9 +16,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/DNA.json';
+import bezzLab from 'assets/img/bezzlab_twitter.PNG';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const NewFindings = ({ direction, cardTitle, cardCategory }) => {
@@ -41,12 +43,11 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
         <Card>
           <CardBody>
             <Typography variant='body1'>
-              The diverse and highly complex nature of modern phosphoproteomics research produces a
-              high volume of data. Chemical phosphoproteomics especially, is amenable to a variety
-              of analytical approaches. In this study we propose novel logic-based algorithms that
-              overcome the limitations of existing tools used for analysis of these types of
-              datasets. Initially we developed a first order deductive, logic-based model and
-              populated it with a scoring system, with which we were able to expand from it
+              The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of data.
+              Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this study we
+              propose novel logic-based algorithms that overcome the limitations of existing tools used for analysis of
+              these types of datasets. Initially we developed a first order deductive, logic-based model and populated
+              it with a scoring system, with which we were able to expand from it
             </Typography>
           </CardBody>
         </Card>
@@ -55,13 +56,13 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
   );
 };
 
-export default () => {
+const Welcome = () => {
   const classes = useStyles();
 
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: animationData,
+    animationData,
   };
 
   const navigationTexts = [
@@ -77,21 +78,19 @@ export default () => {
     <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
       <GridItem>
         <Card>
-          <CardHeader color='warning' style={{ marginTop: '2em' }}>
+          <CardHeader color='warning'>
             <h4 className={classes.cardTitleWhite}>What is ChemPhoProlog?</h4>
           </CardHeader>
           <CardBody>
             <Typography variant='body1'>
-              The diverse and highly complex nature of modern phosphoproteomics research produces a
-              high volume of data. Chemical phosphoproteomics especially, is amenable to a variety
-              of analytical approaches. In this study we propose novel logic-based algorithms that
-              overcome the limitations of existing tools used for analysis of these types of
-              datasets. Initially we developed a first order deductive, logic-based model and
-              populated it with a scoring system, with which we were able to expand from its
-              initially Boolean nature. This allowed us to identify previously unreported
-              inhibitor-kinase relationships which could offer novel therapeutic targets for further
-              investigation. We also present the model and its findings in a human readable and
-              explanation-integrated manner. This offers an open-source model blueprint to act as a
+              The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of data.
+              Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this study we
+              propose novel logic-based algorithms that overcome the limitations of existing tools used for analysis of
+              these types of datasets. Initially we developed a first order deductive, logic-based model and populated
+              it with a scoring system, with which we were able to expand from its initially Boolean nature. This
+              allowed us to identify previously unreported inhibitor-kinase relationships which could offer novel
+              therapeutic targets for further investigation. We also present the model and its findings in a human
+              readable and explanation-integrated manner. This offers an open-source model blueprint to act as a
               resource for its application in more and diverse data sets.
             </Typography>
           </CardBody>
@@ -100,26 +99,19 @@ export default () => {
       <GridItem>
         <GridContainer direction='row'>
           <GridItem md>
-            <NewFindings
-              direction={'column'}
-              cardTitle={'540 Perturbagen - Kinase'}
-              cardCategory={'New Interactions'}
-            />
+            <NewFindings direction='column' cardTitle='540 Perturbagen - Kinase' cardCategory='New Interactions' />
           </GridItem>
           <GridItem md>
             <div
               style={{
                 background: 'rgb(0,0,0,0.8)',
-              }}>
+              }}
+            >
               <Lottie options={defaultOptions} />
             </div>
           </GridItem>
           <GridItem md>
-            <NewFindings
-              direction={'column-reverse'}
-              cardTitle={'20458 PDTs'}
-              cardCategory={'New Downstream Targets'}
-            />
+            <NewFindings direction='column-reverse' cardTitle='20458 PDTs' cardCategory='New Downstream Targets' />
           </GridItem>
         </GridContainer>
       </GridItem>
@@ -148,10 +140,12 @@ export default () => {
             <h4 className={classes.cardTitleWhite}>BezzLab</h4>
           </CardHeader>
           <CardBody>
-            <img alt='bezzlab twitter' src={require('../../assets/img/bezzlab_twitter.PNG')} />
+            <img alt='bezzlab twitter' src={bezzLab} />
           </CardBody>
         </Card>
       </GridItem>
     </GridContainer>
   );
 };
+
+export default Welcome;

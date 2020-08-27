@@ -9,7 +9,7 @@ import logo from 'assets/img/reactlogo.png';
 import StandardRoutes from 'components/Sidebar/StandardRoutes';
 import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
 
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -19,7 +19,7 @@ let ps;
 const useStyles = makeStyles(styles);
 
 const Sidebar = ({ open, handleDrawerToggle }) => {
-  //#region BASE THINGS
+  // #region BASE THINGS
   const [, setMobileOpen] = useState(false);
   // Perfect Scrollbar solution
   const resizeFunction = () => {
@@ -50,11 +50,11 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
   }, [panel]);
 
   const classes = useStyles();
-  //#endregion BASE THINGS
+  // #endregion BASE THINGS
 
   const brand = (text) => (
     <div className={classes.logo}>
-      <a href={'# '} className={classNames(classes.logoLink)}>
+      <a href='# ' className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>
@@ -72,17 +72,18 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
           open
           classes={{
             paper: classNames(classes.drawerPaper),
-          }}>
+          }}
+        >
           {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper} ref={panel}>
             <List className={classes.list}>
               <StandardRoutes />
-              <ExtraRoutes type={'kinase'} />
-              <ExtraRoutes type={'perturbagen'} />
+              <ExtraRoutes type='kinase' />
+              <ExtraRoutes type='perturbagen' />
             </List>
           </div>
           {image !== undefined ? (
-            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
+            <div className={classes.background} style={{ backgroundImage: `url(${image})` }} />
           ) : null}
         </Drawer>
       </Hidden>
@@ -97,17 +98,18 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true,
-          }}>
+          }}
+        >
           {brand('ChemPhoProlog')}
           <div className={classes.sidebarWrapper}>
             <List className={classes.list}>
               <StandardRoutes />
-              <ExtraRoutes type={'kinase'} />
-              <ExtraRoutes type={'perturbagen'} />
+              <ExtraRoutes type='kinase' />
+              <ExtraRoutes type='perturbagen' />
             </List>
           </div>
           {image !== undefined ? (
-            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
+            <div className={classes.background} style={{ backgroundImage: `url(${image})` }} />
           ) : null}
         </Drawer>
       </Hidden>

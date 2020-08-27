@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import classnames from 'classnames';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,13 +15,14 @@ import Edit from '@material-ui/icons/Edit';
 import Close from '@material-ui/icons/Close';
 import Check from '@material-ui/icons/Check';
 // core components
-import styles from 'assets/jss/material-dashboard-react/components/tasksStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/tasksStyle';
 
 const useStyles = makeStyles(styles);
 
 export default function Tasks(props) {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([...props.checkedIndexes]);
+  const checkedIndexes = { props };
+  const [checked, setChecked] = React.useState([...checkedIndexes]);
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -54,26 +55,14 @@ export default function Tasks(props) {
             </TableCell>
             <TableCell className={tableCellClasses}>{tasks[value]}</TableCell>
             <TableCell className={classes.tableActions}>
-              <Tooltip
-                id='tooltip-top'
-                title='Edit Task'
-                placement='top'
-                classes={{ tooltip: classes.tooltip }}
-              >
+              <Tooltip id='tooltip-top' title='Edit Task' placement='top' classes={{ tooltip: classes.tooltip }}>
                 <IconButton aria-label='Edit' className={classes.tableActionButton}>
-                  <Edit className={classes.tableActionButtonIcon + ' ' + classes.edit} />
+                  <Edit className={`${classes.tableActionButtonIcon} ${classes.edit}`} />
                 </IconButton>
               </Tooltip>
-              <Tooltip
-                id='tooltip-top-start'
-                title='Remove'
-                placement='top'
-                classes={{ tooltip: classes.tooltip }}
-              >
+              <Tooltip id='tooltip-top-start' title='Remove' placement='top' classes={{ tooltip: classes.tooltip }}>
                 <IconButton aria-label='Close' className={classes.tableActionButton}>
-                  <Close
-                    className={classes.tableActionButtonIcon + ' ' + classes.close}
-                  />
+                  <Close className={`${classes.tableActionButtonIcon} ${classes.close}`} />
                 </IconButton>
               </Tooltip>
             </TableCell>
@@ -83,9 +72,3 @@ export default function Tasks(props) {
     </Table>
   );
 }
-
-Tasks.propTypes = {
-  tasksIndexes: PropTypes.arrayOf(PropTypes.number),
-  tasks: PropTypes.arrayOf(PropTypes.node),
-  checkedIndexes: PropTypes.array,
-};

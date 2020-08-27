@@ -1,4 +1,4 @@
-export const phosphatases = [
+const phosphatases = [
   'ACP5',
   'ACP6',
   'ACP7',
@@ -191,3 +191,5 @@ export const phosphatases = [
   'SYNJ1',
   'SYNJ2',
 ];
+
+export default phosphatases;

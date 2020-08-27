@@ -8,17 +8,18 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Menu from '@material-ui/icons/Menu';
 import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
-import Button from 'components/CustomButtons/Button.js';
+import Button from 'components/CustomButtons/Button';
 
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/headerStyle';
+
 const useStyles = makeStyles(styles);
 
 const Navbar = ({ routes, handleDrawerToggle }) => {
   const classes = useStyles();
 
-  function makeBrand() {
+  const makeBrand = () => {
     let name;
     let term = '';
 
@@ -27,16 +28,16 @@ const Navbar = ({ routes, handleDrawerToggle }) => {
         name = prop.name;
       }
       if (window.location.href.split('/').length > 5) {
-        term = window.location.href.split('/')[4];
+        [, , , term] = window.location.href.split('/');
       }
       return null;
     });
 
     return term !== '' ? `${name} for ${term}` : name;
-  }
+  };
 
   const appBarClasses = classNames({
-    [' ' + classes['blue']]: 'blue',
+    [` ${classes.blue}`]: 'blue',
   });
 
   return (
@@ -52,7 +53,7 @@ const Navbar = ({ routes, handleDrawerToggle }) => {
           </GridItem>
           <GridItem>
             <Hidden smDown implementation='css'>
-              {<AdminNavbarLinks />}
+              <AdminNavbarLinks />
             </Hidden>
             <Hidden mdUp implementation='css'>
               <IconButton color='inherit' aria-label='open drawer' onClick={handleDrawerToggle}>

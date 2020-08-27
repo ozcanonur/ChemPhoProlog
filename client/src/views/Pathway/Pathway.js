@@ -7,7 +7,7 @@ import popper from 'cytoscape-popper';
 
 import ExtraButtons from 'views/Pathway/ExtraButtons';
 
-import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
+import animatePath from 'views/Pathway/CytoscapeUtils/animation';
 
 import { hideAll as hideTooltips } from 'tippy.js';
 
@@ -43,7 +43,13 @@ const getElementsToAnimate = (cy, selectedPath) => {
   return { animate, fade };
 };
 
-const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) => {
+const Pathway = ({
+  pathwayData,
+  stylesheet,
+  layout,
+  elements,
+  selectedPath,
+}) => {
   const [cy, setCy] = useState(Cytoscape());
   const [animateElements, setAnimateElements] = useState({
     animate: cy.collection(),
@@ -65,7 +71,8 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
 
   const toggleTooltips = () => {
     clearAllTimeouts();
-    if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
+    if (document.getElementsByClassName('tippy-popper').length !== 0)
+      hideTooltips();
     else {
       animatePath(
         animateElements.animate,
@@ -108,8 +115,9 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
       e.removeClass('fade');
     });
 
+    // _evt
     // Resize event listener
-    cy.on('resize', (_evt) => {
+    cy.on('resize', () => {
       runLayout();
     });
 

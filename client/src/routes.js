@@ -11,7 +11,7 @@ import Info from '@material-ui/icons/Info';
 import Web from '@material-ui/icons/Web';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-export const routes = [
+const routes = [
   {
     path: '/welcome',
     name: 'Home',
@@ -56,3 +56,5 @@ export const routes = [
     layout: '/home',
   },
 ];
+
+export default routes;

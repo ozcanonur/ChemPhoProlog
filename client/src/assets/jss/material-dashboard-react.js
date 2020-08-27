@@ -1,3 +1,4 @@
+/*eslint-disable*/
 // ##############################
 // // // Function that converts from hex color to rgb color
 // // // Example: input = #9c27b0 => output = 156, 39, 176
@@ -84,51 +85,27 @@ const boxShadow = {
 
 const primaryBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(primaryColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(primaryColor[0]) + ',.4)',
 };
 const infoBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(infoColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(infoColor[0]) + ',.4)',
 };
 const successBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(successColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(successColor[0]) + ',.4)',
 };
 const warningBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(warningColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(warningColor[0]) + ',.4)',
 };
 const dangerBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(dangerColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(dangerColor[0]) + ',.4)',
 };
 const roseBoxShadow = {
   boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(roseColor[0]) +
-    ',.4)',
+    '0 4px 20px 0 rgba(' + hexToRgb(blackColor) + ',.14), 0 7px 10px -5px rgba(' + hexToRgb(roseColor[0]) + ',.4)',
 };
 
 const warningCardHeader = {

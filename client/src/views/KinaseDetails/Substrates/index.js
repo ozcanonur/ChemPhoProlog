@@ -1,13 +1,13 @@
 import React from 'react';
 
-import CustomTabs from 'components/CustomTabs/CustomTabs.js';
+import CustomTabs from 'components/CustomTabs/CustomTabs';
 
 import PDTs from 'views/KinaseDetails/Substrates/PDTs/';
 import KnownSubstrates from 'views/KinaseDetails/Substrates/KnownSubstrates/';
 import BugReport from '@material-ui/icons/BugReport';
 import Code from '@material-ui/icons/Code';
 
-export default () => {
+const Substrates = () => {
   return (
     <div style={{ padding: '2em' }}>
       <CustomTabs
@@ -28,3 +28,5 @@ export default () => {
     </div>
   );
 };
+
+export default Substrates;

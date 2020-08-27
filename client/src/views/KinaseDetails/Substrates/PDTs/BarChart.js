@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ResponsiveBar } from '@nivo/bar';
 
-export default ({ data }) => (
+const BarChart = ({ data }) => (
   <ResponsiveBar
     data={data}
     keys={['fold_change']}
@@ -28,10 +28,12 @@ export default ({ data }) => (
       legendOffset: -50,
     }}
     enableLabel={false}
-    animate={true}
+    animate
     motionStiffness={90}
     motionDamping={15}
     minValue={-20}
     maxValue={20}
   />
 );
+
+export default BarChart;

@@ -1,6 +1,8 @@
-export const addSidebarRouteKinase = (kinase) => {
+const addSidebarRouteKinase = (kinase) => {
   return {
     type: 'ADD_KINASE_SIDEBAR_ROUTE',
     payload: kinase,
   };
 };
+
+export default addSidebarRouteKinase;

@@ -10,8 +10,7 @@ import animationData from 'assets/lottie/loading2.json';
 
 import Pathway from 'views/Pathway/Pathway';
 import SelectionList from 'views/Pathway/SelectionList';
-import { CallApiForPathway } from 'api/api';
-import { CallApi } from 'api/api';
+import { CallApi, CallApiForPathway } from 'api/api';
 import {
   getCytoStylesheet,
   getCytoLayout,
@@ -19,7 +18,8 @@ import {
 } from 'views/Pathway/CytoscapeUtils/build';
 
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+
 const useStyles = makeStyles(styles);
 
 const formatObservation = (phosphosites, fullObservationData) => {
@@ -28,6 +28,7 @@ const formatObservation = (phosphosites, fullObservationData) => {
   );
 
   const formattedObservation = {};
+  // eslint-disable-next-line camelcase
   observationInCurrentPathway.forEach(({ substrate, fold_change, p_value }) => {
     formattedObservation[substrate] = {
       fold_change: fold_change.toFixed(2),
@@ -57,7 +58,7 @@ export default () => {
     Promise.all([CallApi(observationQuery), CallApiForPathway()]).then(
       (results) => {
         const pathwayResults = results[1];
-        const phosphosites = pathwayResults.phosphosites;
+        const { phosphosites } = pathwayResults;
         const formattedObservation = formatObservation(
           phosphosites,
           results[0]

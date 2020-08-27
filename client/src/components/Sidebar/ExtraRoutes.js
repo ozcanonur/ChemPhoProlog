@@ -11,14 +11,15 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import { removeSidebarRoute } from 'actions/Sidebar/removeSidebarRoute';
+import removeSidebarRoute from 'actions/Sidebar/removeSidebarRoute';
 import { useDispatch, useSelector } from 'react-redux';
-import { additionalRoutes } from 'additionalRoutes';
+import additionalRoutes from 'additionalRoutes';
 
 import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
+
 const useStyles = makeStyles(styles);
 
 const ExtraRoute = ({ route }) => {
@@ -28,7 +29,7 @@ const ExtraRoute = ({ route }) => {
 
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
+    return window.location.href.indexOf(routeName) > -1;
   }
 
   const handleOpen = () => {
@@ -36,15 +37,14 @@ const ExtraRoute = ({ route }) => {
   };
 
   return route.map((prop, key) => {
-    var activePro = ' ';
-    var listItemClasses;
+    const activePro = ' ';
 
-    listItemClasses = classNames({
-      [' ' + classes['blue']]: activeRoute(prop.layout + prop.path),
+    const listItemClasses = classNames({
+      [` ${classes.blue}`]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({
-      [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
+      [` ${classes.whiteFont}`]: activeRoute(prop.layout + prop.path),
     });
 
     const currentTitle = prop.path.split('/')[1];
@@ -63,7 +63,8 @@ const ExtraRoute = ({ route }) => {
               marginTop: '1em',
               textAlign: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            }}>
+            }}
+          >
             <RemoveCircleOutlineIcon
               style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
               onClick={() => handleSelectedTabRemove(currentTitle)}
@@ -71,7 +72,7 @@ const ExtraRoute = ({ route }) => {
             <ListItemText
               primary={currentTitle}
               className={classNames(classes.itemText, whiteFontClasses)}
-              disableTypography={true}
+              disableTypography
               style={{ textAlign: 'left', marginLeft: '1em', cursor: 'pointer' }}
               onClick={handleOpen}
             />
@@ -83,10 +84,7 @@ const ExtraRoute = ({ route }) => {
           </ListItem>
         ) : undefined}
         <Collapse in={open} timeout='auto' unmountOnExit>
-          <NavLink
-            to={prop.layout + prop.path}
-            className={activePro + classes.item}
-            activeClassName='active'>
+          <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === 'string' ? (
                 <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
@@ -96,7 +94,7 @@ const ExtraRoute = ({ route }) => {
               <ListItemText
                 primary={prop.name}
                 className={classNames(classes.itemText, whiteFontClasses)}
-                disableTypography={true}
+                disableTypography
               />
             </ListItem>
           </NavLink>
@@ -125,7 +123,7 @@ const ExtraRoutes = ({ type }) => {
 
     return (
       <div className={classes.logo}>
-        <a href={'# '} className={classNames(classes.logoLink)}>
+        <a href='# ' className={classNames(classes.logoLink)}>
           <div className={classes.logoImage}>
             <img src={logo} alt='logo' className={classes.img} />
           </div>
