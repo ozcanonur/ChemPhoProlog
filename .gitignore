@@ -1,0 +1,9 @@
+node_modules/
+chemphopro.db
+.history/
+.dist/
+client/documentation/
+.vscode/
+client/build/
+.eslintignore
+.eslintrc.js
