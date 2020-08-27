@@ -90,7 +90,7 @@ export default () => {
                 />
               ) : (
                 <Lottie
-                  options={{ loop: true, autoplay: true, animationData: animationData }}
+                  options={{ loop: true, autoplay: true, animationData }}
                   height={500}
                   width={500}
                 />

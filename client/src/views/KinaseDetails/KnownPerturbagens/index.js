@@ -7,7 +7,7 @@ import CardBody from 'components/Card/CardBody.js';
 import Table from 'components/Table/Table';
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import { CallApi } from 'api/api';
 
@@ -15,10 +15,10 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js'
 
 const useStyles = makeStyles(styles);
 
-const KnownPerturbagens = ({ match }) => {
+const KnownPerturbagens = () => {
   const classes = useStyles();
 
-  const kinase = match.url.split('/')[2];
+  const kinase = window.location.href.split('/')[4];
 
   const [knownPerturbagenData, setKnownPerturbagenData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);

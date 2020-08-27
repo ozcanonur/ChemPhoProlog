@@ -15,19 +15,27 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 
 const getElementsToAnimate = (cy, selectedPath) => {
-  let pathwayIds = [];
+  const pathwayIds = [];
   selectedPath.forEach((node, index) => {
-    if (index % 2 !== 0 || index === selectedPath.length - 1) {
+    if (index % 2 === 0) {
+      pathwayIds.push(node);
+    } else {
       pathwayIds.push(`${node}to${selectedPath[index - 1]}`);
       pathwayIds.push(node);
-    } else pathwayIds.push(node);
+    }
   });
 
+  // if (pathwayIds.length > 0) console.log(pathwayIds);
+
   let animate = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
+
   // Sort the animate list according to the pathway ID list (for sequential animation)
   animate = animate.sort(
     (x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id)
   );
+
+  // if (animate.length > 0) console.log(animate.map((e) => e.data().id));
+
   let fade = cy.elements().filter((e) => !pathwayIds.includes(e.data().id));
   // Do not include the starting KPa in fade list (because looks better)
   fade = fade.filter((e) => e.data().id !== animate[0].data().parent);
@@ -48,7 +56,7 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
   };
 
   const clearAllTimeouts = () => {
-    for (var i = 0; i < 100000; i++) clearTimeout(i);
+    for (let i = 0; i < 100000; i += 1) clearTimeout(i);
   };
 
   const toggleFade = () => {

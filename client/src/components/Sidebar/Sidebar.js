@@ -54,7 +54,7 @@ const Sidebar = ({ open, handleDrawerToggle }) => {
 
   const brand = (text) => (
     <div className={classes.logo}>
-      <a className={classNames(classes.logoLink)}>
+      <a href={'# '} className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>

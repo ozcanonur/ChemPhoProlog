@@ -38,20 +38,13 @@ const setupTooltipAndShow = (element, content) => {
 };
 
 const addStartTooltip = (element, fold_change, p_value) => {
-  const content = `<div>Start <br/>FC: ${fold_change} <br/>p: ${p_value} <br/></div>`;
+  const content = `<div>Start <br/>fc: ${fold_change} <br/>p: ${p_value} <br/></div>`;
   setupTooltipAndShow(element, content);
 };
 
-const addPhosphositeTooltip = (element, fold_change, p_value, regulatory, stoppingReason) => {
+const addPhosphositeTooltip = (element, foldChange, p_value, stoppingReason) => {
   const stopReasonText = stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
-  const content =
-    '<div>' +
-    `FC: ${fold_change} <br/>` +
-    `p: ${p_value} <br/>` +
-    `Reg: ${regulatory}  <br/>` +
-    `${stopReasonText}` +
-    '</div>';
-
+  const content = `<div>fc: ${foldChange} <br/>p: ${p_value} <br/>${stopReasonText}</div>`;
   setupTooltipAndShow(element, content);
 };
 
@@ -61,7 +54,7 @@ const addEndKPaTooltip = (element, stoppingReason) => {
 };
 
 export const addTooltip = (i, element, animateElements, pathData) => {
-  const { regulatory, stoppingReasons, observation } = pathData;
+  const { stoppingReasons, observation } = pathData;
   // Phosphosite
   const id = element.data().id;
 
@@ -73,31 +66,12 @@ export const addTooltip = (i, element, animateElements, pathData) => {
   // At last node and it's a KPa
   if (isLastNode && isKPa) addEndKPaTooltip(element, stoppingReasons[id]);
   else if (isPhosphosite) {
-    const observationValue = observation[id].fold_change;
+    const foldChange = observation[id].fold_change;
     const pValue = observation[id].p_value;
-    const reg = regulatory[id];
     const stopReason = stoppingReasons[id];
 
-    if (isStartNode) addStartTooltip(element, observationValue, pValue);
-    else if (isLastNode) addPhosphositeTooltip(element, observationValue, pValue, reg, stopReason);
-    else addPhosphositeTooltip(element, observationValue, pValue, reg);
+    if (isStartNode) addStartTooltip(element, foldChange, pValue);
+    else if (isLastNode) addPhosphositeTooltip(element, foldChange, pValue, stopReason);
+    else addPhosphositeTooltip(element, foldChange, pValue);
   }
 };
-
-// addKPaTooltip(element, observationValue, regulatory[id]);
-// const addKPaTooltip = (element, foldChange, regulatory) => {
-//   const parentKPa = element.parent()[0];
-
-//   let activated = '';
-//   if (foldChange > 0 && regulatory === 'p_inc') activated = 'Activated';
-//   else if (foldChange < 0 && regulatory === 'p_dec') activated = 'Activated';
-//   else if (regulatory === 'unknown') activated = 'Unknown';
-//   else if (regulatory === 'conflicting') activated = 'Conflicting';
-//   else activated = 'Inhibited';
-
-//   const content = `<div>${activated}</div>`;
-
-//   const tooltip = makeTippy(parentKPa, content, 'right-start');
-//   parentKPa.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
-//   tooltip.show();
-// };

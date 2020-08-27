@@ -7,7 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Menu from '@material-ui/icons/Menu';
-import AdminNavbarLinks from './AdminNavbarLinks.js';
+import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
 import Button from 'components/CustomButtons/Button.js';
 
 import classNames from 'classnames';

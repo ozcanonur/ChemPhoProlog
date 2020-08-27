@@ -125,7 +125,7 @@ const ExtraRoutes = ({ type }) => {
 
     return (
       <div className={classes.logo}>
-        <a href={'#'} className={classNames(classes.logoLink)}>
+        <a href={'# '} className={classNames(classes.logoLink)}>
           <div className={classes.logoImage}>
             <img src={logo} alt='logo' className={classes.img} />
           </div>
