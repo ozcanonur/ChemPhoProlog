@@ -11,10 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
-const KnownSubstratesTable = ({ match }) => {
+const KnownSubstratesTable = () => {
   const classes = useStyles();
 
-  const kinase = match.url.split('/')[2];
+  const kinase = window.location.href.split('/')[4];
 
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);

@@ -9,7 +9,6 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: 'edge',
     style: {
-      'curve-style': 'bezier',
       'target-arrow-shape': 'triangle',
       width: 4,
       'line-color': '#ddd',

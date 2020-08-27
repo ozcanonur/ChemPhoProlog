@@ -20,6 +20,8 @@ import { changeSelectedKinase } from 'actions/KinaseList/changeSelectedKinase';
 import { changeCurrentPageKinase } from 'actions/KinaseList/changeCurrentPageKinase';
 import { addSidebarRouteKinase } from 'actions/Sidebar/addSidebarRouteKinase';
 
+import KinaseListPhosphosites from './KinaseListPhosphosites';
+
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(styles);
@@ -105,8 +107,6 @@ const KinaseList = () => {
                       tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
                       tableData={tableData}
                       rowsPerPage={10}
-                      expandable={true}
-                      expandFor={'kinaseList'}
                       rowEndArrow={true}
                       handleSelection={handleSelection}
                       selectedInfo={selectedInfo}
@@ -114,6 +114,7 @@ const KinaseList = () => {
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
                       firstRowOnClick={true}
+                      ExtraContent={KinaseListPhosphosites}
                     />
                   )}
                 </CardBody>

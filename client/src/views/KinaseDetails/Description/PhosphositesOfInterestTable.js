@@ -6,6 +6,8 @@ import Table from 'components/Table/Table';
 
 import { CallApiForProteinSubstrates } from 'api/api';
 
+import PhosphositesOfInterest from './ObservationHeatMap';
+
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
@@ -61,9 +63,9 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
-            expandable={true}
             expandFor={'phosphositesOfInterest'}
             firstRowOnClick={false}
+            ExtraContent={PhosphositesOfInterest}
           />
         )}
       </CardBody>

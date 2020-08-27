@@ -7,6 +7,8 @@ import Table from 'components/Table/Table';
 
 import { CallApiForPDTs } from 'api/api';
 
+import ObservationBarChart from 'views/KinaseDetails/Substrates/PDTs/ObservationBarChart';
+
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
@@ -56,9 +58,9 @@ const PDTTable = ({ cell_line }) => {
             rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
-            expandable={true}
             expandFor={'obsForPDTs'}
             cell_line={cell_line}
+            ExtraContent={ObservationBarChart}
           />
         )}
       </CardBody>

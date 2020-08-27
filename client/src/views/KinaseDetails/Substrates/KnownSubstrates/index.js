@@ -13,13 +13,13 @@ import KnownSubstratesTable from 'views/KinaseDetails/Substrates/KnownSubstrates
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
-const KnownSubstrates = ({ match }) => {
+const KnownSubstrates = () => {
   const classes = useStyles();
 
   return (
     <GridContainer>
       <GridItem xs={12} lg={6}>
-        <KnownSubstratesTable match={match} />
+        <KnownSubstratesTable />
       </GridItem>
       <GridItem xs={12} lg={6}>
         <GridContainer direction='column'>

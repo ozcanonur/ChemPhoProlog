@@ -9,10 +9,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
 const useStyles = makeStyles(styles);
 
-const KinaseListPhosphosites = ({ kinase }) => {
+const KinaseListPhosphosites = ({ row }) => {
   const classes = useStyles();
 
   const [phosphosites, setPhosphosites] = useState([]);
+
+  const kinase = row[0];
 
   useEffect(() => {
     let mounted = true;

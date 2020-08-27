@@ -2,31 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { has, range } from 'lodash';
 
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableBody,
-  TableCell,
-  TablePagination,
-  IconButton,
-  Collapse,
-  Box,
-} from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TablePagination from '@material-ui/core/TablePagination';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import Box from '@material-ui/core/Box';
 
-import {
-  Search,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  KeyboardArrowRight,
-  AddCircleOutline,
-} from '@material-ui/icons';
+import Search from '@material-ui/icons/Search';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import Button from 'components/CustomButtons/Button.js';
 import CustomInput from 'components/CustomInput/CustomInput';
-import KinaseListPhosphosites from 'components/Table/KinaseListPhosphosites';
-import PhosphositesOfInterest from 'components/Table/PhosphositesOfInterest';
-import ObsForPDTs from 'components/Table/ObsForPDTs';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle.js';
@@ -36,14 +29,13 @@ const useStyles = makeStyles(styles);
 const Row = (props) => {
   const {
     row,
-    expandable,
-    expandFor,
     rowEndArrow,
     handleSelection,
     handleAdd,
     selectedInfo,
     cell_line,
     firstRowOnClick,
+    ExtraContent,
   } = props;
 
   const classes = useStyles();
@@ -76,7 +68,7 @@ const Row = (props) => {
   const RowBody = () =>
     row.map((prop, key) => (
       <React.Fragment key={key}>
-        {expandable && key === 0 ? <ExpandButton /> : null}
+        {ExtraContent && key === 0 ? <ExpandButton /> : null}
         <TableCell className={classes.tableCell} key={key}>
           {firstRowOnClick ? (
             <Link
@@ -112,21 +104,15 @@ const Row = (props) => {
         }}>
         <RowBody />
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box margin={1}>
-              {expandFor === 'kinaseList' ? <KinaseListPhosphosites kinase={row[0]} /> : null}
-              {expandFor === 'phosphositesOfInterest' ? (
-                <PhosphositesOfInterest location={{ loc: row[0], res: row[1] }} />
-              ) : null}
-              {expandFor === 'obsForPDTs' ? (
-                <ObsForPDTs PDT={row[0]} cell_line={cell_line} />
-              ) : null}
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+      {ExtraContent !== undefined ? (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
+            <Collapse in={open} timeout='auto' mountOnEnter unmountOnExit>
+              <Box margin={1}>{<ExtraContent row={row} cell_line={cell_line} />}</Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      ) : null}
     </React.Fragment>
   );
 };
@@ -137,17 +123,16 @@ const CustomTable = (props) => {
   const {
     tableHead,
     tableHeaderColor,
-    expandable,
-    expandFor,
-    rowEndArrow,
-    handleSelection,
     tableData,
-    selectedInfo,
-    handleAdd,
     currentPage,
     handleChangePage,
-    cell_line,
+    handleAdd,
+    rowEndArrow,
+    handleSelection,
+    selectedInfo,
     firstRowOnClick,
+    ExtraContent,
+    cell_line,
   } = props;
 
   // Pagination options
@@ -157,7 +142,7 @@ const CustomTable = (props) => {
 
   const createSortState = () => {
     let length = tableHead.length;
-    if (expandable) length -= 1;
+    if (ExtraContent) length -= 1;
     if (rowEndArrow) length -= 1;
 
     let obj = {};
@@ -190,9 +175,7 @@ const CustomTable = (props) => {
   };
 
   const handleSort = (key) => {
-    if (expandable) {
-      key = key - 1;
-    }
+    if (ExtraContent) key = key - 1;
 
     let sortedList = [];
     if (!sortedAsc[key]) {
@@ -235,14 +218,13 @@ const CustomTable = (props) => {
           key={key}
           {...{
             row,
-            expandable,
-            expandFor,
             rowEndArrow,
             handleSelection,
             selectedInfo,
             handleAdd,
             cell_line,
             firstRowOnClick,
+            ExtraContent,
           }}
         />
       ));

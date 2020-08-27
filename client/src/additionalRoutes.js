@@ -1,8 +1,8 @@
 import WelcomePage from 'views/Welcome';
 
-import KinaseDetailsDescription from 'views/KinaseDetails/Description/Description';
-import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
-import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/Substrates';
+import KinaseDetailsDescription from 'views/KinaseDetails/Description/';
+import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/';
+import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/';
 
 import PerturbagenDetailsDescription from 'views/PerturbagenDetails/Description';
 import PerturbagenDetailsKnownTargets from 'views/PerturbagenDetails/KnownTargets';

@@ -12,10 +12,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 const useStyles = makeStyles(styles);
 
-const Description = ({ match }) => {
+export default () => {
   const classes = useStyles();
 
-  const kinase = match.path.split('/')[2];
+  const kinase = window.location.href.split('/')[4];
 
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
@@ -65,5 +65,3 @@ const Description = ({ match }) => {
     </GridContainer>
   );
 };
-
-export default Description;

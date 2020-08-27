@@ -99,7 +99,6 @@ const PerturbagenList = () => {
                       tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
                       tableData={tableData}
                       rowsPerPage={10}
-                      collapsible={false}
                       rowEndArrow={true}
                       handleSelection={handleSelection}
                       handleAdd={handlePerturbagenAdd}
