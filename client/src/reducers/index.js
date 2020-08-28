@@ -9,6 +9,7 @@ import selectedPerturbagenReducer from 'reducers/PerturbagenList/selectedPerturb
 import currentPagePerturbagenReducer from 'reducers/PerturbagenList/currentPagePerturbagenReducer';
 
 import sidebarRoutesReducer from 'reducers/Sidebar/sidebarRoutesReducer';
+import PathwaySelectReducer from './Pathway/PathwaySelectReducer';
 
 export default combineReducers({
   kinaseData: kinaseDataReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
   selectedPerturbagen: selectedPerturbagenReducer,
   currentPagePerturbagen: currentPagePerturbagenReducer,
   sidebarRoutes: sidebarRoutesReducer,
+  pathwaySelectList: PathwaySelectReducer,
 });

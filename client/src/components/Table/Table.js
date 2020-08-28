@@ -11,15 +11,14 @@ import TablePagination from '@material-ui/core/TablePagination';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
+import Button from 'components/CustomButtons/Button';
+import CustomInput from 'components/CustomInput/CustomInput';
 
 import Search from '@material-ui/icons/Search';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
-
-import Button from 'components/CustomButtons/Button';
-import CustomInput from 'components/CustomInput/CustomInput';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle';
@@ -37,6 +36,7 @@ const Row = (props) => {
     ExtraContent,
     selectedItem,
     cell_line,
+    handleAddPathway,
   } = props;
 
   const classes = useStyles();
@@ -55,15 +55,22 @@ const Row = (props) => {
     </TableCell>
   );
 
-  const RightButton = () => (
-    <TableCell style={{ textAlign: 'center' }}>
-      <IconButton aria-label='expand row' size='small' onClick={() => handleAdd(row[0])}>
-        <AddCircleOutline />
-      </IconButton>
-      <IconButton aria-label='expand row' size='small' onClick={() => handleSelection(row[0])}>
-        <KeyboardArrowRight />
-      </IconButton>
-    </TableCell>
+  const SelectionButton = () => (
+    <IconButton aria-label='expand row' size='small' onClick={() => handleSelection(row[0])}>
+      <KeyboardArrowRight />
+    </IconButton>
+  );
+
+  const AddButton = () => (
+    <IconButton aria-label='expand row' size='small' onClick={() => handleAdd(row[0])}>
+      <AddCircleOutline />
+    </IconButton>
+  );
+
+  const AddButtonPathway = () => (
+    <Button onClick={() => handleAddPathway(row)} color='rose' size='sm'>
+      Add to inspection
+    </Button>
   );
 
   const RowBody = () =>
@@ -85,7 +92,13 @@ const Row = (props) => {
             <>{prop}</>
           )}
         </TableCell>
-        {rowEndArrow && key === row.length - 1 ? <RightButton /> : null}
+        {rowEndArrow && key === row.length - 1 ? (
+          <TableCell style={{ textAlign: 'center' }}>
+            {handleAdd ? <AddButton /> : null}
+            {handleSelection ? <SelectionButton /> : null}
+            {handleAddPathway ? <AddButtonPathway /> : null}
+          </TableCell>
+        ) : null}
       </React.Fragment>
     ));
 
@@ -131,6 +144,7 @@ const CustomTable = (props) => {
     ExtraContent,
     cell_line,
     selectedItem,
+    handleAddPathway,
   } = props;
 
   const [filteredList, setFilteredList] = useState([]);
@@ -198,16 +212,19 @@ const CustomTable = (props) => {
 
   const TableHeadContent = () => (
     <TableRow className={classes.tableHeadRow}>
-      {tableHead.map((prop, key) => (
-        <TableCell
-          className={`${classes.tableCell} ${classes.tableHeadCell}`}
-          style={{ cursor: 'pointer' }}
-          key={key}
-          onClick={() => handleSort(key)}
-        >
-          {prop}
-        </TableCell>
-      ))}
+      {tableHead.map((prop, key) => {
+        const textAlign = key === tableHead.length - 1 ? 'center' : 'inherit';
+        return (
+          <TableCell
+            className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            style={{ cursor: 'pointer', textAlign }}
+            key={key}
+            onClick={() => handleSort(key)}
+          >
+            {prop}
+          </TableCell>
+        );
+      })}
     </TableRow>
   );
 
@@ -224,6 +241,7 @@ const CustomTable = (props) => {
           firstRowOnClick,
           ExtraContent,
           selectedItem,
+          handleAddPathway,
         }}
       />
     ));

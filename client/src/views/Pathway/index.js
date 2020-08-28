@@ -8,8 +8,10 @@ import GridItem from 'components/Grid/GridItem';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
+import Pathdetails from 'views/Pathway/PathDetails';
+import PathTable from 'views/Pathway/PathTable';
 import Pathway from 'views/Pathway/Pathway';
-import SelectionList from 'views/Pathway/SelectionList';
+import PathSelectList from 'views/Pathway/PathSelectList';
 import { CallApi, CallApiForPathway } from 'api/api';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/build';
 
@@ -64,36 +66,50 @@ export default () => {
   const layout = getCytoLayout();
   const elements = getCytoElements(pathwayData);
 
-  const changeSelection = (num) => {
-    setSelectedPath(pathwayData.pathways[num]);
+  const changeSelection = (ID) => {
+    setSelectedPath(pathwayData.pathways[ID]);
   };
 
   return (
     <div style={{ padding: '2em' }}>
-      <GridContainer direction='row'>
-        <GridItem xs={10}>
-          <Card>
-            <CardHeader color='warning'>
-              <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
-              <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
-            </CardHeader>
-            <CardBody>
-              {elements.length !== 0 ? (
-                <Pathway
-                  pathwayData={pathwayData}
-                  stylesheet={stylesheet}
-                  layout={layout}
-                  elements={elements}
-                  selectedPath={selectedPath}
-                />
-              ) : (
-                <Lottie options={{ loop: true, autoplay: true, animationData }} height={500} width={500} />
-              )}
-            </CardBody>
-          </Card>
+      <GridContainer direction='column'>
+        <GridItem>
+          <GridContainer direction='row'>
+            <GridItem xs={10}>
+              <Card>
+                <CardHeader color='warning'>
+                  <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
+                  <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
+                </CardHeader>
+                <CardBody>
+                  {elements.length !== 0 ? (
+                    <Pathway
+                      pathwayData={pathwayData}
+                      stylesheet={stylesheet}
+                      layout={layout}
+                      elements={elements}
+                      selectedPath={selectedPath}
+                    />
+                  ) : (
+                    <Lottie options={{ loop: true, autoplay: true, animationData }} height={500} width={500} />
+                  )}
+                </CardBody>
+              </Card>
+            </GridItem>
+            <GridItem xs={2}>
+              <PathSelectList pathwayData={pathwayData} changeSelection={changeSelection} />
+            </GridItem>
+          </GridContainer>
         </GridItem>
-        <GridItem xs={2}>
-          <SelectionList pathwayData={pathwayData} changeSelection={changeSelection} />
+        <GridItem>
+          <GridContainer direction='row'>
+            <GridItem md>
+              <PathTable pathwayData={pathwayData} />
+            </GridItem>
+            <GridItem md>
+              <Pathdetails pathwayData={pathwayData} selectedPath={selectedPath} />
+            </GridItem>
+          </GridContainer>
         </GridItem>
       </GridContainer>
     </div>

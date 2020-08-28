@@ -12,7 +12,7 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ['kinaseData', 'perturbagenData'],
+  blacklist: ['kinaseData', 'perturbagenData', 'pathwaySelectList'],
 };
 
 export const store = createStore(persistReducer(persistConfig, reducers), composeEnhancers(applyMiddleware(thunk)));
