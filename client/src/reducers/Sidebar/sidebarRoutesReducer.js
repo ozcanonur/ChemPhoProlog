@@ -1,4 +1,4 @@
-import { uniqWith } from 'lodash';
+import uniqWith from 'lodash/uniqWith';
 
 export default (state = [], action) => {
   const filterDuplicates = (type, itemName) =>

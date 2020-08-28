@@ -9,7 +9,7 @@ import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
 import Pathdetails from 'views/Pathway/PathDetails';
-import PathTable from 'views/Pathway/PathTable';
+import PathsTable from 'views/Pathway/PathsTable';
 import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
 import { CallApi, CallApiForPaths } from 'api/api';
@@ -88,7 +88,7 @@ export default () => {
                       selectedPath={selectedPath}
                     />
                   ) : (
-                    <Lottie options={{ loop: true, autoplay: true, animationData }} height={500} width={500} />
+                    <Lottie options={{ loop: true, autoplay: true, animationData }} height={800} width={800} />
                   )}
                 </CardBody>
               </Card>
@@ -101,7 +101,7 @@ export default () => {
         <GridItem>
           <GridContainer direction='row'>
             <GridItem md>
-              <PathTable data={data} />
+              <PathsTable data={data} />
             </GridItem>
             <GridItem md>
               <Pathdetails data={data} selectedPath={selectedPath} />

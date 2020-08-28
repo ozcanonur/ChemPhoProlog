@@ -13,7 +13,7 @@ import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 import { Slide } from '@material-ui/core';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { pick } from 'lodash';
+import pick from 'lodash/pick';
 
 import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
 import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';

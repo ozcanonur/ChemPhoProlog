@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { zip } from 'lodash';
+import zip from 'lodash/zip';
 import { CallApi } from 'api/api';
 
 import { Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';

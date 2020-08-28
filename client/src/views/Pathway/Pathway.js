@@ -136,6 +136,9 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         elements={elements}
         stylesheet={stylesheet}
         style={{ height: '800px' }}
+        minZoom={0.5}
+        maxZoom={1.5}
+        boxSelectionEnabled
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
         <ExtraButtons cy={cy} runLayout={runLayout} toggleFade={toggleFade} toggleTooltips={toggleTooltips} />

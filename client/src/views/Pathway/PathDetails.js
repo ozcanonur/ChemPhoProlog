@@ -14,7 +14,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 const useStyles = makeStyles(styles);
 
 // Should only work for KPa endings for now
-const getExplanation = (path, observation, regulatory) => {
+const getExplanationForPath = (path, observation, regulatory) => {
   const outputList = [];
   let prevBottomKPaActivity = 'inhibited';
   for (let i = 0; i < path.length; i += 2) {
@@ -56,7 +56,7 @@ const PathDetails = ({ data, selectedPath }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const reversedPath = selectedPath.slice().reverse();
-  const explanation = getExplanation(reversedPath, data.observation, data.regulatory);
+  const explanation = getExplanationForPath(reversedPath, data.observation, data.regulatory);
 
   // const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
 

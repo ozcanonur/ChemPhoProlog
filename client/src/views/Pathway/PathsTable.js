@@ -22,7 +22,7 @@ const parsePathsToTableData = (paths, stoppingReasons) =>
     return [key, stopNode, stopReason, pathLength];
   });
 
-const PathTable = ({ data }) => {
+const PathsTable = ({ data }) => {
   const classes = useStyles();
 
   const { paths, stoppingReasons } = data;
@@ -67,4 +67,4 @@ const PathTable = ({ data }) => {
   );
 };
 
-export default PathTable;
+export default PathsTable;
