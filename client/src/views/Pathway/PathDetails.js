@@ -1,11 +1,10 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useState } from 'react';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
+import Table from 'components/Table/Table';
 
 import phosphatases from 'views/Pathway/variables/phosphatases';
 
@@ -47,40 +46,40 @@ const getExplanation = (path, observation, regulatory) => {
 
     prevBottomKPaActivity = bottomKPaActivity;
   }
+
   return outputList;
 };
 
 const PathDetails = ({ data, selectedPath }) => {
   const classes = useStyles();
 
-  const reversedPath = selectedPath.slice().reverse();
-  const explanation = getExplanation(data.observation, data.regulatory, reversedPath);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
+  const reversedPath = selectedPath.slice().reverse();
+  const explanation = getExplanation(reversedPath, data.observation, data.regulatory);
+
+  // const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
+
+  const handleChangePage = (_event, newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
-    <Card>
+    <Card style={{ height: 650 }}>
       <CardHeader color='info'>
         <h4 className={classes.cardTitleWhite}>Explanation</h4>
         <p className={classes.cardCategoryWhite}>Torin</p>
       </CardHeader>
       <CardBody>
-        <GridContainer direction='column'>
-          <GridItem style={{ marginTop: 15, marginBottom: 22 }}>
-            <StartExplanation />
-          </GridItem>
-          {explanation.map((triplet, key) => (
-            <GridItem key={key}>
-              <GridContainer direction='row'>
-                {triplet.map((e, key) => (
-                  <GridItem md key={key}>
-                    {e}
-                  </GridItem>
-                ))}
-              </GridContainer>
-            </GridItem>
-          ))}
-        </GridContainer>
+        <Table
+          className='my-node'
+          tableHeaderColor='warning'
+          tableHead={['Start', 'Phosphosite', 'End']}
+          tableData={explanation}
+          rowsPerPage={8}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
+        />
       </CardBody>
     </Card>
   );

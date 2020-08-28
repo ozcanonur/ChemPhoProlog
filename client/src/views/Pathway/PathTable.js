@@ -45,7 +45,7 @@ const PathTable = ({ data }) => {
   };
 
   return (
-    <Card>
+    <Card style={{ height: 650 }}>
       <CardHeader color='rose'>
         <h4 className={classes.cardTitleWhite}>Paths found</h4>
         <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>

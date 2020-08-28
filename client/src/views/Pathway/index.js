@@ -31,6 +31,7 @@ const formatObservation = (phosphosites, fullObservationData) => {
       p_value: p_value.toFixed(2),
     };
   });
+
   return formattedObservation;
 };
 
