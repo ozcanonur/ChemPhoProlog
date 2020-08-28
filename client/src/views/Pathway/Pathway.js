@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
 import Cytoscape from 'cytoscape';
@@ -13,33 +14,33 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 
 const getElementsToAnimate = (cy, selectedPath) => {
-  const pathwayIds = [];
+  const pathIds = [];
   selectedPath.forEach((node, index) => {
     if (index % 2 === 0) {
-      pathwayIds.push(node);
+      pathIds.push(node);
     } else {
-      pathwayIds.push(`${node}to${selectedPath[index - 1]}`);
-      pathwayIds.push(node);
+      pathIds.push(`${node}to${selectedPath[index - 1]}`);
+      pathIds.push(node);
     }
   });
 
-  // if (pathwayIds.length > 0) console.log(pathwayIds);
+  // if (pathIds.length > 0) console.log(pathIds);
 
-  let animate = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
+  let animate = cy.elements().filter((e) => pathIds.includes(e.data().id));
 
   // Sort the animate list according to the pathway ID list (for sequential animation)
-  animate = animate.sort((x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id));
+  animate = animate.sort((x, y) => pathIds.indexOf(x.data().id) - pathIds.indexOf(y.data().id));
 
   // if (animate.length > 0) console.log(animate.map((e) => e.data().id));
 
-  let fade = cy.elements().filter((e) => !pathwayIds.includes(e.data().id));
+  let fade = cy.elements().filter((e) => !pathIds.includes(e.data().id));
   // Do not include the starting KPa in fade list (because looks better)
   fade = fade.filter((e) => e.data().id !== animate[0].data().parent);
 
   return { animate, fade };
 };
 
-const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) => {
+const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
   const [cy, setCy] = useState(Cytoscape());
   const [animateElements, setAnimateElements] = useState({
     animate: cy.collection(),
@@ -67,9 +68,9 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
       animatePath(
         animateElements.animate,
         {
-          regulatory: pathwayData.regulatory,
-          stoppingReasons: pathwayData.stoppingReasons,
-          observation: pathwayData.observation,
+          regulatory: data.regulatory,
+          stoppingReasons: data.stoppingReasons,
+          observation: data.observation,
         },
         0
       );
@@ -109,9 +110,9 @@ const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) =>
     animatePath(
       animateElements.animate,
       {
-        regulatory: pathwayData.regulatory,
-        stoppingReasons: pathwayData.stoppingReasons,
-        observation: pathwayData.observation,
+        regulatory: data.regulatory,
+        stoppingReasons: data.stoppingReasons,
+        observation: data.observation,
       },
       50
     );

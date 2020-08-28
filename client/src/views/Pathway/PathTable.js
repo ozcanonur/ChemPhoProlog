@@ -6,15 +6,15 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 
 import { useDispatch } from 'react-redux';
-import addPathwaySelect from 'actions/Pathway/addPathwaySelect';
+import addInspectPath from 'actions/Pathway/addInspectPath';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);
 
-const parsePathwaysToTableData = (pathways, stoppingReasons) =>
-  pathways.map((path, key) => {
+const parsePathsToTableData = (paths, stoppingReasons) =>
+  paths.map((path, key) => {
     const pathLength = path.length;
     const stopNode = path[pathLength - 1];
     const stopReason = stoppingReasons[stopNode];
@@ -22,26 +22,26 @@ const parsePathwaysToTableData = (pathways, stoppingReasons) =>
     return [key, stopNode, stopReason, pathLength];
   });
 
-const PathTable = ({ pathwayData }) => {
+const PathTable = ({ data }) => {
   const classes = useStyles();
 
-  const { pathways, stoppingReasons } = pathwayData;
+  const { paths, stoppingReasons } = data;
 
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const parsedPathways = parsePathwaysToTableData(pathways, stoppingReasons);
-    setTableData(parsedPathways);
-  }, [pathways, stoppingReasons]);
+    const parsedPaths = parsePathsToTableData(paths, stoppingReasons);
+    setTableData(parsedPaths);
+  }, [paths, stoppingReasons]);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_event, newPage) => {
     setCurrentPage(newPage);
   };
 
   const dispatch = useDispatch();
-  const handleAddPathway = (row) => {
-    dispatch(addPathwaySelect(row));
+  const handleAddPath = (row) => {
+    dispatch(addInspectPath(row));
   };
 
   return (
@@ -60,7 +60,7 @@ const PathTable = ({ pathwayData }) => {
           currentPage={currentPage}
           handleChangePage={handleChangePage}
           rowEndArrow
-          handleAddPathway={handleAddPathway}
+          handleAddPath={handleAddPath}
         />
       </CardBody>
     </Card>

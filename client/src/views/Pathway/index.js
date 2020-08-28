@@ -12,7 +12,7 @@ import Pathdetails from 'views/Pathway/PathDetails';
 import PathTable from 'views/Pathway/PathTable';
 import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
-import { CallApi, CallApiForPathway } from 'api/api';
+import { CallApi, CallApiForPaths } from 'api/api';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/build';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,11 +21,11 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 const useStyles = makeStyles(styles);
 
 const formatObservation = (phosphosites, fullObservationData) => {
-  const observationInCurrentPathway = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
+  const observationInCurrentPaths = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
 
   const formattedObservation = {};
   // eslint-disable-next-line camelcase
-  observationInCurrentPathway.forEach(({ substrate, fold_change, p_value }) => {
+  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
     formattedObservation[substrate] = {
       fold_change: fold_change.toFixed(2),
       p_value: p_value.toFixed(2),
@@ -37,8 +37,8 @@ const formatObservation = (phosphosites, fullObservationData) => {
 export default () => {
   const classes = useStyles();
 
-  const [pathwayData, setPathwayData] = useState({
-    pathways: [],
+  const [data, setData] = useState({
+    paths: [],
     relations: {},
     phosphosites: [],
     regulatory: {},
@@ -51,23 +51,19 @@ export default () => {
   useEffect(() => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
-    Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
-      const pathwayResults = results[1];
-      const { phosphosites } = pathwayResults;
-      const formattedObservation = formatObservation(phosphosites, results[0]);
-      setPathwayData({
-        observation: formattedObservation,
-        ...pathwayResults,
-      });
+    Promise.all([CallApi(observationQuery), CallApiForPaths()]).then((results) => {
+      const [fullObservationData, pathsResults] = results;
+      const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);
+      setData({ observation: formattedObservation, ...pathsResults });
     });
   }, []);
 
-  const stylesheet = getCytoStylesheet(pathwayData.observation, pathwayData.regulatory);
+  const stylesheet = getCytoStylesheet(data.observation, data.regulatory);
   const layout = getCytoLayout();
-  const elements = getCytoElements(pathwayData);
+  const elements = getCytoElements(data);
 
   const changeSelection = (ID) => {
-    setSelectedPath(pathwayData.pathways[ID]);
+    setSelectedPath(data.paths[ID]);
   };
 
   return (
@@ -84,7 +80,7 @@ export default () => {
                 <CardBody>
                   {elements.length !== 0 ? (
                     <Pathway
-                      pathwayData={pathwayData}
+                      data={data}
                       stylesheet={stylesheet}
                       layout={layout}
                       elements={elements}
@@ -97,17 +93,17 @@ export default () => {
               </Card>
             </GridItem>
             <GridItem xs={2}>
-              <PathSelectList pathwayData={pathwayData} changeSelection={changeSelection} />
+              <PathSelectList data={data} changeSelection={changeSelection} />
             </GridItem>
           </GridContainer>
         </GridItem>
         <GridItem>
           <GridContainer direction='row'>
             <GridItem md>
-              <PathTable pathwayData={pathwayData} />
+              <PathTable data={data} />
             </GridItem>
             <GridItem md>
-              <Pathdetails pathwayData={pathwayData} selectedPath={selectedPath} />
+              <Pathdetails data={data} selectedPath={selectedPath} />
             </GridItem>
           </GridContainer>
         </GridItem>

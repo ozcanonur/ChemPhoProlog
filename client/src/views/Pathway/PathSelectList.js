@@ -17,7 +17,7 @@ const useStyles = makeStyles(styles);
 const SelectionList = ({ changeSelection }) => {
   const classes = useStyles();
 
-  const pathwaySelectList = useSelector((state) => state.pathwaySelectList);
+  const pathsInspectList = useSelector((state) => state.pathsInspectList);
 
   return (
     <Card>
@@ -27,7 +27,7 @@ const SelectionList = ({ changeSelection }) => {
       </CardHeader>
       <CardBody style={{ maxHeight: '800px', overflow: 'auto' }}>
         <List>
-          {pathwaySelectList.map((e, key) => {
+          {pathsInspectList.map((e, key) => {
             const [ID, node, stopReason, length] = e;
             const text = `${ID} / ${node} / ${stopReason} / ${length}`;
             return (

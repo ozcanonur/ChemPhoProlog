@@ -36,7 +36,7 @@ const Row = (props) => {
     ExtraContent,
     selectedItem,
     cell_line,
-    handleAddPathway,
+    handleAddPath,
   } = props;
 
   const classes = useStyles();
@@ -67,8 +67,8 @@ const Row = (props) => {
     </IconButton>
   );
 
-  const AddButtonPathway = () => (
-    <Button onClick={() => handleAddPathway(row)} color='rose' size='sm'>
+  const AddButtonPath = () => (
+    <Button onClick={() => handleAddPath(row)} color='rose' size='sm'>
       Add to inspection
     </Button>
   );
@@ -96,7 +96,7 @@ const Row = (props) => {
           <TableCell style={{ textAlign: 'center' }}>
             {handleAdd ? <AddButton /> : null}
             {handleSelection ? <SelectionButton /> : null}
-            {handleAddPathway ? <AddButtonPathway /> : null}
+            {handleAddPath ? <AddButtonPath /> : null}
           </TableCell>
         ) : null}
       </React.Fragment>
@@ -144,7 +144,7 @@ const CustomTable = (props) => {
     ExtraContent,
     cell_line,
     selectedItem,
-    handleAddPathway,
+    handleAddPath,
   } = props;
 
   const [filteredList, setFilteredList] = useState([]);
@@ -241,7 +241,7 @@ const CustomTable = (props) => {
           firstRowOnClick,
           ExtraContent,
           selectedItem,
-          handleAddPathway,
+          handleAddPath,
         }}
       />
     ));

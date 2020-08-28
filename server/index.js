@@ -82,19 +82,19 @@ String.prototype.replaceAll = function (search, replacement) {
   return target.split(search).join(replacement);
 };
 
-const parsePathway = (rows) => {
-  let pathways = []; // Legit paths Root > KPa > Ps on KPa > KPa...
+const parseCSVToPaths = (csvData) => {
+  let paths = []; // Legit paths Root > KPa > PsonKPa > KPa...
   let relations = {}; // KPa affects phosphosites
-  let phosphosites = []; // Phosphosites that exist
+  let phosphosites = []; // Phosphosites that just EXIST
   let regulatory = {}; // Regulatory effect of phosphosites
   let stoppingReasons = {}; // Why we stopped
 
-  for (const row of rows) {
+  for (const row of csvData) {
     let path = row.Path;
     path = path.substring(1, path.length - 1);
     path = path.split(/\[(.+?)\]/);
 
-    let pathway = [];
+    let parsedPath = [];
     for (let i = 1; i < path.length - 1; i += 2) {
       let step = path[i].split(', ');
       step = step.map((e) => e.replaceAll("'", ''));
@@ -108,41 +108,41 @@ const parsePathway = (rows) => {
           phosphosites.push(step[0]);
           regulatory[step[0]] = step[2];
           stoppingReasons[step[0]] = row.Explanation;
-          pathway.push(step[0]);
+          parsedPath.push(step[0]);
           continue;
           // regular phosphosite ending
         } else if (step[4].includes('(')) {
           phosphosites.push(step[4]);
           regulatory[step[4]] = step[6];
           stoppingReasons[step[4]] = row.Explanation;
-          //pathway.push(step[4])
+          //parsedPath.push(step[4])
         } else {
           stoppingReasons[step[3]] = row.Explanation;
         }
       }
 
-      pathway.push(affected);
-      pathway.push(affecting);
+      parsedPath.push(affected);
+      parsedPath.push(affecting);
       // One off fix for regular phosphosite ending
-      if (i === path.length - 2 && step[4].includes('(')) pathway.push(step[4]);
+      if (i === path.length - 2 && step[4].includes('(')) parsedPath.push(step[4]);
 
       if (!(affecting in relations)) relations[affecting] = [affected];
       else if (!relations[affecting].includes(affected)) relations[affecting].push(affected);
       regulatory[step[0]] = step[2];
     }
-    pathways.push(pathway);
+    paths.push(parsedPath);
   }
   // Combine all phosphosites (from relations and leftovers)
   phosphosites = _.union(phosphosites, Object.values(relations).flat());
 
-  return { pathways, relations, phosphosites, regulatory, stoppingReasons };
+  return { paths, relations, phosphosites, regulatory, stoppingReasons };
 };
 
 router.get('/api/pathway', (req, res) => {
   (async () => {
     const fileData = await fs.readFile('../toydata.csv');
-    parse(fileData, { columns: true, trim: true }, (err, rows) => {
-      const pathwayData = parsePathway(rows);
+    parse(fileData, { columns: true, trim: true }, (err, csvData) => {
+      const pathwayData = parseCSVToPaths(csvData);
       res.send(pathwayData);
     });
   })();

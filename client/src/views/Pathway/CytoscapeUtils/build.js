@@ -52,8 +52,7 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e) =>
-        observation[e.data().id].fold_change > 0 ? 'green' : 'red',
+      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'green' : 'red'),
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e) => {
@@ -137,13 +136,13 @@ export const getCytoLayout = () => {
   };
 };
 
-export const getCytoElements = (pathwayData) => {
+export const getCytoElements = (data) => {
   // KPas
-  const nodes = Object.keys(pathwayData.relations).map((e) => {
+  const nodes = Object.keys(data.relations).map((e) => {
     return { data: { id: e }, classes: ['KPa'] };
   });
 
-  const phosphosites = pathwayData.phosphosites.map((e) => {
+  const phosphosites = data.phosphosites.map((e) => {
     return {
       data: { id: e, parent: e.split('(')[0] },
       classes: ['phosphosite'],
@@ -151,9 +150,9 @@ export const getCytoElements = (pathwayData) => {
   });
 
   // Avoiding loops with indexOf, messes up the layout for some reason?
-  const edges = Object.keys(pathwayData.relations)
+  const edges = Object.keys(data.relations)
     .map((key) =>
-      pathwayData.relations[key]
+      data.relations[key]
         .filter((x) => x.indexOf(key) === -1)
         .map((e) => {
           return { data: { id: `${key}to${e}`, source: key, target: e } };

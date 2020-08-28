@@ -3,6 +3,7 @@ const phosphatases = [
   'ACP6',
   'ACP7',
   'ACPP',
+  'ACP1',
   'ACYP1',
   'ACYP2',
   'ALPI',

@@ -15,9 +15,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 const useStyles = makeStyles(styles);
 
 // Should only work for KPa endings for now
-const getExplanation = (pathwayData, path) => {
-  const { observation, regulatory } = pathwayData;
-
+const getExplanation = (path, observation, regulatory) => {
   const outputList = [];
   let prevBottomKPaActivity = 'inhibited';
   for (let i = 0; i < path.length; i += 2) {
@@ -52,21 +50,19 @@ const getExplanation = (pathwayData, path) => {
   return outputList;
 };
 
-const PathDetails = ({ pathwayData, selectedPath }) => {
+const PathDetails = ({ data, selectedPath }) => {
   const classes = useStyles();
 
-  // DUSP4 MAPK3(T202) MAPK3 CDC25A(S18) CDC25A CDK2(Y15) CDK2 CDK2(T160) CDK2 CDK7(T170) CDK7 CDK1(T161) CDK1 PPP1CA(T320) PPP1CA AKT1(S473)
-
   const reversedPath = selectedPath.slice().reverse();
-  const explanation = getExplanation(pathwayData, reversedPath);
+  const explanation = getExplanation(data.observation, data.regulatory, reversedPath);
 
-  const StartExplanation = () => <div>{`Torin inhibits ${reversedPath[0]}`}</div>;
+  const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
 
   return (
     <Card>
       <CardHeader color='info'>
         <h4 className={classes.cardTitleWhite}>Explanation</h4>
-        <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
+        <p className={classes.cardCategoryWhite}>Torin</p>
       </CardHeader>
       <CardBody>
         <GridContainer direction='column'>
