@@ -102,10 +102,10 @@ const PerturbagenList = () => {
                       rowEndArrow
                       handleSelection={handleSelection}
                       handleAdd={handlePerturbagenAdd}
-                      selectedInfo={selectedInfo}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
                       firstRowOnClick
+                      selectedItem={selectedItem}
                     />
                   )}
                 </CardBody>

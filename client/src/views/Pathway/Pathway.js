@@ -4,12 +4,10 @@ import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
+import { hideAll as hideTooltips } from 'tippy.js';
 
 import ExtraButtons from 'views/Pathway/ExtraButtons';
-
 import animatePath from 'views/Pathway/CytoscapeUtils/animation';
-
-import { hideAll as hideTooltips } from 'tippy.js';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
@@ -30,9 +28,7 @@ const getElementsToAnimate = (cy, selectedPath) => {
   let animate = cy.elements().filter((e) => pathwayIds.includes(e.data().id));
 
   // Sort the animate list according to the pathway ID list (for sequential animation)
-  animate = animate.sort(
-    (x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id)
-  );
+  animate = animate.sort((x, y) => pathwayIds.indexOf(x.data().id) - pathwayIds.indexOf(y.data().id));
 
   // if (animate.length > 0) console.log(animate.map((e) => e.data().id));
 
@@ -43,13 +39,7 @@ const getElementsToAnimate = (cy, selectedPath) => {
   return { animate, fade };
 };
 
-const Pathway = ({
-  pathwayData,
-  stylesheet,
-  layout,
-  elements,
-  selectedPath,
-}) => {
+const Pathway = ({ pathwayData, stylesheet, layout, elements, selectedPath }) => {
   const [cy, setCy] = useState(Cytoscape());
   const [animateElements, setAnimateElements] = useState({
     animate: cy.collection(),
@@ -71,8 +61,8 @@ const Pathway = ({
 
   const toggleTooltips = () => {
     clearAllTimeouts();
-    if (document.getElementsByClassName('tippy-popper').length !== 0)
-      hideTooltips();
+
+    if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
     else {
       animatePath(
         animateElements.animate,
@@ -88,9 +78,7 @@ const Pathway = ({
 
   useEffect(() => {
     return () => {
-      // Cleanup animation timeouts
       clearAllTimeouts();
-      // Clear tooltips
       hideTooltips();
     };
   }, []);
@@ -100,8 +88,7 @@ const Pathway = ({
     setAnimateElements(getElementsToAnimate(cy, selectedPath));
   }, [selectedPath]);
 
-  // Run every render
-  useEffect(() => {
+  const resetPathwayVisuals = () => {
     // Remove the previous highlighting/tooltips if any
     hideTooltips();
     clearAllTimeouts();
@@ -114,16 +101,11 @@ const Pathway = ({
       e.removeClass('highlightedPhosphataseEdge');
       e.removeClass('fade');
     });
+  };
 
-    // _evt
-    // Resize event listener
-    cy.on('resize', () => {
-      runLayout();
-    });
-
+  const playAnimation = () => {
     // Fade nodes outside the animation
     animateElements.fade.addClass('fade');
-
     animatePath(
       animateElements.animate,
       {
@@ -131,12 +113,21 @@ const Pathway = ({
         stoppingReasons: pathwayData.stoppingReasons,
         observation: pathwayData.observation,
       },
-      100
+      50
     );
+  };
+
+  useEffect(() => {
+    resetPathwayVisuals();
+    playAnimation();
+    // Resize event listener
+    cy.on('resize', () => {
+      runLayout();
+    });
   });
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       <CytoscapeComponent
         cy={(cy) => {
           setCy(cy);
@@ -146,12 +137,7 @@ const Pathway = ({
         style={{ height: '800px' }}
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons
-          cy={cy}
-          runLayout={runLayout}
-          toggleFade={toggleFade}
-          toggleTooltips={toggleTooltips}
-        />
+        <ExtraButtons cy={cy} runLayout={runLayout} toggleFade={toggleFade} toggleTooltips={toggleTooltips} />
       </div>
     </div>
   );

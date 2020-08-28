@@ -58,12 +58,11 @@ const Home = () => {
 
   const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
 
-  const getExtraRoutes = (type) => {
-    return currentlyInspecting
+  const getExtraRoutes = (type) =>
+    currentlyInspecting
       .filter((e) => e.type === type)
       .map((e) => e.name)
       .map((e) => additionalRoutes(type, e));
-  };
 
   const extraKinaseRoutes = getExtraRoutes('kinase');
   const extraPerturbagenRoutes = getExtraRoutes('perturbagen');
@@ -78,10 +77,10 @@ const Home = () => {
         <div className={classes.map}>
           <Switch>
             {routes.map((prop, key) => (
-              <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
             ))}
             {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
-              <Route path={prop.layout + prop.path} component={prop.component} key={key} />
+              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
             ))}
             <Redirect from='/' to='/home/welcome' />
           </Switch>

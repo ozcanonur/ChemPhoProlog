@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { has, range } from 'lodash';
+import { range } from 'lodash';
 
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -33,10 +33,10 @@ const Row = (props) => {
     rowEndArrow,
     handleSelection,
     handleAdd,
-    selectedInfo,
-    cell_line,
     firstRowOnClick,
     ExtraContent,
+    selectedItem,
+    cell_line,
   } = props;
 
   const classes = useStyles();
@@ -82,19 +82,12 @@ const Row = (props) => {
               {prop}
             </Link>
           ) : (
-            <div>{prop}</div>
+            <>{prop}</>
           )}
         </TableCell>
         {rowEndArrow && key === row.length - 1 ? <RightButton /> : null}
       </React.Fragment>
     ));
-
-  let currentSelectedEle;
-  if (has(selectedInfo, 'kinase_name')) {
-    currentSelectedEle = selectedInfo.kinase_name;
-  } else if (has(selectedInfo, 'name')) {
-    currentSelectedEle = selectedInfo.name;
-  }
 
   return (
     <>
@@ -102,7 +95,7 @@ const Row = (props) => {
         key={row}
         className={classes.tableBodyRow}
         style={{
-          backgroundColor: row[0] === currentSelectedEle ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
+          backgroundColor: row[0] === selectedItem ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
         }}
       >
         <RowBody />
@@ -134,18 +127,26 @@ const CustomTable = (props) => {
     handleAdd,
     rowEndArrow,
     handleSelection,
-    selectedInfo,
     firstRowOnClick,
     ExtraContent,
     cell_line,
+    selectedItem,
   } = props;
 
-  // Pagination options
-  // eslint-disable-next-line react/destructuring-assignment
-  const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
-  // Currently displayed values, filtered by the search field
   const [filteredList, setFilteredList] = useState([]);
 
+  useEffect(() => {
+    setFilteredList(tableData);
+  }, [tableData]);
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+  };
+
+  // Currently displayed values, filtered by the search field
   const createSortState = () => {
     let { length } = tableHead;
     if (ExtraContent) length -= 1;
@@ -162,23 +163,6 @@ const CustomTable = (props) => {
 
   // Sort state
   const [sortedAsc, setSortedAsc] = useState(createSortState());
-
-  useEffect(() => {
-    setFilteredList(tableData);
-  }, [tableData]);
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  // Filter the values by the search term and set the state
-  const filterByTermAndSetTableData = (event) => {
-    const filtered = tableData.filter(
-      (row) => row[0].toString().toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
-    );
-    handleChangePage(null, 0);
-    setFilteredList(filtered);
-  };
 
   const handleSort = (key) => {
     // eslint-disable-next-line no-param-reassign
@@ -201,6 +185,15 @@ const CustomTable = (props) => {
 
     setFilteredList([...sortedList]);
     setSortedAsc({ ...sortedAsc, [key]: !sortedAsc[key] });
+  };
+
+  // Filter the values by the search term and set the state
+  const filterByTermAndSetTableData = (event) => {
+    const filtered = tableData.filter(
+      (row) => row[0].toString().toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
+    );
+    handleChangePage(null, 0);
+    setFilteredList(filtered);
   };
 
   const TableHeadContent = () => (
@@ -226,11 +219,11 @@ const CustomTable = (props) => {
           row,
           rowEndArrow,
           handleSelection,
-          selectedInfo,
           handleAdd,
           cell_line,
           firstRowOnClick,
           ExtraContent,
+          selectedItem,
         }}
       />
     ));

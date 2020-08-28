@@ -1,4 +1,4 @@
-import addTooltip from 'views/Pathway/CytoscapeUtils/tooltip';
+import addTooltipOnAnimate from 'views/Pathway/CytoscapeUtils/tooltip';
 import phosphatases from 'views/Pathway/variables/phosphatases';
 
 const getParentActivityClass = (element, observation, regulatory) => {
@@ -39,7 +39,7 @@ const animatePath = (animateElements, pathData, duration) => {
       if (isEdge) addEdgeStyle(element);
       else if (isPhosphosite) addPhosphositeAndParentStyle(element, observation, regulatory);
 
-      addTooltip(i, element, animateElements, pathData);
+      addTooltipOnAnimate(i, element, animateElements, pathData);
     }
 
     i += 1;

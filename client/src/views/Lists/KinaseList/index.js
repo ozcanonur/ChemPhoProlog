@@ -113,6 +113,7 @@ const KinaseList = () => {
                       handleChangePage={handlePageChange}
                       firstRowOnClick
                       ExtraContent={KinaseListPhosphosites}
+                      selectedItem={selectedItem}
                     />
                   )}
                 </CardBody>

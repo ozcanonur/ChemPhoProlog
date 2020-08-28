@@ -36,26 +36,26 @@ const makeTooltip = (element, content, placement) => {
 const setupTooltipAndShow = (element, content) => {
   const tooltip = makeTooltip(element, content, 'bottom');
   element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
-  tooltip.show();
+  return tooltip;
 };
 
 const addStartTooltip = (element, fold_change, p_value) => {
   const content = `<div>Start <br/>fc: ${fold_change} <br/>p: ${p_value} <br/></div>`;
-  setupTooltipAndShow(element, content);
+  setupTooltipAndShow(element, content).show();
 };
 
 const addPhosphositeTooltip = (element, foldChange, p_value, stoppingReason) => {
   const stopReasonText = stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
   const content = `<div>fc: ${foldChange} <br/>p: ${p_value} <br/>${stopReasonText}</div>`;
-  setupTooltipAndShow(element, content);
+  setupTooltipAndShow(element, content).show();
 };
 
 const addEndKPaTooltip = (element, stoppingReason) => {
   const content = `<div>Stop: ${stoppingReason}</div>`;
-  setupTooltipAndShow(element, content);
+  setupTooltipAndShow(element, content).show();
 };
 
-const addTooltip = (i, element, animateElements, pathData) => {
+const addTooltipOnAnimate = (i, element, animateElements, pathData) => {
   const { stoppingReasons, observation } = pathData;
   // Phosphosite
   const { id } = element.data();
@@ -78,4 +78,4 @@ const addTooltip = (i, element, animateElements, pathData) => {
   }
 };
 
-export default addTooltip;
+export default addTooltipOnAnimate;

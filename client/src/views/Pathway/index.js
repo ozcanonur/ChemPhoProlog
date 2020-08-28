@@ -11,11 +11,7 @@ import animationData from 'assets/lottie/loading2.json';
 import Pathway from 'views/Pathway/Pathway';
 import SelectionList from 'views/Pathway/SelectionList';
 import { CallApi, CallApiForPathway } from 'api/api';
-import {
-  getCytoStylesheet,
-  getCytoLayout,
-  getCytoElements,
-} from 'views/Pathway/CytoscapeUtils/build';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/build';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
@@ -23,9 +19,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 const useStyles = makeStyles(styles);
 
 const formatObservation = (phosphosites, fullObservationData) => {
-  const observationInCurrentPathway = fullObservationData.filter((e) =>
-    phosphosites.includes(e.substrate)
-  );
+  const observationInCurrentPathway = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
 
   const formattedObservation = {};
   // eslint-disable-next-line camelcase
@@ -55,26 +49,18 @@ export default () => {
   useEffect(() => {
     const observationQuery =
       'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
-    Promise.all([CallApi(observationQuery), CallApiForPathway()]).then(
-      (results) => {
-        const pathwayResults = results[1];
-        const { phosphosites } = pathwayResults;
-        const formattedObservation = formatObservation(
-          phosphosites,
-          results[0]
-        );
-        setPathwayData({
-          observation: formattedObservation,
-          ...pathwayResults,
-        });
-      }
-    );
+    Promise.all([CallApi(observationQuery), CallApiForPathway()]).then((results) => {
+      const pathwayResults = results[1];
+      const { phosphosites } = pathwayResults;
+      const formattedObservation = formatObservation(phosphosites, results[0]);
+      setPathwayData({
+        observation: formattedObservation,
+        ...pathwayResults,
+      });
+    });
   }, []);
 
-  const stylesheet = getCytoStylesheet(
-    pathwayData.observation,
-    pathwayData.regulatory
-  );
+  const stylesheet = getCytoStylesheet(pathwayData.observation, pathwayData.regulatory);
   const layout = getCytoLayout();
   const elements = getCytoElements(pathwayData);
 
@@ -84,15 +70,12 @@ export default () => {
 
   return (
     <div style={{ padding: '2em' }}>
-      <GridContainer direction="row">
+      <GridContainer direction='row'>
         <GridItem xs={10}>
           <Card>
-            <CardHeader color="warning">
+            <CardHeader color='warning'>
               <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
-              <p className={classes.cardCategoryWhite}>
-                {' '}
-                MCF-7 / Torin / AKT1(S473)
-              </p>
+              <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
             </CardHeader>
             <CardBody>
               {elements.length !== 0 ? (
@@ -104,20 +87,13 @@ export default () => {
                   selectedPath={selectedPath}
                 />
               ) : (
-                <Lottie
-                  options={{ loop: true, autoplay: true, animationData }}
-                  height={500}
-                  width={500}
-                />
+                <Lottie options={{ loop: true, autoplay: true, animationData }} height={500} width={500} />
               )}
             </CardBody>
           </Card>
         </GridItem>
         <GridItem xs={2}>
-          <SelectionList
-            pathwayData={pathwayData}
-            changeSelection={changeSelection}
-          />
+          <SelectionList pathwayData={pathwayData} changeSelection={changeSelection} />
         </GridItem>
       </GridContainer>
     </div>

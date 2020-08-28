@@ -29,28 +29,30 @@ const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
   ];
 
   return (
-    <GridContainer direction='column'>
-      {buttonList.map(({ text, onClick }, key) => (
-        <GridItem key={key}>
-          <Button onClick={onClick} color='warning' style={{ width: '100px' }}>
-            {text}
-          </Button>
-        </GridItem>
-      ))}
-      <Fade in={legendOpen}>
-        <div
-          style={{
-            position: 'absolute',
-            top: 5,
-            right: 130,
-            pointerEvents: 'none',
-            padding: '10px',
-          }}
-        >
-          <Legend />
-        </div>
-      </Fade>
-    </GridContainer>
+    <div style={{ padding: '1em' }}>
+      <GridContainer direction='column'>
+        {buttonList.map(({ text, onClick }, key) => (
+          <GridItem key={key}>
+            <Button onClick={onClick} color='warning' style={{ width: '100px' }}>
+              {text}
+            </Button>
+          </GridItem>
+        ))}
+        <Fade in={legendOpen}>
+          <div
+            style={{
+              position: 'absolute',
+              top: 5,
+              right: 130,
+              pointerEvents: 'none',
+              padding: '10px',
+            }}
+          >
+            <Legend />
+          </div>
+        </Fade>
+      </GridContainer>
+    </div>
   );
 };
 
