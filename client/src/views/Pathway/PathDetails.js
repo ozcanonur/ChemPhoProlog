@@ -56,7 +56,11 @@ const PathDetails = ({ data, selectedPath }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const reversedPath = selectedPath.slice().reverse();
-  const explanation = getExplanationForPath(reversedPath, data.observation, data.regulatory);
+
+  // TODO HACKY FIX FOR ONLY WORKS ON KPa
+  let explanation = [];
+  if (reversedPath.length > 0 && reversedPath[0].indexOf('(') === -1)
+    explanation = getExplanationForPath(reversedPath, data.observation, data.regulatory);
 
   // const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
 
