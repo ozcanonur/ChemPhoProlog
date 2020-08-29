@@ -44,6 +44,51 @@ const getElementsToAnimate = (cy, selectedPath) => {
   return { animate, fade };
 };
 
+const cxtmenuOptions = (dispatchFunc) => {
+  return {
+    menuRadius: 100,
+    selector: '.KPa',
+    commands: [
+      {
+        fillColor: 'rgba(0, 0, 0, 0.4)',
+        content: 'Add to sidebar',
+        contentStyle: {
+          fontWeight: 500,
+        },
+        select: (ele) => {
+          dispatchFunc(addSidebarRouteKinase(ele.data().id));
+        },
+        enabled: true,
+      },
+      {
+        fillColor: 'rgba(255, 152, 0,.4)',
+        content: 'Go to UniProt',
+        contentStyle: {
+          fontWeight: 500,
+        },
+        select: (ele) => {
+          const id = kinaseIds[ele.data().id];
+          window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
+        },
+        enabled: true,
+      },
+    ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
+    fillColor: 'rgba(0, 0, 0, 0.4)',
+    activeFillColor: 'rgba(75, 119, 190, 0.6)', // the colour used to indicate the selected command
+    activePadding: 20, // additional size in pixels for the active command
+    indicatorSize: 24, // the size in pixels of the pointer to the active command
+    separatorWidth: 3, // the empty spacing in pixels between successive commands
+    spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
+    minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
+    maxSpotlightRadius: 24, // the maximum radius in pixels of the spotlight
+    openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+    itemColor: 'white',
+    itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
+    zIndex: 9999,
+    atMouse: false,
+  };
+};
+
 const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
   let cy = Cytoscape();
 
@@ -83,53 +128,14 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
   };
 
   const dispatch = useDispatch();
-  const cxtmenuOptions = {
-    menuRadius: 100,
-    selector: '.KPa', // elements matching this Cytoscape.js selector will trigger cxtmenus
-    commands: [
-      {
-        fillColor: 'rgba(0, 0, 0, 0.4)', // optional: custom background color for item
-        content: 'Add to sidebar', // html/text content to be displayed in the menu
-        contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-        select: (ele) => {
-          dispatch(addSidebarRouteKinase(ele.data().id));
-        },
-        enabled: true, // whether the command is selectable
-      },
-      {
-        fillColor: 'rgba(250, 190, 88, 0.4)', // optional: custom background color for item
-        content: 'Go to UniProt', // html/text content to be displayed in the menu
-        contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-        select: (ele) => {
-          const id = kinaseIds[ele.data().id];
-          window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
-        },
-        enabled: true, // whether the command is selectable
-      },
-    ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
-    fillColor: 'rgba(0, 0, 0, 0.4)', // the background colour of the menu
-    activeFillColor: 'rgba(75, 119, 190, 0.6)', // the colour used to indicate the selected command
-    activePadding: 20, // additional size in pixels for the active command
-    indicatorSize: 24, // the size in pixels of the pointer to the active command
-    separatorWidth: 3, // the empty spacing in pixels between successive commands
-    spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
-    minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
-    maxSpotlightRadius: 24, // the maximum radius in pixels of the spotlight
-    openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
-    itemColor: 'white', // the colour of text in the command's content
-    itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
-    zIndex: 9999, // the z-index of the ui div
-    atMouse: false, // draw menu at mouse position
-  };
 
   useEffect(() => {
     // Resize event listener
     cy.on('resize', () => {
       runLayout();
     });
-
     // Set context menu
-    cy.cxtmenu(cxtmenuOptions);
+    cy.cxtmenu(cxtmenuOptions(dispatch));
 
     return () => {
       clearAllTimeouts();
