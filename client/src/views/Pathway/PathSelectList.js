@@ -14,7 +14,7 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);
 
-const SelectionList = ({ changeSelection }) => {
+const PathSelectList = ({ changeSelection }) => {
   const classes = useStyles();
 
   const pathsInspectList = useSelector((state) => state.pathsInspectList);
@@ -42,4 +42,4 @@ const SelectionList = ({ changeSelection }) => {
   );
 };
 
-export default SelectionList;
+export default PathSelectList;

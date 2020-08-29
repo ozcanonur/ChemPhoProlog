@@ -65,7 +65,7 @@ const PathDetails = ({ data, selectedPath }) => {
   };
 
   return (
-    <Card style={{ height: 650 }}>
+    <Card style={{ height: 750, opacity: selectedPath.length === 0 ? 0.5 : 1 }}>
       <CardHeader color='info'>
         <h4 className={classes.cardTitleWhite}>Explanation</h4>
         <p className={classes.cardCategoryWhite}>Torin</p>
@@ -76,7 +76,7 @@ const PathDetails = ({ data, selectedPath }) => {
           tableHeaderColor='warning'
           tableHead={['Start', 'Phosphosite', 'End']}
           tableData={explanation}
-          rowsPerPage={8}
+          rowsPerPage={10}
           currentPage={currentPage}
           handleChangePage={handleChangePage}
         />

@@ -42,7 +42,7 @@ const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
           <div
             style={{
               position: 'absolute',
-              top: 5,
+              top: 10,
               right: 130,
               pointerEvents: 'none',
               padding: '10px',

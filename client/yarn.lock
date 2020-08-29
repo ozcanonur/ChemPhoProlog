@@ -4039,6 +4039,11 @@ cytoscape-cose-bilkent@^4.1.0:
   dependencies:
     cose-base "^1.0.0"
 
+cytoscape-cxtmenu@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/cytoscape-cxtmenu/-/cytoscape-cxtmenu-3.1.2.tgz#a183629fc53b58cdf82db601c2eed9eca41eefae"
+  integrity sha512-ikPWyNRZ6IfIykXU9J6tXkwu2Gk3nYK5yNmNJI/wtLFCuELdcCqpEXobgGLDT7yEGO+jI1upxmb4Lex/DPZlgA==
+
 cytoscape-popper@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/cytoscape-popper/-/cytoscape-popper-1.0.7.tgz#8154ff507d0cc1a17952f00643e71fc1f8ea9fae"
