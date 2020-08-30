@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
-import tippy, { sticky } from 'tippy.js';
+/* eslint-disable no-param-reassign */
+import tippy, { sticky, hideAll as hideTooltips } from 'tippy.js';
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 import './tooltip.css';
+import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
+import { clearAllTimeouts } from 'views/Pathway/CytoscapeUtils/misc';
 
 const makeTooltip = (element, content, placement) => {
   const ref = element.popperRef();
@@ -12,7 +15,6 @@ const makeTooltip = (element, content, placement) => {
 
   return tippy(dummyDomEle, {
     onCreate: (instance) => {
-      // eslint-disable-next-line no-param-reassign
       instance.popperInstance.reference = ref;
     },
     content,
@@ -33,35 +35,33 @@ const makeTooltip = (element, content, placement) => {
   });
 };
 
-const setupTooltipAndShow = (element, content) => {
+const setupTooltip = (element, content) => {
   const tooltip = makeTooltip(element, content, 'bottom');
   element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
   return tooltip;
 };
 
-const addStartTooltip = (element, fold_change, p_value) => {
-  const content = `<div>Start <br/>fc: ${fold_change} <br/>p: ${p_value} <br/></div>`;
-  setupTooltipAndShow(element, content).show();
+const addStartTooltip = (element, fold_change, pValue) => {
+  const content = `Start <br/> fc: ${fold_change} <br/> p: ${pValue}`;
+  setupTooltip(element, content).show();
 };
 
-const addPhosphositeTooltip = (element, foldChange, p_value, stoppingReason) => {
+const addPhosphositeTooltip = (element, foldChange, pValue, stoppingReason) => {
   const stopReasonText = stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
-  const content = `<div>fc: ${foldChange} <br/>p: ${p_value} <br/>${stopReasonText}</div>`;
-  setupTooltipAndShow(element, content).show();
+  const content = `fc: ${foldChange} <br/> p: ${pValue} <br/> ${stopReasonText}`;
+  setupTooltip(element, content).show();
 };
 
 const addEndKPaTooltip = (element, stoppingReason) => {
-  const content = `<div>Stop: ${stoppingReason}</div>`;
-  setupTooltipAndShow(element, content).show();
+  const content = `Stop: ${stoppingReason}`;
+  setupTooltip(element, content).show();
 };
 
-const addTooltipOnAnimate = (i, element, animateElements, pathData) => {
-  const { stoppingReasons, observation } = pathData;
+export const addTooltip = (data, element, isStartNode, isLastNode) => {
+  const { stoppingReasons, observation } = data;
   // Phosphosite
   const { id } = element.data();
 
-  const isStartNode = i === 0;
-  const isLastNode = i === animateElements.length - 1;
   const isPhosphosite = element.data().parent !== undefined;
   const isKPa = element.data().parent === undefined;
 
@@ -70,12 +70,17 @@ const addTooltipOnAnimate = (i, element, animateElements, pathData) => {
   else if (isPhosphosite) {
     const foldChange = observation[id].fold_change;
     const pValue = observation[id].p_value;
-    const stopReason = stoppingReasons[id];
+    const stoppingReason = stoppingReasons[id];
 
     if (isStartNode) addStartTooltip(element, foldChange, pValue);
-    else if (isLastNode) addPhosphositeTooltip(element, foldChange, pValue, stopReason);
+    else if (isLastNode) addPhosphositeTooltip(element, foldChange, pValue, stoppingReason);
     else addPhosphositeTooltip(element, foldChange, pValue);
   }
 };
 
-export default addTooltipOnAnimate;
+export const toggleTooltips = (data, elementsToAnimate) => {
+  clearAllTimeouts();
+
+  if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
+  else animatePath(elementsToAnimate, data, 0);
+};

@@ -6,8 +6,12 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Legend from 'views/Pathway/Legend/';
 
-const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
+import { toggleTooltips } from 'views/Pathway/CytoscapeUtils/tooltip';
+
+const ExtraButtons = ({ data, elementsToAnimate }) => {
   const [legendOpen, setLegendOpen] = useState(false);
+
+  const { elementsToFade } = elementsToAnimate;
 
   const buttonList = [
     {
@@ -15,16 +19,16 @@ const ExtraButtons = ({ runLayout, toggleFade, toggleTooltips }) => {
       onClick: () => setLegendOpen(!legendOpen),
     },
     {
-      text: 'Layout',
-      onClick: () => runLayout(),
-    },
-    {
       text: 'Fade',
-      onClick: () => toggleFade(),
+      onClick: () => elementsToFade.toggleClass('fade'),
     },
     {
       text: 'Tooltips',
-      onClick: () => toggleTooltips(),
+      onClick: () => toggleTooltips(data, elementsToAnimate),
+    },
+    {
+      text: 'Phosphosites',
+      onClick: () => console.log('gfds'),
     },
   ];
 

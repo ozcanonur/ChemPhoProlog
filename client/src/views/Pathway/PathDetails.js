@@ -59,8 +59,8 @@ const PathDetails = ({ data, selectedPath }) => {
 
   // TODO HACKY FIX FOR ONLY WORKS ON KPa
   let explanation = [];
-  if (reversedPath.length > 0 && reversedPath[0].indexOf('(') === -1)
-    explanation = getExplanationForPath(reversedPath, data.observation, data.regulatory);
+  const endsWithKPa = reversedPath.length > 0 && reversedPath[0].indexOf('(') === -1;
+  if (endsWithKPa) explanation = getExplanationForPath(reversedPath, data.observation, data.regulatory);
 
   // const StartExplanation = () => (selectedPath.length !== 0 ? <div>{`Torin inhibits ${reversedPath[0]}`}</div> : null);
 
