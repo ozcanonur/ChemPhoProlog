@@ -17,6 +17,7 @@ import additionalRoutes from 'additionalRoutes';
 
 import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';
+
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
 
@@ -40,7 +41,7 @@ const ExtraRoute = ({ route }) => {
     const activePro = ' ';
 
     const listItemClasses = classNames({
-      [` ${classes.blue}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.orange}`]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({

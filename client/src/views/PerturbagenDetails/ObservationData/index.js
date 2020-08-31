@@ -54,7 +54,7 @@ const ObservationData = () => {
   return (
     <div style={{ padding: '2em' }}>
       <Card>
-        <CardHeader color='warning'>
+        <CardHeader color='primary'>
           <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
           <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
         </CardHeader>
@@ -64,7 +64,7 @@ const ObservationData = () => {
           ) : (
             <Table
               className='my-node'
-              tableHeaderColor='warning'
+              tableHeaderColor='primary'
               tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
               tableData={tableData}
               rowsPerPage={10}

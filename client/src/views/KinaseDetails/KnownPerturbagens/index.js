@@ -48,7 +48,7 @@ const KnownPerturbagens = () => {
     <GridContainer direction='row' justify='space-between' style={{ padding: '2em' }}>
       <GridItem md>
         <Card>
-          <CardHeader color='warning'>
+          <CardHeader color='primary'>
             <h4 className={classes.cardTitleWhite}>Known Perturbagens</h4>
             <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
           </CardHeader>
@@ -58,7 +58,7 @@ const KnownPerturbagens = () => {
             ) : (
               <Table
                 className='my-node'
-                tableHeaderColor='warning'
+                tableHeaderColor='primary'
                 tableHead={['Perturbagen', 'Source', 'Score']}
                 tableData={knownPerturbagenData}
                 rowsPerPage={10}

@@ -20,7 +20,7 @@ const AboutUs = () => {
       <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
         <GridItem>
           <Card>
-            <CardHeader color='warning' style={{ marginTop: '2em' }}>
+            <CardHeader color='primary' style={{ marginTop: '2em' }}>
               <h4 className={classes.cardTitleWhite}>What is ChemPhoProlog?</h4>
             </CardHeader>
             <CardBody>
@@ -33,7 +33,7 @@ const AboutUs = () => {
         </GridItem>
         <GridItem>
           <Card>
-            <CardHeader color='warning'>
+            <CardHeader color='primary'>
               <h4 className={classes.cardTitleWhite}>How to navigate?</h4>
             </CardHeader>
             <CardBody>

@@ -91,7 +91,7 @@ const KinaseList = () => {
           <GridContainer direction='row' alignItems='stretch'>
             <GridItem xs={12} lg={6}>
               <Card>
-                <CardHeader color='warning'>
+                <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>Kinases</h4>
                   <p className={classes.cardCategoryWhite}>Select a kinase</p>
                 </CardHeader>
@@ -101,7 +101,7 @@ const KinaseList = () => {
                   ) : (
                     <Table
                       className='my-node'
-                      tableHeaderColor='warning'
+                      tableHeaderColor='primary'
                       tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
                       tableData={tableData}
                       rowsPerPage={10}

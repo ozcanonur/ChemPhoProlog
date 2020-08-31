@@ -44,7 +44,7 @@ const PathwayIndex = () => {
           <GridContainer direction='row'>
             <GridItem xs={10}>
               <Card>
-                <CardHeader color='warning'>
+                <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
                   <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
                 </CardHeader>

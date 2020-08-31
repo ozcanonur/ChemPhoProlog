@@ -72,14 +72,14 @@ const PathDetails = () => {
 
   return (
     <Card style={{ height: 750, opacity: selectedPath.length === 0 ? 0.5 : 1 }}>
-      <CardHeader color='info'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Explanation</h4>
         <p className={classes.cardCategoryWhite}>Torin</p>
       </CardHeader>
       <CardBody>
         <Table
           className='my-node'
-          tableHeaderColor='warning'
+          tableHeaderColor='primary'
           tableHead={['Start', 'Phosphosite', 'End']}
           tableData={explanation}
           rowsPerPage={10}

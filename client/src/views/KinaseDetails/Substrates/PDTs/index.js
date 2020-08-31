@@ -24,7 +24,7 @@ const PDTs = () => {
 
   const CircularCard = ({ cell_line }) => (
     <Card>
-      <CardHeader color='info'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>{`PDT Commonality in ${cell_line}`}</h4>
         <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
       </CardHeader>
@@ -34,41 +34,29 @@ const PDTs = () => {
     </Card>
   );
 
+  const cellLines = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'];
+
   return (
     <GridContainer direction='column'>
       <GridItem md>
         <GridContainer direction='row'>
-          <GridItem md>
-            <CircularCard cell_line='MCF-7' />
-          </GridItem>
-          <GridItem md>
-            <CircularCard cell_line='HL-60' />
-          </GridItem>
-          <GridItem md>
-            <CircularCard cell_line='NTERA-2 clone D1' />
-          </GridItem>
+          {cellLines.map((cellLine, key) => (
+            <GridItem md key={key}>
+              <CircularCard cell_line={cellLine} />
+            </GridItem>
+          ))}
         </GridContainer>
       </GridItem>
       <GridItem md>
         <CustomTabs
-          headerColor='rose'
-          tabs={[
-            {
-              tabName: `MCF-7`,
+          headerColor='success'
+          tabs={cellLines.map((cellLine) => {
+            return {
+              tabName: cellLine,
               tabIcon: BugReport,
-              tabContent: <PDTTable cell_line='MCF-7' />,
-            },
-            {
-              tabName: `HL-60`,
-              tabIcon: BugReport,
-              tabContent: <PDTTable cell_line='HL-60' />,
-            },
-            {
-              tabName: `NTERA-2 clone D1`,
-              tabIcon: BugReport,
-              tabContent: <PDTTable cell_line='NTERA-2 clone D1' />,
-            },
-          ]}
+              tabContent: <PDTTable cell_line={cellLine} />,
+            };
+          })}
         />
       </GridItem>
     </GridContainer>

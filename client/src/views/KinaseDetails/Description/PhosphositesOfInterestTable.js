@@ -39,7 +39,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
 
   return (
     <Card>
-      <CardHeader color='warning'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Phosphosites of interest</h4>
         <p className={classes.cardCategoryWhite}>Select a phosphosite</p>
       </CardHeader>
@@ -49,7 +49,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
         ) : (
           <Table
             className='my-node'
-            tableHeaderColor='warning'
+            tableHeaderColor='primary'
             tableHead={[
               'Obs. Data',
               'Location',

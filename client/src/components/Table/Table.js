@@ -68,7 +68,7 @@ const Row = (props) => {
   );
 
   const AddButtonPath = () => (
-    <Button onClick={() => handleAddPath(row)} color='rose' size='sm'>
+    <Button onClick={() => handleAddPath(row)} size='sm' style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}>
       Add to inspection
     </Button>
   );
@@ -108,7 +108,7 @@ const Row = (props) => {
         key={row}
         className={classes.tableBodyRow}
         style={{
-          backgroundColor: row[0] === selectedItem ? 'rgba(255, 152, 0, 0.1)' : 'inherit',
+          backgroundColor: row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
         }}
       >
         <RowBody />
@@ -273,7 +273,7 @@ const CustomTable = (props) => {
           }}
           onChange={(event) => filterByTermAndSetTableData(event)}
         />
-        <Button color='white' aria-label='edit' justIcon round>
+        <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
           <Search />
         </Button>
       </div>

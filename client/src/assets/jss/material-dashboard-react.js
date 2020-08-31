@@ -1,4 +1,3 @@
-/*eslint-disable*/
 // ##############################
 // // // Function that converts from hex color to rgb color
 // // // Example: input = #9c27b0 => output = 156, 39, 176
@@ -49,12 +48,15 @@ const defaultFont = {
   lineHeight: '1.5em',
 };
 
-const primaryColor = ['#9c27b0', 'rgba(156, 39, 176,.4)', '#8e24aa', '#af2cc5'];
-const warningColor = ['#ff9800', 'rgba(255, 152, 0,.4)', '#fb8c00', 'rgba(255, 152, 0,.4)'];
-const dangerColor = ['#f44336', '#ef5350', '#e53935', '#f55a4e'];
-const successColor = ['#4caf50', '#66bb6a', '#43a047', '#5cb860'];
+// [boxShadow, gradientTo, gradientFrom, ???]
+const primaryColor = ['#001233', 'rgba(6,119,161, 0.05)', '#2D4159', '#001233'];
+const successColor = ['#2D4159', '#2D4159', '#2D4159', '#2D4159'];
+const warningColor = ['#FFC107', '#FFECB4', '#e5ad06', '#FFC107'];
 const infoColor = ['#00acc1', '#26c6da', '#00acc1', '#00d3ee'];
-const roseColor = ['#e91e63', 'rgba(233, 30, 99,.4)', '#d81b60', 'rgba(233, 30, 99,.4)'];
+
+const dangerColor = ['#001233', '#2D4159', '#2D4159', '#001233'];
+
+const roseColor = ['#e91e63', '#59253A', '#59253A', 'rgba(233, 30, 99,.4)'];
 const grayColor = [
   '#999',
   '#777',
@@ -69,6 +71,7 @@ const grayColor = [
   '#eee',
   '#e7e7e7',
 ];
+
 const blackColor = '#000';
 const whiteColor = '#FFF';
 
@@ -129,7 +132,7 @@ const primaryCardHeader = {
   ...primaryBoxShadow,
 };
 const roseCardHeader = {
-  background: 'linear-gradient(60deg, #000, ' + roseColor[2] + ')',
+  background: 'linear-gradient(60deg, ' + roseColor[2] + ', ' + roseColor[1] + ')',
   ...roseBoxShadow,
 };
 

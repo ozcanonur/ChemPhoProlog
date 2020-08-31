@@ -85,7 +85,7 @@ const PerturbagenList = () => {
           <GridContainer direction='row'>
             <GridItem sm={12} lg={6}>
               <Card>
-                <CardHeader color='warning'>
+                <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
                   <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
                 </CardHeader>
@@ -95,7 +95,7 @@ const PerturbagenList = () => {
                   ) : (
                     <Table
                       className='my-node'
-                      tableHeaderColor='warning'
+                      tableHeaderColor='primary'
                       tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
                       tableData={tableData}
                       rowsPerPage={10}

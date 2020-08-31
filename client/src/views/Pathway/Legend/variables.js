@@ -8,7 +8,7 @@ export const nodes = [
     text: '(+) Fold change',
   },
   {
-    color: 'orange',
+    color: '#e5ad06',
     text: 'Phosphosite',
   },
 ];

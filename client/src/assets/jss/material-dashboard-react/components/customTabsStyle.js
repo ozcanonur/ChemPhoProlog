@@ -1,4 +1,4 @@
-import { hexToRgb, whiteColor } from 'assets/jss/material-dashboard-react.js';
+import { hexToRgb, whiteColor, warningColor } from 'assets/jss/material-dashboard-react.js';
 
 const customTabsStyle = {
   cardTitle: {
@@ -34,7 +34,7 @@ const customTabsStyle = {
     },
   },
   tabSelected: {
-    backgroundColor: 'rgba(' + hexToRgb(whiteColor) + ', 0.3)',
+    backgroundColor: 'rgba(' + '229,173,6' + ', 1)',
     transition: '0.2s background-color 0.1s',
   },
   tabWrapper: {

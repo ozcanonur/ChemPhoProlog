@@ -30,8 +30,8 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
     <GridContainer direction='column' style={{ flexWrap: 'inherit', flexDirection: direction }}>
       <GridItem>
         <Card>
-          <CardHeader color='primary' stats icon>
-            <CardIcon color='primary'>
+          <CardHeader color='warning' stats icon>
+            <CardIcon color='warning'>
               <NewReleases />
             </CardIcon>
             <p className={classes.cardCategory}>{cardCategory}</p>
@@ -78,7 +78,7 @@ const Welcome = () => {
     <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
       <GridItem>
         <Card>
-          <CardHeader color='warning'>
+          <CardHeader color='primary'>
             <h4 className={classes.cardTitleWhite}>What is ChemPhoProlog?</h4>
           </CardHeader>
           <CardBody>
@@ -117,7 +117,7 @@ const Welcome = () => {
       </GridItem>
       <GridItem style={{ marginTop: '20px' }}>
         <Card>
-          <CardHeader color='warning'>
+          <CardHeader color='primary'>
             <h4 className={classes.cardTitleWhite}>How to navigate?</h4>
           </CardHeader>
           <CardBody>
@@ -136,7 +136,7 @@ const Welcome = () => {
       </GridItem>
       <GridItem>
         <Card>
-          <CardHeader color='warning'>
+          <CardHeader color='primary'>
             <h4 className={classes.cardTitleWhite}>BezzLab</h4>
           </CardHeader>
           <CardBody>

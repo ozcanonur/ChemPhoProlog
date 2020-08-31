@@ -4,7 +4,6 @@ import { ResponsivePie } from '@nivo/pie';
 const PieChart = ({ data, colors }) => (
   <ResponsivePie
     data={data}
-    sortByValue
     margin={{ top: 0, right: 0, bottom: 0, left: 15 }}
     innerRadius={0.35}
     padAngle={2}
@@ -20,7 +19,7 @@ const PieChart = ({ data, colors }) => (
     radialLabelsLinkStrokeWidth={1}
     radialLabelsLinkColor={{ from: 'color' }}
     slicesLabelsSkipAngle={10}
-    slicesLabelsTextColor='#333333'
+    slicesLabelsTextColor='#fff'
     animate
     motionStiffness={90}
     motionDamping={15}

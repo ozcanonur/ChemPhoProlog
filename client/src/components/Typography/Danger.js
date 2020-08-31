@@ -9,5 +9,5 @@ const useStyles = makeStyles(styles);
 export default function Danger(props) {
   const classes = useStyles();
   const { children } = props;
-  return <div className={`${classes.defaultFontStyle} ${classes.dangerText}`}>{children}</div>;
+  return <div className={`${classes.defaultFontStyle} ${classes.warningText}`}>{children}</div>;
 }

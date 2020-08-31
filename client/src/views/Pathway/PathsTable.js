@@ -41,14 +41,14 @@ const PathsTable = () => {
 
   return (
     <Card style={{ height: 750 }}>
-      <CardHeader color='rose'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Paths found</h4>
         <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
       </CardHeader>
       <CardBody>
         <Table
           className='my-node'
-          tableHeaderColor='warning'
+          tableHeaderColor='primary'
           tableHead={['ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
           tableData={tableData}
           rowsPerPage={5}

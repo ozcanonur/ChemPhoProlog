@@ -25,7 +25,7 @@ const StandardRoutes = () => {
     const activePro = ' ';
 
     const listItemClasses = classNames({
-      [` ${classes.blue}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.orange}`]: activeRoute(prop.layout + prop.path),
     });
 
     const whiteFontClasses = classNames({

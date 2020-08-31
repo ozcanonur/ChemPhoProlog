@@ -41,7 +41,7 @@ const KnownTargets = () => {
   return (
     <div style={{ padding: '2em' }}>
       <Card>
-        <CardHeader color='warning'>
+        <CardHeader color='primary'>
           <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
           <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
         </CardHeader>
@@ -51,7 +51,7 @@ const KnownTargets = () => {
           ) : (
             <Table
               className='my-node'
-              tableHeaderColor='warning'
+              tableHeaderColor='primary'
               tableHead={['Kinase', 'Source', 'Score']}
               tableData={tableData}
               rowsPerPage={10}

@@ -217,7 +217,7 @@ const sidebarStyle = (theme) => ({
     },
   },
   orange: {
-    backgroundColor: warningColor[0],
+    backgroundColor: warningColor[2],
     boxShadow:
       '0 12px 20px -10px rgba(' +
       hexToRgb(warningColor[0]) +
@@ -227,7 +227,7 @@ const sidebarStyle = (theme) => ({
       hexToRgb(warningColor[0]) +
       ',.2)',
     '&:hover,&:focus': {
-      backgroundColor: warningColor[0],
+      backgroundColor: warningColor[2],
       boxShadow:
         '0 12px 20px -10px rgba(' +
         hexToRgb(warningColor[0]) +

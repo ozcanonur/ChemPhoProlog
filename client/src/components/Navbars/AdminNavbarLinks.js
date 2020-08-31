@@ -101,7 +101,7 @@ export default function AdminNavbarLinks() {
         onChange={(e) => handleChange(e.target.value)}
         // onBlur={() => setSearchOpen(false)}
       />
-      <Button color='white' aria-label='edit' justIcon round>
+      <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
         <Search />
       </Button>
       {searchOpen ? (

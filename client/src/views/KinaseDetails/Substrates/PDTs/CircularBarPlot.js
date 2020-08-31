@@ -115,7 +115,7 @@ const CircularBarPlot = ({ cell_line }) => {
     .data(data)
     .enter()
     .append('path')
-    .attr('fill', '#00acc1')
+    .attr('fill', 'rgba(45,65,89, 1)')
     .attr(
       'd',
       d3

@@ -29,7 +29,7 @@ const PathSelectList = () => {
 
   return (
     <Card>
-      <CardHeader color='warning'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Inpsect</h4>
         <p className={classes.cardCategoryWhite}>And Animate!</p>
       </CardHeader>

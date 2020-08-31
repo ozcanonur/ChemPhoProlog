@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Drawer, Hidden, List } from '@material-ui/core';
 
 import image from 'assets/img/dna.jpg';
-import logo from 'assets/img/reactlogo.png';
+import logo from 'assets/img/bezzlab.png';
 
 import StandardRoutes from 'components/Sidebar/StandardRoutes';
 import ExtraRoutes from 'components/Sidebar/ExtraRoutes';

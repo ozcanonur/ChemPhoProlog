@@ -12,6 +12,8 @@ import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 
 const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
   const [legendOpen, setLegendOpen] = useState(false);
+  const [faded, setFaded] = useState(false);
+  const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
 
   const { elementsToFade } = elementsToAnimate;
@@ -20,14 +22,23 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
     {
       text: 'Legend',
       onClick: () => setLegendOpen(!legendOpen),
+      state: legendOpen,
     },
     {
       text: 'Fade',
-      onClick: () => elementsToFade.toggleClass('fade'),
+      onClick: () => {
+        elementsToFade.toggleClass('fade');
+        setFaded(!faded);
+      },
+      state: faded,
     },
     {
       text: 'Tooltips',
-      onClick: () => toggleTooltips(data, elementsToAnimate),
+      onClick: () => {
+        toggleTooltips(data, elementsToAnimate);
+        setTooltipsOpen(!tooltipsOpen);
+      },
+      state: tooltipsOpen,
     },
     {
       text: 'Phosphosites',
@@ -39,6 +50,7 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
         }
         setPhosphositesOpen(!phosphositesOpen);
       },
+      state: phosphositesOpen,
     },
     {
       text: 'Export',
@@ -56,9 +68,16 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
   return (
     <div style={{ padding: '1em' }}>
       <GridContainer direction='column'>
-        {buttonList.map(({ text, onClick }, key) => (
+        {buttonList.map(({ text, onClick, state }, key) => (
           <GridItem key={key}>
-            <Button onClick={onClick} color='warning' style={{ width: '100px' }}>
+            <Button
+              onClick={onClick}
+              style={{
+                width: '100px',
+                backgroundColor: 'rgba(45,65,89, 0.7)',
+                borderLeft: state ? '5px solid #e5ad06' : 'inherit',
+              }}
+            >
               {text}
             </Button>
           </GridItem>

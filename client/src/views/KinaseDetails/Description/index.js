@@ -24,7 +24,7 @@ const Description = () => {
         <GridContainer direction='row' alignItems='stretch'>
           <GridItem lg={6}>
             <Card>
-              <CardHeader color='rose'>
+              <CardHeader color='primary'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>
                 <p className={classes.cardCategoryWhite}>placeholder</p>
               </CardHeader>
@@ -41,7 +41,7 @@ const Description = () => {
           </GridItem>
           <GridItem lg={6}>
             <Card>
-              <CardHeader color='rose'>
+              <CardHeader color='primary'>
                 <h4 className={classes.cardTitleWhite}>PLACEHOLDER</h4>
                 <p className={classes.cardCategoryWhite}>placeholder</p>
               </CardHeader>

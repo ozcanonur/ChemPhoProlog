@@ -19,7 +19,7 @@ const cxtmenuOptions = (dispatchFunc) => {
         enabled: true,
       },
       {
-        fillColor: 'rgba(255, 152, 0,.4)',
+        fillColor: 'rgba(45,65,89, 0.7)',
         content: 'Go to UniProt',
         contentStyle: {
           fontWeight: 500,
@@ -32,7 +32,7 @@ const cxtmenuOptions = (dispatchFunc) => {
       },
     ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
     fillColor: 'rgba(0, 0, 0, 0.4)',
-    activeFillColor: 'rgba(75, 119, 190, 0.6)', // the colour used to indicate the selected command
+    activeFillColor: 'rgba(229,173,6, 0.4)', // the colour used to indicate the selected command
     activePadding: 20, // additional size in pixels for the active command
     indicatorSize: 24, // the size in pixels of the pointer to the active command
     separatorWidth: 3, // the empty spacing in pixels between successive commands

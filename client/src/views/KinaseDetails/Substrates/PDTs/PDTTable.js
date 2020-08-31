@@ -42,7 +42,7 @@ const PDTTable = ({ cell_line }) => {
 
   return (
     <Card>
-      <CardHeader color='warning'>
+      <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Putative Downstream Targets</h4>
         <p className={classes.cardCategoryWhite}>Select a substrate</p>
       </CardHeader>
@@ -52,7 +52,7 @@ const PDTTable = ({ cell_line }) => {
         ) : (
           <Table
             className='my-node'
-            tableHeaderColor='warning'
+            tableHeaderColor='primary'
             tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
             tableData={PDTs.map(Object.values)}
             rowsPerPage={10}

@@ -38,7 +38,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
       value: 24,
     },
   ];
-  const colorsNewPerturbagens = ['rgba(156, 39, 176, 0.84)', 'rgba(156, 39, 176, 0.32)'];
+  const colorsNewPerturbagens = ['rgba(255,193,7, 0.7)', 'rgba(45,65,89, 0.7)'];
 
   const dataNewSubstrates = [
     {
@@ -53,7 +53,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
     },
   ];
 
-  const colorsNewSubstrates = ['rgba(0, 172, 193, 0.84)', 'rgba(0, 172, 193, 0.32)'];
+  const colorsNewSubstrates = ['rgba(255,193,7, 0.7)', 'rgba(45,65,89, 0.7)'];
 
   return (
     <GridContainer direction='column'>
@@ -61,9 +61,9 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
         <GridContainer direction='row' justify='space-evenly'>
           <GridItem md>
             <Card>
-              <CardHeader color='primary' stats icon>
+              <CardHeader color='warning' stats icon>
                 <CardIcon
-                  color='primary'
+                  color='warning'
                   onMouseOver={() => setLeftIconHovered(true)}
                   onMouseOut={() => setLeftIconHovered(false)}
                   style={{
@@ -105,9 +105,9 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
         <GridContainer direction='row' justify='space-evenly'>
           <GridItem md>
             <Card>
-              <CardHeader color='primary' stats icon>
+              <CardHeader color='warning' stats icon>
                 <CardIcon
-                  color='info'
+                  color='warning'
                   onMouseOver={() => setRightIconHovered(true)}
                   onMouseOut={() => setRightIconHovered(false)}
                   style={{

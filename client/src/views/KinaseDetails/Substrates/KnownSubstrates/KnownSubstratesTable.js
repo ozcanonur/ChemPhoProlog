@@ -48,14 +48,14 @@ const KnownSubstratesTable = () => {
         <div>No entries found.</div>
       ) : (
         <Card>
-          <CardHeader color='warning'>
+          <CardHeader color='primary'>
             <h4 className={classes.cardTitleWhite}>Known Substrates</h4>
             <p className={classes.cardCategoryWhite}>Select a substrate</p>
           </CardHeader>
           <CardBody>
             <Table
               className='my-node'
-              tableHeaderColor='warning'
+              tableHeaderColor='primary'
               tableHead={['Substrate', 'Sources']}
               tableData={knownSubstrateData}
               rowsPerPage={10}

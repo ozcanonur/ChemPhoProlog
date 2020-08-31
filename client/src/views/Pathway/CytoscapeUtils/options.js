@@ -18,7 +18,7 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: '.phosphosite',
     style: {
-      backgroundColor: 'orange',
+      backgroundColor: '#e5ad06',
       content: 'data(id)',
     },
   },
