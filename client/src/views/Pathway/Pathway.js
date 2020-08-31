@@ -19,15 +19,13 @@ Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
 const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
-  let cy = Cytoscape();
-
+  const [cy, setCy] = useState(Cytoscape());
   const [elementsToAnimate, setElementsToAnimate] = useState({
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
   });
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     // Resize event listener
     cy.on('resize', () => {
@@ -35,13 +33,14 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     });
 
     // Set context menu
-    cy.cxtmenu(cxtmenuOptions(dispatch));
+    if (cy.elements().length > 0) cy.cxtmenu(cxtmenuOptions(dispatch));
 
     return () => {
+      cy.removeListener('on');
       clearAllTimeouts();
       hideTooltips();
     };
-  }, []);
+  }, [cy]);
 
   // Set currently animated elements
   useEffect(() => {
@@ -50,15 +49,15 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   useEffect(() => {
     resetPathwayVisuals(cy);
-    animatePath(elementsToAnimate, data, 50);
+    animatePath(elementsToAnimate, data, 50, true);
   });
 
   return (
     <div>
       <CytoscapeComponent
-        cy={(cyCore) => {
+        cy={(cy) => {
           // Need this to get a reference to cy object in the component
-          cy = cyCore;
+          setCy(cy);
         }}
         elements={elements}
         stylesheet={stylesheet}
@@ -68,7 +67,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         boxSelectionEnabled
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons data={data} elementsToAnimate={elementsToAnimate} />
+        <ExtraButtons cy={cy} data={data} elementsToAnimate={elementsToAnimate} />
       </div>
     </div>
   );

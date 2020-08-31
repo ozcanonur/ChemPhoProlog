@@ -7,9 +7,12 @@ import GridItem from 'components/Grid/GridItem';
 import Legend from 'views/Pathway/Legend/';
 
 import { toggleTooltips } from 'views/Pathway/CytoscapeUtils/tooltip';
+import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
+import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 
-const ExtraButtons = ({ data, elementsToAnimate }) => {
+const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
   const [legendOpen, setLegendOpen] = useState(false);
+  const [phosphositesOpen, setPhosphositesOpen] = useState(false);
 
   const { elementsToFade } = elementsToAnimate;
 
@@ -28,7 +31,14 @@ const ExtraButtons = ({ data, elementsToAnimate }) => {
     },
     {
       text: 'Phosphosites',
-      onClick: () => console.log('gfds'),
+      onClick: () => {
+        if (phosphositesOpen) resetPathwayVisuals(cy);
+        else {
+          resetPathwayVisuals(cy);
+          animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false);
+        }
+        setPhosphositesOpen(!phosphositesOpen);
+      },
     },
   ];
 

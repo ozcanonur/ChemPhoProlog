@@ -56,7 +56,7 @@ const addPhosphositeAndParentStyle = (element, observation, regulatory) => {
   element.parent().addClass(parentActivityClass);
 };
 
-export const animatePath = (elementsToAnimate, data, duration) => {
+export const animatePath = (elementsToAnimate, data, duration, showTooltips) => {
   const { regulatory, observation } = data;
   const { elementsToShow, elementsToFade } = elementsToAnimate;
 
@@ -76,7 +76,7 @@ export const animatePath = (elementsToAnimate, data, duration) => {
 
       const isStartNode = i === 0;
       const isLastNode = i === elementsToShow.length - 1;
-      addTooltip(data, element, isStartNode, isLastNode);
+      if (showTooltips) addTooltip(data, element, isStartNode, isLastNode);
     }
 
     i += 1;
