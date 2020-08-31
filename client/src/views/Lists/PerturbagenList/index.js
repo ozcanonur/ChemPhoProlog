@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -7,16 +7,15 @@ import CardBody from 'components/Card/CardBody';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
-
-import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
-
-import { Slide } from '@material-ui/core';
+import Slide from '@material-ui/core/Slide';
 
 import { useSelector, useDispatch } from 'react-redux';
 import fetchPerturbagenData from 'actions/PerturbagenList/fetchPerturbagenData';
 import changeSelectedPerturbagen from 'actions/PerturbagenList/changeSelectedPerturbagen';
 import changeCurrentPagePerturbagen from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
 import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
+
+import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
@@ -25,23 +24,26 @@ const useStyles = makeStyles(styles);
 
 const PerturbagenList = () => {
   const classes = useStyles();
-  // Table data
-  const tableData = useSelector((state) => state.perturbagenData);
+
+  const data = useSelector((state) => state.perturbagenData);
+  const tableData = useMemo(() => {
+    return data.map(Object.values);
+  }, [data]);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (tableData.length === 0) {
+    if (data.length === 0) {
       const query = 'select * from Perturbagen group by name order by name';
       dispatch(fetchPerturbagenData(query));
     }
-  }, [tableData, dispatch]);
+  }, [data, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedPerturbagen);
   const handleSelection = (selection) => {
     dispatch(changeSelectedPerturbagen(selection));
   };
-  const selectedInfo = tableData.filter((item) => item.name === selectedItem)[0];
+  const selectedInfo = data.filter((item) => item.name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPagePerturbagen);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import GridItem from 'components/Grid/GridItem';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
+import pick from 'lodash/pick';
 
 import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
 import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';
@@ -27,22 +28,27 @@ const useStyles = makeStyles(styles);
 const KinaseList = () => {
   const classes = useStyles();
 
-  const tableData = useSelector((state) => state.kinaseData);
+  const data = useSelector((state) => state.kinaseData);
+  const tableData = useMemo(() => {
+    return data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])).map(Object.values);
+  }, [data]);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (tableData.length === 0) {
+    if (data.length === 0) {
       const query = 'select * from Protein where kinase_name <> "" order by kinase_name';
       dispatch(fetchKinaseData(query));
     }
-  }, [tableData, dispatch]);
+  }, [data, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedKinase);
   const handleSelection = (selection) => {
     dispatch(changeSelectedKinase(selection));
   };
-  const selectedInfo = tableData.filter((item) => item.kinase_name === selectedItem)[0];
+
+  console.log(data);
+  const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPageKinase);
@@ -90,7 +96,7 @@ const KinaseList = () => {
                   <p className={classes.cardCategoryWhite}>Select a kinase</p>
                 </CardHeader>
                 <CardBody>
-                  {tableData === [] ? (
+                  {data === [] ? (
                     <div>Loading...</div>
                   ) : (
                     <Table
