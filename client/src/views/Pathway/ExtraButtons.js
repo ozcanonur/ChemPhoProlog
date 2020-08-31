@@ -40,6 +40,17 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
         setPhosphositesOpen(!phosphositesOpen);
       },
     },
+    {
+      text: 'Export as PNG',
+      onClick: async () => {
+        const png64 = await cy.png({ output: 'blob-promise' });
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = URL.createObjectURL(new Blob([png64], { type: 'image/png' }));
+        a.download = 'pathway.png';
+        a.click();
+      },
+    },
   ];
 
   return (

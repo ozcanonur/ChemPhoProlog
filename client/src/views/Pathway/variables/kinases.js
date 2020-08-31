@@ -1,4 +1,4 @@
-const kinaseIds = {
+const kinases = {
   AAK1: 'Q2M2I8',
   ABL1: 'P00519',
   ABL2: 'P42684',
@@ -400,4 +400,4 @@ const kinaseIds = {
   ZHX2: 'Q9Y6X8',
 };
 
-export default kinaseIds;
+export default kinases;

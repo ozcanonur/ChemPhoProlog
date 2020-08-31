@@ -27,13 +27,17 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    cy.fit();
     // Resize event listener
     cy.on('resize', () => {
       runLayout(cy, layout);
     });
 
     // Set context menu
-    if (cy.elements().length > 0) cy.cxtmenu(cxtmenuOptions(dispatch));
+    if (cy.elements().length > 0) {
+      // runLayout(cy, layout);
+      cy.cxtmenu(cxtmenuOptions(dispatch));
+    }
 
     return () => {
       cy.removeListener('on');

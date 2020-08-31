@@ -1,5 +1,6 @@
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
-import kinaseIds from 'views/Pathway/variables/kinaseIds';
+import kinases from 'views/Pathway/variables/kinases';
+import phosphatases from 'views/Pathway/variables/phosphatases';
 
 const cxtmenuOptions = (dispatchFunc) => {
   return {
@@ -24,7 +25,7 @@ const cxtmenuOptions = (dispatchFunc) => {
           fontWeight: 500,
         },
         select: (ele) => {
-          const id = kinaseIds[ele.data().id];
+          const id = kinases[ele.data().id] || phosphatases[ele.data().id];
           window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
         },
         enabled: true,

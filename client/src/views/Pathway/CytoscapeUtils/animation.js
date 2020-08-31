@@ -43,7 +43,7 @@ const getParentActivityClass = (element, observation, regulatory) => {
 };
 
 const addEdgeStyle = (element) => {
-  const sourceIsPhosphatase = phosphatases.includes(element.data().source);
+  const sourceIsPhosphatase = Object.keys(phosphatases).includes(element.data().source);
 
   if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
   else element.addClass('highlightedKinaseEdge');

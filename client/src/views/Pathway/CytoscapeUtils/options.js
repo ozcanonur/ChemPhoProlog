@@ -105,11 +105,11 @@ export const getCytoLayout = () => {
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 100000,
+    nodeRepulsion: 200000,
     // Ideal (intra-graph) edge length
-    idealEdgeLength: 50,
+    idealEdgeLength: 20,
     // Divisor to compute edge forces
-    edgeElasticity: 0.5,
+    edgeElasticity: 0.75,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
     nestingFactor: 0.5,
     // Gravity force (constant)
@@ -121,9 +121,9 @@ export const getCytoLayout = () => {
     // Type of layout animation. The option set is {'during', 'end', false}
     animate: true,
     // Duration for animate:end
-    animationDuration: 300,
+    animationDuration: 700,
     // These paddings are space between nodes (phosphosites actually)
-    tilingPaddingVertical: 10,
+    tilingPaddingVertical: 20,
     tilingPaddingHorizontal: 10,
     // Gravity range (constant) for compounds
     gravityRangeCompound: 0.1,

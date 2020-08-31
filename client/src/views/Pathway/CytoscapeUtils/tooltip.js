@@ -59,7 +59,6 @@ const addEndKPaTooltip = (element, stoppingReason) => {
 
 export const addTooltip = (data, element, isStartNode, isLastNode) => {
   const { stoppingReasons, observation } = data;
-  // Phosphosite
   const { id } = element.data();
 
   const isPhosphosite = element.data().parent !== undefined;

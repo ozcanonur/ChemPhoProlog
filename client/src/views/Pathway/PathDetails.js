@@ -24,7 +24,7 @@ const getExplanationForPath = (path, observation, regulatory) => {
     const bottomKPa = path[i + 2];
 
     const topKPaActivity = prevBottomKPaActivity;
-    const topKPaFunction = phosphatases.includes(topKPa) ? 'dephosphorylates' : 'phosphorylates';
+    const topKPaFunction = Object.keys(phosphatases).includes(topKPa) ? 'dephosphorylates' : 'phosphorylates';
 
     const foldChange = observation[midPhosphosite].fold_change;
     const reg = regulatory[midPhosphosite];
