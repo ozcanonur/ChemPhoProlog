@@ -47,7 +47,6 @@ const KinaseList = () => {
     dispatch(changeSelectedKinase(selection));
   };
 
-  console.log(data);
   const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
 
   // Current page

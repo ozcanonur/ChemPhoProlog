@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Fade from '@material-ui/core/Fade';
 import Button from 'components/CustomButtons/Button';
@@ -10,6 +11,8 @@ import { toggleTooltips } from 'views/Pathway/CytoscapeUtils/tooltip';
 import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 
+import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
+
 const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
   const [legendOpen, setLegendOpen] = useState(false);
   const [faded, setFaded] = useState(false);
@@ -18,6 +21,7 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
 
   const { elementsToFade } = elementsToAnimate;
 
+  const dispatch = useDispatch();
   const buttonList = [
     {
       text: 'Legend',
@@ -43,11 +47,10 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
     {
       text: 'Phosphosites',
       onClick: () => {
-        if (phosphositesOpen) resetPathwayVisuals(cy);
-        else {
-          resetPathwayVisuals(cy);
-          animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false, false);
-        }
+        resetPathwayVisuals(cy);
+        if (phosphositesOpen) dispatch(changeSelectedPath([]));
+        else animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false, false);
+
         setPhosphositesOpen(!phosphositesOpen);
       },
       state: phosphositesOpen,
