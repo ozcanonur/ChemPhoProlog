@@ -35,7 +35,7 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
         if (phosphositesOpen) resetPathwayVisuals(cy);
         else {
           resetPathwayVisuals(cy);
-          animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false);
+          animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false, false);
         }
         setPhosphositesOpen(!phosphositesOpen);
       },

@@ -1,11 +1,11 @@
 export const nodes = [
   {
     color: 'green',
-    text: '(+) Fold change',
+    text: '(-) Fold change',
   },
   {
     color: 'red',
-    text: '(-) Fold change',
+    text: '(+) Fold change',
   },
   {
     color: 'orange',

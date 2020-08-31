@@ -82,5 +82,5 @@ export const toggleTooltips = (data, elementsToAnimate) => {
   clearAllTimeouts();
 
   if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
-  else animatePath(elementsToAnimate, data, 0, true);
+  else animatePath(elementsToAnimate, data, 0, true, true);
 };

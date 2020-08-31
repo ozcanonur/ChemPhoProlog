@@ -49,14 +49,16 @@ const addEdgeStyle = (element) => {
   else element.addClass('highlightedKinaseEdge');
 };
 
-const addPhosphositeAndParentStyle = (element, observation, regulatory) => {
+const addPhosphositeStyle = (element) => {
   element.addClass('highlightedPhosphosite');
+};
 
+const addPhosphositeParentStyle = (element, observation, regulatory) => {
   const parentActivityClass = getParentActivityClass(element, observation, regulatory);
   element.parent().addClass(parentActivityClass);
 };
 
-export const animatePath = (elementsToAnimate, data, duration, showTooltips) => {
+export const animatePath = (elementsToAnimate, data, duration, showTooltips, showParentActivity) => {
   const { regulatory, observation } = data;
   const { elementsToShow, elementsToFade } = elementsToAnimate;
 
@@ -72,11 +74,16 @@ export const animatePath = (elementsToAnimate, data, duration, showTooltips) => 
       const isPhosphosite = element.data().parent !== undefined;
 
       if (isEdge) addEdgeStyle(element);
-      else if (isPhosphosite) addPhosphositeAndParentStyle(element, observation, regulatory);
+      else if (isPhosphosite) {
+        addPhosphositeStyle(element);
+        if (showParentActivity) addPhosphositeParentStyle(element, observation, regulatory);
+      }
 
-      const isStartNode = i === 0;
-      const isLastNode = i === elementsToShow.length - 1;
-      if (showTooltips) addTooltip(data, element, isStartNode, isLastNode);
+      if (showTooltips) {
+        const isStartNode = i === 0;
+        const isLastNode = i === elementsToShow.length - 1;
+        addTooltip(data, element, isStartNode, isLastNode);
+      }
     }
 
     i += 1;

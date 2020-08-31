@@ -49,7 +49,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   useEffect(() => {
     resetPathwayVisuals(cy);
-    animatePath(elementsToAnimate, data, 50, true);
+    animatePath(elementsToAnimate, data, 50, true, true);
   });
 
   return (

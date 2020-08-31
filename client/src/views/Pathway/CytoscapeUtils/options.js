@@ -123,8 +123,8 @@ export const getCytoLayout = () => {
     // Duration for animate:end
     animationDuration: 300,
     // These paddings are space between nodes (phosphosites actually)
-    tilingPaddingVertical: 5,
-    tilingPaddingHorizontal: 5,
+    tilingPaddingVertical: 10,
+    tilingPaddingHorizontal: 10,
     // Gravity range (constant) for compounds
     gravityRangeCompound: 0.1,
     // Gravity force (constant) for compounds
