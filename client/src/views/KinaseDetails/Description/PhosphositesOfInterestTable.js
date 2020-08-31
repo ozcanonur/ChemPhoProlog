@@ -61,10 +61,8 @@ const PhosphositesOfInterestTable = ({ protein }) => {
             ]}
             tableData={tableData}
             rowsPerPage={10}
-            rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
-            firstRowOnClick={false}
             ExtraContent={ObservationHeatMap}
           />
         )}

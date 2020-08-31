@@ -62,7 +62,6 @@ const KnownPerturbagens = () => {
                 tableHead={['Perturbagen', 'Source', 'Score']}
                 tableData={knownPerturbagenData}
                 rowsPerPage={10}
-                rowEndArrow={false}
                 currentPage={currentPage}
                 handleChangePage={handleChangePage}
               />

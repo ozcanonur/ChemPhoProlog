@@ -68,9 +68,7 @@ const ObservationData = () => {
               tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
               tableData={tableData}
               rowsPerPage={10}
-              collapsible={false}
               currentPage={currentPage}
-              firstRowOnClick={false}
               handleChangePage={handleChangePage}
             />
           )}

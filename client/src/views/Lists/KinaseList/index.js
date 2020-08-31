@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -7,19 +8,14 @@ import CardBody from 'components/Card/CardBody';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
-
-import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
-
-import { Slide } from '@material-ui/core';
-
-import { useSelector, useDispatch } from 'react-redux';
-import pick from 'lodash/pick';
+import Slide from '@material-ui/core/Slide';
 
 import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
 import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';
 import changeCurrentPageKinase from 'actions/KinaseList/changeCurrentPageKinase';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
+import KinaseListRightPanel from 'views/Lists/KinaseList/KinaseListRightPanel';
 import KinaseListPhosphosites from 'views/Lists/KinaseList/KinaseListPhosphosites';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,24 +27,22 @@ const useStyles = makeStyles(styles);
 const KinaseList = () => {
   const classes = useStyles();
 
-  // Kinase table data
-  const data = useSelector((state) => state.kinaseData);
-  const tableData = data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])).map(Object.values);
+  const tableData = useSelector((state) => state.kinaseData);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (data.length === 0) {
+    if (tableData.length === 0) {
       const query = 'select * from Protein where kinase_name <> "" order by kinase_name';
       dispatch(fetchKinaseData(query));
     }
-  }, [data, dispatch]);
+  }, [tableData, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedKinase);
   const handleSelection = (selection) => {
     dispatch(changeSelectedKinase(selection));
   };
-  const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
+  const selectedInfo = tableData.filter((item) => item.kinase_name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPageKinase);
@@ -90,7 +84,7 @@ const KinaseList = () => {
         <GridItem>
           <GridContainer direction='row' alignItems='stretch'>
             <GridItem xs={12} lg={6}>
-              <Card>
+              <Card style={{ height: 900 }}>
                 <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>Kinases</h4>
                   <p className={classes.cardCategoryWhite}>Select a kinase</p>
@@ -105,12 +99,11 @@ const KinaseList = () => {
                       tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
                       tableData={tableData}
                       rowsPerPage={10}
-                      rowEndArrow
-                      handleSelection={handleSelection}
-                      selectedInfo={selectedInfo}
-                      handleAdd={handleKinaseAdd}
                       currentPage={currentPage}
                       handleChangePage={handlePageChange}
+                      rowEndArrow
+                      handleSelection={handleSelection}
+                      handleAdd={handleKinaseAdd}
                       firstRowOnClick
                       ExtraContent={KinaseListPhosphosites}
                       selectedItem={selectedItem}

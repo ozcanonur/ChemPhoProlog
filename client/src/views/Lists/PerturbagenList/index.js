@@ -26,23 +26,22 @@ const useStyles = makeStyles(styles);
 const PerturbagenList = () => {
   const classes = useStyles();
   // Table data
-  const data = useSelector((state) => state.perturbagenData);
-  const tableData = data.map(Object.values);
+  const tableData = useSelector((state) => state.perturbagenData);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (data.length === 0) {
+    if (tableData.length === 0) {
       const query = 'select * from Perturbagen group by name order by name';
       dispatch(fetchPerturbagenData(query));
     }
-  }, [data, dispatch]);
+  }, [tableData, dispatch]);
 
   // Currently selected item
   const selectedItem = useSelector((state) => state.selectedPerturbagen);
   const handleSelection = (selection) => {
     dispatch(changeSelectedPerturbagen(selection));
   };
-  const selectedInfo = data.filter((item) => item.name === selectedItem)[0];
+  const selectedInfo = tableData.filter((item) => item.name === selectedItem)[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPagePerturbagen);
@@ -84,7 +83,7 @@ const PerturbagenList = () => {
         <GridItem md>
           <GridContainer direction='row'>
             <GridItem sm={12} lg={6}>
-              <Card>
+              <Card style={{ height: 900 }}>
                 <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
                   <p className={classes.cardCategoryWhite}>Select a perturbagen</p>

@@ -27,7 +27,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    cy.fit();
+    // cy.fit();
     // Resize event listener
     cy.on('resize', () => {
       runLayout(cy, layout);

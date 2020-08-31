@@ -59,7 +59,6 @@ const KnownSubstratesTable = () => {
               tableHead={['Substrate', 'Sources']}
               tableData={knownSubstrateData}
               rowsPerPage={10}
-              rowEndArrow={false}
               currentPage={currentPage}
               handleChangePage={handleChangePage}
             />

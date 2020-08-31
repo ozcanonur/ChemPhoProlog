@@ -56,7 +56,6 @@ const PDTTable = ({ cell_line }) => {
             tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with']}
             tableData={PDTs.map(Object.values)}
             rowsPerPage={10}
-            rowEndArrow={false}
             currentPage={currentPage}
             handleChangePage={handleChangePage}
             cell_line={cell_line}

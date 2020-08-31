@@ -89,7 +89,7 @@ const parseCSVToPaths = (csvData) => {
   let regulatory = {}; // Regulatory effect of phosphosites
   let stoppingReasons = {}; // Why we stopped
 
-  for (const row of csvData) {
+  csvData.forEach((row) => {
     let path = row.Path;
     path = path.substring(1, path.length - 1);
     path = path.split(/\[(.+?)\]/);
@@ -131,7 +131,8 @@ const parseCSVToPaths = (csvData) => {
       regulatory[step[0]] = step[2];
     }
     paths.push(parsedPath);
-  }
+  });
+
   // Combine all phosphosites (from relations and leftovers)
   phosphosites = _.union(phosphosites, Object.values(relations).flat());
 
@@ -142,6 +143,7 @@ router.get('/api/pathway', (req, res) => {
   (async () => {
     const fileData = await fs.readFile('../toydata.csv');
     parse(fileData, { columns: true, trim: true }, (err, csvData) => {
+      if (err) throw err;
       const pathwayData = parseCSVToPaths(csvData);
       res.send(pathwayData);
     });

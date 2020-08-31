@@ -213,7 +213,7 @@ const CustomTable = (props) => {
   const TableHeadContent = () => (
     <TableRow className={classes.tableHeadRow}>
       {tableHead.map((prop, key) => {
-        const textAlign = key === tableHead.length - 1 ? 'center' : 'inherit';
+        const textAlign = key === tableHead.length - 1 && rowEndArrow ? 'center' : 'inherit';
         return (
           <TableCell
             className={`${classes.tableCell} ${classes.tableHeadCell}`}

@@ -23,7 +23,7 @@ const ListRightPanel = (props) => {
   } = props;
 
   return (
-    <Card>
+    <Card style={{ height: 900 }}>
       <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>{topHeaderTitle}</h4>
         <p className={classes.cardCategoryWhite}>{topHeaderSubTitle}</p>
