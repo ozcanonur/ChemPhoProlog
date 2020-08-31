@@ -9,7 +9,10 @@ import selectedPerturbagenReducer from 'reducers/PerturbagenList/selectedPerturb
 import currentPagePerturbagenReducer from 'reducers/PerturbagenList/currentPagePerturbagenReducer';
 
 import sidebarRoutesReducer from 'reducers/Sidebar/sidebarRoutesReducer';
+
 import inspectReducer from 'reducers/Pathway/inspectReducer';
+import selectedPathReducer from 'reducers/Pathway/selectedPathReducer';
+import pathwayDataReducer from 'reducers/Pathway/pathwayDataReducer';
 
 export default combineReducers({
   kinaseData: kinaseDataReducer,
@@ -20,4 +23,6 @@ export default combineReducers({
   currentPagePerturbagen: currentPagePerturbagenReducer,
   sidebarRoutes: sidebarRoutesReducer,
   pathsInspectList: inspectReducer,
+  selectedPath: selectedPathReducer,
+  pathwayData: pathwayDataReducer,
 });

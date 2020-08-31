@@ -28,7 +28,7 @@ export const getElementsToAnimate = (cy, selectedPath) => {
 };
 
 const getParentActivityClass = (element, observation, regulatory) => {
-  const { id } = element.data().id;
+  const { id } = element.data();
 
   const foldChange = observation[id].fold_change;
   const reg = regulatory[id];

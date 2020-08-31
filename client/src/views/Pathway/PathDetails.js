@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -50,13 +51,14 @@ const getExplanationForPath = (path, observation, regulatory) => {
   return outputList;
 };
 
-const PathDetails = ({ data, selectedPath }) => {
+const PathDetails = () => {
   const classes = useStyles();
 
-  const [currentPage, setCurrentPage] = useState(0);
-
+  const data = useSelector((state) => state.pathwayData);
+  const selectedPath = useSelector((state) => state.selectedPath);
   const reversedPath = selectedPath.slice().reverse();
 
+  const [currentPage, setCurrentPage] = useState(0);
   // TODO HACKY FIX FOR ONLY WORKS ON KPa
   let explanation = [];
   const endsWithKPa = reversedPath.length > 0 && reversedPath[0].indexOf('(') === -1;

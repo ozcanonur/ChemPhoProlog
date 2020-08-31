@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import addInspectPath from 'actions/Pathway/addInspectPath';
 
 import Table from 'components/Table/Table';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
-
-import { useDispatch } from 'react-redux';
-import addInspectPath from 'actions/Pathway/addInspectPath';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
@@ -22,18 +21,14 @@ const parsePathsToTableData = (paths, stoppingReasons) =>
     return [key, stopNode, stopReason, pathLength];
   });
 
-const PathsTable = ({ data }) => {
+const PathsTable = () => {
   const classes = useStyles();
 
+  const data = useSelector((state) => state.pathwayData);
   const { paths, stoppingReasons } = data;
+  const tableData = parsePathsToTableData(paths, stoppingReasons);
 
-  const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-
-  useEffect(() => {
-    const parsedPaths = parsePathsToTableData(paths, stoppingReasons);
-    setTableData(parsedPaths);
-  }, [paths, stoppingReasons]);
 
   const handleChangePage = (_event, newPage) => {
     setCurrentPage(newPage);

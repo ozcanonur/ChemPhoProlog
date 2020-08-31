@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import getPathwayData from 'actions/Pathway/getPathwayData';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -12,60 +15,27 @@ import Pathdetails from 'views/Pathway/PathDetails';
 import PathsTable from 'views/Pathway/PathsTable';
 import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
-import { CallApi, CallApiForPaths } from 'api/api';
-import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/build';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);
 
-const formatObservation = (phosphosites, fullObservationData) => {
-  const observationInCurrentPaths = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
-
-  const formattedObservation = {};
-  // eslint-disable-next-line camelcase
-  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
-    formattedObservation[substrate] = {
-      fold_change: fold_change.toFixed(2),
-      p_value: p_value.toFixed(2),
-    };
-  });
-
-  return formattedObservation;
-};
-
-export default () => {
+const PathwayIndex = () => {
   const classes = useStyles();
 
-  const [data, setData] = useState({
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  });
+  const data = useSelector((state) => state.pathwayData);
+  const selectedPath = useSelector((state) => state.selectedPath);
 
-  const [selectedPath, setSelectedPath] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    const observationQuery =
-      'select substrate, fold_change, p_value from observation where perturbagen="Torin" and cell_line="MCF-7"';
-    Promise.all([CallApi(observationQuery), CallApiForPaths()]).then((results) => {
-      const [fullObservationData, pathsResults] = results;
-      const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);
-      setData({ observation: formattedObservation, ...pathsResults });
-    });
-  }, []);
+    dispatch(getPathwayData('Torin', 'MCF-7'));
+  }, [dispatch]);
 
   const stylesheet = getCytoStylesheet(data.observation, data.regulatory);
   const layout = getCytoLayout();
   const elements = getCytoElements(data);
-
-  const changeSelection = (ID) => {
-    setSelectedPath(data.paths[ID]);
-  };
 
   return (
     <div style={{ padding: '2em' }}>
@@ -94,17 +64,17 @@ export default () => {
               </Card>
             </GridItem>
             <GridItem xs={2}>
-              <PathSelectList data={data} changeSelection={changeSelection} />
+              <PathSelectList />
             </GridItem>
           </GridContainer>
         </GridItem>
         <GridItem>
           <GridContainer direction='row'>
             <GridItem md>
-              <PathsTable data={data} />
+              <PathsTable />
             </GridItem>
             <GridItem md>
-              <Pathdetails data={data} selectedPath={selectedPath} />
+              <Pathdetails />
             </GridItem>
           </GridContainer>
         </GridItem>
@@ -112,3 +82,5 @@ export default () => {
     </div>
   );
 };
+
+export default PathwayIndex;
