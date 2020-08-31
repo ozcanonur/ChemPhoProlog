@@ -34,10 +34,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     });
 
     // Set context menu
-    if (cy.elements().length > 0) {
-      // runLayout(cy, layout);
-      cy.cxtmenu(cxtmenuOptions(dispatch));
-    }
+    if (cy.elements().length > 0) cy.cxtmenu(cxtmenuOptions(dispatch));
 
     return () => {
       cy.removeListener('on');
@@ -54,7 +51,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
   useEffect(() => {
     resetPathwayVisuals(cy);
     animatePath(elementsToAnimate, data, 50, true, true);
-  });
+  }, [elementsToAnimate]);
 
   return (
     <div>

@@ -11,7 +11,7 @@ import GridItem from 'components/Grid/GridItem';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
-import Pathdetails from 'views/Pathway/PathDetails';
+import PathDetails from 'views/Pathway/PathDetails';
 import PathsTable from 'views/Pathway/PathsTable';
 import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
@@ -74,7 +74,7 @@ const PathwayIndex = () => {
               <PathsTable />
             </GridItem>
             <GridItem md>
-              <Pathdetails />
+              <PathDetails />
             </GridItem>
           </GridContainer>
         </GridItem>

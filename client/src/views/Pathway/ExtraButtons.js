@@ -41,9 +41,9 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
       },
     },
     {
-      text: 'Export as PNG',
+      text: 'Export',
       onClick: async () => {
-        const png64 = await cy.png({ output: 'blob-promise' });
+        const png64 = await cy.png({ output: 'blob-promise', full: true, scale: 2 });
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.href = URL.createObjectURL(new Blob([png64], { type: 'image/png' }));
