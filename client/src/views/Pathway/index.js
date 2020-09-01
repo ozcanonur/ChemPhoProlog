@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import getPathwayData from 'actions/Pathway/getPathwayData';
 
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
+import CardGeneric from 'components/Card/CardGeneric';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Lottie from 'react-lottie';
@@ -17,14 +15,7 @@ import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const PathwayIndex = () => {
-  const classes = useStyles();
-
   const data = useSelector((state) => state.pathwayData);
   const selectedPath = useSelector((state) => state.selectedPath);
 
@@ -43,25 +34,19 @@ const PathwayIndex = () => {
         <GridItem>
           <GridContainer direction='row'>
             <GridItem xs={10}>
-              <Card>
-                <CardHeader color='primary'>
-                  <h4 className={classes.cardTitleWhite}>Bottom up pathway</h4>
-                  <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
-                </CardHeader>
-                <CardBody>
-                  {elements.length !== 0 ? (
-                    <Pathway
-                      data={data}
-                      stylesheet={stylesheet}
-                      layout={layout}
-                      elements={elements}
-                      selectedPath={selectedPath}
-                    />
-                  ) : (
-                    <Lottie options={{ loop: true, autoplay: true, animationData }} height={800} width={800} />
-                  )}
-                </CardBody>
-              </Card>
+              <CardGeneric color='primary' cardTitle='Bottom up Pathway' cardSubtitle='MCF-7 / Torin / AKT1(S473)'>
+                {elements.length !== 0 ? (
+                  <Pathway
+                    data={data}
+                    stylesheet={stylesheet}
+                    layout={layout}
+                    elements={elements}
+                    selectedPath={selectedPath}
+                  />
+                ) : (
+                  <Lottie options={{ loop: true, autoplay: true, animationData }} height={800} width={800} />
+                )}
+              </CardGeneric>
             </GridItem>
             <GridItem xs={2}>
               <PathSelectList />

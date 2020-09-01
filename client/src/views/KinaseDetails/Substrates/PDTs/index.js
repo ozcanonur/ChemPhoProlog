@@ -5,33 +5,22 @@ import BugReport from '@material-ui/icons/BugReport';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
+import CardGeneric from 'components/Card/CardGeneric';
 
 import CircularBarPlot from 'views/KinaseDetails/Substrates/PDTs/CircularBarPlot';
 import PDTTable from 'views/KinaseDetails/Substrates/PDTs/PDTTable';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const PDTs = () => {
-  const classes = useStyles();
-
   const kinase = window.location.href.split('/')[4];
 
   const CircularCard = ({ cell_line }) => (
-    <Card>
-      <CardHeader color='primary'>
-        <h4 className={classes.cardTitleWhite}>{`PDT Commonality in ${cell_line}`}</h4>
-        <p className={classes.cardCategoryWhite}>{`Between ${kinase} and other kinases`}</p>
-      </CardHeader>
-      <CardBody>
-        <CircularBarPlot cell_line={cell_line} />
-      </CardBody>
-    </Card>
+    <CardGeneric
+      color='primary'
+      cardTitle={`PDT Commonality in ${cell_line}`}
+      cardSubtitle={`Between ${kinase} and other kinases`}
+    >
+      <CircularBarPlot cell_line={cell_line} />
+    </CardGeneric>
   );
 
   const cellLines = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'];

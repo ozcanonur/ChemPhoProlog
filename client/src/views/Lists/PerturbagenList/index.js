@@ -2,10 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
+import CardGeneric from 'components/Card/CardGeneric';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from 'components/Card/CardHeader';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 
@@ -17,14 +15,7 @@ import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbag
 
 import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const PerturbagenList = () => {
-  const classes = useStyles();
-
   const data = useSelector((state) => state.perturbagenData);
   const tableData = useMemo(() => {
     return data.map(Object.values);
@@ -70,47 +61,44 @@ const PerturbagenList = () => {
     <div>
       <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
         <GridItem md>
-          <Card>
-            <CardBody>
-              <Typography variant='body1'>
-                ChemPhoPro provides a compendium of results and related information obtained from chemical
-                phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of results and
-                related information obtained from chemical phosphoproteomics experiments. And some other stuff.
-                ChemPhoPro provides a compendium of results and related information obtained from chemical
-                phosphoproteomics experiments. And some other stuff.
-              </Typography>
-            </CardBody>
-          </Card>
+          <CardGeneric>
+            <Typography variant='body1'>
+              ChemPhoPro provides a compendium of results and related information obtained from chemical
+              phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of results and
+              related information obtained from chemical phosphoproteomics experiments. And some other stuff. ChemPhoPro
+              provides a compendium of results and related information obtained from chemical phosphoproteomics
+              experiments. And some other stuff.
+            </Typography>
+          </CardGeneric>
         </GridItem>
         <GridItem md>
           <GridContainer direction='row'>
             <GridItem sm={12} lg={6}>
-              <Card style={{ height: 900 }}>
-                <CardHeader color='primary'>
-                  <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
-                  <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
-                </CardHeader>
-                <CardBody>
-                  {tableData === [] ? (
-                    <div>Loading...</div>
-                  ) : (
-                    <Table
-                      className='my-node'
-                      tableHeaderColor='primary'
-                      tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
-                      tableData={tableData}
-                      rowsPerPage={10}
-                      rowEndArrow
-                      handleSelection={handleSelection}
-                      handleAdd={handlePerturbagenAdd}
-                      currentPage={currentPage}
-                      handleChangePage={handlePageChange}
-                      firstRowOnClick
-                      selectedItem={selectedItem}
-                    />
-                  )}
-                </CardBody>
-              </Card>
+              <CardGeneric
+                color='primary'
+                cardTitle='Perturbagens'
+                cardSubtitle='Select a perturbagen'
+                style={{ height: 900 }}
+              >
+                {tableData.length === 0 ? (
+                  <div>Loading...</div>
+                ) : (
+                  <Table
+                    className='my-node'
+                    tableHeaderColor='primary'
+                    tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+                    tableData={tableData}
+                    rowsPerPage={10}
+                    rowEndArrow
+                    handleSelection={handleSelection}
+                    handleAdd={handlePerturbagenAdd}
+                    currentPage={currentPage}
+                    handleChangePage={handlePageChange}
+                    firstRowOnClick
+                    selectedItem={selectedItem}
+                  />
+                )}
+              </CardGeneric>
             </GridItem>
             <GridItem sm={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
+import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
@@ -47,23 +45,17 @@ const KnownSubstratesTable = () => {
       {knownSubstrateData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
-        <Card>
-          <CardHeader color='primary'>
-            <h4 className={classes.cardTitleWhite}>Known Substrates</h4>
-            <p className={classes.cardCategoryWhite}>Select a substrate</p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              className='my-node'
-              tableHeaderColor='primary'
-              tableHead={['Substrate', 'Sources']}
-              tableData={knownSubstrateData}
-              rowsPerPage={10}
-              currentPage={currentPage}
-              handleChangePage={handleChangePage}
-            />
-          </CardBody>
-        </Card>
+        <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
+          <Table
+            className='my-node'
+            tableHeaderColor='primary'
+            tableHead={['Substrate', 'Sources']}
+            tableData={knownSubstrateData}
+            rowsPerPage={10}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+          />
+        </CardGeneric>
       )}
     </>
   );

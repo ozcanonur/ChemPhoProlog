@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
+
+import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import { CallApiForProteinSubstrates } from 'api/api';
-
 import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const PhosphositesOfInterestTable = ({ protein }) => {
-  const classes = useStyles();
-
   const [currentPage, setCurrentPage] = useState(0);
   const [tableData, setTableData] = useState([]);
 
@@ -38,36 +29,30 @@ const PhosphositesOfInterestTable = ({ protein }) => {
   }, [protein]);
 
   return (
-    <Card>
-      <CardHeader color='primary'>
-        <h4 className={classes.cardTitleWhite}>Phosphosites of interest</h4>
-        <p className={classes.cardCategoryWhite}>Select a phosphosite</p>
-      </CardHeader>
-      <CardBody>
-        {tableData.length === 0 ? (
-          <div>No entries found.</div>
-        ) : (
-          <Table
-            className='my-node'
-            tableHeaderColor='primary'
-            tableHead={[
-              'Obs. Data',
-              'Location',
-              'Residue',
-              'Detected in',
-              'Pst_effect',
-              'Reported Substrate of',
-              'Reported PDT of',
-            ]}
-            tableData={tableData}
-            rowsPerPage={10}
-            currentPage={currentPage}
-            handleChangePage={handleChangePage}
-            ExtraContent={ObservationHeatMap}
-          />
-        )}
-      </CardBody>
-    </Card>
+    <CardGeneric color='primary' cardTitle='Phosphosites of interest' cardSubtitle='Select a phosphosite'>
+      {tableData.length === 0 ? (
+        <div>No entries found.</div>
+      ) : (
+        <Table
+          className='my-node'
+          tableHeaderColor='primary'
+          tableHead={[
+            'Obs. Data',
+            'Location',
+            'Residue',
+            'Detected in',
+            'Pst_effect',
+            'Reported Substrate of',
+            'Reported PDT of',
+          ]}
+          tableData={tableData}
+          rowsPerPage={10}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
+          ExtraContent={ObservationHeatMap}
+        />
+      )}
+    </CardGeneric>
   );
 };
 

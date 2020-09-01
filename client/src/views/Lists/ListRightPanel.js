@@ -2,18 +2,9 @@ import React from 'react';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
-
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
+import CardGeneric from 'components/Card/CardGeneric';
 
 const ListRightPanel = (props) => {
-  const classes = useStyles();
-
   const {
     topHeaderTitle,
     topHeaderSubTitle,
@@ -23,25 +14,16 @@ const ListRightPanel = (props) => {
   } = props;
 
   return (
-    <Card style={{ height: 900 }}>
-      <CardHeader color='primary'>
-        <h4 className={classes.cardTitleWhite}>{topHeaderTitle}</h4>
-        <p className={classes.cardCategoryWhite}>{topHeaderSubTitle}</p>
-      </CardHeader>
-      <CardBody>
-        <GridContainer direction='column'>
-          <GridItem>
-            <Card>
-              <CardHeader color='primary'>
-                <h4 className={classes.cardTitleWhite}>{selectedEleTitle}</h4>
-              </CardHeader>
-              <CardBody>{selectedEleDetailsBody}</CardBody>
-            </Card>
-          </GridItem>
-          <GridItem>{selectedEleDetailsBottomBody}</GridItem>
-        </GridContainer>
-      </CardBody>
-    </Card>
+    <CardGeneric color='primary' cardTitle={topHeaderTitle} cardSubtitle={topHeaderSubTitle} style={{ height: 900 }}>
+      <GridContainer direction='column'>
+        <GridItem>
+          <CardGeneric color='primary' cardTitle={selectedEleTitle}>
+            {selectedEleDetailsBody}
+          </CardGeneric>
+        </GridItem>
+        <GridItem>{selectedEleDetailsBottomBody}</GridItem>
+      </GridContainer>
+    </CardGeneric>
   );
 };
 

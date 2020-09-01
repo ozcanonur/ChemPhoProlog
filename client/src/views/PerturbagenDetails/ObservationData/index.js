@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
+import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const ObservationData = () => {
-  const classes = useStyles();
-
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -53,27 +44,21 @@ const ObservationData = () => {
 
   return (
     <div style={{ padding: '2em' }}>
-      <Card>
-        <CardHeader color='primary'>
-          <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
-          <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
-        </CardHeader>
-        <CardBody>
-          {tableData.length === 0 ? (
-            <Lottie options={defaultOptions} height={500} width={500} />
-          ) : (
-            <Table
-              className='my-node'
-              tableHeaderColor='primary'
-              tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
-              tableData={tableData}
-              rowsPerPage={10}
-              currentPage={currentPage}
-              handleChangePage={handleChangePage}
-            />
-          )}
-        </CardBody>
-      </Card>
+      <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+        {tableData.length === 0 ? (
+          <Lottie options={defaultOptions} height={500} width={500} />
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='primary'
+            tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
+            tableData={tableData}
+            rowsPerPage={10}
+            currentPage={currentPage}
+            handleChangePage={handleChangePage}
+          />
+        )}
+      </CardGeneric>
     </div>
   );
 };

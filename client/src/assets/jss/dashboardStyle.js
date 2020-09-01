@@ -43,7 +43,7 @@ const defaultFont = {
 };
 
 // [boxShadow, gradientTo, gradientFrom, ???]
-const primaryColor = ['#001233', 'rgba(6,119,161, 0.05)', '#2D4159', '#001233'];
+const primaryColor = ['#001233', 'rgba(6,119,161, 0)', '#2D4159', '#001233'];
 const successColor = ['#2D4159', '#2D4159', '#2D4159', '#2D4159'];
 const warningColor = ['#FFC107', '#FFECB4', '#e5ad06', '#FFC107'];
 const infoColor = ['#00acc1', '#26c6da', '#00acc1', '#00d3ee'];

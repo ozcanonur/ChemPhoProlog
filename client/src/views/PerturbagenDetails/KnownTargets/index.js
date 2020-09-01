@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
+import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import { CallApi } from 'api/api';
@@ -40,30 +38,24 @@ const KnownTargets = () => {
 
   return (
     <div style={{ padding: '2em' }}>
-      <Card>
-        <CardHeader color='primary'>
-          <h4 className={classes.cardTitleWhite}>Perturbagens</h4>
-          <p className={classes.cardCategoryWhite}>Select a perturbagen</p>
-        </CardHeader>
-        <CardBody>
-          {tableData === [] ? (
-            <div>Loading...</div>
-          ) : (
-            <Table
-              className='my-node'
-              tableHeaderColor='primary'
-              tableHead={['Kinase', 'Source', 'Score']}
-              tableData={tableData}
-              rowsPerPage={10}
-              collapsible={false}
-              currentPage={currentPage}
-              firstRowOnClick
-              handleChangePage={handleChangePage}
-              handleAdd={handleKinaseAdd}
-            />
-          )}
-        </CardBody>
-      </Card>
+      <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+        {tableData === [] ? (
+          <div>Loading...</div>
+        ) : (
+          <Table
+            className='my-node'
+            tableHeaderColor='primary'
+            tableHead={['Kinase', 'Source', 'Score']}
+            tableData={tableData}
+            rowsPerPage={10}
+            collapsible={false}
+            currentPage={currentPage}
+            firstRowOnClick
+            handleChangePage={handleChangePage}
+            handleAdd={handleKinaseAdd}
+          />
+        )}
+      </CardGeneric>
     </div>
   );
 };
