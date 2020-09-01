@@ -71,7 +71,6 @@ router.get('/api/pdts/', (req, res) => {
 
   db.all(query, [], (err, rows) => {
     if (err) throw err;
-
     res.send(rows);
   });
 });
@@ -82,11 +81,11 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 const parseCSVToPaths = (csvData) => {
-  let paths = []; // Legit paths Root > KPa > PsonKPa > KPa...
-  let relations = {}; // KPa affects phosphosites
+  const paths = []; // Legit paths Root > KPa > PsonKPa > KPa...
+  const relations = {}; // KPa affects phosphosites
   let phosphosites = []; // Phosphosites that just EXIST
-  let regulatory = {}; // Regulatory effect of phosphosites
-  let stoppingReasons = {}; // Why we stopped
+  const regulatory = {}; // Regulatory effect of phosphosites
+  const stoppingReasons = {}; // Why we stopped
 
   csvData.forEach((row) => {
     let path = row.Path;
@@ -114,7 +113,7 @@ const parseCSVToPaths = (csvData) => {
           phosphosites.push(step[4]);
           regulatory[step[4]] = step[6];
           stoppingReasons[step[4]] = row.Explanation;
-          //parsedPath.push(step[4])
+          // parsedPath.push(step[4])
         } else {
           stoppingReasons[step[3]] = row.Explanation;
         }

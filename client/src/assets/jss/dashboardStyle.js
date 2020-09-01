@@ -70,7 +70,6 @@ const boxShadow = {
     blackColor
   )}, 0.12), 0 8px 10px -5px rgba(${hexToRgb(blackColor)}, 0.2)`,
 };
-
 const primaryBoxShadow = {
   boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(primaryColor[0])},.4)`,
 };
