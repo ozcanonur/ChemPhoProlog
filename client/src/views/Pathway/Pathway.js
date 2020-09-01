@@ -27,6 +27,13 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    if (cy.elements().length > 0) {
+      // Need to run on first init
+      runLayout(cy, layout);
+      // Set context menu
+      cy.cxtmenu(cxtmenuOptions(dispatch));
+    }
+
     // Resize event listener
     let width = cy.width();
     let height = cy.height();
@@ -34,18 +41,12 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
       const widthChange = Math.abs(evt.target.width() - width);
       const heightChange = Math.abs(evt.target.height() - height);
 
-      // Need to run on first render because doesn't run layout without it
-      const isFirstRender = widthChange === 0 && heightChange === 0;
       const sizeChanged = widthChange > 30 || heightChange > 30;
-
-      if (isFirstRender || sizeChanged) runLayout(cy, layout);
+      if (sizeChanged) runLayout(cy, layout);
 
       width = evt.target.width();
       height = evt.target.height();
     });
-
-    // Set context menu
-    if (cy.elements().length > 0) cy.cxtmenu(cxtmenuOptions(dispatch));
 
     // Cleanup
     return () => {

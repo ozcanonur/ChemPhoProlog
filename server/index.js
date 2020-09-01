@@ -11,7 +11,6 @@ const port = process.env.PORT || 5000;
 path = require('path');
 
 router.use(express.static('../client/build'));
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 

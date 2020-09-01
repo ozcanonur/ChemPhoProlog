@@ -14,7 +14,7 @@ import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
 const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
-  const [legendOpen, setLegendOpen] = useState(false);
+  const [legendOpen, setLegendOpen] = useState(true);
   const [faded, setFaded] = useState(false);
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);

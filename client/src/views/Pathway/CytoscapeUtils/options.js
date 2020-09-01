@@ -52,7 +52,7 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'green' : 'red'),
+      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'red' : 'green'),
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e) => {
