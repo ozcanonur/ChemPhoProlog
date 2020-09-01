@@ -1,8 +1,4 @@
-import {
-  drawerWidth,
-  transition,
-  container,
-} from 'assets/jss/material-dashboard-react.js';
+import { drawerWidth, transition, container } from 'assets/jss/dashboardStyle';
 
 const appStyle = (theme) => ({
   wrapper: {

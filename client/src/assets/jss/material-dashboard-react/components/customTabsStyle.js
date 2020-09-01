@@ -1,4 +1,4 @@
-import { whiteColor } from 'assets/jss/material-dashboard-react.js';
+import { whiteColor } from 'assets/jss/dashboardStyle';
 
 const customTabsStyle = {
   cardTitle: {
@@ -27,7 +27,7 @@ const customTabsStyle = {
     borderRadius: '3px',
     lineHeight: '24px',
     border: '0 !important',
-    color: whiteColor + ' !important',
+    color: `${whiteColor} !important`,
     marginLeft: '4px',
     '&:last-child': {
       marginLeft: '0px',

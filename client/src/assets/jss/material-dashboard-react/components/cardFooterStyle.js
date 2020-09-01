@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import { grayColor } from 'assets/jss/material-dashboard-react';
+import { grayColor } from 'assets/jss/dashboardStyle';
 
 const cardFooterStyle = {
   cardFooter: {

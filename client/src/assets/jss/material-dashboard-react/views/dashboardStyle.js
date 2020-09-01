@@ -1,9 +1,4 @@
-import {
-  successColor,
-  whiteColor,
-  grayColor,
-  hexToRgb,
-} from 'assets/jss/material-dashboard-react.js';
+import { successColor, whiteColor, grayColor, hexToRgb } from 'assets/jss/dashboardStyle';
 
 const dashboardStyle = {
   successText: {
@@ -43,7 +38,7 @@ const dashboardStyle = {
     marginBottom: '0',
   },
   cardCategoryWhite: {
-    color: 'rgba(' + hexToRgb(whiteColor) + ',.62)',
+    color: `rgba(${hexToRgb(whiteColor)},.62)`,
     margin: '0',
     fontSize: '14px',
     marginTop: '0',

@@ -8,7 +8,7 @@ import React from 'react';
 // import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
 
 // import { makeStyles } from '@material-ui/core/styles';
-// import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+// import styles from 'assets/jss/dashboardStyle/views/dashboardStyle.js';
 // const useStyles = makeStyles(styles);
 
 const Description = () => {

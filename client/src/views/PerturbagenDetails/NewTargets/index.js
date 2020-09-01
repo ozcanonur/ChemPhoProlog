@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { makeStyles } from '@material-ui/core/styles';
-// import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+// import styles from 'assets/jss/dashboardStyle/views/dashboardStyle.js';
 // const useStyles = makeStyles(styles);
 
 const NewTargets = () => {

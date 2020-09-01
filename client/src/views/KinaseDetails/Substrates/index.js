@@ -11,7 +11,7 @@ const Substrates = () => {
   return (
     <div style={{ padding: '2em' }}>
       <CustomTabs
-        headerColor='danger'
+        headerColor='success'
         tabs={[
           {
             tabName: 'Known Substrates',
