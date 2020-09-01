@@ -47,6 +47,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     // Set context menu
     if (cy.elements().length > 0) cy.cxtmenu(cxtmenuOptions(dispatch));
 
+    // Cleanup
     return () => {
       cy.removeListener('on');
       clearAllTimeouts();

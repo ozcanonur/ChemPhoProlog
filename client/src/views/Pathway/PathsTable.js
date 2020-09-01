@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import addInspectPath from 'actions/Pathway/addInspectPath';
 
@@ -26,7 +26,10 @@ const PathsTable = () => {
 
   const data = useSelector((state) => state.pathwayData);
   const { paths, stoppingReasons } = data;
-  const tableData = parsePathsToTableData(paths, stoppingReasons);
+
+  const tableData = useMemo(() => {
+    return parsePathsToTableData(paths, stoppingReasons);
+  }, [paths, stoppingReasons]);
 
   const [currentPage, setCurrentPage] = useState(0);
 
