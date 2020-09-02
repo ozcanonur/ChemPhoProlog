@@ -29,10 +29,6 @@ export default function CustomInput(props) {
     [classes.underline]: true,
   });
 
-  // const marginTop = classNames({
-  //   [classes.marginTop]: labelText === undefined,
-  // });
-
   return (
     <FormControl
       {...formControlProps}

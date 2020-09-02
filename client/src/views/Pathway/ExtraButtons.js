@@ -19,7 +19,6 @@ const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
 
-  const { elementsToFade } = elementsToAnimate;
   const { cyLocked, changeLock } = lock;
 
   const dispatch = useDispatch();
@@ -32,7 +31,7 @@ const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
     {
       text: 'Fade',
       onClick: () => {
-        elementsToFade.toggleClass('fade');
+        elementsToAnimate.elementsToFade.toggleClass('fade');
         setFaded(!faded);
       },
       state: faded,

@@ -84,8 +84,8 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         style={{ height: '800px' }}
         minZoom={0.5}
         maxZoom={1.2}
-        boxSelectionEnabled
         autolock={cyLocked}
+        boxSelectionEnabled
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
         <ExtraButtons cy={cy} data={data} elementsToAnimate={elementsToAnimate} lock={{ cyLocked, changeLock }} />

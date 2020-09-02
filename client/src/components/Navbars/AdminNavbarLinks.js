@@ -44,6 +44,7 @@ const ItemRenderer = ({ data, index, style }) => {
     if (itemType === 'kinase') dispatch(addSidebarRouteKinase(itemName));
     else if (itemType === 'perturbagen') dispatch(addSidebarRoutePerturbagen(itemName));
   };
+
   // TODO POINTER EVENTS DOESNT WORK (ONCLICK BECAUSE OF ONBLUR FALSE OR SMTH)
   return (
     <div style={style}>
@@ -64,26 +65,31 @@ const AdminNavbarLinks = () => {
   const [filteredSearchResults, setFilteredSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  if (searchOpen) {
-    const perturbagenQuery = 'select distinct name as perturbagen from perturbagen';
-    const kinaseQuery = 'select distinct kinase_name as kinase from protein where kinase_name not null';
-    const substrateQuery = 'select distinct substrate_id as substrate from substrate';
-
-    (async () => {
-      const results = await Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]);
-      setSearchResults(results.flat());
-    })();
-  }
-
   const handleChange = (value) => {
     if (value === '') setSearchOpen(false);
     else {
-      const filteredSearchResults = searchResults.filter((e) => {
-        return e[Object.keys(e)[0]].toString().toLowerCase().indexOf(value.toLowerCase()) === 0;
-      });
+      const filteredSearchResults = searchResults.filter(
+        (e) => e[Object.keys(e)[0]].toString().toLowerCase().indexOf(value.toLowerCase()) === 0
+      );
 
       setFilteredSearchResults(filteredSearchResults);
       setSearchOpen(true);
+    }
+  };
+
+  const handleFocus = () => {
+    setSearchOpen(true);
+
+    // Load the data on first focus
+    if (searchResults.length === 0) {
+      const perturbagenQuery = 'select distinct name as perturbagen from perturbagen';
+      const kinaseQuery = 'select distinct kinase_name as kinase from protein where kinase_name not null';
+      const substrateQuery = 'select distinct substrate_id as substrate from substrate';
+
+      (async () => {
+        const results = await Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]);
+        setSearchResults(results.flat());
+      })();
     }
   };
 
@@ -94,18 +100,19 @@ const AdminNavbarLinks = () => {
           className: `${classes.margin} ${classes.search}`,
         }}
         inputProps={{
-          placeholder: 'Search',
+          placeholder: searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
           inputProps: {
             'aria-label': 'Search',
           },
         }}
         onChange={(e) => handleChange(e.target.value)}
-        // onBlur={() => setSearchOpen(false)}
+        onFocus={() => handleFocus()}
+        onBlur={() => setSearchOpen(false)}
       />
       <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
         <Search />
       </Button>
-      {searchOpen ? (
+      {searchOpen && filteredSearchResults.length !== 0 ? (
         <FixedSizeList
           dense
           itemData={filteredSearchResults}
