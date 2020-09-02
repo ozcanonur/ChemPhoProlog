@@ -13,7 +13,7 @@ import Warning from '@material-ui/icons/Warning';
 import NewReleases from '@material-ui/icons/NewReleases';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import PieChart from 'views/Lists/PieChart';
+import PieChart from 'views/PieChart';
 
 import { makeStyles } from '@material-ui/core/styles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';

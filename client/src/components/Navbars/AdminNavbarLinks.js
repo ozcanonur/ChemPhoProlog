@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -64,15 +64,16 @@ export default function AdminNavbarLinks() {
   const [filteredSearchResults, setFilteredSearchResults] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  useEffect(() => {
+  if (searchOpen) {
     const perturbagenQuery = 'select distinct name as perturbagen from perturbagen';
     const kinaseQuery = 'select distinct kinase_name as kinase from protein where kinase_name not null';
     const substrateQuery = 'select distinct substrate_id as substrate from substrate';
 
-    Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]).then((results) => {
+    (async () => {
+      const results = await Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]);
       setSearchResults(results.flat());
-    });
-  }, []);
+    })();
+  }
 
   const handleChange = (value) => {
     if (value === '') setSearchOpen(false);

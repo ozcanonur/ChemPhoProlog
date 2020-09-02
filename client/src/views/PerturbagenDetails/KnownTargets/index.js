@@ -7,14 +7,7 @@ import Table from 'components/Table/Table';
 import { CallApi } from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
-import { makeStyles } from '@material-ui/core/styles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-
-const useStyles = makeStyles(styles);
-
 const KnownTargets = () => {
-  const classes = useStyles();
-
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 

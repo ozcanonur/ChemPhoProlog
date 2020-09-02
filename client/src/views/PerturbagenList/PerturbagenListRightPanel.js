@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NewFindingsCard from 'views/Lists/NewFindingsCard';
-import ListRightPanel from 'views/Lists/ListRightPanel';
+import NewFindingsCard from 'views/NewFindingsCard';
+import ListRightPanel from 'views/ListRightPanel';
 
 const PerturbagenListRightPanel = ({ selectedInfo }) => {
   const findingsProps = {
@@ -17,10 +17,7 @@ const PerturbagenListRightPanel = ({ selectedInfo }) => {
     selectedEleTitle: selectedInfo.name,
     selectedEleDetailsBody: (
       <div style={{ textAlign: 'center' }}>
-        <img
-          src={`http://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`}
-          alt=''
-        />
+        <img src={`http://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`} alt='' />
       </div>
     ),
     selectedEleDetailsBottomBody: <NewFindingsCard {...findingsProps} />,

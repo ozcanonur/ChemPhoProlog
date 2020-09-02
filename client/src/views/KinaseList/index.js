@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -6,40 +7,43 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Typography from '@material-ui/core/Typography';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
+import pick from 'lodash/pick';
 
-import { useSelector, useDispatch } from 'react-redux';
-import fetchPerturbagenData from 'actions/PerturbagenList/fetchPerturbagenData';
-import changeSelectedPerturbagen from 'actions/PerturbagenList/changeSelectedPerturbagen';
-import changeCurrentPagePerturbagen from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
-import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
+import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
+import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';
+import changeCurrentPageKinase from 'actions/KinaseList/changeCurrentPageKinase';
+import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
-import PerturbagenListRightPanel from 'views/Lists/PerturbagenList/PerturbagenListRightPanel';
+import KinaseListRightPanel from 'views/KinaseList/KinaseListRightPanel';
+import KinaseListPhosphosites from 'views/KinaseList/KinaseListPhosphosites';
 
-const PerturbagenList = () => {
-  const data = useSelector((state) => state.perturbagenData);
+// Kinase List on the Home page
+const KinaseList = () => {
+  const data = useSelector((state) => state.kinaseData);
   const tableData = useMemo(() => {
-    return data.map(Object.values);
+    return data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])).map(Object.values);
   }, [data]);
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (data.length === 0) {
-      const query = 'select * from Perturbagen group by name order by name';
-      dispatch(fetchPerturbagenData(query));
+      const query = 'select * from Protein where kinase_name <> "" order by kinase_name';
+      dispatch(fetchKinaseData(query));
     }
   }, [data, dispatch]);
 
   // Currently selected item
-  const selectedItem = useSelector((state) => state.selectedPerturbagen);
+  const selectedItem = useSelector((state) => state.selectedKinase);
   const handleSelection = (selection) => {
-    dispatch(changeSelectedPerturbagen(selection));
+    dispatch(changeSelectedKinase(selection));
   };
-  const selectedInfo = data.filter((item) => item.name === selectedItem)[0];
+
+  const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
 
   // Current page
-  const currentPage = useSelector((state) => state.currentPagePerturbagen);
+  const currentPage = useSelector((state) => state.currentPageKinase);
   const handlePageChange = (event, page) => {
-    dispatch(changeCurrentPagePerturbagen(page));
+    dispatch(changeCurrentPageKinase(page));
   };
 
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
@@ -53,14 +57,14 @@ const PerturbagenList = () => {
     }
   }, [selectedItem]);
 
-  const handlePerturbagenAdd = (selection) => {
-    dispatch(addSidebarRoutePerturbagen(selection));
+  const handleKinaseAdd = (selection) => {
+    dispatch(addSidebarRouteKinase(selection));
   };
 
   return (
     <div>
       <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
-        <GridItem md>
+        <GridItem>
           <CardGeneric>
             <Typography variant='body1'>
               ChemPhoPro provides a compendium of results and related information obtained from chemical
@@ -71,40 +75,34 @@ const PerturbagenList = () => {
             </Typography>
           </CardGeneric>
         </GridItem>
-        <GridItem md>
-          <GridContainer direction='row'>
-            <GridItem sm={12} lg={6}>
-              <CardGeneric
-                color='primary'
-                cardTitle='Perturbagens'
-                cardSubtitle='Select a perturbagen'
-                style={{ height: 900 }}
-              >
-                {tableData.length === 0 ? (
+        <GridItem>
+          <GridContainer direction='row' alignItems='stretch'>
+            <GridItem xs={12} lg={6}>
+              <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase' style={{ height: 900 }}>
+                {data === [] ? (
                   <div>Loading...</div>
                 ) : (
                   <Table
                     className='my-node'
                     tableHeaderColor='primary'
-                    tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+                    tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
                     tableData={tableData}
                     rowsPerPage={10}
-                    rowEndArrow
-                    handleSelection={handleSelection}
-                    handleAdd={handlePerturbagenAdd}
                     currentPage={currentPage}
                     handleChangePage={handlePageChange}
+                    rowEndArrow
+                    handleSelection={handleSelection}
+                    handleAdd={handleKinaseAdd}
                     firstRowOnClick
+                    ExtraContent={KinaseListPhosphosites}
                     selectedItem={selectedItem}
                   />
                 )}
               </CardGeneric>
             </GridItem>
-            <GridItem sm={12} lg={6}>
+            <GridItem xs={12} lg={6}>
               <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-                <div>
-                  {selectedInfo !== undefined ? <PerturbagenListRightPanel selectedInfo={selectedInfo} /> : null}
-                </div>
+                <div>{selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}</div>
               </Slide>
             </GridItem>
           </GridContainer>
@@ -114,4 +112,4 @@ const PerturbagenList = () => {
   );
 };
 
-export default PerturbagenList;
+export default KinaseList;

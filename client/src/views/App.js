@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from 'react';
+import React, { useState, createRef, useEffect, Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Navbar from 'components/Navbars/Navbar';
@@ -19,7 +19,6 @@ const useStyles = makeStyles(styles);
 let ps;
 
 const Home = () => {
-  // #region Misc.
   const classes = useStyles();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -54,7 +53,6 @@ const Home = () => {
       window.removeEventListener('resize', resizeFunction);
     };
   }, [mainPanel]);
-  // #endregion Misc.
 
   const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
 
@@ -66,7 +64,6 @@ const Home = () => {
 
   const extraKinaseRoutes = getExtraRoutes('kinase');
   const extraPerturbagenRoutes = getExtraRoutes('perturbagen');
-
   const allRoutes = [...[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat(), ...routes];
 
   return (
@@ -75,15 +72,18 @@ const Home = () => {
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} />
         <div className={classes.map}>
-          <Switch>
-            {routes.map((prop, key) => (
-              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
-            ))}
-            {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
-              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
-            ))}
-            <Redirect from='/' to='/home/welcome' />
-          </Switch>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              {routes.map((prop, key) => {
+                const lazyComponent = lazy(() => import(`views/${prop.componentDirectory}`));
+                return <Route key={key} path={prop.layout + prop.path} component={lazyComponent} />;
+              })}
+              {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
+                <Route key={key} path={prop.layout + prop.path} component={prop.component} />
+              ))}
+              <Redirect from='/' to='/home/welcome' />
+            </Switch>
+          </Suspense>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ListRightPanel from 'views/Lists/ListRightPanel';
-import NewFindingsCard from 'views/Lists/NewFindingsCard';
+import ListRightPanel from 'views/ListRightPanel';
+import NewFindingsCard from 'views/NewFindingsCard';
 
 const KinaseDescriptionBody = ({ selectedInfo }) => (
   <>
