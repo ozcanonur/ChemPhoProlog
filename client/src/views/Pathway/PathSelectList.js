@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { useSelector, useDispatch } from 'react-redux';
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);

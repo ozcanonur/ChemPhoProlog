@@ -5,7 +5,7 @@ import { CallApi } from 'api/api';
 
 import { Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/tableStyle';
 
 const useStyles = makeStyles(styles);

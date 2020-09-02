@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/cardBodyStyle';
 
 const useStyles = makeStyles(styles);

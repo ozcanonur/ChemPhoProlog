@@ -8,7 +8,7 @@ import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import routes from 'routes';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
 
 const useStyles = makeStyles(styles);

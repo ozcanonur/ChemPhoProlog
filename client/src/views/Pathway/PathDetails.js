@@ -9,7 +9,7 @@ import Table from 'components/Table/Table';
 
 import phosphatases from 'views/Pathway/variables/phosphatases';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);

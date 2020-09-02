@@ -1,5 +1,6 @@
 import React, { useState, createRef, useEffect, Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Navbar from 'components/Navbars/Navbar';
 import Sidebar from 'components/Sidebar/Sidebar';
@@ -9,9 +10,8 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 import routes from 'routes';
 import additionalRoutes from 'additionalRoutes';
-import { useSelector } from 'react-redux';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
 
 const useStyles = makeStyles(styles);

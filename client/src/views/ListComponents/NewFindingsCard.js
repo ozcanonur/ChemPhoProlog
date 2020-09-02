@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -8,23 +8,19 @@ import CardIcon from 'components/Card/CardIcon';
 import CardFooter from 'components/Card/CardFooter';
 import Danger from 'components/Typography/Danger';
 
-import ArrowForward from '@material-ui/icons/ArrowForward';
 import Warning from '@material-ui/icons/Warning';
 import NewReleases from '@material-ui/icons/NewReleases';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import PieChart from 'views/PieChart';
+import PieChart from 'views/ListComponents/PieChart';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);
 
 const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIconText }) => {
   const classes = useStyles();
-
-  const [leftIconHovered, setLeftIconHovered] = useState(false);
-  const [rightIconHovered, setRightIconHovered] = useState(false);
 
   const dataNewPerturbagens = [
     {
@@ -38,7 +34,6 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
       value: 24,
     },
   ];
-  const colorsNewPerturbagens = ['rgba(255,193,7, 0.7)', 'rgba(45,65,89, 0.7)'];
 
   const dataNewSubstrates = [
     {
@@ -53,7 +48,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
     },
   ];
 
-  const colorsNewSubstrates = ['rgba(255,193,7, 0.7)', 'rgba(45,65,89, 0.7)'];
+  const colorsNew = ['rgba(255,193,7, 0.7)', 'rgba(45,65,89, 0.7)'];
 
   return (
     <GridContainer direction='column'>
@@ -62,24 +57,8 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
           <GridItem md>
             <Card>
               <CardHeader color='warning' stats icon>
-                <CardIcon
-                  color='warning'
-                  onMouseOver={() => setLeftIconHovered(true)}
-                  onMouseOut={() => setLeftIconHovered(false)}
-                  style={{
-                    transform: `${leftIconHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {leftIconHovered ? (
-                    <ArrowForward
-                      style={{
-                        pointerEvents: `${leftIconHovered ? 'none' : 'inherit'}`,
-                      }}
-                    />
-                  ) : (
-                    <NewReleases />
-                  )}
+                <CardIcon color='warning'>
+                  <NewReleases />
                 </CardIcon>
                 <p className={classes.cardCategory}>{leftIconTitle}</p>
                 <h3 className={classes.cardTitle}>{leftIconText}</h3>
@@ -96,7 +75,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
           </GridItem>
           <GridItem md>
             <div style={{ height: '150px' }}>
-              <PieChart data={dataNewPerturbagens} colors={colorsNewPerturbagens} />
+              <PieChart data={dataNewPerturbagens} colors={colorsNew} />
             </div>
           </GridItem>
         </GridContainer>
@@ -106,24 +85,8 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
           <GridItem md>
             <Card>
               <CardHeader color='warning' stats icon>
-                <CardIcon
-                  color='warning'
-                  onMouseOver={() => setRightIconHovered(true)}
-                  onMouseOut={() => setRightIconHovered(false)}
-                  style={{
-                    transform: `${rightIconHovered ? 'scale(1.2,1.2)' : 'scale(1,1)'}`,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {rightIconHovered ? (
-                    <ArrowForward
-                      style={{
-                        pointerEvents: `${rightIconHovered ? 'none' : 'inherit'}`,
-                      }}
-                    />
-                  ) : (
-                    <TrendingDown />
-                  )}
+                <CardIcon color='warning'>
+                  <TrendingDown />
                 </CardIcon>
                 <p className={classes.cardCategory}>{rightIconTitle}</p>
                 <h3 className={classes.cardTitle}>{rightIconText}</h3>
@@ -140,7 +103,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
           </GridItem>
           <GridItem md>
             <div style={{ height: '150px' }}>
-              <PieChart data={dataNewSubstrates} colors={colorsNewSubstrates} />
+              <PieChart data={dataNewSubstrates} colors={colorsNew} />
             </div>
           </GridItem>
         </GridContainer>

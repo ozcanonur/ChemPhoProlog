@@ -11,7 +11,7 @@ import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
 import Button from 'components/CustomButtons/Button';
 
 import classNames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/headerStyle';
 
 const useStyles = makeStyles(styles);

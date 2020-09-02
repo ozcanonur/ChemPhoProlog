@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import CardGeneric from 'components/Card/CardGeneric';
-import Typography from '@material-ui/core/Typography';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 import pick from 'lodash/pick';
@@ -62,53 +61,36 @@ const KinaseList = () => {
   };
 
   return (
-    <div>
-      <GridContainer direction='column' justify='space-between' style={{ padding: '2em' }}>
-        <GridItem>
-          <CardGeneric>
-            <Typography variant='body1'>
-              ChemPhoPro provides a compendium of results and related information obtained from chemical
-              phosphoproteomics experiments. And some other stuff. ChemPhoPro provides a compendium of results and
-              related information obtained from chemical phosphoproteomics experiments. And some other stuff. ChemPhoPro
-              provides a compendium of results and related information obtained from chemical phosphoproteomics
-              experiments. And some other stuff.
-            </Typography>
-          </CardGeneric>
-        </GridItem>
-        <GridItem>
-          <GridContainer direction='row' alignItems='stretch'>
-            <GridItem xs={12} lg={6}>
-              <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase' style={{ height: 900 }}>
-                {data === [] ? (
-                  <div>Loading...</div>
-                ) : (
-                  <Table
-                    className='my-node'
-                    tableHeaderColor='primary'
-                    tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
-                    tableData={tableData}
-                    rowsPerPage={10}
-                    currentPage={currentPage}
-                    handleChangePage={handlePageChange}
-                    rowEndArrow
-                    handleSelection={handleSelection}
-                    handleAdd={handleKinaseAdd}
-                    firstRowOnClick
-                    ExtraContent={KinaseListPhosphosites}
-                    selectedItem={selectedItem}
-                  />
-                )}
-              </CardGeneric>
-            </GridItem>
-            <GridItem xs={12} lg={6}>
-              <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-                <div>{selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}</div>
-              </Slide>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
-    </div>
+    <GridContainer direction='row' style={{ padding: '2em' }}>
+      <GridItem xs={12} lg={6}>
+        <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase'>
+          {data === [] ? (
+            <div>Loading...</div>
+          ) : (
+            <Table
+              className='my-node'
+              tableHeaderColor='primary'
+              tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
+              tableData={tableData}
+              rowsPerPage={10}
+              currentPage={currentPage}
+              handleChangePage={handlePageChange}
+              rowEndArrow
+              handleSelection={handleSelection}
+              handleAdd={handleKinaseAdd}
+              firstRowOnClick
+              ExtraContent={KinaseListPhosphosites}
+              selectedItem={selectedItem}
+            />
+          )}
+        </CardGeneric>
+      </GridItem>
+      <GridItem xs={12} lg={6}>
+        <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
+          <div>{selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}</div>
+        </Slide>
+      </GridItem>
+    </GridContainer>
   );
 };
 

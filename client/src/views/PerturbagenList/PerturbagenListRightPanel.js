@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NewFindingsCard from 'views/NewFindingsCard';
-import ListRightPanel from 'views/ListRightPanel';
+import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
+import ListRightPanel from 'views/ListComponents/ListRightPanel';
 
 const PerturbagenListRightPanel = ({ selectedInfo }) => {
   const findingsProps = {

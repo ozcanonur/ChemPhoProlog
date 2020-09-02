@@ -9,7 +9,7 @@ import Input from '@material-ui/core/Input';
 import Clear from '@material-ui/icons/Clear';
 import Check from '@material-ui/icons/Check';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/customInputStyle';
 
 const useStyles = makeStyles(styles);

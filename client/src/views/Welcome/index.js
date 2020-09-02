@@ -18,7 +18,7 @@ import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/DNA.json';
 import bezzLab from 'assets/img/bezzlab_twitter.PNG';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);

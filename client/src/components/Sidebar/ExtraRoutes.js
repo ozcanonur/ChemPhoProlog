@@ -18,7 +18,7 @@ import additionalRoutes from 'additionalRoutes';
 import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
 
 const useStyles = makeStyles(styles);
@@ -110,18 +110,16 @@ const ExtraRoutes = ({ type }) => {
 
   const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
 
-  const getExtraRoutes = (type) => {
-    return currentlyInspecting
+  const getExtraRoutes = (type) =>
+    currentlyInspecting
       .filter((e) => e.type === type)
       .map((e) => e.name)
       .map((e) => additionalRoutes(type, e));
-  };
 
   const extraRoutes = getExtraRoutes(type);
 
   const brand = (type) => {
     const text = type === 'kinase' ? 'Kinases' : 'Perturbagens';
-
     return (
       <div className={classes.logo}>
         <a href='# ' className={classNames(classes.logoLink)}>

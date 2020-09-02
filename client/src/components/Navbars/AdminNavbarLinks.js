@@ -18,7 +18,7 @@ import { CallApi } from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
 
 const useStyles = makeStyles(styles);
