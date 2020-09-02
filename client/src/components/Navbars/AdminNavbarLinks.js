@@ -30,11 +30,9 @@ const ItemRenderer = ({ data, index, style }) => {
 
   let redirectTo = `/home/${itemName}/description`;
   let itemIcon;
-  if (itemType === 'kinase') {
-    itemIcon = <PanoramaHorizontal />;
-  } else if (itemType === 'perturbagen') {
-    itemIcon = <Healing />;
-  } else {
+  if (itemType === 'kinase') itemIcon = <PanoramaHorizontal />;
+  else if (itemType === 'perturbagen') itemIcon = <Healing />;
+  else {
     itemIcon = <TrendingDown />;
     redirectTo = '#';
   }
@@ -45,7 +43,6 @@ const ItemRenderer = ({ data, index, style }) => {
     else if (itemType === 'perturbagen') dispatch(addSidebarRoutePerturbagen(itemName));
   };
 
-  // TODO POINTER EVENTS DOESNT WORK (ONCLICK BECAUSE OF ONBLUR FALSE OR SMTH)
   return (
     <div style={style}>
       <Link to={redirectTo}>

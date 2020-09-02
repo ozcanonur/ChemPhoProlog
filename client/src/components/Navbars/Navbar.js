@@ -24,12 +24,8 @@ const Navbar = ({ routes, handleDrawerToggle }) => {
     let term = '';
 
     routes.map((prop) => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
-        name = prop.name;
-      }
-      if (window.location.href.split('/').length > 5) {
-        [, , , term] = window.location.href.split('/');
-      }
+      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) name = prop.name;
+      if (window.location.href.split('/').length > 5) [, , , term] = window.location.href.split('/');
       return null;
     });
 

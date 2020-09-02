@@ -64,13 +64,12 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
 
   // Set currently animated elements
   useEffect(() => {
-    setElementsToAnimate(getElementsToAnimate(cy, selectedPath));
-  }, [selectedPath]);
+    const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
+    setElementsToAnimate(elementsToAnimate);
 
-  useEffect(() => {
     resetPathwayVisuals(cy);
     animatePath(elementsToAnimate, data, 50, true, true);
-  }, [elementsToAnimate]);
+  }, [selectedPath]);
 
   return (
     <div>

@@ -20,9 +20,9 @@ const PathSelectList = () => {
 
   const data = useSelector((state) => state.pathwayData);
   const pathsInspectList = useSelector((state) => state.pathsInspectList);
+  const selectedPath = useSelector((state) => state.selectedPath);
 
   const dispatch = useDispatch();
-
   const pathOnClick = (id) => {
     dispatch(changeSelectedPath(data.paths[id]));
   };
@@ -35,11 +35,11 @@ const PathSelectList = () => {
       </CardHeader>
       <CardBody style={{ maxHeight: '800px', overflow: 'auto' }}>
         <List>
-          {pathsInspectList.map((e, key) => {
-            const [id, node, stopReason, length] = e;
+          {pathsInspectList.map((path, key) => {
+            const [id, node, stopReason, length] = path;
             const text = `${id} / ${node} / ${stopReason} / ${length}`;
             return (
-              <ListItem button key={key} onClick={() => pathOnClick(id)}>
+              <ListItem button key={key} onClick={() => pathOnClick(id)} selected={selectedPath === data.paths[id]}>
                 <ListItemText primary={text} />
               </ListItem>
             );
