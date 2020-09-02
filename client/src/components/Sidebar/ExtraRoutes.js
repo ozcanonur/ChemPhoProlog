@@ -29,9 +29,9 @@ const ExtraRoute = ({ route }) => {
   const [open, setOpen] = useState(true);
 
   // verifies if routeName is the one active (in browser input)
-  function activeRoute(routeName) {
+  const activeRoute = (routeName) => {
     return window.location.href.indexOf(routeName) > -1;
-  }
+  };
 
   const handleOpen = () => {
     setOpen(!open);

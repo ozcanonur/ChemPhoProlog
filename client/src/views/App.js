@@ -46,7 +46,7 @@ const Home = () => {
     }
     window.addEventListener('resize', resizeFunction);
 
-    return function cleanup() {
+    return () => {
       if (navigator.platform.indexOf('Win') > -1) {
         ps.destroy();
       }

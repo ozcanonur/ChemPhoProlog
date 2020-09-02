@@ -13,13 +13,14 @@ import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
-const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
+const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
   const [legendOpen, setLegendOpen] = useState(true);
   const [faded, setFaded] = useState(false);
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
 
   const { elementsToFade } = elementsToAnimate;
+  const { cyLocked, changeLock } = lock;
 
   const dispatch = useDispatch();
   const buttonList = [
@@ -55,6 +56,14 @@ const ExtraButtons = ({ cy, data, elementsToAnimate }) => {
       },
       state: phosphositesOpen,
     },
+    {
+      text: 'Lock',
+      onClick: () => {
+        changeLock();
+      },
+      state: cyLocked,
+    },
+
     {
       text: 'Export',
       onClick: async () => {

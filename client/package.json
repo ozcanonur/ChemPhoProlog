@@ -19,6 +19,7 @@
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-cxtmenu": "^3.1.2",
     "cytoscape-popper": "^1.0.7",
+    "tippy.js": "5.2.1",
     "d3": "^5.16.0",
     "d3-scale": "^3.2.1",
     "d3-scale-chromatic": "^1.5.0",
@@ -28,7 +29,7 @@
     "node-sass": "^4.14.1",
     "particles-bg": "^2.5.0",
     "perfect-scrollbar": "1.5.0",
-    "prop-types": "15.7.2",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-cytoscapejs": "^1.2.1",
     "react-dom": "16.13.1",
@@ -42,8 +43,7 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0",
-    "tippy.js": "5.2.1"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

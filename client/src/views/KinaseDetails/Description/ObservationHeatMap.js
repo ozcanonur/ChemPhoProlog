@@ -5,7 +5,7 @@ import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
 import { CallApi } from 'api/api';
 
-import perturbagenNames from 'views/KinaseDetails/Description/variables/perturbagenNames';
+import perturbagens from 'views/KinaseDetails/Description/variables/perturbagens';
 
 const ObservationHeatMap = ({ row }) => {
   const [observationData, setObservationData] = useState([]);
@@ -27,7 +27,7 @@ const ObservationHeatMap = ({ row }) => {
       if (mounted) setObservationData(res.map(Object.values));
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [location, residue, protein]);
@@ -46,12 +46,11 @@ const ObservationHeatMap = ({ row }) => {
     return result;
   };
 
-  const obsMCF = createHeatmapObject('MCF-7', observationData);
-  const obsHL = createHeatmapObject('HL-60', observationData);
-  const obsNTERA = createHeatmapObject('NTERA-2 clone D1', observationData);
+  const [obsMCF, obsHL, obsNTERA] = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'].map((cellLine) =>
+    createHeatmapObject(cellLine, observationData)
+  );
 
   const heatmapData = [obsNTERA, obsHL, obsMCF];
-  const keys = perturbagenNames;
 
   return (
     <div>
@@ -59,7 +58,7 @@ const ObservationHeatMap = ({ row }) => {
         <div>No observation data for this site</div>
       ) : (
         <div style={{ height: '20em' }}>
-          <HeatMap data={heatmapData} indexBy='cell_line' keys={keys} />
+          <HeatMap data={heatmapData} indexBy='cell_line' keys={perturbagens} />
         </div>
       )}
     </div>

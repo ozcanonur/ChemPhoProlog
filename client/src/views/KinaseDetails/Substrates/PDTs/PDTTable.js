@@ -25,7 +25,7 @@ const PDTTable = ({ cell_line }) => {
       }
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [kinase, cell_line]);

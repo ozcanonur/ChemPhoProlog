@@ -30,7 +30,7 @@ const KnownPerturbagens = () => {
       }
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [kinase]);
@@ -40,7 +40,7 @@ const KnownPerturbagens = () => {
       <GridItem md>
         <CardGeneric color='primary' cardTitle='Known Perturbagens' cardSubtitle='Select a perturbagen'>
           {knownPerturbagenData.length === 0 ? (
-            <div>No entries found.</div>
+            <div>No entries found</div>
           ) : (
             <Table
               className='my-node'

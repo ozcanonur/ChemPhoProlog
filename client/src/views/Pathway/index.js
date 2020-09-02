@@ -15,6 +15,17 @@ import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
 
+const TableAndDetails = () => (
+  <GridContainer direction='row'>
+    <GridItem md>
+      <PathsTable />
+    </GridItem>
+    <GridItem md>
+      <PathDetails />
+    </GridItem>
+  </GridContainer>
+);
+
 const PathwayIndex = () => {
   const data = useSelector((state) => state.pathwayData);
   const selectedPath = useSelector((state) => state.selectedPath);
@@ -54,14 +65,7 @@ const PathwayIndex = () => {
           </GridContainer>
         </GridItem>
         <GridItem>
-          <GridContainer direction='row'>
-            <GridItem md>
-              <PathsTable />
-            </GridItem>
-            <GridItem md>
-              <PathDetails />
-            </GridItem>
-          </GridContainer>
+          <TableAndDetails />
         </GridItem>
       </GridContainer>
     </div>

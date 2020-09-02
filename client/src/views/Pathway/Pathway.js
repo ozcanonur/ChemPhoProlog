@@ -24,6 +24,11 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
   });
+  const [cyLocked, setCyLocked] = useState(false);
+
+  const changeLock = () => {
+    setCyLocked(!cyLocked);
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -80,9 +85,10 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         minZoom={0.5}
         maxZoom={1.2}
         boxSelectionEnabled
+        autolock={cyLocked}
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons cy={cy} data={data} elementsToAnimate={elementsToAnimate} />
+        <ExtraButtons cy={cy} data={data} elementsToAnimate={elementsToAnimate} lock={{ cyLocked, changeLock }} />
       </div>
     </div>
   );

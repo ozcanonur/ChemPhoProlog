@@ -15,9 +15,9 @@ const useStyles = makeStyles(styles);
 
 const StandardRoutes = () => {
   // verifies if routeName is the one active (in browser input)
-  function activeRoute(routeName) {
+  const activeRoute = (routeName) => {
     return window.location.href.indexOf(routeName) > -1;
-  }
+  };
 
   const classes = useStyles();
 

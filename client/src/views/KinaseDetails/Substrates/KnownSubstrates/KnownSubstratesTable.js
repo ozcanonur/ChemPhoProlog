@@ -28,7 +28,7 @@ const KnownSubstratesTable = () => {
       }
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [kinase]);

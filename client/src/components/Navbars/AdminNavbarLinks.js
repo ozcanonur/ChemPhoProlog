@@ -57,7 +57,7 @@ const ItemRenderer = ({ data, index, style }) => {
   );
 };
 
-export default function AdminNavbarLinks() {
+const AdminNavbarLinks = () => {
   const classes = useStyles();
 
   const [searchResults, setSearchResults] = useState([]);
@@ -120,4 +120,6 @@ export default function AdminNavbarLinks() {
       ) : null}
     </div>
   );
-}
+};
+
+export default AdminNavbarLinks;

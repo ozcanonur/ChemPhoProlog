@@ -28,7 +28,7 @@ const KinaseListPhosphosites = ({ row }) => {
       }
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [kinase]);

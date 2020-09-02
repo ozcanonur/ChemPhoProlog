@@ -18,12 +18,10 @@ const PhosphositesOfInterestTable = ({ protein }) => {
     let mounted = true;
 
     CallApiForProteinSubstrates(protein).then((res) => {
-      if (mounted) {
-        setTableData(res.map(Object.values));
-      }
+      if (mounted) setTableData(res.map(Object.values));
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [protein]);

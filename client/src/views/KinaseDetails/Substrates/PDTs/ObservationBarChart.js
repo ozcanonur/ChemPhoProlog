@@ -27,7 +27,7 @@ const ObsForPDTs = ({ row, cell_line }) => {
       }
     });
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
   }, [PDT, cell_line]);
