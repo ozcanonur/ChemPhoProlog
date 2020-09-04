@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect, Suspense, lazy } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -72,18 +72,15 @@ const Home = () => {
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} />
         <div className={classes.map}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              {routes.map((prop, key) => {
-                const lazyComponent = lazy(() => import(`views/${prop.componentDirectory}`));
-                return <Route key={key} path={prop.layout + prop.path} component={lazyComponent} />;
-              })}
-              {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
-                <Route key={key} path={prop.layout + prop.path} component={prop.component} />
-              ))}
-              <Redirect from='/' to='/home/welcome' />
-            </Switch>
-          </Suspense>
+          <Switch>
+            {routes.map((prop, key) => {
+              return <Route key={key} path={prop.layout + prop.path} component={prop.component} />;
+            })}
+            {[...extraKinaseRoutes, ...extraPerturbagenRoutes].flat().map((prop, key) => (
+              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
+            ))}
+            <Redirect from='/' to='/home/welcome' />
+          </Switch>
         </div>
       </div>
     </div>

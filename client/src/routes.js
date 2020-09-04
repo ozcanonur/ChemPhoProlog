@@ -1,3 +1,8 @@
+import Welcome from 'views/Welcome/index';
+import KinaseList from 'views/KinaseList';
+import PerturbagenList from 'views/PerturbagenList';
+import Pathway from 'views/Pathway';
+
 import Home from '@material-ui/icons/Home';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
 import Healing from '@material-ui/icons/Healing';
@@ -9,35 +14,35 @@ const routes = [
     path: '/welcome',
     name: 'Home',
     icon: Home,
-    componentDirectory: 'Welcome',
+    component: Welcome,
     layout: '/home',
   },
   {
     path: '/kinaseList',
     name: 'Kinase List',
     icon: PanoramaHorizontal,
-    componentDirectory: 'KinaseList',
+    component: KinaseList,
     layout: '/home',
   },
   {
     path: '/perturbagenList',
     name: 'Perturbagen List',
     icon: Healing,
-    componentDirectory: 'PerturbagenList',
+    component: PerturbagenList,
     layout: '/home',
   },
   {
     path: '/api',
     name: 'API',
     icon: Web,
-    componentDirectory: 'Welcome',
+    component: 'Welcome',
     layout: '/home',
   },
   {
     path: '/pathway',
     name: 'Pathway',
     icon: TrendingDown,
-    componentDirectory: 'Pathway',
+    component: Pathway,
     layout: '/home',
   },
 ];
