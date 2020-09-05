@@ -5,7 +5,9 @@ const parse = require('csv-parse');
 const fs = require('fs').promises;
 const _ = require('lodash');
 
+const prolog = require('tau-prolog');
 const { parseCSVToPaths } = require('./pathwayParser');
+// const { queryProlog } = require('./prolog');
 
 const router = express();
 const port = process.env.PORT || 5000;
@@ -20,9 +22,7 @@ router.listen(port, () => console.log(`Listening on port ${port}`));
 
 // Connect to the DB
 const db = new sqlite3.Database('../chemphopro.db', sqlite3.OPEN_READONLY, (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
+  if (err) return console.error(err.message);
   console.log('Connected to ChemphoproDB');
 });
 
@@ -93,3 +93,68 @@ router.get('/*', function (req, res) {
     if (err) res.status(500).send(err);
   });
 });
+
+/////////////////////////////////////////
+/////////////PROLOG//////////////////////
+/////////////////////////////////////////
+const session = prolog.create();
+
+const askQuery = (query) => {
+  return new Promise((resolve, reject) => {
+    session.query(query, {
+      success: () => {
+        resolve();
+      },
+      error: (err) => {
+        reject(new Error(err));
+      },
+    });
+  });
+};
+
+const getAnswer = () => {
+  return new Promise((resolve, reject) => {
+    session.answer({
+      success: (answer) => {
+        resolve(answer);
+      },
+      error: (err) => {
+        reject(new Error(err));
+      },
+      fail: () => {
+        reject(new Error('Get answer failed'));
+      },
+      limit: () => {
+        reject(new Error('Limit exceeded'));
+      },
+    });
+  });
+};
+
+const consultFiles = (files) => {
+  return new Promise((resolve, reject) => {
+    files.forEach((file) => {
+      session.consult(file, {
+        success: () => {
+          resolve();
+        },
+        error: (err) => {
+          reject(new Error(err));
+        },
+      });
+    });
+  });
+};
+
+const files = ['./facts/expressed_in.pl', './facts/knowninhibitor.pl'];
+const query = "findall(X, expressedin(X, 'MCF7'), List).";
+
+// Handles promise rejects, similar to try/catch but fancier
+const handleError = (fn) => (...params) => fn(...params).catch(console.error);
+
+// handleError(async () => {
+//   await consultFiles(files);
+//   await askQuery(query);
+//   const answer = await getAnswer();
+//   console.log(prolog.format_answer(answer));
+// })();
