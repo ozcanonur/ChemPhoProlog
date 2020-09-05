@@ -108,14 +108,9 @@ const ExtraRoute = ({ route }) => {
 const ExtraRoutes = ({ type }) => {
   const classes = useStyles();
 
-  const currentlyInspecting = useSelector((state) => state.sidebarRoutes);
-
+  const extraSidebarRoutes = useSelector((state) => state.extraSidebarRoutes);
   const getExtraRoutes = (type) =>
-    currentlyInspecting
-      .filter((e) => e.type === type)
-      .map((e) => e.name)
-      .map((e) => additionalRoutes(type, e));
-
+    extraSidebarRoutes.filter((e) => e.type === type).map((e) => additionalRoutes(type, e.name));
   const extraRoutes = getExtraRoutes(type);
 
   const brand = (type) => {

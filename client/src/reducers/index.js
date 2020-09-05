@@ -18,7 +18,7 @@ export default combineReducers({
   perturbagenData: perturbagenDataReducer,
   selectedPerturbagen: selectedPerturbagenReducer,
   currentPagePerturbagen: currentPagePerturbagenReducer,
-  sidebarRoutes: sidebarRoutesReducer,
+  extraSidebarRoutes: sidebarRoutesReducer,
   pathsInspectList: inspectReducer,
   selectedPath: selectedPathReducer,
   pathwayData: pathwayDataReducer,

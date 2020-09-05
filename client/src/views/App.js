@@ -54,18 +54,9 @@ const Home = () => {
     };
   }, [mainPanel]);
 
-  const sidebarRoutes = useSelector((state) => state.sidebarRoutes);
-
-  const getExtraRoutes = (type) =>
-    sidebarRoutes
-      .filter((e) => e.type === type)
-      .map((e) => e.name)
-      .map((e) => additionalRoutes(type, e));
-
-  const extraKinaseRoutes = getExtraRoutes('kinase');
-  const extraPerturbagenRoutes = getExtraRoutes('perturbagen');
-  const extraRoutes = [...extraKinaseRoutes, ...extraPerturbagenRoutes].flat();
-  const allRoutes = [...extraRoutes, ...routes];
+  const extraSidebarRoutes = useSelector((state) => state.extraSidebarRoutes);
+  const getExtraRoutes = () => extraSidebarRoutes.map(({ type, name }) => additionalRoutes(type, name));
+  const allRoutes = [...routes, ...getExtraRoutes().flat()];
 
   return (
     <div className={classes.wrapper}>
@@ -74,10 +65,7 @@ const Home = () => {
         <Navbar routes={allRoutes} handleDrawerToggle={handleDrawerToggle} />
         <div className={classes.map}>
           <Switch>
-            {routes.map((prop, key) => (
-              <Route key={key} path={prop.layout + prop.path} component={prop.component} />
-            ))}
-            {extraRoutes.map((prop, key) => (
+            {allRoutes.map((prop, key) => (
               <Route key={key} path={prop.layout + prop.path} component={prop.component} />
             ))}
             <Redirect from='/' to='/home/welcome' />
