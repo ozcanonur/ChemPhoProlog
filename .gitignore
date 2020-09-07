@@ -10,3 +10,4 @@ client/build/
 facts/
 combinedFacts.pl
 perturbs_MCF7_all.pl
+scratch/

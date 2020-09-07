@@ -89,7 +89,7 @@ const Row = (props) => {
               {prop}
             </Link>
           ) : (
-            <>{prop}</>
+            prop
           )}
         </TableCell>
         {rowEndArrow && key === row.length - 1 ? (

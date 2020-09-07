@@ -7,7 +7,6 @@ const _ = require('lodash');
 
 const prolog = require('tau-prolog');
 const { parseCSVToPaths } = require('./pathwayParser');
-// const { queryProlog } = require('./prolog');
 
 const router = express();
 const port = process.env.PORT || 5000;
@@ -97,60 +96,101 @@ router.get('/*', function (req, res) {
 /////////////////////////////////////////
 /////////////PROLOG//////////////////////
 /////////////////////////////////////////
-const session = prolog.create();
-
-const askQuery = (query) => {
-  return new Promise((resolve, reject) => {
-    session.query(query, {
-      success: () => {
-        resolve();
-      },
-      error: (err) => {
-        reject(new Error(err));
-      },
-    });
-  });
-};
-
-const getAnswer = () => {
-  return new Promise((resolve, reject) => {
-    session.answer({
-      success: (answer) => {
-        resolve(answer);
-      },
-      error: (err) => {
-        reject(new Error(err));
-      },
-      fail: () => {
-        reject(new Error('Get answer failed'));
-      },
-      limit: () => {
-        reject(new Error('Limit exceeded'));
-      },
-    });
-  });
-};
-
-const consultFiles = (files) => {
-  return new Promise((resolve, reject) => {
-    files.forEach((file) => {
-      session.consult(file, {
-        success: () => {
-          resolve();
-        },
-        error: (err) => {
-          reject(new Error(err));
-        },
-      });
-    });
-  });
-};
-
-const files = ['./facts/expressed_in.pl', './facts/knowninhibitor.pl'];
-const query = "findall(X, expressedin(X, 'MCF7'), List).";
-
 // Handles promise rejects, similar to try/catch but fancier
-const handleError = (fn) => (...params) => fn(...params).catch(console.error);
+// const handleError = (fn) => (...params) => fn(...params).catch(console.error);
+
+// const session = prolog.create();
+
+// const askQuery = (query) => {
+//   return new Promise((resolve, reject) => {
+//     session.query(query, {
+//       success: () => {
+//         resolve();
+//       },
+//       error: (err) => {
+//         reject(new Error(err));
+//       },
+//     });
+//   });
+// };
+
+// const getAnswer = () => {
+//   return new Promise((resolve, reject) => {
+//     session.answer({
+//       success: (answer) => {
+//         resolve(answer);
+//       },
+//       error: (err) => {
+//         reject(new Error(err));
+//       },
+//       fail: () => {
+//         reject(new Error('Get answer failed'));
+//       },
+//       limit: () => {
+//         reject(new Error('Limit exceeded'));
+//       },
+//     });
+//   });
+// };
+
+// const consultFile = (file) => {
+//   return new Promise((resolve, reject) => {
+//     session.consult(file, {
+//       success: () => {
+//         resolve();
+//       },
+//       error: (err) => {
+//         reject(new Error(err));
+//       },
+//     });
+//   });
+// };
+
+// const asyncForEach = async (array, callback) => {
+//   for (let i = 0; i < array.length; i += 1) {
+//     await callback(array[i], i, array);
+//   }
+// };
+
+// const consultFiles = async (files) => {
+//   await asyncForEach(files, async (file) => {
+//     await consultFile(file);
+//   });
+// };
+
+// const files = [
+//   './facts/expressed_in.pl',
+//   './facts/kinases.pl',
+//   './facts/knowninhibitor.pl',
+//   './facts/knownsign_all.pl',
+//   './facts/knownsign_uniq.pl',
+//   './facts/knowntarget_all.pl',
+//   './facts/knowntarget_INmtor.pl',
+//   './facts/perturbs_MCF7_INmtor.pl',
+//   './facts/phosphatases.pl',
+
+//   './facts/segmentaa.pl',
+//   './facts/segmentab.pl',
+//   './facts/segmentac.pl',
+//   './facts/segmentad.pl',
+// ];
+
+// const query = "findall(X, expressedin(X, 'MCF7'), List).";
+
+// if (typeof localStorage === 'undefined' || localStorage === null) {
+//   var LocalStorage = require('node-localstorage').LocalStorage;
+//   localStorage = new LocalStorage('./scratch');
+// }
+
+// handleError(async () => {
+//   console.log(typeof localStorage.getItem('prologSession'));
+//   console.time('consult');
+//   await consultFiles(files);
+//   console.timeEnd('consult');
+//   console.log(session);
+//   localStorage.setItem('prologSession', JSON.stringify(session));
+//   console.log(JSON.parse(localStorage.getItem('prologSession')));
+// })();
 
 // handleError(async () => {
 //   await consultFiles(files);
