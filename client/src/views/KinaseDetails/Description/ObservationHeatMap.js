@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 
 import perturbagens from 'views/KinaseDetails/Description/variables/perturbagens';
 
@@ -19,11 +19,10 @@ const ObservationHeatMap = ({ row }) => {
     let mounted = true;
 
     const substrate = `${protein}(${residue}${location})`;
-    const query =
-      `select perturbagen, cell_line, fold_change from observation ` +
-      `where substrate="${substrate}" and fold_change > -888`;
+    const route = '/getObservation';
+    const params = { substrate };
 
-    CallApi(query).then((res) => {
+    getApi(route, params).then((res) => {
       if (mounted) setObservationData(res.map(Object.values));
     });
 

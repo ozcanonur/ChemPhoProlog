@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { CallApiForProteinSubstrates } from 'api/api';
+import { getApi } from 'api/api';
 import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
 const PhosphositesOfInterestTable = ({ protein }) => {
@@ -16,8 +16,10 @@ const PhosphositesOfInterestTable = ({ protein }) => {
 
   useEffect(() => {
     let mounted = true;
+    const route = '/phosphositesOfInterest';
+    const params = { protein };
 
-    CallApiForProteinSubstrates(protein).then((res) => {
+    getApi(route, params).then((res) => {
       if (mounted) setTableData(res.map(Object.values));
     });
 

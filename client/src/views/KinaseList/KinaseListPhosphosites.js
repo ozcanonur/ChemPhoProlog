@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import zip from 'lodash/zip';
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 
 import { Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core';
 
@@ -19,10 +19,10 @@ const KinaseListPhosphosites = ({ row }) => {
 
   useEffect(() => {
     let mounted = true;
+    const route = '/getPhosphosites';
+    const params = { kinase };
 
-    const query = `select distinct substrate_id from Substrate where substrate_id like "%${kinase}(%"`;
-
-    CallApi(query).then((res) => {
+    getApi(route, params).then((res) => {
       if (mounted) {
         setPhosphosites(res.map(Object.values));
       }

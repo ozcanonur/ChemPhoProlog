@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 
@@ -18,11 +18,10 @@ const ObservationData = () => {
   const perturbagen = window.location.href.split('/')[4];
 
   useEffect(() => {
-    const query =
-      `Select substrate, cell_line, fold_change, p_value, cv from Observation ` +
-      `where perturbagen="${perturbagen}" and fold_change <> -888 and p_value <> -888 order by cell_line, substrate`;
+    const route = '/getObservationPerturbagen';
+    const params = { perturbagen };
 
-    CallApi(query).then((res) => {
+    getApi(route, params).then((res) => {
       setTableData(
         res
           .map((e) => ({

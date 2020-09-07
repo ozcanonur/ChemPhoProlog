@@ -1,7 +1,8 @@
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 
 const fetchKinaseData = (query) => async (dispatch) => {
-  const response = await CallApi(query);
+  const route = '/getKinaseList';
+  const response = await getApi(route);
 
   dispatch({ type: 'FETCH_KINASE_DATA', payload: response });
 };

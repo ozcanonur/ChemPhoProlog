@@ -22,10 +22,7 @@ const PerturbagenList = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (data.length === 0) {
-      const query = 'select * from Perturbagen group by name order by name';
-      dispatch(fetchPerturbagenData(query));
-    }
+    if (data.length === 0) dispatch(fetchPerturbagenData());
   }, [data, dispatch]);
 
   // Currently selected item
@@ -87,7 +84,9 @@ const PerturbagenList = () => {
       </GridItem>
       <GridItem sm={12} lg={6}>
         <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-          <div>{selectedInfo !== undefined ? <PerturbagenListRightPanel selectedInfo={selectedInfo} /> : null}</div>
+          <div>
+            {selectedInfo !== undefined ? <PerturbagenListRightPanel selectedInfo={selectedInfo} /> : null}
+          </div>
         </Slide>
       </GridItem>
     </GridContainer>

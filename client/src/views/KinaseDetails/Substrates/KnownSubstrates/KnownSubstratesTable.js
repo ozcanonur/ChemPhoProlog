@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 
 const KnownSubstratesTable = () => {
   const kinase = window.location.href.split('/')[4];
@@ -18,9 +18,10 @@ const KnownSubstratesTable = () => {
   useEffect(() => {
     let mounted = true;
 
-    const kinaseQuery = `select PsT, sources from known_target where KPa="${kinase}" order by PsT`;
+    const route = '/getKnownSubstrates';
+    const params = { KPa: kinase };
 
-    CallApi(kinaseQuery).then((res) => {
+    getApi(route, params).then((res) => {
       const tableData = res.map(Object.values);
 
       if (mounted) {

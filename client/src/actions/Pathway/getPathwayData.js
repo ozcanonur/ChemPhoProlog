@@ -1,4 +1,4 @@
-import { CallApi, CallApiForPaths } from 'api/api';
+import { getApi } from 'api/api';
 
 const formatObservation = (phosphosites, fullObservationData) => {
   const observationInCurrentPaths = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
@@ -15,9 +15,15 @@ const formatObservation = (phosphosites, fullObservationData) => {
   return formattedObservation;
 };
 
-const getPathwayData = (perturbagen, cellLine) => async (dispatch) => {
-  const observationQuery = `select substrate, fold_change, p_value from observation where perturbagen="${perturbagen}" and cell_line="${cellLine}"`;
-  const [fullObservationData, pathsResults] = await Promise.all([CallApi(observationQuery), CallApiForPaths()]);
+const getPathwayData = (perturbagen, cell_line) => async (dispatch) => {
+  const pathwayRoute = '/pathway';
+  const observationRoute = '/getObservationPerturbagenCellLine';
+  const observationParams = { perturbagen, cell_line };
+
+  const [fullObservationData, pathsResults] = await Promise.all([
+    getApi(observationRoute, observationParams),
+    getApi(pathwayRoute),
+  ]);
 
   const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);
 

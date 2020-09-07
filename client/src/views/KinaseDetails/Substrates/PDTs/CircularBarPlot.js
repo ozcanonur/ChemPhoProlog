@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-import { CallApiForPDTs } from 'api/api';
+import { getApi } from 'api/api';
 
 const CircularBarPlot = ({ cell_line }) => {
   const chart = useRef();
@@ -12,8 +12,10 @@ const CircularBarPlot = ({ cell_line }) => {
 
   useEffect(() => {
     let mounted = true;
+    const route = '/pdts';
+    const params = { kinase, cell_line };
 
-    CallApiForPDTs(kinase, cell_line).then((res) => {
+    getApi(route, params).then((res) => {
       if (mounted) {
         setPDTs(res);
       }
@@ -159,7 +161,9 @@ const CircularBarPlot = ({ cell_line }) => {
       return d.Kinase;
     })
     .attr('transform', function (d) {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI
+        ? 'rotate(180)'
+        : 'rotate(0)';
     })
     .style('font-size', '11px')
     .attr('alignment-baseline', 'middle');

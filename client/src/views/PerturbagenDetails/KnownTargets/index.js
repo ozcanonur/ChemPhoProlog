@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
 const KnownTargets = () => {
@@ -23,8 +23,10 @@ const KnownTargets = () => {
   const perturbagen = window.location.href.split('/')[4];
 
   useEffect(() => {
-    const query = `Select kinase, source, score from PK_relationship where perturbagen="${perturbagen}" order by kinase`;
-    CallApi(query).then((res) => {
+    const route = '/getKnownTargets';
+    const params = { perturbagen };
+
+    getApi(route, params).then((res) => {
       setTableData(res.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values));
     });
   }, [perturbagen]);

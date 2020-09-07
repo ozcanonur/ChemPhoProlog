@@ -25,10 +25,7 @@ const KinaseList = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (data.length === 0) {
-      const query = 'select * from Protein where kinase_name <> "" order by kinase_name';
-      dispatch(fetchKinaseData(query));
-    }
+    if (data.length === 0) dispatch(fetchKinaseData());
   }, [data, dispatch]);
 
   // Currently selected item
@@ -87,7 +84,9 @@ const KinaseList = () => {
       </GridItem>
       <GridItem xs={12} lg={6}>
         <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-          <div>{selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}</div>
+          <div>
+            {selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}
+          </div>
         </Slide>
       </GridItem>
     </GridContainer>

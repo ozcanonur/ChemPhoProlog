@@ -14,7 +14,7 @@ import TrendingDown from '@material-ui/icons/TrendingDown';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 
-import { CallApi } from 'api/api';
+import { getApi } from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
 
@@ -79,12 +79,16 @@ const AdminNavbarLinks = () => {
 
     // Load the data on first focus
     if (searchResults.length === 0) {
-      const perturbagenQuery = 'select distinct name as perturbagen from perturbagen';
-      const kinaseQuery = 'select distinct kinase_name as kinase from protein where kinase_name not null';
-      const substrateQuery = 'select distinct substrate_id as substrate from substrate';
-
       (async () => {
-        const results = await Promise.all([CallApi(perturbagenQuery), CallApi(kinaseQuery), CallApi(substrateQuery)]);
+        const perturbagenRoute = '/getAllPerturbagens';
+        const kinaseRoute = '/getAllKinases';
+        const substrateRoute = '/getAllSubstrates';
+
+        const results = await Promise.all([
+          getApi(perturbagenRoute),
+          getApi(kinaseRoute),
+          getApi(substrateRoute),
+        ]);
         setSearchResults(results.flat());
       })();
     }
