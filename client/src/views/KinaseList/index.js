@@ -16,11 +16,31 @@ import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 import KinaseListRightPanel from 'views/KinaseList/KinaseListRightPanel';
 import KinaseListPhosphosites from 'views/KinaseList/KinaseListPhosphosites';
 
+const convertExpressedIns = (data) => {
+  data.forEach((row) => {
+    const { expressed_in } = row;
+
+    let newField = '';
+    if (expressed_in) {
+      expressed_in.split(' ').forEach((field) => {
+        if (field.includes('MCF')) newField += 'MCF ';
+        else if (field.includes('HL')) newField += 'HL ';
+        else if (field.includes('NTERA')) newField += 'NT';
+      });
+    }
+
+    row.expressed_in = newField;
+  });
+
+  return data;
+};
+
 // Kinase List on the Home page
 const KinaseList = () => {
   const data = useSelector((state) => state.kinaseData);
   const tableData = useMemo(() => {
-    return data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])).map(Object.values);
+    const relevantFieldsPicked = data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id']));
+    return convertExpressedIns(relevantFieldsPicked).map(Object.values);
   }, [data]);
 
   const dispatch = useDispatch();

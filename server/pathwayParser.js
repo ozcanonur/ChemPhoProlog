@@ -62,4 +62,4 @@ const parseCSVToPaths = (csvData) => {
   return { paths, relations, phosphosites, regulatory, stoppingReasons };
 };
 
-exports.parseCSVToPaths = parseCSVToPaths;
+module.exports = parseCSVToPaths;
