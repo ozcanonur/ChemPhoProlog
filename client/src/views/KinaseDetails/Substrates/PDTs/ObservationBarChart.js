@@ -12,8 +12,8 @@ const ObsForPDTs = ({ row, cell_line }) => {
   useEffect(() => {
     let mounted = true;
 
-    const route = '/getObservationFC';
-    const params = { substrate: PDT, cell_line };
+    const route = '/getObservation';
+    const params = { substrate: PDT, cell_line, for: 'barChart' };
 
     getApi(route, params).then((res) => {
       if (mounted) {

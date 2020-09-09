@@ -1,6 +1,7 @@
 {
   "name": "Chemphoprolog",
   "version": "1.9.0",
+  "license": "MIT",
   "description": "Chemphoprolog",
   "private": false,
   "main": "dist/index.js",

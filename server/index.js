@@ -21,16 +21,6 @@ const db = new sqlite3.Database('../chemphopro.db', sqlite3.OPEN_READONLY, (err)
   console.log('Connected to ChemphoproDB');
 });
 
-// General api
-router.get('/api/api/', (req, res) => {
-  const queryString = req.query.query;
-  db.all(queryString, [], (err, rows) => {
-    if (err) throw err;
-
-    res.send(rows);
-  });
-});
-
 router.get('/api/getAllPerturbagens', (req, res) => {
   const query = 'select distinct name as perturbagen from perturbagen';
   db.all(query, [], (err, rows) => {
@@ -81,49 +71,35 @@ router.get('/api/getPhosphosites/', (req, res) => {
   });
 });
 
-router.get('/api/getObservation/', (req, res) => {
-  const substrate = req.query.substrate;
-
-  const query = `select perturbagen, cell_line, fold_change from observation where substrate = ? and fold_change > -888`;
-  db.all(query, [substrate], (err, rows) => {
-    if (err) throw err;
-    res.send(rows);
-  });
-});
-
-router.get('/api/getObservationFC/', (req, res) => {
+router.get('/api/getObservation', (req, res) => {
+  const purpose = req.query.for;
   const substrate = req.query.substrate;
   const cell_line = req.query.cell_line;
-
-  const query = `select perturbagen, fold_change from observation where substrate = ? and cell_line = ? and p_value > -888 and fold_change > -888 order by perturbagen`;
-  db.all(query, [substrate, cell_line], (err, rows) => {
-    if (err) throw err;
-    res.send(rows);
-  });
-});
-
-router.get('/api/getObservationPerturbagen', (req, res) => {
   const perturbagen = req.query.perturbagen;
 
-  const query = `Select substrate, cell_line, fold_change, p_value, cv from Observation where perturbagen = ? and fold_change <> -888 and p_value <> -888 order by cell_line, substrate`;
-  db.all(query, [perturbagen], (err, rows) => {
+  let query = '';
+  let vars = [];
+  if (purpose === 'obsData') {
+    query = `Select substrate, cell_line, fold_change, p_value, cv from Observation where perturbagen = ? and fold_change <> -888 and p_value <> -888 order by cell_line, substrate`;
+    vars = [perturbagen];
+  } else if (purpose === 'pathway') {
+    query = `select substrate, fold_change, p_value from observation where perturbagen = ? and cell_line = ?`;
+    vars = [perturbagen, cell_line];
+  } else if (purpose === 'heatMap') {
+    query = `select perturbagen, cell_line, fold_change from observation where substrate = ? and fold_change > -888`;
+    vars = [substrate];
+  } else if (purpose === 'barChart') {
+    query = `select perturbagen, fold_change from observation where substrate = ? and cell_line = ? and p_value > -888 and fold_change > -888 order by perturbagen`;
+    vars = [substrate, cell_line];
+  }
+
+  db.all(query, vars, (err, rows) => {
     if (err) throw err;
     res.send(rows);
   });
 });
 
-router.get('/api/getObservationPerturbagenCellLine', (req, res) => {
-  const perturbagen = req.query.perturbagen;
-  const cell_line = req.query.cell_line;
-
-  const query = `select substrate, fold_change, p_value from observation where perturbagen = ? and cell_line = ?`;
-  db.all(query, [perturbagen, cell_line], (err, rows) => {
-    if (err) throw err;
-    res.send(rows);
-  });
-});
-
-router.get('/api/getKnownPerturbagens/', (req, res) => {
+router.get('/api/getKnownPerturbagens', (req, res) => {
   const kinase = req.query.kinase;
 
   const query = `select perturbagen, source, score from PK_relationship where kinase = ? order by perturbagen`;

@@ -18,8 +18,8 @@ const ObservationData = () => {
   const perturbagen = window.location.href.split('/')[4];
 
   useEffect(() => {
-    const route = '/getObservationPerturbagen';
-    const params = { perturbagen };
+    const route = '/getObservation';
+    const params = { perturbagen, for: 'obsData' };
 
     getApi(route, params).then((res) => {
       setTableData(

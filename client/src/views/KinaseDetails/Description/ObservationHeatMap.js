@@ -20,7 +20,7 @@ const ObservationHeatMap = ({ row }) => {
 
     const substrate = `${protein}(${residue}${location})`;
     const route = '/getObservation';
-    const params = { substrate };
+    const params = { substrate, for: 'heatMap' };
 
     getApi(route, params).then((res) => {
       if (mounted) setObservationData(res.map(Object.values));

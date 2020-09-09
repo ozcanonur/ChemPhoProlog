@@ -1,6 +1,7 @@
 {
   "name": "chemphoprolog",
   "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "client": "cd ../client && yarn start",
     "server": "nodemon --max-old-space-size=16384 index.js",

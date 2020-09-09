@@ -57,6 +57,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     // Cleanup
     return () => {
       cy.removeListener('on');
+      cy.destroy();
       clearAllTimeouts();
       hideTooltips();
     };
@@ -87,7 +88,12 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         boxSelectionEnabled
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons cy={cy} data={data} elementsToAnimate={elementsToAnimate} lock={{ cyLocked, changeLock }} />
+        <ExtraButtons
+          cy={cy}
+          data={data}
+          elementsToAnimate={elementsToAnimate}
+          lock={{ cyLocked, changeLock }}
+        />
       </div>
     </div>
   );
