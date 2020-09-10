@@ -26,6 +26,7 @@ export const getCytoStylesheet = (observation, regulatory) => [
     selector: '.KPa',
     style: {
       fontSize: 20,
+      'compound-sizing-wrt-labels': 'include',
     },
   },
   {
@@ -98,22 +99,22 @@ export const getCytoStylesheet = (observation, regulatory) => [
 export const getCytoLayout = () => {
   return {
     name: 'cose-bilkent',
-    quality: 'default',
+    quality: 'quality',
     randomize: false,
     // Whether to include labels in node dimensions. Useful for avoiding label overlap
     nodeDimensionsIncludeLabels: true,
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 200000,
+    nodeRepulsion: 10000,
     // Ideal (intra-graph) edge length
     idealEdgeLength: 20,
     // Divisor to compute edge forces
-    edgeElasticity: 0.75,
+    edgeElasticity: 0.1,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
     nestingFactor: 0.5,
     // Gravity force (constant)
-    gravity: 0.25,
+    gravity: 0.1,
     // Maximum number of iterations to perform
     numIter: 2500,
     // Whether to tile disconnected nodes
@@ -130,7 +131,7 @@ export const getCytoLayout = () => {
     // Gravity force (constant) for compounds
     gravityCompound: 0.9,
     // Gravity range (constant)
-    gravityRange: 10,
+    gravityRange: 3,
     // Initial cooling factor for incremental layout
     initialEnergyOnIncremental: 0.5,
   };
@@ -155,7 +156,12 @@ export const getCytoElements = (data) => {
       data.relations[key]
         .filter((x) => x.indexOf(key) === -1)
         .map((e) => {
-          return { data: { id: `${key}to${e}`, source: key, target: e } };
+          return {
+            data: { id: `${key}to${e}`, source: key, target: e },
+            selectable: false,
+            grabbable: false,
+            pannable: false,
+          };
         })
     )
     .flat();

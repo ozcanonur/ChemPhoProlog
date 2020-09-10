@@ -14,8 +14,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import Lottie from 'react-lottie';
-import animationData from 'assets/lottie/DNA.json';
 import bezzLab from 'assets/img/bezzlab_twitter.PNG';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -43,11 +41,12 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
         <Card>
           <CardBody>
             <Typography variant='body1'>
-              The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of data.
-              Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this study we
-              propose novel logic-based algorithms that overcome the limitations of existing tools used for analysis of
-              these types of datasets. Initially we developed a first order deductive, logic-based model and populated
-              it with a scoring system, with which we were able to expand from it
+              The diverse and highly complex nature of modern phosphoproteomics research produces a high
+              volume of data. Chemical phosphoproteomics especially, is amenable to a variety of analytical
+              approaches. In this study we propose novel logic-based algorithms that overcome the limitations
+              of existing tools used for analysis of these types of datasets. Initially we developed a first
+              order deductive, logic-based model and populated it with a scoring system, with which we were
+              able to expand from it
             </Typography>
           </CardBody>
         </Card>
@@ -58,12 +57,6 @@ const NewFindings = ({ direction, cardTitle, cardCategory }) => {
 
 const Welcome = () => {
   const classes = useStyles();
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData,
-  };
 
   const navigationTexts = [
     'The diverse and highly complex nature of modern phosphoproteomics research produces a',
@@ -83,15 +76,16 @@ const Welcome = () => {
           </CardHeader>
           <CardBody>
             <Typography variant='body1'>
-              The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of data.
-              Chemical phosphoproteomics especially, is amenable to a variety of analytical approaches. In this study we
-              propose novel logic-based algorithms that overcome the limitations of existing tools used for analysis of
-              these types of datasets. Initially we developed a first order deductive, logic-based model and populated
-              it with a scoring system, with which we were able to expand from its initially Boolean nature. This
-              allowed us to identify previously unreported inhibitor-kinase relationships which could offer novel
-              therapeutic targets for further investigation. We also present the model and its findings in a human
-              readable and explanation-integrated manner. This offers an open-source model blueprint to act as a
-              resource for its application in more and diverse data sets.
+              The diverse and highly complex nature of modern phosphoproteomics research produces a high
+              volume of data. Chemical phosphoproteomics especially, is amenable to a variety of analytical
+              approaches. In this study we propose novel logic-based algorithms that overcome the limitations
+              of existing tools used for analysis of these types of datasets. Initially we developed a first
+              order deductive, logic-based model and populated it with a scoring system, with which we were
+              able to expand from its initially Boolean nature. This allowed us to identify previously
+              unreported inhibitor-kinase relationships which could offer novel therapeutic targets for
+              further investigation. We also present the model and its findings in a human readable and
+              explanation-integrated manner. This offers an open-source model blueprint to act as a resource
+              for its application in more and diverse data sets.
             </Typography>
           </CardBody>
         </Card>
@@ -99,19 +93,18 @@ const Welcome = () => {
       <GridItem>
         <GridContainer direction='row'>
           <GridItem md>
-            <NewFindings direction='column' cardTitle='540 Perturbagen - Kinase' cardCategory='New Interactions' />
+            <NewFindings
+              direction='column'
+              cardTitle='540 Perturbagen - Kinase'
+              cardCategory='New Interactions'
+            />
           </GridItem>
           <GridItem md>
-            <div
-              style={{
-                background: 'rgb(0,0,0,0.8)',
-              }}
-            >
-              <Lottie options={defaultOptions} />
-            </div>
-          </GridItem>
-          <GridItem md>
-            <NewFindings direction='column-reverse' cardTitle='20458 PDTs' cardCategory='New Downstream Targets' />
+            <NewFindings
+              direction='column-reverse'
+              cardTitle='20458 PDTs'
+              cardCategory='New Downstream Targets'
+            />
           </GridItem>
         </GridContainer>
       </GridItem>

@@ -108,7 +108,7 @@ const AdminNavbarLinks = () => {
         }}
         onChange={(e) => handleChange(e.target.value)}
         onFocus={() => handleFocus()}
-        onBlur={() => setSearchOpen(false)}
+        // onBlur={() => setSearchOpen(false)}
       />
       <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
         <Search />

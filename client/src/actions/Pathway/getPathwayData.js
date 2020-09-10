@@ -15,14 +15,16 @@ const formatObservation = (phosphosites, fullObservationData) => {
   return formattedObservation;
 };
 
-const getPathwayData = (perturbagen, cell_line) => async (dispatch) => {
+const getPathwayData = (cell_line, perturbagen, substrate) => async (dispatch) => {
   const pathwayRoute = '/pathway';
+  const pathwayParams = { cell_line, perturbagen, substrate };
+
   const observationRoute = '/getObservation';
   const observationParams = { perturbagen, cell_line, for: 'pathway' };
 
   const [fullObservationData, pathsResults] = await Promise.all([
     getApi(observationRoute, observationParams),
-    getApi(pathwayRoute),
+    getApi(pathwayRoute, pathwayParams),
   ]);
 
   const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);

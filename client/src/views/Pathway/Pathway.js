@@ -81,7 +81,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
         }}
         elements={elements}
         stylesheet={stylesheet}
-        style={{ height: '800px' }}
+        style={{ height: '1000px' }}
         minZoom={0.5}
         maxZoom={1.2}
         autolock={cyLocked}

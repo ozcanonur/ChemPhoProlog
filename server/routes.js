@@ -1,10 +1,6 @@
 const express = require('express');
-const parse = require('csv-parse');
-const fs = require('fs').promises;
-const _ = require('lodash');
 const path = require('path');
 
-const parseCSVToPaths = require('./pathwayParser');
 const db = require('./index');
 
 const router = new express.Router();
@@ -167,16 +163,15 @@ router.get('/api/pdts/', (req, res) => {
   });
 });
 
-// Pathway
+const queryProlog = require('./swipl/index');
+const swipl = require('swipl');
+
 router.get('/api/pathway', (req, res) => {
-  (async () => {
-    const fileData = await fs.readFile('../toydata.csv');
-    parse(fileData, { columns: true, trim: true }, (err, csvData) => {
-      if (err) throw err;
-      const pathwayData = parseCSVToPaths(csvData);
-      res.send(pathwayData);
-    });
-  })();
+  const { cellLine, perturbagen, substrate } = req.query;
+
+  const pathwayData = queryProlog(swipl, cellLine, perturbagen, substrate);
+
+  res.send(pathwayData);
 });
 
 // Catch all for deploy

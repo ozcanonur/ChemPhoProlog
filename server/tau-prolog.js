@@ -1,4 +1,4 @@
-const fsPure = require('fs');
+const fs = require('fs');
 const prolog = require('tau-prolog');
 
 // Handles promise rejects, similar to try/catch but fancier
@@ -64,7 +64,7 @@ const consultFiles = async (files) => {
 };
 
 let files = [];
-fsPure.readdirSync(path.join(__dirname, '/facts')).forEach((file) => {
+fs.readdirSync(path.join(__dirname, '/facts')).forEach((file) => {
   files.push(`./facts/${file}`);
 });
 console.log(files);
