@@ -16,7 +16,18 @@ const useStyles = makeStyles(styles);
 
 export default function CustomInput(props) {
   const classes = useStyles();
-  const { formControlProps, labelText, id, labelProps, inputProps, error, success, onChange, onBlur, onFocus } = props;
+  const {
+    formControlProps,
+    labelText,
+    id,
+    labelProps,
+    inputProps,
+    error,
+    success,
+    onChange,
+    onBlur,
+    onFocus,
+  } = props;
 
   const labelClasses = classNames({
     [` ${classes.labelRootError}`]: error,
@@ -51,6 +62,7 @@ export default function CustomInput(props) {
         onBlur={onBlur}
         onFocus={onFocus}
       />
+
       {error ? (
         <Clear className={`${classes.feedback} ${classes.labelRootError}`} />
       ) : success ? (

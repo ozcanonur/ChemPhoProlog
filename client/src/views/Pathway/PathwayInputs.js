@@ -21,11 +21,19 @@ const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
   const item = data.data[index];
+
   const handleCellLineChange = data.onClick;
+  const { onBlur, handleSelect } = data;
+
+  const onClick = () => {
+    handleCellLineChange(item);
+    onBlur();
+    handleSelect(item);
+  };
 
   return (
     <div style={style}>
-      <ListItem button style={{ color: 'black' }} onClick={() => handleCellLineChange(item)}>
+      <ListItem button style={{ color: 'black' }} onClick={() => onClick()}>
         <ListItemText primary={item} />
       </ListItem>
     </div>
@@ -43,6 +51,7 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
     getApi('/getAllSubstrates').then((res) => {
       const values = res.map((e) => Object.values(e)[0]);
       setSearchResults(values);
+      setFilteredSearchResults(values);
     });
   }, []);
 
@@ -56,6 +65,10 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
       setFilteredSearchResults(filteredSearchResults);
       setSearchOpen(true);
     }
+  };
+
+  const onBlur = () => {
+    setSearchOpen(false);
   };
 
   return (
@@ -77,7 +90,7 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: filteredSearchResults, onClick: handleSubstrateChange }}
+          itemData={{ data: filteredSearchResults, onClick: handleSubstrateChange, onBlur }}
           height={200}
           width='20em'
           itemSize={46}
@@ -95,6 +108,29 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
   const classes = useStyles();
 
   const [searchOpen, setSearchOpen] = useState(false);
+  const [filteredSearchResults, setFilteredSearchResults] = useState(perturbagens);
+  const [selected, setSelected] = useState('');
+
+  const handleChange = (value) => {
+    if (value === '') setSearchOpen(false);
+    else {
+      const filteredSearchResults = perturbagens.filter(
+        (e) => e.toLowerCase().indexOf(value.toLowerCase()) === 0
+      );
+
+      setFilteredSearchResults(filteredSearchResults);
+      setSearchOpen(true);
+    }
+    setSelected(value);
+  };
+
+  const onBlur = () => {
+    setSearchOpen(false);
+  };
+
+  const handleSelect = (value) => {
+    setSelected(value);
+  };
 
   return (
     <div className={classes.searchWrapper} style={{ position: 'relative' }}>
@@ -107,18 +143,20 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
           inputProps: {
             'aria-label': 'Search',
           },
-          defaultValue: 'Torin',
+          value: selected,
         }}
         onFocus={() => setSearchOpen(true)}
+        onChange={(e) => handleChange(e.target.value)}
       />
+
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: perturbagens, onClick: handlePerturbagenChange }}
+          itemData={{ data: filteredSearchResults, onClick: handlePerturbagenChange, onBlur, handleSelect }}
           height={200}
           width='20em'
           itemSize={46}
-          itemCount={61}
+          itemCount={filteredSearchResults.length}
           style={{ backgroundColor: 'white', color: 'black', position: 'absolute', zIndex: 5000 }}
         >
           {ItemRenderer}
@@ -132,6 +170,10 @@ const InputCellLine = ({ handleCellLineChange }) => {
   const classes = useStyles();
 
   const [searchOpen, setSearchOpen] = useState(false);
+
+  const onBlur = () => {
+    setSearchOpen(false);
+  };
 
   return (
     <div className={classes.searchWrapper} style={{ position: 'relative' }}>
@@ -151,7 +193,7 @@ const InputCellLine = ({ handleCellLineChange }) => {
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: ['MCF7', 'HL60', 'NTERA'], onClick: handleCellLineChange }}
+          itemData={{ data: ['MCF7', 'HL60', 'NTERA'], onClick: handleCellLineChange, onBlur }}
           height={200}
           width='20em'
           itemSize={46}
@@ -170,6 +212,7 @@ const PathwayInputs = () => {
 
   const dispatch = useDispatch();
   const onGetPathwaySubmit = () => {
+    // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
     dispatch(getPathwayData('MCF-7', perturbagen, substrate));
   };
@@ -193,6 +236,7 @@ const PathwayInputs = () => {
   };
 
   console.log(inputs);
+
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
       <GridContainer direction='row'>
@@ -218,82 +262,3 @@ const PathwayInputs = () => {
 };
 
 export default PathwayInputs;
-
-// const inputList = [
-//     {
-//       placeholder: 'Cell Line',
-//       defaultValue: 'MCF7',
-//       type: 'cellLine',
-//     },
-//     {
-//       placeholder: 'Perturbagen',
-//       defaultValue: 'Torin',
-//       type: 'perturbagen',
-//     },
-//     {
-//       placeholder: 'Substrate',
-//       defaultValue: 'AKT1(S473)',
-//       type: 'substrate',
-//     },
-//   ];
-
-// const InputField = ({ input, handleInputChange }) => {
-//     const classes = useStyles();
-
-//     const { placeholder, defaultValue, type } = input;
-
-//     const [searchResults, setSearchResults] = useState([]);
-//     const [filteredSearchResults, setFilteredSearchResults] = useState([]);
-//     const [searchOpen, setSearchOpen] = useState(false);
-
-//     const handleFocus = () => {
-//       setSearchOpen(true);
-
-//       // Load the data on first focus
-//       if (searchResults.length === 0) {
-//         (async () => {
-//           const perturbagenRoute = '/getAllPerturbagens';
-//           const kinaseRoute = '/getAllKinases';
-//           const substrateRoute = '/getAllSubstrates';
-
-//           const results = await Promise.all([
-//             getApi(perturbagenRoute),
-//             getApi(kinaseRoute),
-//             getApi(substrateRoute),
-//           ]);
-//           setSearchResults(results.flat());
-//         })();
-//       }
-//     };
-
-//     const handleChange = (e, type) => {
-//       if (e.target.value === '') setSearchOpen(false);
-//       else {
-//         const filteredSearchResults = searchResults.filter(
-//           (e) => e[Object.keys(e)[0]].toString().toLowerCase().indexOf(e.target.value.toLowerCase()) === 0
-//         );
-
-//         setFilteredSearchResults(filteredSearchResults);
-//         setSearchOpen(true);
-//       }
-//       handleInputChange(e, type);
-//     };
-
-//     return (
-//       <CustomInput
-//         formControlProps={{
-//           className: `${classes.margin} ${classes.search}`,
-//         }}
-//         inputProps={{
-//           placeholder: placeholder,
-//           inputProps: {
-//             'aria-label': 'Search',
-//           },
-//           defaultValue: defaultValue,
-//         }}
-//         onChange={(e) => handleChange(e, type)}
-//         onFocus={() => setSearchOpen(true)}
-//         onBlur={() => setSearchOpen(false)}
-//       />
-//     );
-//   };

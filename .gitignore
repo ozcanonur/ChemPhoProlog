@@ -5,8 +5,6 @@ chemphopro.db
 client/documentation/
 .vscode/
 client/build/
-.eslintignore
-.eslintrc.js
 facts/
 combinedFacts.pl
 perturbs_MCF7_all.pl
