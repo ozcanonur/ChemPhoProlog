@@ -10,11 +10,11 @@ const useStyles = makeStyles(styles);
 
 const CardGeneric = (props) => {
   const classes = useStyles();
-  const { color, cardTitle, cardSubtitle, children, style } = props;
+  const { color, cardTitle, cardSubtitle, children, style, headerStyle } = props;
 
   return (
     <Card style={style}>
-      <CardHeader color={color}>
+      <CardHeader color={color} style={headerStyle}>
         <h4 className={classes.cardTitleWhite}>{cardTitle}</h4>
         <p className={classes.cardCategoryWhite}>{cardSubtitle}</p>
       </CardHeader>

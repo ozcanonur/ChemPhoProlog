@@ -24,7 +24,14 @@ const parsePathsToTableData = (paths, stoppingReasons) =>
 const PathsTable = () => {
   const classes = useStyles();
 
-  const data = useSelector((state) => state.pathwayData);
+  const data = useSelector((state) => state.pathwayData) || {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  };
   const { paths, stoppingReasons } = data;
 
   const tableData = useMemo(() => {

@@ -1,7 +1,4 @@
-export default (
-  state = { paths: [], relations: {}, phosphosites: [], regulatory: {}, stoppingReasons: {}, observation: {} },
-  action
-) => {
+export default (state = null, action) => {
   switch (action.type) {
     case 'GET_PATHWAY_DATA':
       return action.payload;

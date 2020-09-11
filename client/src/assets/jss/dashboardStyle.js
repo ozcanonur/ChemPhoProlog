@@ -71,16 +71,24 @@ const boxShadow = {
   )}, 0.12), 0 8px 10px -5px rgba(${hexToRgb(blackColor)}, 0.2)`,
 };
 const primaryBoxShadow = {
-  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(primaryColor[0])},.4)`,
+  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(
+    primaryColor[0]
+  )},.4)`,
 };
 const infoBoxShadow = {
-  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(infoColor[0])},.4)`,
+  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(
+    infoColor[0]
+  )},.4)`,
 };
 const successBoxShadow = {
-  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(successColor[0])},.4)`,
+  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(
+    successColor[0]
+  )},.4)`,
 };
 const warningBoxShadow = {
-  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(warningColor[0])},.4)`,
+  boxShadow: `0 4px 20px 0 rgba(${hexToRgb(blackColor)},.14), 0 7px 10px -5px rgba(${hexToRgb(
+    warningColor[0]
+  )},.4)`,
 };
 
 const warningCardHeader = {
@@ -123,6 +131,7 @@ const card = {
   borderRadius: '3px',
   color: `rgba(${hexToRgb(blackColor)}, 0.87)`,
   background: whiteColor,
+  marginBottom: '50px',
 };
 
 const defaultBoxShadow = {

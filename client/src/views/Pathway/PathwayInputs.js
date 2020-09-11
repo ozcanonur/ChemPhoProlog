@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import getPathwayData from 'actions/Pathway/getPathwayData';
 import { getApi } from 'api/api';
 
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import TrendingDown from '@material-ui/icons/TrendingDown';
+import GestureSharp from '@material-ui/icons/GestureSharp';
+import Healing from '@material-ui/icons/Healing';
 import Button from 'components/CustomButtons/Button';
 import CustomInput from 'components/CustomInput/CustomInput';
 import CardGeneric from 'components/Card/CardGeneric';
@@ -23,11 +28,11 @@ const ItemRenderer = ({ data, index, style }) => {
   const item = data.data[index];
 
   const handleCellLineChange = data.onClick;
-  const { onBlur, handleSelect } = data;
+  const { handleBlur, handleSelect } = data;
 
   const onClick = () => {
     handleCellLineChange(item);
-    onBlur();
+    handleBlur();
     handleSelect(item);
   };
 
@@ -46,6 +51,7 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [filteredSearchResults, setFilteredSearchResults] = useState([]);
+  const [selected, setSelected] = useState('AKT1(S473)');
 
   useEffect(() => {
     getApi('/getAllSubstrates').then((res) => {
@@ -65,14 +71,24 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
       setFilteredSearchResults(filteredSearchResults);
       setSearchOpen(true);
     }
+    setSelected(value);
   };
 
-  const onBlur = () => {
-    setSearchOpen(false);
+  const handleBlur = () => {
+    setTimeout(() => {
+      setSearchOpen(!searchOpen);
+    }, 100);
+  };
+
+  const handleSelect = (value) => {
+    setSelected(value);
   };
 
   return (
     <div className={classes.searchWrapper} style={{ position: 'relative' }}>
+      <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
+        <TrendingDown />
+      </Button>
       <CustomInput
         formControlProps={{
           className: `${classes.margin} ${classes.search}`,
@@ -81,21 +97,29 @@ const InputSubstrate = ({ handleSubstrateChange }) => {
           placeholder: 'Substrate',
           inputProps: {
             'aria-label': 'Search',
+            onFocus: () => setSearchOpen(true),
+            onChange: (e) => handleChange(e.target.value),
+            onBlur: () => handleBlur(),
+            style: { marginLeft: '10px' },
           },
-          // defaultValue: 'AKT1(S473)',
+          value: selected,
         }}
-        onFocus={() => setSearchOpen(true)}
-        onChange={(e) => handleChange(e.target.value)}
       />
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: filteredSearchResults, onClick: handleSubstrateChange, onBlur }}
+          itemData={{ data: filteredSearchResults, onClick: handleSubstrateChange, handleBlur, handleSelect }}
           height={200}
           width='20em'
           itemSize={46}
           itemCount={filteredSearchResults.length}
-          style={{ backgroundColor: 'white', color: 'black', position: 'absolute', zIndex: 5000 }}
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            position: 'absolute',
+            left: '41px',
+            zIndex: 5000,
+          }}
         >
           {ItemRenderer}
         </FixedSizeList>
@@ -109,7 +133,7 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [filteredSearchResults, setFilteredSearchResults] = useState(perturbagens);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('Torin');
 
   const handleChange = (value) => {
     if (value === '') setSearchOpen(false);
@@ -124,8 +148,10 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
     setSelected(value);
   };
 
-  const onBlur = () => {
-    setSearchOpen(false);
+  const handleBlur = () => {
+    setTimeout(() => {
+      setSearchOpen(!searchOpen);
+    }, 100);
   };
 
   const handleSelect = (value) => {
@@ -134,6 +160,9 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
 
   return (
     <div className={classes.searchWrapper} style={{ position: 'relative' }}>
+      <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
+        <Healing />
+      </Button>
       <CustomInput
         formControlProps={{
           className: `${classes.margin} ${classes.search}`,
@@ -142,22 +171,34 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
           placeholder: 'Perturbagen',
           inputProps: {
             'aria-label': 'Search',
+            onFocus: () => setSearchOpen(true),
+            onChange: (e) => handleChange(e.target.value),
+            onBlur: () => handleBlur(),
+            style: { marginLeft: '10px' },
           },
           value: selected,
         }}
-        onFocus={() => setSearchOpen(true)}
-        onChange={(e) => handleChange(e.target.value)}
       />
-
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: filteredSearchResults, onClick: handlePerturbagenChange, onBlur, handleSelect }}
+          itemData={{
+            data: filteredSearchResults,
+            onClick: handlePerturbagenChange,
+            handleBlur,
+            handleSelect,
+          }}
           height={200}
           width='20em'
           itemSize={46}
           itemCount={filteredSearchResults.length}
-          style={{ backgroundColor: 'white', color: 'black', position: 'absolute', zIndex: 5000 }}
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            position: 'absolute',
+            left: '41px',
+            zIndex: 5000,
+          }}
         >
           {ItemRenderer}
         </FixedSizeList>
@@ -169,14 +210,29 @@ const InputPerturbagen = ({ handlePerturbagenChange }) => {
 const InputCellLine = ({ handleCellLineChange }) => {
   const classes = useStyles();
 
+  const [searchResults, setSearchResults] = useState(['MCF7', 'HL60', 'NTERA']);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [selected, setSelected] = useState('MCF7');
 
-  const onBlur = () => {
-    setSearchOpen(false);
+  const handleChange = (value) => {
+    setSelected(value);
+  };
+
+  const handleSelect = (value) => {
+    setSelected(value);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setSearchOpen(!searchOpen);
+    }, 100);
   };
 
   return (
     <div className={classes.searchWrapper} style={{ position: 'relative' }}>
+      <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
+        <GestureSharp />
+      </Button>
       <CustomInput
         formControlProps={{
           className: `${classes.margin} ${classes.search}`,
@@ -185,20 +241,34 @@ const InputCellLine = ({ handleCellLineChange }) => {
           placeholder: 'Cell Line',
           inputProps: {
             'aria-label': 'Search',
+            onFocus: () => setSearchOpen(true),
+            onChange: (e) => handleChange(e.target.value),
+            onBlur: () => handleBlur(),
+            style: { marginLeft: '10px' },
           },
-          defaultValue: 'MCF7',
+          value: selected,
         }}
-        onFocus={() => setSearchOpen(true)}
       />
       {searchOpen ? (
         <FixedSizeList
           dense
-          itemData={{ data: ['MCF7', 'HL60', 'NTERA'], onClick: handleCellLineChange, onBlur }}
+          itemData={{
+            data: searchResults,
+            onClick: handleCellLineChange,
+            handleBlur,
+            handleSelect,
+          }}
           height={200}
           width='20em'
           itemSize={46}
           itemCount={3}
-          style={{ backgroundColor: 'white', color: 'black', position: 'absolute', zIndex: 5000 }}
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            position: 'absolute',
+            left: '41px',
+            zIndex: 5000,
+          }}
         >
           {ItemRenderer}
         </FixedSizeList>
@@ -208,13 +278,19 @@ const InputCellLine = ({ handleCellLineChange }) => {
 };
 
 const PathwayInputs = () => {
-  const [inputs, setInputs] = useState({ cellLine: 'MCF7', perturbagen: 'Torin', substrate: 'AKT1(S473)' });
+  const [inputs, setInputs] = useState({
+    cellLine: 'MCF7',
+    perturbagen: 'Torin',
+    substrate: 'AKT1(S473)',
+  });
+
+  const [switchChecked, setSwitchChecked] = useState(false);
 
   const dispatch = useDispatch();
   const onGetPathwaySubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
-    dispatch(getPathwayData('MCF-7', perturbagen, substrate));
+    dispatch(getPathwayData('MCF-7', perturbagen, substrate, switchChecked));
   };
 
   const handleCellLineChange = (selection) => {
@@ -235,28 +311,49 @@ const PathwayInputs = () => {
     setInputs(newInputs);
   };
 
-  console.log(inputs);
+  const handleSwitch = () => {
+    setSwitchChecked(!switchChecked);
+  };
 
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer direction='row'>
+      <GridContainer direction='row' justify='center'>
         <GridItem>
-          <InputCellLine handleCellLineChange={handleCellLineChange} />
-          <InputPerturbagen handlePerturbagenChange={handlePerturbagenChange} />
-          <InputSubstrate handleSubstrateChange={handleSubstrateChange} />
+          <CardGeneric color='warning' cardTitle='Cell Line' headerStyle={{ padding: '0.7rem 1rem' }}>
+            <InputCellLine handleCellLineChange={handleCellLineChange} />
+          </CardGeneric>
         </GridItem>
         <GridItem>
-          <Button
-            onClick={() => onGetPathwaySubmit()}
-            style={{
-              width: '100px',
-              backgroundColor: 'rgba(45,65,89, 0.7)',
-            }}
-          >
-            Get pathway
-          </Button>
+          <CardGeneric color='warning' cardTitle='Perturbagen' headerStyle={{ padding: '0.7rem 1rem' }}>
+            <InputPerturbagen handlePerturbagenChange={handlePerturbagenChange} />
+          </CardGeneric>
+        </GridItem>
+        <GridItem>
+          <CardGeneric color='warning' cardTitle='Substrate' headerStyle={{ padding: '0.7rem 1rem' }}>
+            <InputSubstrate handleSubstrateChange={handleSubstrateChange} />
+          </CardGeneric>
         </GridItem>
       </GridContainer>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Button
+          onClick={() => onGetPathwaySubmit()}
+          style={{
+            width: '200px',
+            backgroundColor: 'rgba(229,173,6)',
+            color: 'white',
+            height: '50px',
+          }}
+        >
+          Get pathway
+        </Button>
+        <FormControlLabel
+          control={
+            <Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />
+          }
+          label='Kinase ends only'
+          style={{ marginLeft: '10px' }}
+        />
+      </div>
     </CardGeneric>
   );
 };

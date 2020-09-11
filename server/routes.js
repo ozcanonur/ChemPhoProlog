@@ -167,9 +167,9 @@ const queryProlog = require('./swipl/index');
 const swipl = require('swipl');
 
 router.get('/api/pathway', (req, res) => {
-  const { cellLine, perturbagen, substrate } = req.query;
+  const { cellLine, perturbagen, substrate, onlyKinaseEnds } = req.query;
 
-  const pathwayData = queryProlog(swipl, cellLine, perturbagen, substrate);
+  const pathwayData = queryProlog(swipl, cellLine, perturbagen, substrate, onlyKinaseEnds);
 
   res.send(pathwayData);
 });

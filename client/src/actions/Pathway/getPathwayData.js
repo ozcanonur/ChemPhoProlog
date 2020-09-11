@@ -15,9 +15,9 @@ const formatObservation = (phosphosites, fullObservationData) => {
   return formattedObservation;
 };
 
-const getPathwayData = (cell_line, perturbagen, substrate) => async (dispatch) => {
+const getPathwayData = (cell_line, perturbagen, substrate, onlyKinaseEnds) => async (dispatch) => {
   const pathwayRoute = '/pathway';
-  const pathwayParams = { cell_line, perturbagen, substrate };
+  const pathwayParams = { cell_line, perturbagen, substrate, onlyKinaseEnds };
 
   const observationRoute = '/getObservation';
   const observationParams = { perturbagen, cell_line, for: 'pathway' };

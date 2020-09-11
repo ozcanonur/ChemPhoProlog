@@ -24,7 +24,8 @@ import styles from 'assets/jss/material-dashboard-react/components/headerLinksSt
 const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
-  const item = data[index];
+  const setSearchOpen = data.setSearchOpen;
+  const item = data.data[index];
   const itemName = item[Object.keys(item)[0]];
   const itemType = Object.keys(item)[0];
 
@@ -41,6 +42,7 @@ const ItemRenderer = ({ data, index, style }) => {
   const handleSelect = () => {
     if (itemType === 'kinase') dispatch(addSidebarRouteKinase(itemName));
     else if (itemType === 'perturbagen') dispatch(addSidebarRoutePerturbagen(itemName));
+    setSearchOpen(false);
   };
 
   return (
@@ -94,6 +96,13 @@ const AdminNavbarLinks = () => {
     }
   };
 
+  // Hacky fix with timeout or doesn't fire the click inside
+  const handleBlur = () => {
+    setTimeout(() => {
+      setSearchOpen(!searchOpen);
+    }, 100);
+  };
+
   return (
     <div className={classes.searchWrapper}>
       <CustomInput
@@ -104,11 +113,11 @@ const AdminNavbarLinks = () => {
           placeholder: searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
           inputProps: {
             'aria-label': 'Search',
+            onChange: (e) => handleChange(e.target.value),
+            onFocus: () => handleFocus(),
+            onBlur: () => handleBlur(),
           },
         }}
-        onChange={(e) => handleChange(e.target.value)}
-        onFocus={() => handleFocus()}
-        // onBlur={() => setSearchOpen(false)}
       />
       <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
         <Search />
@@ -116,7 +125,7 @@ const AdminNavbarLinks = () => {
       {searchOpen && filteredSearchResults.length !== 0 ? (
         <FixedSizeList
           dense
-          itemData={filteredSearchResults}
+          itemData={{ data: filteredSearchResults, setSearchOpen }}
           height={300}
           width='20em'
           itemSize={46}

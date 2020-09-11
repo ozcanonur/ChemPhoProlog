@@ -1,4 +1,5 @@
 const parsePaths = require('./parse');
+const { lastIndexOf } = require('lodash');
 ///////////////////////////////////
 //////////////CONSULT//////////////
 ///////////////////////////////////
@@ -39,7 +40,7 @@ const parseHead = (head, extendedHead) => {
 ///////////////////////////////////
 //////////////QUERY////////////////
 ///////////////////////////////////
-const queryProlog = (swipl, cellLine, perturbagen, substrate) => {
+const queryProlog = (swipl, cellLine, perturbagen, substrate, onlyKinaseEnds) => {
   // Set directory
   swipl.call(`working_directory(_, "${__dirname.replaceAll('\\', '/')}").`);
 
@@ -64,10 +65,21 @@ const queryProlog = (swipl, cellLine, perturbagen, substrate) => {
   );
 
   let node = null;
-  const paths = [];
+  let paths = [];
   while ((node = query.next())) {
     const path = parsePath(node.Path, []);
     paths.push({ path, explanation: node.Explanation, inhibited: node.Inhibited });
+  }
+
+  if (onlyKinaseEnds === 'true') {
+    paths = paths.filter((path) => {
+      const lastStep = path.path[path.path.length - 1];
+      const endsWithKPaAndPs = lastStep[4].includes('(');
+      const endsWithPs = lastStep[3] === 'na' && lastStep[4] === 'na';
+      return !(endsWithKPaAndPs || endsWithPs);
+    });
+  } else {
+    console.log('else');
   }
 
   query.close();

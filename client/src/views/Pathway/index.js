@@ -16,10 +16,6 @@ const PathwayIndex = () => {
   const data = useSelector((state) => state.pathwayData);
   const selectedPath = useSelector((state) => state.selectedPath);
 
-  const stylesheet = getCytoStylesheet(data.observation, data.regulatory);
-  const layout = getCytoLayout();
-  const elements = getCytoElements(data);
-
   return (
     <div style={{ padding: '2em' }}>
       <GridContainer direction='column'>
@@ -36,16 +32,18 @@ const PathwayIndex = () => {
                     cardTitle='Bottom up Pathway'
                     cardSubtitle='MCF-7 / Torin / AKT1(S473)'
                   >
-                    {data.paths.length !== 0 ? (
+                    {data === null ? (
+                      'Select inputs'
+                    ) : data.paths.length === 0 ? (
+                      'No paths found'
+                    ) : (
                       <Pathway
                         data={data}
-                        stylesheet={stylesheet}
-                        layout={layout}
-                        elements={elements}
+                        stylesheet={getCytoStylesheet(data.observation, data.regulatory)}
+                        layout={getCytoLayout()}
+                        elements={getCytoElements(data)}
                         selectedPath={selectedPath}
                       />
-                    ) : (
-                      'Select inputs'
                     )}
                   </CardGeneric>
                 </GridItem>

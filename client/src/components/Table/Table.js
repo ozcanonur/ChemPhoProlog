@@ -269,9 +269,9 @@ const CustomTable = (props) => {
             placeholder: 'Search',
             inputProps: {
               'aria-label': 'Search',
+              onChange: (event) => filterByTermAndSetTableData(event),
             },
           }}
-          onChange={(event) => filterByTermAndSetTableData(event)}
         />
         <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
           <Search />
