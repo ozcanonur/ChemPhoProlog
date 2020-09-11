@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -9,7 +9,9 @@ import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
+import CardGeneric from 'components/Card/CardGeneric';
 import ExtraButtons from 'views/Pathway/ExtraButtons';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
 import { getElementsToAnimate, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 import cxtmenuOptions from 'views/Pathway/CytoscapeUtils/cxtmenuOptions';
@@ -18,14 +20,29 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
+const Pathway = () => {
+  const data = useSelector((state) => state.pathwayData) || {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  };
+
+  const selectedPath = useSelector((state) => state.selectedPath);
+
+  const elements = getCytoElements(data);
+  const stylesheet = getCytoStylesheet(data.observation, data.regulatory);
+  const layout = getCytoLayout();
+
   const [cy, setCy] = useState(Cytoscape());
   const [elementsToAnimate, setElementsToAnimate] = useState({
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
   });
-  const [cyLocked, setCyLocked] = useState(false);
 
+  const [cyLocked, setCyLocked] = useState(false);
   const changeLock = () => {
     setCyLocked(!cyLocked);
   };
@@ -63,6 +80,13 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
     };
   }, [cy]);
 
+  useEffect(() => {
+    if (cy.elements().length > 0) {
+      runLayout(cy, layout);
+    }
+    // console.log(elements);
+  }, [elements]);
+
   // Set currently animated elements
   useEffect(() => {
     const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
@@ -73,13 +97,28 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
   }, [selectedPath]);
 
   return (
-    <div>
+    <CardGeneric color='primary' cardTitle='Bottom up Pathway' cardSubtitle='MCF-7 / Torin / AKT1(S473)'>
       <CytoscapeComponent
         cy={(cy) => {
           // Need this to get a reference to cy object in the component
           setCy(cy);
         }}
         elements={elements}
+        // get={(object, key) => {
+        //   // must check type because some props may be immutable and others may not be
+        //   if (Immutable.Map.isMap(object) || Immutable.List.isList(object)) {
+        //     return object.get(key);
+        //   }
+        //   return object[key];
+        // }}
+        // toJson={(object) => {
+        //   // must check type because some props may be immutable and others may not be
+        //   if (Immutable.isImmutable(object)) {
+        //     return object.toJSON();
+        //   }
+        //   return object;
+        // }}
+        // diff={(objectA, objectB) => true}
         stylesheet={stylesheet}
         style={{ height: '1000px' }}
         minZoom={0.5}
@@ -95,7 +134,7 @@ const Pathway = ({ data, stylesheet, layout, elements, selectedPath }) => {
           lock={{ cyLocked, changeLock }}
         />
       </div>
-    </div>
+    </CardGeneric>
   );
 };
 

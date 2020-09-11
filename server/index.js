@@ -15,7 +15,7 @@ const router = express();
 router.use(express.static('../client/build'));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use(require('./routes'));
+router.use(require('./routes/index'));
 
 const port = process.env.PORT || 5000;
 router.listen(port, () => console.log(`Listening on port ${port}`));

@@ -35,7 +35,7 @@ const routes = [
     path: '/api',
     name: 'API',
     icon: Web,
-    component: 'Welcome',
+    component: Welcome,
     layout: '/home',
   },
   {

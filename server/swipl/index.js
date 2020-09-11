@@ -1,5 +1,4 @@
-const parsePaths = require('./parse');
-const { lastIndexOf } = require('lodash');
+const parsePaths = require('./parsePaths');
 ///////////////////////////////////
 //////////////CONSULT//////////////
 ///////////////////////////////////
@@ -16,7 +15,7 @@ const consultFiles = (swipl, files) => {
 ///////////////////////////////////
 
 ///////////////////////////////////
-//////////////PARSE////////////////
+//    Parsing the swipl output   //
 ///////////////////////////////////
 const parsePath = (path, pathList) => {
   if (path.tail === null) return pathList;
@@ -40,7 +39,7 @@ const parseHead = (head, extendedHead) => {
 ///////////////////////////////////
 //////////////QUERY////////////////
 ///////////////////////////////////
-const queryProlog = (swipl, cellLine, perturbagen, substrate, onlyKinaseEnds) => {
+const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
   // Set directory
   swipl.call(`working_directory(_, "${__dirname.replaceAll('\\', '/')}").`);
 
@@ -53,16 +52,16 @@ const queryProlog = (swipl, cellLine, perturbagen, substrate, onlyKinaseEnds) =>
     './facts/knowntarget_all.pl',
     './facts/phosphatases.pl',
     './facts/rules_bottomup.pl',
-    `./facts/${perturbagen}.pl`,
   ];
+
+  // Also consult specific perturbagen observation file if provided
+  if (perturbagen) filesToConsult.push(`./facts/${perturbagen}.pl`);
 
   console.log('Consult started');
   consultFiles(swipl, filesToConsult);
 
   // Query
-  const query = new swipl.Query(
-    `perturbed_path_init('MCF7', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`
-  );
+  const query = new swipl.Query(queryString);
 
   let node = null;
   let paths = [];
@@ -71,6 +70,7 @@ const queryProlog = (swipl, cellLine, perturbagen, substrate, onlyKinaseEnds) =>
     paths.push({ path, explanation: node.Explanation, inhibited: node.Inhibited });
   }
 
+  // Filter phosphosite ends if specified
   if (onlyKinaseEnds === 'true') {
     paths = paths.filter((path) => {
       const lastStep = path.path[path.path.length - 1];
@@ -78,13 +78,12 @@ const queryProlog = (swipl, cellLine, perturbagen, substrate, onlyKinaseEnds) =>
       const endsWithPs = lastStep[3] === 'na' && lastStep[4] === 'na';
       return !(endsWithKPaAndPs || endsWithPs);
     });
-  } else {
-    console.log('else');
   }
 
   query.close();
   console.log('Query end');
 
+  // Parse the final output into data before sending back to client
   return parsePaths(paths);
 };
 

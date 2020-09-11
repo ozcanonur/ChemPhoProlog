@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const db = require('./index');
+const db = require('../index');
 
 const router = new express.Router();
 
@@ -163,20 +163,21 @@ router.get('/api/pdts/', (req, res) => {
   });
 });
 
-const queryProlog = require('./swipl/index');
+const queryProlog = require('../swipl/index');
 const swipl = require('swipl');
 
 router.get('/api/pathway', (req, res) => {
   const { cellLine, perturbagen, substrate, onlyKinaseEnds } = req.query;
 
-  const pathwayData = queryProlog(swipl, cellLine, perturbagen, substrate, onlyKinaseEnds);
+  const queryString = `perturbed_path_init('MCF7', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`;
+  const pathwayData = queryProlog(swipl, queryString, perturbagen, onlyKinaseEnds);
 
   res.send(pathwayData);
 });
 
 // Catch all for deploy
 router.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
+  res.sendFile(path.join(__dirname, '../../client/build/index.html'), function (err) {
     if (err) res.status(500).send(err);
   });
 });

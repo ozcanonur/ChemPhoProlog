@@ -14,7 +14,7 @@ import { resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
 const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
-  const [legendOpen, setLegendOpen] = useState(true);
+  const [legendOpen, setLegendOpen] = useState(false);
   const [faded, setFaded] = useState(false);
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
@@ -49,7 +49,14 @@ const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
       onClick: () => {
         resetPathwayVisuals(cy);
         if (phosphositesOpen) dispatch(changeSelectedPath([]));
-        else animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false, false);
+        else
+          animatePath(
+            { elementsToShow: cy.elements(), elementsToFade: cy.collection() },
+            data,
+            0,
+            false,
+            false
+          );
 
         setPhosphositesOpen(!phosphositesOpen);
       },

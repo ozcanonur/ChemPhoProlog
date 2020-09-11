@@ -10,6 +10,7 @@ import sidebarRoutesReducer from 'reducers/Sidebar/sidebarRoutesReducer';
 import inspectReducer from 'reducers/Pathway/inspectReducer';
 import selectedPathReducer from 'reducers/Pathway/selectedPathReducer';
 import pathwayDataReducer from 'reducers/Pathway/pathwayDataReducer';
+import inputsReducer from 'reducers/Pathway/inputsReducer';
 
 export default combineReducers({
   kinaseData: kinaseDataReducer,
@@ -22,4 +23,5 @@ export default combineReducers({
   pathsInspectList: inspectReducer,
   selectedPath: selectedPathReducer,
   pathwayData: pathwayDataReducer,
+  pathwayInputs: inputsReducer,
 });
