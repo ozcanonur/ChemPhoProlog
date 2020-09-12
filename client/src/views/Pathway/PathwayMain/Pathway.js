@@ -11,7 +11,7 @@ import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
 import CardGeneric from 'components/Card/CardGeneric';
-import ExtraButtons from 'views/Pathway/ExtraButtons';
+import ExtraButtons from 'views/Pathway/PathwayMain/ExtraButtons';
 import { getElementsToAnimate, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 import cxtmenuOptions from 'views/Pathway/CytoscapeUtils/cxtmenuOptions';
@@ -61,15 +61,6 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
     };
   }, [cy]);
 
-  useEffect(() => {
-    if (cy.elements().length > 0) {
-      runLayout(cy, layout);
-      if (cxtMenu) cxtMenu.destroy();
-      cxtMenu = cy.cxtmenu(cxtmenuOptions(dispatch));
-    }
-    // console.log(elements);
-  }, [elements]);
-
   // Set currently animated elements
   useEffect(() => {
     const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
@@ -82,6 +73,14 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
   useEffect(() => {
     resetPathwayVisuals(cy);
   }, [data]);
+
+  useEffect(() => {
+    if (cy.elements().length > 0) {
+      runLayout(cy, layout);
+      if (cxtMenu) cxtMenu.destroy();
+      cxtMenu = cy.cxtmenu(cxtmenuOptions(dispatch));
+    }
+  }, [elements]);
 
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
@@ -97,21 +96,6 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
           cy = _cy;
         }}
         elements={elements}
-        // get={(object, key) => {
-        //   // must check type because some props may be immutable and others may not be
-        //   if (Immutable.Map.isMap(object) || Immutable.List.isList(object)) {
-        //     return object.get(key);
-        //   }
-        //   return object[key];
-        // }}
-        // toJson={(object) => {
-        //   // must check type because some props may be immutable and others may not be
-        //   if (Immutable.isImmutable(object)) {
-        //     return object.toJSON();
-        //   }
-        //   return object;
-        // }}
-        // diff={(objectA, objectB) => true}
         stylesheet={stylesheet}
         style={{ height: '1000px' }}
         minZoom={0.5}
@@ -119,7 +103,6 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
         autolock={cyLocked}
         boxSelectionEnabled
       />
-
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
         <ExtraButtons
           cy={cy}

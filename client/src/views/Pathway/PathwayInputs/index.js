@@ -7,6 +7,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Button from 'components/CustomButtons/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/PathwayInputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,16 +23,22 @@ export default function Inputs() {
   const inputs = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData);
 
+  // cellLine: 'MCF7',
+  //     perturbagen: 'Torin',
+  //     substrate: 'AKT1(S473)',
+  //     onlyKinaseEnds: false,
+
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
   useEffect(() => {
     const initInputs = {
       cellLine: 'MCF7',
-      perturbagen: 'Torin',
-      substrate: 'AKT1(S473)',
+      perturbagen: 'Trametinib',
+      substrate: 'MYC(S62)',
       onlyKinaseEnds: false,
     };
     dispatch(setSelectedInputs(initInputs));
+    getPathwayData({ ...initInputs });
   }, [dispatch]);
 
   useEffect(() => {
@@ -48,9 +55,7 @@ export default function Inputs() {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
     // dispatch(clearPathwayData());
-
     dispatch(getPathwayData('MCF-7', perturbagen, substrate, switchChecked));
-
     dispatch(removeAllInspectPaths());
     setLoading(true);
   };
@@ -77,7 +82,7 @@ export default function Inputs() {
               height: '50px',
             }}
           >
-            {loading ? 'Loading...' : 'Get pathway'}
+            {loading ? <img src={loading_thin} alt='Loading thin' /> : 'Get pathway'}
           </Button>
         </GridItem>
         <GridItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

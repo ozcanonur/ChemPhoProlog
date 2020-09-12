@@ -71,7 +71,8 @@ export const animatePath = (elementsToAnimate, data, duration, showTooltips, sho
       const element = elementsToShow[i];
 
       const isEdge = element.data().target !== undefined;
-      const isPhosphosite = element.data().parent !== undefined;
+      // include start as well if it has no parent with i === 0
+      const isPhosphosite = element.data().parent !== undefined || i === 0;
 
       if (isEdge) addEdgeStyle(element);
       else if (isPhosphosite) {

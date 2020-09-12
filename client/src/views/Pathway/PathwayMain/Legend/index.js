@@ -2,11 +2,11 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import { nodes, borders, areas, lines } from 'views/Pathway/Legend/variables';
-import Node from 'views/Pathway/Legend/Node';
-import Border from 'views/Pathway/Legend/Border';
-import Area from 'views/Pathway/Legend/Area';
-import Line from 'views/Pathway/Legend/Line';
+import { nodes, borders, areas, lines } from 'views/Pathway/PathwayMain/Legend/variables';
+import Node from 'views/Pathway/PathwayMain/Legend/Node';
+import Border from 'views/Pathway/PathwayMain/Legend/Border';
+import Area from 'views/Pathway/PathwayMain/Legend/Area';
+import Line from 'views/Pathway/PathwayMain/Legend/Line';
 
 const Legend = () => (
   <Grid container direction='column' spacing={1}>

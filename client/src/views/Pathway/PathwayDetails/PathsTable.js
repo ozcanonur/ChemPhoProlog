@@ -24,6 +24,7 @@ const parsePathsToTableData = (paths, stoppingReasons) =>
 const PathsTable = () => {
   const classes = useStyles();
 
+  const { cellLine, perturbagen, substrate } = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData) || {
     paths: [],
     relations: {},
@@ -53,7 +54,7 @@ const PathsTable = () => {
     <Card style={{ height: 750 }}>
       <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Paths found</h4>
-        <p className={classes.cardCategoryWhite}> MCF-7 / Torin / AKT1(S473)</p>
+        <p className={classes.cardCategoryWhite}>{`${cellLine} / ${perturbagen} / ${substrate}`}</p>
       </CardHeader>
       <CardBody>
         <Table

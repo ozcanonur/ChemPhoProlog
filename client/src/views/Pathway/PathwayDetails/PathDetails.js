@@ -31,7 +31,11 @@ const getExplanationForPath = (path, observation, regulatory) => {
 
     const bottomKPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
     const bottomKPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
-    const bottomKPaActivity = bottomKPaActivated ? 'activated' : bottomKPaInhibited ? 'inhibited' : 'conflicting';
+    const bottomKPaActivity = bottomKPaActivated
+      ? 'activated'
+      : bottomKPaInhibited
+      ? 'inhibited'
+      : 'conflicting';
 
     const topKPaOutput = `${topKPa} is ${topKPaActivity}, (${topKPaFunction})`;
     const midPhosphositeOutput = `${midPhosphosite}, fc: ${foldChange}, reg: ${reg}`;
@@ -54,6 +58,7 @@ const getExplanationForPath = (path, observation, regulatory) => {
 const PathDetails = () => {
   const classes = useStyles();
 
+  const { perturbagen } = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData);
   const selectedPath = useSelector((state) => state.selectedPath);
   const reversedPath = selectedPath.slice().reverse();
@@ -74,7 +79,7 @@ const PathDetails = () => {
     <Card style={{ height: 750, opacity: selectedPath.length === 0 ? 0.5 : 1 }}>
       <CardHeader color='primary'>
         <h4 className={classes.cardTitleWhite}>Explanation</h4>
-        <p className={classes.cardCategoryWhite}>Torin</p>
+        <p className={classes.cardCategoryWhite}>{perturbagen}</p>
       </CardHeader>
       <CardBody>
         <Table
