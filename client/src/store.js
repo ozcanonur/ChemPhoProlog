@@ -23,6 +23,8 @@ const persistConfig = {
   ],
 };
 
-export const store = createStore(persistReducer(persistConfig, reducers), composeEnhancers(applyMiddleware(thunk)));
-
+export const store = createStore(
+  persistReducer(persistConfig, reducers),
+  composeEnhancers(applyMiddleware(thunk))
+);
 export const persistor = persistStore(store);

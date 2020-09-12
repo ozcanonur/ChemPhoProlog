@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { store } from 'store';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -35,7 +36,8 @@ export default function Virtualize({ type }) {
   const classes = useStyles();
 
   const [data, setData] = useState([]);
-  const inputs = useSelector((state) => state.pathwayInputs);
+
+  const inputs = store.getState().pathwayInputs;
 
   useEffect(() => {
     if (type === 'Substrate') {
@@ -60,12 +62,15 @@ export default function Virtualize({ type }) {
     <Autocomplete
       id={type}
       style={{ width: 300 }}
+      disabled={type === 'Cell Line'}
       disableListWrap
       classes={classes}
       ListboxComponent={ListboxComponent}
       renderGroup={renderGroup}
       options={data}
-      renderInput={(params) => <TextField {...params} variant='outlined' label={type} />}
+      renderInput={(params) => (
+        <TextField {...params} variant='outlined' label={type === 'Cell Line' ? 'MCF-7' : type} />
+      )}
       renderOption={(option) => <Typography noWrap>{option}</Typography>}
       onInputChange={(_e, value) => onInputChange(value)}
     />

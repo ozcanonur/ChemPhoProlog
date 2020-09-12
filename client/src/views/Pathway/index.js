@@ -1,5 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { store } from 'store';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
@@ -10,7 +12,24 @@ import PathsTable from 'views/Pathway/PathsTable';
 import Pathway from 'views/Pathway/Pathway';
 import PathSelectList from 'views/Pathway/PathSelectList';
 
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
+
 const PathwayIndex = () => {
+  const data = useSelector((state) => state.pathwayData) || {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  };
+
+  const start = store.getState().pathwayInputs.substrate;
+
+  const elements = getCytoElements(data);
+  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
+  const layout = getCytoLayout();
+
   return (
     <div style={{ padding: '2em' }}>
       <GridContainer direction='column'>
@@ -22,7 +41,7 @@ const PathwayIndex = () => {
             <GridItem>
               <GridContainer direction='row'>
                 <GridItem xs={10}>
-                  <Pathway />
+                  <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
                 </GridItem>
                 <GridItem xs={2}>
                   <PathSelectList />

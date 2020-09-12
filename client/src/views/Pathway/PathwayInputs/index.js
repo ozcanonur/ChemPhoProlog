@@ -11,11 +11,16 @@ import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/PathwayInputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
 import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
+import removeAllInspectPaths from 'actions/Pathway/removeAllInspectPaths';
 import getPathwayData from 'actions/Pathway/getPathwayData';
+// eslint-disable-next-line no-unused-vars
+import clearPathwayData from 'actions/Pathway/clearPathwayData';
 
 export default function Inputs() {
-  const [switchChecked, setSwitchChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [switchChecked, setSwitchChecked] = useState(true);
   const inputs = useSelector((state) => state.pathwayInputs);
+  const data = useSelector((state) => state.pathwayData);
 
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
@@ -29,6 +34,10 @@ export default function Inputs() {
     dispatch(setSelectedInputs(initInputs));
   }, [dispatch]);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [data]);
+
   const handleSwitch = () => {
     setSwitchChecked(!switchChecked);
     const newInputs = { ...inputs, onlyKinaseEnds: !switchChecked };
@@ -38,16 +47,19 @@ export default function Inputs() {
   const onSubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
+    // dispatch(clearPathwayData());
+
     dispatch(getPathwayData('MCF-7', perturbagen, substrate, switchChecked));
+
+    dispatch(removeAllInspectPaths());
+    setLoading(true);
   };
 
-  console.log(inputs);
-
-  const inputTypeList = ['Cell Line', 'Perturbagens', 'Substrate'];
+  const inputTypeList = ['Cell Line', 'Perturbagen', 'Substrate'];
 
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer direction='row'>
+      <GridContainer direction='row' alignItems='center'>
         {inputTypeList.map((inputType, key) => (
           <GridItem key={key}>
             <VirtualizedDropDown type={inputType} />
@@ -65,7 +77,7 @@ export default function Inputs() {
               height: '50px',
             }}
           >
-            Get pathway
+            {loading ? 'Loading...' : 'Get pathway'}
           </Button>
         </GridItem>
         <GridItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

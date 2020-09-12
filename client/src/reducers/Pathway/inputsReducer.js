@@ -1,4 +1,4 @@
-export default (state = { cellLine: '', perturbagen: '', substrate: '', onlyKinaseEnds: false }, action) => {
+export default (state = { cellLine: '', perturbagen: '', substrate: '', onlyKinaseEnds: true }, action) => {
   switch (action.type) {
     case 'SET_SELECTED_INPUTS':
       return action.payload;

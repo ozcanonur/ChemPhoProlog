@@ -163,6 +163,16 @@ router.get('/api/pdts/', (req, res) => {
   });
 });
 
+// router.get('/api/validSubstratesPathway', (req, res) => {
+//   const query =
+//     'select distinct substrate from observation where p_value > 0 and p_value < 0.05 and fold_change <> -888 and substrate not like "%(M%" and substrate not like "%(X%"';
+
+//   db.all(query, [], (err, rows) => {
+//     if (err) throw err;
+//     res.send(rows);
+//   });
+// });
+
 const queryProlog = require('../swipl/index');
 const swipl = require('swipl');
 

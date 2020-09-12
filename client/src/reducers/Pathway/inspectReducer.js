@@ -11,6 +11,8 @@ export default (state = [], action) => {
   switch (action.type) {
     case 'ADD_INSPECT_PATH':
       return filterDuplicates();
+    case 'REMOVE_ALL_INSPECT_PATHS':
+      return [];
     default:
       return state;
   }

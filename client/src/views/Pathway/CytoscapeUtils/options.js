@@ -1,4 +1,4 @@
-export const getCytoStylesheet = (observation, regulatory) => [
+export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: 'node',
     style: {
@@ -18,8 +18,10 @@ export const getCytoStylesheet = (observation, regulatory) => [
   {
     selector: '.phosphosite',
     style: {
-      backgroundColor: '#e5ad06',
       content: 'data(id)',
+      backgroundColor: (e) => (e.data().id === start ? '#2D4159' : '#e5ad06'),
+      width: (e) => (e.data().id === start ? 60 : 30),
+      height: (e) => (e.data().id === start ? 60 : 30),
     },
   },
   {
@@ -99,14 +101,14 @@ export const getCytoStylesheet = (observation, regulatory) => [
 export const getCytoLayout = () => {
   return {
     name: 'cose-bilkent',
-    quality: 'quality',
+    quality: 'default',
     randomize: false,
     // Whether to include labels in node dimensions. Useful for avoiding label overlap
     nodeDimensionsIncludeLabels: true,
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 10000,
+    nodeRepulsion: 100000,
     // Ideal (intra-graph) edge length
     idealEdgeLength: 20,
     // Divisor to compute edge forces

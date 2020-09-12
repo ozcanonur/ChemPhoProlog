@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { store } from 'store';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -11,7 +12,6 @@ import { hideAll as hideTooltips } from 'tippy.js';
 
 import CardGeneric from 'components/Card/CardGeneric';
 import ExtraButtons from 'views/Pathway/ExtraButtons';
-import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
 import { getElementsToAnimate, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
 import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
 import cxtmenuOptions from 'views/Pathway/CytoscapeUtils/cxtmenuOptions';
@@ -20,23 +20,12 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const Pathway = () => {
-  const data = useSelector((state) => state.pathwayData) || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
+let cxtMenu;
+let cy = Cytoscape();
 
+const Pathway = ({ data, elements, stylesheet, layout }) => {
   const selectedPath = useSelector((state) => state.selectedPath);
 
-  const elements = getCytoElements(data);
-  const stylesheet = getCytoStylesheet(data.observation, data.regulatory);
-  const layout = getCytoLayout();
-
-  const [cy, setCy] = useState(Cytoscape());
   const [elementsToAnimate, setElementsToAnimate] = useState({
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
@@ -49,13 +38,6 @@ const Pathway = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (cy.elements().length > 0) {
-      // Need to run on first init
-      runLayout(cy, layout);
-      // Set context menu
-      cy.cxtmenu(cxtmenuOptions(dispatch));
-    }
-
     // Resize event listener
     let width = cy.width();
     let height = cy.height();
@@ -74,7 +56,6 @@ const Pathway = () => {
     // Cleanup
     return () => {
       cy.removeListener('on');
-      cy.destroy();
       clearAllTimeouts();
       hideTooltips();
     };
@@ -83,6 +64,8 @@ const Pathway = () => {
   useEffect(() => {
     if (cy.elements().length > 0) {
       runLayout(cy, layout);
+      if (cxtMenu) cxtMenu.destroy();
+      cxtMenu = cy.cxtmenu(cxtmenuOptions(dispatch));
     }
     // console.log(elements);
   }, [elements]);
@@ -96,12 +79,22 @@ const Pathway = () => {
     animatePath(elementsToAnimate, data, 50, true, true);
   }, [selectedPath]);
 
+  useEffect(() => {
+    resetPathwayVisuals(cy);
+  }, [data]);
+
+  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
+
   return (
-    <CardGeneric color='primary' cardTitle='Bottom up Pathway' cardSubtitle='MCF-7 / Torin / AKT1(S473)'>
+    <CardGeneric
+      color='primary'
+      cardTitle='Pathway'
+      cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
+    >
       <CytoscapeComponent
-        cy={(cy) => {
+        cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          setCy(cy);
+          cy = _cy;
         }}
         elements={elements}
         // get={(object, key) => {
@@ -126,6 +119,7 @@ const Pathway = () => {
         autolock={cyLocked}
         boxSelectionEnabled
       />
+
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
         <ExtraButtons
           cy={cy}
