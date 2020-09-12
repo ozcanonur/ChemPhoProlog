@@ -41,12 +41,15 @@ export default function Virtualize({ type }) {
 
   useEffect(() => {
     if (type === 'Substrate') {
-      getApi('/getAllSubstrates').then((res) => {
+      const route = '/getValidObservations';
+      const params = { cell_line: 'MCF-7', perturbagen: inputs.perturbagen };
+
+      getApi(route, params).then((res) => {
         setData(res.map((e) => Object.values(e)[0]));
       });
     } else if (type === 'Perturbagen') setData(perturbagens);
     else if (type === 'Cell Line') setData(['MCF7', 'HL60', 'NTERA']);
-  }, [type]);
+  }, [type, inputs.perturbagen]);
 
   const dispatch = useDispatch();
   const onInputChange = (value) => {

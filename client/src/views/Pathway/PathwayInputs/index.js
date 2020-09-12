@@ -19,13 +19,13 @@ import clearPathwayData from 'actions/Pathway/clearPathwayData';
 
 export default function Inputs() {
   const [loading, setLoading] = useState(false);
-  const [switchChecked, setSwitchChecked] = useState(true);
+  const [switchChecked, setSwitchChecked] = useState(false);
   const inputs = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData);
 
   // cellLine: 'MCF7',
-  //     perturbagen: 'Torin',
-  //     substrate: 'AKT1(S473)',
+  //     perturbagen: 'Trametinib',
+  //     substrate: 'MYC(S62)',
   //     onlyKinaseEnds: false,
 
   const dispatch = useDispatch();
@@ -33,8 +33,8 @@ export default function Inputs() {
   useEffect(() => {
     const initInputs = {
       cellLine: 'MCF7',
-      perturbagen: 'Trametinib',
-      substrate: 'MYC(S62)',
+      perturbagen: 'Torin',
+      substrate: 'AKT1(S473)',
       onlyKinaseEnds: false,
     };
     dispatch(setSelectedInputs(initInputs));
@@ -62,6 +62,18 @@ export default function Inputs() {
 
   const inputTypeList = ['Cell Line', 'Perturbagen', 'Substrate'];
 
+  const ButtonText = () => {
+    if (loading)
+      return (
+        <div>
+          <p>Loading...</p>
+          <img src={loading_thin} alt='Loading thin' style={{ marginTop: '-17px', marginBottom: '5px' }} />
+        </div>
+      );
+    if (data && data.paths.length === 0) return 'No paths, try again';
+    return 'Get pathway';
+  };
+
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
       <GridContainer direction='row' alignItems='center'>
@@ -82,7 +94,7 @@ export default function Inputs() {
               height: '50px',
             }}
           >
-            {loading ? <img src={loading_thin} alt='Loading thin' /> : 'Get pathway'}
+            <ButtonText />
           </Button>
         </GridItem>
         <GridItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

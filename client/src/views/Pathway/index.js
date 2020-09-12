@@ -53,9 +53,7 @@ const PathwayIndex = () => {
                 <GridItem md>
                   <PathsTable />
                 </GridItem>
-                <GridItem md>
-                  <PathDetails />
-                </GridItem>
+                <GridItem md>{/* <PathDetails /> */}</GridItem>
               </GridContainer>
             </GridItem>
           </GridContainer>

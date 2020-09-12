@@ -61,7 +61,7 @@ export const addTooltip = (data, element, isStartNode, isLastNode) => {
   const { stoppingReasons, observation } = data;
   const { id } = element.data();
 
-  const isPhosphosite = element.data().parent !== undefined;
+  const isPhosphosite = element.data().id.includes('(') && !element.data().target;
   const isKPa = element.data().parent === undefined;
 
   // At last node and it's a KPa

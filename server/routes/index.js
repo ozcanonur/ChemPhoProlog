@@ -137,7 +137,6 @@ router.get('/api/phosphositesOfInterest/', (req, res) => {
 
   db.all(query, [protein], (err, rows) => {
     if (err) throw err;
-
     res.send(rows);
   });
 });
@@ -163,19 +162,26 @@ router.get('/api/pdts/', (req, res) => {
   });
 });
 
-// router.get('/api/validSubstratesPathway', (req, res) => {
-//   const query =
-//     'select distinct substrate from observation where p_value > 0 and p_value < 0.05 and fold_change <> -888 and substrate not like "%(M%" and substrate not like "%(X%"';
+// Valid observations
+router.get('/api/getValidObservations', (req, res) => {
+  const perturbagen = req.query.perturbagen;
+  const cell_line = req.query.cell_line;
 
-//   db.all(query, [], (err, rows) => {
-//     if (err) throw err;
-//     res.send(rows);
-//   });
-// });
+  const query =
+    'select substrate from Observation_valid where perturbagen = ? and cell_line = ? order by substrate';
+  db.all(query, [perturbagen, cell_line], (err, rows) => {
+    if (err) throw err;
 
+    // const parsedRows = rows.map(
+    //   ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change, 10).toFixed(2)}`
+    // );
+    res.send(rows);
+  });
+});
+
+// Prolog things
 const queryProlog = require('../swipl/index');
 const swipl = require('swipl');
-
 router.get('/api/pathway', (req, res) => {
   const { cellLine, perturbagen, substrate, onlyKinaseEnds } = req.query;
 
