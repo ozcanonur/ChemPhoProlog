@@ -119,14 +119,14 @@ export const getCytoLayout = () => {
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 100000,
+    nodeRepulsion: 1000000,
     // Ideal (intra-graph) edge length
-    idealEdgeLength: 20,
+    idealEdgeLength: 10,
     // Divisor to compute edge forces
     edgeElasticity: 0.1,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
     nestingFactor: 0.5,
-    // Gravity force (constant)
+    // Gravity force (constant) Higher makes nodes TOO FAR APART, lower makes compounds too large
     gravity: 0.1,
     // Maximum number of iterations to perform
     numIter: 2500,
@@ -142,11 +142,11 @@ export const getCytoLayout = () => {
     // Gravity range (constant) for compounds
     gravityRangeCompound: 0.1,
     // Gravity force (constant) for compounds
-    gravityCompound: 0.9,
+    gravityCompound: 3,
     // Gravity range (constant)
-    gravityRange: 3,
+    gravityRange: 1,
     // Initial cooling factor for incremental layout
-    initialEnergyOnIncremental: 0.5,
+    initialEnergyOnIncremental: 0.1,
     ready: () => {},
     // Called on `layoutstop`
     stop: () => {},

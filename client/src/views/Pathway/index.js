@@ -7,7 +7,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 
 import PathwayInputs from 'views/Pathway/PathwayInputs/index';
-import PathDetails from 'views/Pathway/PathwayDetails/PathDetails';
+// import PathDetails from 'views/Pathway/PathwayDetails/PathDetails';
 import PathsTable from 'views/Pathway/PathwayDetails/PathsTable';
 import Pathway from 'views/Pathway/PathwayMain/Pathway';
 import PathSelectList from 'views/Pathway/PathwayMain/PathSelectList';

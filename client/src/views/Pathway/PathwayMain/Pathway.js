@@ -21,12 +21,12 @@ Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
 let cxtMenu;
-// let cy = Cytoscape();
+let cy = Cytoscape();
 
 const Pathway = ({ data, elements, stylesheet, layout }) => {
   const selectedPath = useSelector((state) => state.selectedPath);
 
-  const [cy, setCy] = useState(Cytoscape());
+  // const [cy, setCy] = useState(Cytoscape());
   const [elementsToAnimate, setElementsToAnimate] = useState({
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
@@ -63,12 +63,12 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
   }, [cy]);
 
   useEffect(() => {
+    runLayout(cy, layout);
     resetPathwayVisuals(cy);
   }, [data]);
 
   useEffect(() => {
     if (cy.elements().length > 0) {
-      runLayout(cy, layout);
       if (cxtMenu) cxtMenu.destroy();
       cxtMenu = cy.cxtmenu(cxtmenuOptions(dispatch));
     }
@@ -94,9 +94,7 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
       <CytoscapeComponent
         cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          const phosphosites = _cy.$('.phosphosite').map((e) => e.data().id);
-          console.log(phosphosites);
-          setCy(_cy);
+          cy = _cy;
         }}
         elements={elements}
         stylesheet={stylesheet}
