@@ -11,10 +11,10 @@ import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
 import CardGeneric from 'components/Card/CardGeneric';
-import ExtraButtons from 'views/Pathway/PathwayMain/ExtraButtons';
-import { getElementsToAnimate, animatePath } from 'views/Pathway/CytoscapeUtils/animation';
-import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/CytoscapeUtils/misc';
-import cxtmenuOptions from 'views/Pathway/CytoscapeUtils/cxtmenuOptions';
+import ExtraButtons from 'views/Pathway/Main/ExtraButtons';
+import { getElementsToAnimate, animatePath } from 'views/Pathway/utils/animation';
+import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/utils/misc';
+import cxtmenuOptions from 'views/Pathway/utils/cxtmenuOptions';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);

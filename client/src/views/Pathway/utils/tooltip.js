@@ -5,8 +5,8 @@ import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 import './tooltip.css';
-import { animatePath } from 'views/Pathway/CytoscapeUtils/animation';
-import { clearAllTimeouts } from 'views/Pathway/CytoscapeUtils/misc';
+import { animatePath } from 'views/Pathway/utils/animation';
+import { clearAllTimeouts } from 'views/Pathway/utils/misc';
 
 const makeTooltip = (element, content, placement) => {
   const ref = element.popperRef();

@@ -6,13 +6,13 @@ import { store } from 'store';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 
-import PathwayInputs from 'views/Pathway/PathwayInputs/index';
+import PathwayInputs from 'views/Pathway/Inputs/index';
 // import PathDetails from 'views/Pathway/PathwayDetails/PathDetails';
-import PathsTable from 'views/Pathway/PathwayDetails/PathsTable';
-import Pathway from 'views/Pathway/PathwayMain/Pathway';
-import PathSelectList from 'views/Pathway/PathwayMain/PathSelectList';
+import PathsTable from 'views/Pathway/Information/PathsTable';
+import Pathway from 'views/Pathway/Main/Pathway';
+import PathSelectList from 'views/Pathway/Main/PathSelectList';
 
-import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/CytoscapeUtils/options';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/utils/options';
 
 const PathwayIndex = () => {
   const data = useSelector((state) => state.pathwayData) || {

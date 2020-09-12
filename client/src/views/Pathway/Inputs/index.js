@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
-import VirtualizedDropDown from 'views/Pathway/PathwayInputs/VirtualizedDropDown';
+import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
 import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
 import removeAllInspectPaths from 'actions/Pathway/removeAllInspectPaths';

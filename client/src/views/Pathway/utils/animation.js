@@ -1,4 +1,4 @@
-import { addTooltip } from 'views/Pathway/CytoscapeUtils/tooltip';
+import { addTooltip } from 'views/Pathway/utils/tooltip';
 import phosphatases from 'views/Pathway/variables/phosphatases';
 
 export const getElementsToAnimate = (cy, selectedPath) => {

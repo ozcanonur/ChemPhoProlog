@@ -13,7 +13,7 @@ import { getApi } from 'api/api';
 import perturbagens from 'views/KinaseDetails/Description/variables/perturbagens';
 import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
 
-import ListboxComponent from 'views/Pathway/PathwayInputs/ListBoxComponent';
+import ListboxComponent from 'views/Pathway/Inputs/ListBoxComponent';
 
 const renderGroup = (params) => [
   <ListSubheader key={params.key} component='div'>
