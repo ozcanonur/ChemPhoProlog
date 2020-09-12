@@ -27,7 +27,6 @@ const getPathwayData = (cell_line, perturbagen, substrate, onlyKinaseEnds) => as
     getApi(pathwayRoute, pathwayParams),
   ]);
 
-  console.log(pathsResults);
   const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);
 
   dispatch({ type: 'GET_PATHWAY_DATA', payload: { observation: formattedObservation, ...pathsResults } });

@@ -21,11 +21,12 @@ Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
 let cxtMenu;
-let cy = Cytoscape();
+// let cy = Cytoscape();
 
 const Pathway = ({ data, elements, stylesheet, layout }) => {
   const selectedPath = useSelector((state) => state.selectedPath);
 
+  const [cy, setCy] = useState(Cytoscape());
   const [elementsToAnimate, setElementsToAnimate] = useState({
     elementsToShow: cy.collection(),
     elementsToFade: cy.collection(),
@@ -61,15 +62,6 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
     };
   }, [cy]);
 
-  // Set currently animated elements
-  useEffect(() => {
-    const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
-    setElementsToAnimate(elementsToAnimate);
-
-    resetPathwayVisuals(cy);
-    animatePath(elementsToAnimate, data, 50, true, true);
-  }, [selectedPath]);
-
   useEffect(() => {
     resetPathwayVisuals(cy);
   }, [data]);
@@ -82,6 +74,15 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
     }
   }, [elements]);
 
+  // Set currently animated elements
+  useEffect(() => {
+    const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
+    setElementsToAnimate(elementsToAnimate);
+
+    resetPathwayVisuals(cy);
+    animatePath(elementsToAnimate, data, 50, true, true);
+  }, [selectedPath]);
+
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   return (
@@ -93,7 +94,9 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
       <CytoscapeComponent
         cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          cy = _cy;
+          const phosphosites = _cy.$('.phosphosite').map((e) => e.data().id);
+          console.log(phosphosites);
+          setCy(_cy);
         }}
         elements={elements}
         stylesheet={stylesheet}

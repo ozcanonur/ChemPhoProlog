@@ -1,3 +1,5 @@
+import { store } from 'store';
+
 export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: 'node',
@@ -145,6 +147,9 @@ export const getCytoLayout = () => {
     gravityRange: 3,
     // Initial cooling factor for incremental layout
     initialEnergyOnIncremental: 0.5,
+    ready: () => {},
+    // Called on `layoutstop`
+    stop: () => {},
   };
 };
 
@@ -154,9 +159,13 @@ export const getCytoElements = (data) => {
     return { data: { id: e }, classes: ['KPa'] };
   });
 
+  // Need to put the start node OUTSIDE a compound or the diff() in Cytoscape-react messes up
+  // It removes the compound, so the children also gets devoured
+  // Other phosphosites will ALWAYS be a part of a KPa (=compound), so it only matters for the start
+  const start = store.getState().pathwayInputs.substrate;
   const phosphosites = data.phosphosites.map((e) => {
     return {
-      data: { id: e, parent: e.split('(')[0] },
+      data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
       classes: ['phosphosite'],
     };
   });
