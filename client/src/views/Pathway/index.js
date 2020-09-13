@@ -7,7 +7,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 
 import PathwayInputs from 'views/Pathway/Inputs/index';
-// import PathDetails from 'views/Pathway/PathwayDetails/PathDetails';
+import PathExplanation from 'views/Pathway/Information/PathExplanation';
 import PathsTable from 'views/Pathway/Information/PathsTable';
 import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';
@@ -15,7 +15,7 @@ import PathSelectList from 'views/Pathway/Main/PathSelectList';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/utils/options';
 import whyRender from 'customHooks';
 
-// Wrapping it up in memo because react-router match changes causes rerender
+// Wrapping it up in memo because react-router {match} causes re-render
 // Problematic with cxtmenu > add to sidebar function
 const PathwayIndex = React.memo(
   function PathwayIndex(props) {
@@ -58,7 +58,9 @@ const PathwayIndex = React.memo(
                   <GridItem md>
                     <PathsTable />
                   </GridItem>
-                  <GridItem md>{/* <PathDetails /> */}</GridItem>
+                  <GridItem md>
+                    <PathExplanation />
+                  </GridItem>
                 </GridContainer>
               </GridItem>
             </GridContainer>

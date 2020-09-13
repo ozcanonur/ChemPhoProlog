@@ -24,6 +24,7 @@ const persistConfig = {
     'elementsToAnimate',
     'cxtMenu',
     'pathwayInputs',
+    'pathExplanation',
   ],
 };
 
