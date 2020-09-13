@@ -56,51 +56,57 @@ const ExtraRoute = ({ route }) => {
     };
 
     return (
-      <div key={key}>
-        {key === 0 ? (
-          <ListItem
-            key={currentTitle}
-            style={{
-              marginTop: '1em',
-              textAlign: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            }}
-          >
-            <RemoveCircleOutlineIcon
-              style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
-              onClick={() => handleSelectedTabRemove(currentTitle)}
-            />
-            <ListItemText
-              primary={currentTitle}
-              className={classNames(classes.itemText, whiteFontClasses)}
-              disableTypography
-              style={{ textAlign: 'left', marginLeft: '1em', cursor: 'pointer' }}
-              onClick={handleOpen}
-            />
-            {open ? (
-              <ExpandLessIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
-            ) : (
-              <ExpandMoreIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
-            )}
-          </ListItem>
-        ) : undefined}
-        <Collapse in={open} timeout='auto' unmountOnExit>
-          <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
-            <ListItem button className={classes.itemLink + listItemClasses}>
-              {typeof prop.icon === 'string' ? (
-                <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
-              ) : (
-                <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
-              )}
+      <Slide in={true} direction='left' mountOnEnter unmountOnExit>
+        <div key={key}>
+          {key === 0 ? (
+            <ListItem
+              key={currentTitle}
+              style={{
+                marginTop: '1em',
+                textAlign: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              }}
+            >
+              <RemoveCircleOutlineIcon
+                style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
+                onClick={() => handleSelectedTabRemove(currentTitle)}
+              />
               <ListItemText
-                primary={prop.name}
+                primary={currentTitle}
                 className={classNames(classes.itemText, whiteFontClasses)}
                 disableTypography
+                style={{ textAlign: 'left', marginLeft: '1em', cursor: 'pointer' }}
+                onClick={handleOpen}
               />
+              {open ? (
+                <ExpandLessIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
+              ) : (
+                <ExpandMoreIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
+              )}
             </ListItem>
-          </NavLink>
-        </Collapse>
-      </div>
+          ) : undefined}
+          <Collapse in={open} timeout='auto' unmountOnExit>
+            <NavLink
+              to={prop.layout + prop.path}
+              className={activePro + classes.item}
+              activeClassName='active'
+            >
+              <ListItem button className={classes.itemLink + listItemClasses}>
+                {typeof prop.icon === 'string' ? (
+                  <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
+                ) : (
+                  <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
+                )}
+                <ListItemText
+                  primary={prop.name}
+                  className={classNames(classes.itemText, whiteFontClasses)}
+                  disableTypography
+                />
+              </ListItem>
+            </NavLink>
+          </Collapse>
+        </div>
+      </Slide>
     );
   });
 };

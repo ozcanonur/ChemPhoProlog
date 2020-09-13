@@ -24,7 +24,7 @@ import styles from 'assets/jss/material-dashboard-react/components/headerLinksSt
 const useStyles = makeStyles(styles);
 
 const ItemRenderer = ({ data, index, style }) => {
-  const setSearchOpen = data.setSearchOpen;
+  const { setSearchOpen } = data;
   const item = data.data[index];
   const itemName = item[Object.keys(item)[0]];
   const itemType = Object.keys(item)[0];

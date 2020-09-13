@@ -13,12 +13,11 @@ import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';
 
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/utils/options';
-import whyRender from 'customHooks';
 
 // Wrapping it up in memo because react-router {match} causes re-render
 // Problematic with cxtmenu > add to sidebar function
 const PathwayIndex = React.memo(
-  function PathwayIndex(props) {
+  function PathwayIndex() {
     const data = useSelector((state) => state.pathwayData) || {
       paths: [],
       relations: {},
@@ -34,7 +33,6 @@ const PathwayIndex = React.memo(
     const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
     const layout = getCytoLayout();
 
-    whyRender('PathwayIndex', props);
     return (
       <div style={{ padding: '2em' }}>
         <GridContainer direction='column'>
