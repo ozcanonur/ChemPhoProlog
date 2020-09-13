@@ -15,7 +15,15 @@ import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
 const ExtraButtons = () => {
   const cy = useSelector((state) => state.cy);
-  const data = useSelector((state) => state.pathwayData);
+  const data = useSelector((state) => state.pathwayData) || {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  };
+
   const elementsToAnimate = useSelector((state) => state.elementsToAnimate);
 
   const [legendOpen, setLegendOpen] = useState(false);
@@ -37,6 +45,7 @@ const ExtraButtons = () => {
         setFaded(!faded);
       },
       state: faded,
+      disabled: !elementsToAnimate.elementsToShow.length,
     },
     {
       text: 'Tooltips',
@@ -45,6 +54,7 @@ const ExtraButtons = () => {
         setTooltipsOpen(!tooltipsOpen);
       },
       state: tooltipsOpen,
+      disabled: !elementsToAnimate.elementsToShow.length,
     },
     {
       text: 'Phosphosites',
@@ -62,6 +72,7 @@ const ExtraButtons = () => {
         setPhosphositesOpen(!phosphositesOpen);
       },
       state: phosphositesOpen,
+      disabled: !data.paths.length,
     },
     {
       text: 'Export',
@@ -79,10 +90,11 @@ const ExtraButtons = () => {
   return (
     <div style={{ padding: '1em' }}>
       <GridContainer direction='column'>
-        {buttonList.map(({ text, onClick, state }, key) => (
+        {buttonList.map(({ text, onClick, state, disabled }, key) => (
           <GridItem key={key}>
             <Button
               onClick={onClick}
+              disabled={disabled}
               style={{
                 width: '100px',
                 backgroundColor: 'rgba(45,65,89, 0.7)',

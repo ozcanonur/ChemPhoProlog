@@ -76,7 +76,7 @@ export default function Inputs() {
           <img src={loading_thin} alt='Loading thin' style={{ marginTop: '-17px', marginBottom: '5px' }} />
         </div>
       );
-    if (data && data.paths.length === 0) return 'No paths, try again';
+    if (data && data.paths.length === 1) return 'No paths, try another';
     return 'Get pathway';
   };
 

@@ -159,7 +159,7 @@ export const getCytoLayout = () => {
 export const getCytoElements = (data) => {
   // KPas
   const nodes = Object.keys(data.relations).map((e) => {
-    return { data: { id: e }, classes: ['KPa'] };
+    return { data: { id: e }, classes: ['KPa'], selectable: false };
   });
 
   // Need to put the start node OUTSIDE a compound or the diff() in Cytoscape-react messes up
@@ -170,6 +170,7 @@ export const getCytoElements = (data) => {
     return {
       data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
       classes: ['phosphosite'],
+      selectable: false,
     };
   });
 
