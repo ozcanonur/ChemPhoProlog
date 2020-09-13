@@ -11,6 +11,9 @@ import inspectReducer from 'reducers/Pathway/inspectReducer';
 import selectedPathReducer from 'reducers/Pathway/selectedPathReducer';
 import pathwayDataReducer from 'reducers/Pathway/pathwayDataReducer';
 import inputsReducer from 'reducers/Pathway/inputsReducer';
+import cyReducer from 'reducers/Pathway/cyReducer';
+import elementsToAnimateReducer from 'reducers/Pathway/elementsToAnimateReducer';
+import cxtMenuReducer from 'reducers/Pathway/cxtMenuReducer';
 
 export default combineReducers({
   kinaseData: kinaseDataReducer,
@@ -24,4 +27,7 @@ export default combineReducers({
   selectedPath: selectedPathReducer,
   pathwayData: pathwayDataReducer,
   pathwayInputs: inputsReducer,
+  cy: cyReducer,
+  elementsToAnimate: elementsToAnimateReducer,
+  cxtMenu: cxtMenuReducer,
 });

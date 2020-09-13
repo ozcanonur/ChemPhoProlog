@@ -1,8 +1,6 @@
-const setSelectedInputs = (inputs) => {
+export default (inputs) => {
   return {
     type: 'SET_SELECTED_INPUTS',
     payload: inputs,
   };
 };
-
-export default setSelectedInputs;

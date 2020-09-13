@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { store } from 'store';
+import setCy from 'actions/Pathway/setCy';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -12,78 +13,52 @@ import { hideAll as hideTooltips } from 'tippy.js';
 
 import CardGeneric from 'components/Card/CardGeneric';
 import ExtraButtons from 'views/Pathway/Main/ExtraButtons';
-import { getElementsToAnimate, animatePath } from 'views/Pathway/utils/animation';
-import { runLayout, clearAllTimeouts, resetPathwayVisuals } from 'views/Pathway/utils/misc';
+import {
+  runLayout,
+  clearAllTimeouts,
+  resetPathwayVisuals,
+  addResizeEventListener,
+} from 'views/Pathway/utils/misc';
 import cxtmenuOptions from 'views/Pathway/utils/cxtmenuOptions';
+import setCxtMenu from 'actions/Pathway/setCxtMenu';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-let cxtMenu;
-let cy = Cytoscape();
-
 const Pathway = ({ data, elements, stylesheet, layout }) => {
-  const selectedPath = useSelector((state) => state.selectedPath);
-
-  // const [cy, setCy] = useState(Cytoscape());
-  const [elementsToAnimate, setElementsToAnimate] = useState({
-    elementsToShow: cy.collection(),
-    elementsToFade: cy.collection(),
-  });
-
-  const [cyLocked, setCyLocked] = useState(false);
-  const changeLock = () => {
-    setCyLocked(!cyLocked);
-  };
+  const cy = useSelector((state) => state.cy) || Cytoscape();
+  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   const dispatch = useDispatch();
   useEffect(() => {
-    // Resize event listener
-    let width = cy.width();
-    let height = cy.height();
-    cy.on('resize', (evt) => {
-      const widthChange = Math.abs(evt.target.width() - width);
-      const heightChange = Math.abs(evt.target.height() - height);
-
-      // Only run layout again when resize is more than 30px
-      const sizeChanged = widthChange > 30 || heightChange > 30;
-      if (sizeChanged) runLayout(cy, layout);
-
-      width = evt.target.width();
-      height = evt.target.height();
-    });
+    addResizeEventListener(cy, layout);
 
     // Cleanup
     return () => {
       cy.removeListener('on');
-      clearAllTimeouts();
-      hideTooltips();
+
+      // Have to do this because it clashes with bg animation
+      setTimeout(() => {
+        clearAllTimeouts();
+        hideTooltips();
+      }, 100);
     };
   }, [cy]);
 
   useEffect(() => {
-    runLayout(cy, layout);
     resetPathwayVisuals(cy);
   }, [data]);
 
   useEffect(() => {
     if (cy.elements().length > 0) {
-      if (cxtMenu) cxtMenu.destroy();
-      cxtMenu = cy.cxtmenu(cxtmenuOptions(dispatch));
+      const currCxtMenu = store.getState().cxtMenu;
+      if (currCxtMenu) currCxtMenu.destroy();
+
+      const newCxtMenuOptions = cxtmenuOptions(dispatch);
+      dispatch(setCxtMenu(cy.cxtmenu(newCxtMenuOptions)));
     }
   }, [elements]);
-
-  // Set currently animated elements
-  useEffect(() => {
-    const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
-    setElementsToAnimate(elementsToAnimate);
-
-    resetPathwayVisuals(cy);
-    animatePath(elementsToAnimate, data, 50, true, true);
-  }, [selectedPath]);
-
-  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   return (
     <CardGeneric
@@ -94,23 +69,18 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
       <CytoscapeComponent
         cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          cy = _cy;
+          dispatch(setCy(_cy));
+          runLayout(_cy, layout);
         }}
         elements={elements}
         stylesheet={stylesheet}
-        style={{ height: '1000px' }}
+        style={{ height: '60rem' }}
         minZoom={0.5}
         maxZoom={1.2}
-        autolock={cyLocked}
         boxSelectionEnabled
       />
       <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons
-          cy={cy}
-          data={data}
-          elementsToAnimate={elementsToAnimate}
-          lock={{ cyLocked, changeLock }}
-        />
+        <ExtraButtons />
       </div>
     </CardGeneric>
   );

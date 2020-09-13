@@ -7,6 +7,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Button from 'components/CustomButtons/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import Cytoscape from 'cytoscape';
 import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
@@ -14,8 +15,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
 import removeAllInspectPaths from 'actions/Pathway/removeAllInspectPaths';
 import getPathwayData from 'actions/Pathway/getPathwayData';
+import setElementsToAnimate from 'actions/Pathway/setElementsToAnimate';
 // eslint-disable-next-line no-unused-vars
-import clearPathwayData from 'actions/Pathway/clearPathwayData';
 
 export default function Inputs() {
   const [loading, setLoading] = useState(false);
@@ -54,9 +55,14 @@ export default function Inputs() {
   const onSubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
-    // dispatch(clearPathwayData());
     dispatch(getPathwayData('MCF-7', perturbagen, substrate, switchChecked));
     dispatch(removeAllInspectPaths());
+    dispatch(
+      setElementsToAnimate({
+        elementsToShow: Cytoscape().collection(),
+        elementsToFade: Cytoscape().collection(),
+      })
+    );
     setLoading(true);
   };
 

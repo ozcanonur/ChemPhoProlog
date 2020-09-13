@@ -20,6 +20,10 @@ const persistConfig = {
     'pathsInspectList',
     'pathwayData',
     'selectedPath',
+    'cy',
+    'elementsToAnimate',
+    'cxtMenu',
+    'pathwayInputs',
   ],
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Fade from '@material-ui/core/Fade';
 import Button from 'components/CustomButtons/Button';
@@ -13,13 +13,15 @@ import { resetPathwayVisuals } from 'views/Pathway/utils/misc';
 
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
-const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
+const ExtraButtons = () => {
+  const cy = useSelector((state) => state.cy);
+  const data = useSelector((state) => state.pathwayData);
+  const elementsToAnimate = useSelector((state) => state.elementsToAnimate);
+
   const [legendOpen, setLegendOpen] = useState(false);
   const [faded, setFaded] = useState(false);
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
-
-  const { cyLocked, changeLock } = lock;
 
   const dispatch = useDispatch();
   const buttonList = [
@@ -57,19 +59,10 @@ const ExtraButtons = ({ cy, data, elementsToAnimate, lock }) => {
             false,
             false
           );
-
         setPhosphositesOpen(!phosphositesOpen);
       },
       state: phosphositesOpen,
     },
-    {
-      text: 'Lock',
-      onClick: () => {
-        changeLock();
-      },
-      state: cyLocked,
-    },
-
     {
       text: 'Export',
       onClick: async () => {

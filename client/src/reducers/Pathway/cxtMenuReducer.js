@@ -1,6 +1,6 @@
 export default (state = null, action) => {
   switch (action.type) {
-    case 'GET_PATHWAY_DATA':
+    case 'SET_CXT_MENU':
       return action.payload;
     default:
       return state;

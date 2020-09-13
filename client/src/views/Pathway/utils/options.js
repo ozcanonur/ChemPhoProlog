@@ -133,7 +133,7 @@ export const getCytoLayout = () => {
     // Whether to tile disconnected nodes
     tile: true,
     // Type of layout animation. The option set is {'during', 'end', false}
-    animate: true,
+    animate: false,
     // Duration for animate:end
     animationDuration: 700,
     // These paddings are space between nodes (phosphosites actually)
