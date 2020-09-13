@@ -44,7 +44,7 @@ const PathSelectList = () => {
         <h4 className={classes.cardTitleWhite}>Inpsect</h4>
         <p className={classes.cardCategoryWhite}>And Animate!</p>
       </CardHeader>
-      <CardBody style={{ maxHeight: '800px', overflow: 'auto' }}>
+      <CardBody style={{ maxHeight: '70vh', overflow: 'auto' }}>
         <List>
           {pathsInspectList.map((path, key) => {
             const [id, node, stopReason, length] = path;

@@ -14,7 +14,7 @@ import 'assets/css/material-dashboard-react.css';
 
 // const whyDidYouRender = require('@welldone-software/why-did-you-render');
 // whyDidYouRender(React, {
-//   include: [/[A-Z][a-z]/],
+//   include: [/Pathway/],
 // });
 
 const hist = createBrowserHistory();

@@ -13,54 +13,61 @@ import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';
 
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/utils/options';
+import whyRender from 'customHooks';
 
-const PathwayIndex = () => {
-  const data = useSelector((state) => state.pathwayData) || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
+// Wrapping it up in memo because react-router match changes causes rerender
+// Problematic with cxtmenu > add to sidebar function
+const PathwayIndex = React.memo(
+  function PathwayIndex(props) {
+    const data = useSelector((state) => state.pathwayData) || {
+      paths: [],
+      relations: {},
+      phosphosites: [],
+      regulatory: {},
+      stoppingReasons: {},
+      observation: {},
+    };
 
-  const start = store.getState().pathwayInputs.substrate;
+    const start = store.getState().pathwayInputs.substrate;
 
-  const elements = getCytoElements(data);
-  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
-  const layout = getCytoLayout();
+    const elements = getCytoElements(data);
+    const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
+    const layout = getCytoLayout();
 
-  return (
-    <div style={{ padding: '2em' }}>
-      <GridContainer direction='column'>
-        <GridItem>
-          <PathwayInputs />
-        </GridItem>
-        <GridItem>
-          <GridContainer direction='column'>
-            <GridItem>
-              <GridContainer direction='row'>
-                <GridItem xs={10}>
-                  <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
-                </GridItem>
-                <GridItem xs={2}>
-                  <PathSelectList />
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-            <GridItem>
-              <GridContainer direction='row'>
-                <GridItem md>
-                  <PathsTable />
-                </GridItem>
-                <GridItem md>{/* <PathDetails /> */}</GridItem>
-              </GridContainer>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
-    </div>
-  );
-};
+    whyRender('PathwayIndex', props);
+    return (
+      <div style={{ padding: '2em' }}>
+        <GridContainer direction='column'>
+          <GridItem>
+            <PathwayInputs />
+          </GridItem>
+          <GridItem>
+            <GridContainer direction='column'>
+              <GridItem>
+                <GridContainer direction='row'>
+                  <GridItem xs={10}>
+                    <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
+                  </GridItem>
+                  <GridItem xs={2}>
+                    <PathSelectList />
+                  </GridItem>
+                </GridContainer>
+              </GridItem>
+              <GridItem>
+                <GridContainer direction='row'>
+                  <GridItem md>
+                    <PathsTable />
+                  </GridItem>
+                  <GridItem md>{/* <PathDetails /> */}</GridItem>
+                </GridContainer>
+              </GridItem>
+            </GridContainer>
+          </GridItem>
+        </GridContainer>
+      </div>
+    );
+  },
+  (prevProps, nextProps) => prevProps.match.path === nextProps.match.path
+);
 
 export default PathwayIndex;

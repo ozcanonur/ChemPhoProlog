@@ -4,6 +4,7 @@ import phosphatases from 'views/Pathway/variables/phosphatases';
 export const getElementsToAnimate = (cy, selectedPath) => {
   const pathIds = [];
   selectedPath.forEach((node, index) => {
+    // Skip edges
     if (index % 2 === 0) pathIds.push(node);
     else {
       pathIds.push(`${node}to${selectedPath[index - 1]}`);

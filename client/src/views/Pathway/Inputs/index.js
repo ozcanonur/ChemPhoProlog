@@ -20,7 +20,7 @@ import setElementsToAnimate from 'actions/Pathway/setElementsToAnimate';
 
 export default function Inputs() {
   const [loading, setLoading] = useState(false);
-  const [switchChecked, setSwitchChecked] = useState(false);
+  const [switchChecked, setSwitchChecked] = useState(true);
   const inputs = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData);
 
@@ -36,7 +36,7 @@ export default function Inputs() {
       cellLine: 'MCF7',
       perturbagen: 'Torin',
       substrate: 'AKT1(S473)',
-      onlyKinaseEnds: false,
+      onlyKinaseEnds: true,
     };
     dispatch(setSelectedInputs(initInputs));
     getPathwayData({ ...initInputs });

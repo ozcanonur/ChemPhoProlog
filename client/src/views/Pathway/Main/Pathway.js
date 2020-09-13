@@ -26,19 +26,19 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const Pathway = ({ data, elements, stylesheet, layout }) => {
+const Pathway = (props) => {
+  const { data, elements, stylesheet, layout } = props;
   const cy = useSelector((state) => state.cy) || Cytoscape();
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   const dispatch = useDispatch();
   useEffect(() => {
     addResizeEventListener(cy, layout);
-
     // Cleanup
     return () => {
       cy.removeListener('on');
 
-      // Have to do this because it clashes with bg animation
+      // Have to do this timeout because it clashes with bg animation
       setTimeout(() => {
         clearAllTimeouts();
         hideTooltips();
@@ -65,17 +65,21 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
       color='primary'
       cardTitle='Pathway'
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
+      style={{ height: '55rem' }}
     >
       <CytoscapeComponent
         cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          dispatch(setCy(_cy));
+          if (_cy !== cy) {
+            dispatch(setCy(_cy));
+          }
           runLayout(_cy, layout);
         }}
+        autolock={false}
         elements={elements}
         stylesheet={stylesheet}
-        style={{ height: '60rem' }}
-        minZoom={0.5}
+        style={{ height: '100%' }}
+        minZoom={0.3}
         maxZoom={1.2}
         boxSelectionEnabled
       />
