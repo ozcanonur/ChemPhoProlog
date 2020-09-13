@@ -60,7 +60,7 @@ const PathsTable = () => {
         <Table
           className='my-node'
           tableHeaderColor='primary'
-          tableHead={['ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
+          tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
           tableData={tableData}
           rowsPerPage={5}
           currentPage={currentPage}

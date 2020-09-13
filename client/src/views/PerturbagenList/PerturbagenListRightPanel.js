@@ -17,7 +17,10 @@ const PerturbagenListRightPanel = ({ selectedInfo }) => {
     selectedEleTitle: selectedInfo.name,
     selectedEleDetailsBody: (
       <div style={{ textAlign: 'center' }}>
-        <img src={`http://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`} alt='' />
+        <img
+          src={`https://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`}
+          alt='Perturbagen'
+        />
       </div>
     ),
     selectedEleDetailsBottomBody: <NewFindingsCard {...findingsProps} />,

@@ -26,8 +26,7 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const Pathway = (props) => {
-  const { data, elements, stylesheet, layout } = props;
+const Pathway = ({ data, elements, stylesheet, layout }) => {
   const cy = useSelector((state) => state.cy) || Cytoscape();
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 

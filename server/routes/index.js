@@ -168,14 +168,14 @@ router.get('/api/getValidObservations', (req, res) => {
   const cell_line = req.query.cell_line;
 
   const query =
-    'select substrate from Observation_valid where perturbagen = ? and cell_line = ? order by substrate';
+    'select substrate, fold_change from Observation_valid where perturbagen = ? and cell_line = ? order by fold_change';
   db.all(query, [perturbagen, cell_line], (err, rows) => {
     if (err) throw err;
 
-    // const parsedRows = rows.map(
-    //   ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change, 10).toFixed(2)}`
-    // );
-    res.send(rows);
+    const parsedRows = rows.map(
+      ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change, 10).toFixed(2)}`
+    );
+    res.send(parsedRows);
   });
 });
 

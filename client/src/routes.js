@@ -32,17 +32,17 @@ const routes = [
     layout: '/home',
   },
   {
+    path: '/pathway',
+    name: 'Pathways',
+    icon: TrendingDown,
+    component: Pathway,
+    layout: '/home',
+  },
+  {
     path: '/api',
     name: 'API',
     icon: Web,
     component: Welcome,
-    layout: '/home',
-  },
-  {
-    path: '/pathway',
-    name: 'Pathway',
-    icon: TrendingDown,
-    component: Pathway,
     layout: '/home',
   },
 ];

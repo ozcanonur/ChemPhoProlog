@@ -113,29 +113,31 @@ export const getCytoLayout = () => {
     quality: 'proof',
     randomize: false,
     fit: true,
-    paddding: 30,
+    padding: 30,
     // Whether to include labels in node dimensions. Useful for avoiding label overlap
     nodeDimensionsIncludeLabels: true,
     // number of ticks per frame; higher is faster but more jerky
     refresh: 60,
-    // Node repulsion (non overlapping) multiplier
+    // Node repulsion (non overlapping) multiplier. CRITICAL for different layouts
     nodeRepulsion: 1000000,
     // Ideal (intra-graph) edge length
-    idealEdgeLength: 10,
+    idealEdgeLength: 20,
     // Divisor to compute edge forces
     edgeElasticity: 0.1,
     // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
     nestingFactor: 0.5,
     // Gravity force (constant) Higher makes nodes TOO FAR APART, lower makes compounds too large
     gravity: 0.1,
-    // Maximum number of iterations to perform
-    numIter: 2500,
-    // Whether to tile disconnected nodes
+    // Maximum number of iterations to perform.
+    // Makes layout far better with more iterations, but also far slower. 2500 is default, 10000 feels acceptable
+    numIter: 10000,
+    // Makes nodes that don't have edges (phosphosites inside KPas) spread out in compound
     tile: true,
-    // Type of layout animation. The option set is {'during', 'end', false}
+    // Type of layout animation.
+    // The option set is {'during', 'end', false}. During is quite funny
     animate: false,
     // Duration for animate:end
-    animationDuration: 700,
+    animationDuration: 100,
     // These paddings are space between nodes (phosphosites actually)
     tilingPaddingVertical: 20,
     tilingPaddingHorizontal: 10,
@@ -147,6 +149,7 @@ export const getCytoLayout = () => {
     gravityRange: 1,
     // Initial cooling factor for incremental layout
     initialEnergyOnIncremental: 0.1,
+    // Called on `layoutready`
     ready: () => {},
     // Called on `layoutstop`
     stop: () => {},
@@ -170,20 +173,22 @@ export const getCytoElements = (data) => {
     };
   });
 
-  // Avoiding loops with indexOf, messes up the layout for some reason?
+  // Avoiding self phosphorylation nodes with indexOf, messes up the layout for some reason?
+  // Add them as KPa > KPa though, KPa > self phosphosite doesn't work.
   const edges = Object.keys(data.relations)
-    .map((key) =>
-      data.relations[key]
-        .filter((x) => x.indexOf(key) === -1)
-        .map((e) => {
-          return {
-            data: { id: `${key}to${e}`, source: key, target: e },
-            selectable: false,
-            grabbable: false,
-            pannable: false,
-          };
-        })
-    )
+    .map((key) => {
+      return data.relations[key].map((e) => {
+        const id = e.indexOf(key) !== -1 ? `${key}to${key}` : `${key}to${e}`;
+        const target = e.indexOf(key) !== -1 ? key : e;
+
+        return {
+          data: { id, source: key, target },
+          selectable: false,
+          grabbable: false,
+          pannable: false,
+        };
+      });
+    })
     .flat();
 
   return [...nodes, ...phosphosites, ...edges];

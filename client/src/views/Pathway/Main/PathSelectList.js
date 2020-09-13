@@ -33,8 +33,8 @@ const PathSelectList = () => {
     const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
     dispatch(setElementsToAnimate(elementsToAnimate));
 
-    clearAllTimeouts();
     resetPathwayVisuals(cy);
+    clearAllTimeouts();
     animatePath(elementsToAnimate, data, 50, true, true, dispatch);
   };
 

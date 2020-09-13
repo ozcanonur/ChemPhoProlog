@@ -45,7 +45,7 @@ export default function Virtualize({ type }) {
       const params = { cell_line: 'MCF-7', perturbagen: inputs.perturbagen };
 
       getApi(route, params).then((res) => {
-        setData(res.map((e) => Object.values(e)[0]));
+        setData(res);
       });
     } else if (type === 'Perturbagen') setData(perturbagens);
     else if (type === 'Cell Line') setData(['MCF7', 'HL60', 'NTERA']);
@@ -61,6 +61,12 @@ export default function Virtualize({ type }) {
     dispatch(setSelectedInputs(newInputs));
   };
 
+  const getLabel = (type) => {
+    if (type === 'Cell Line') return 'MCF-7';
+    if (type === 'Substrate') return `${data.length} Substrates`;
+    return type;
+  };
+
   return (
     <Autocomplete
       id={type}
@@ -71,11 +77,9 @@ export default function Virtualize({ type }) {
       ListboxComponent={ListboxComponent}
       renderGroup={renderGroup}
       options={data}
-      renderInput={(params) => (
-        <TextField {...params} variant='outlined' label={type === 'Cell Line' ? 'MCF-7' : type} />
-      )}
+      renderInput={(params) => <TextField {...params} variant='outlined' label={getLabel(type)} />}
       renderOption={(option) => <Typography noWrap>{option}</Typography>}
-      onInputChange={(_e, value) => onInputChange(value)}
+      onInputChange={(_e, value) => onInputChange(value.split(',')[0])}
     />
   );
 }
