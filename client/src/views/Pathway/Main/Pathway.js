@@ -69,9 +69,7 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
       <CytoscapeComponent
         cy={(_cy) => {
           // Need this to get a reference to cy object in the component
-          if (_cy !== cy) {
-            dispatch(setCy(_cy));
-          }
+          if (_cy !== cy) dispatch(setCy(_cy));
           runLayout(_cy, layout);
         }}
         autolock={false}

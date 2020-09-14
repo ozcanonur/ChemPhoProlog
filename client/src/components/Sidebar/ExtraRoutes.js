@@ -56,8 +56,8 @@ const ExtraRoute = ({ route }) => {
     };
 
     return (
-      <Slide in={true} direction='left' mountOnEnter unmountOnExit>
-        <div key={key}>
+      <Slide in={true} key={key} direction='left' mountOnEnter unmountOnExit>
+        <div>
           {key === 0 ? (
             <ListItem
               key={currentTitle}

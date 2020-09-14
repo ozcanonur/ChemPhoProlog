@@ -19,14 +19,14 @@ const routes = [
   },
   {
     path: '/kinaseList',
-    name: 'Kinase List',
+    name: 'Kinases',
     icon: PanoramaHorizontal,
     component: KinaseList,
     layout: '/home',
   },
   {
     path: '/perturbagenList',
-    name: 'Perturbagen List',
+    name: 'Perturbagens',
     icon: Healing,
     component: PerturbagenList,
     layout: '/home',

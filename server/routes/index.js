@@ -135,7 +135,7 @@ router.get('/api/phosphositesOfInterest/', (req, res) => {
     `(select TProtein, PsT_effect, residue_type, residue_offset from known_sign where TProtein = ?) as y ` +
     `on x.residue = y.residue_type and x.location = y.residue_offset`;
 
-  db.all(query, [protein], (err, rows) => {
+  db.all(query, [protein, protein], (err, rows) => {
     if (err) throw err;
     res.send(rows);
   });
