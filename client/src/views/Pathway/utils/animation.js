@@ -2,11 +2,16 @@ import { addTooltip } from 'views/Pathway/utils/tooltip';
 import phosphatases from 'variables/phosphatases';
 
 export const getElementsToAnimate = (cy, selectedPath) => {
+  console.log(selectedPath);
   const pathIds = [];
   selectedPath.forEach((node, index) => {
     // Skip edges
     if (index % 2 === 0) pathIds.push(node);
     else {
+      if (node.includes(selectedPath[index - 1])) {
+        // This edge doesn't exist
+        // Add loop elements inside, but they won't show anyway?
+      }
       pathIds.push(`${node}to${selectedPath[index - 1]}`);
       pathIds.push(node);
     }
@@ -24,6 +29,10 @@ export const getElementsToAnimate = (cy, selectedPath) => {
     elementsToFade = allElements.filter(
       (e) => !pathIds.includes(e.data().id) && e.data().id !== elementsToShow[0].data().parent
     );
+
+  elementsToShow.forEach((element) => {
+    console.log(element.data().id);
+  });
 
   return { elementsToShow, elementsToFade };
 };

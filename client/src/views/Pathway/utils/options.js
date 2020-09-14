@@ -176,11 +176,22 @@ export const getCytoElements = (data) => {
 
   // Avoiding self phosphorylation nodes with indexOf, messes up the layout for some reason?
   // Add them as KPa > KPa though, KPa > self phosphosite doesn't work.
+  const loops = [];
   const edges = Object.keys(data.relations)
     .map((key) => {
       return data.relations[key].map((e) => {
-        const id = e.indexOf(key) !== -1 ? `${key}to${key}` : `${key}to${e}`;
-        const target = e.indexOf(key) !== -1 ? key : e;
+        const isLoop = e.indexOf(key) !== -1;
+        const id = isLoop ? `${key}to${key}` : `${key}to${e}`;
+        const target = isLoop ? key : e;
+
+        if (isLoop) {
+          loops.push({
+            data: { id: `${key}to${e}`, source: key, target: e },
+            selectable: false,
+            grabbable: false,
+            pannable: false,
+          });
+        }
 
         return {
           data: { id, source: key, target },
@@ -192,5 +203,5 @@ export const getCytoElements = (data) => {
     })
     .flat();
 
-  return [...nodes, ...phosphosites, ...edges];
+  return { elements: [...nodes, ...phosphosites, ...edges], loops };
 };
