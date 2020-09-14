@@ -73,8 +73,8 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
         if (reg === 'p_dec') return '#650000';
         return '#505050';
       },
-      width: 40,
-      height: 40,
+      width: (e) => (e.data().id === start ? 60 : 40),
+      height: (e) => (e.data().id === start ? 60 : 40),
       'transition-property': 'width height border-width',
       'transition-duration': '0.2s',
       'transition-timing-function': 'ease-out',

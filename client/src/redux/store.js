@@ -12,20 +12,7 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: [
-    'kinaseData',
-    'currentPageKinase',
-    'perturbagenData',
-    'currentPagePerturbagen',
-    'pathsInspectList',
-    'pathwayData',
-    'selectedPath',
-    'cy',
-    'elementsToAnimate',
-    'cxtMenu',
-    'pathwayInputs',
-    'pathExplanation',
-  ],
+  whitelist: ['selectedKinase', 'selectedPerturbagen', 'extraSidebarRoutes'],
 };
 
 export const store = createStore(
