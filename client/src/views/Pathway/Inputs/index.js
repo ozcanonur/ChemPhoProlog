@@ -12,10 +12,10 @@ import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
-import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
-import removeAllInspectPaths from 'actions/Pathway/removeAllInspectPaths';
-import getPathwayData from 'actions/Pathway/getPathwayData';
-import setElementsToAnimate from 'actions/Pathway/setElementsToAnimate';
+import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
+import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
+import getPathwayData from 'redux/actions/Pathway/getPathwayData';
+import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
 // eslint-disable-next-line no-unused-vars
 
 export default function Inputs() {

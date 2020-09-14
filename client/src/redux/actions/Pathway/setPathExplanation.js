@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import phosphatases from 'variables/phosphatases';
-import { store } from 'store';
+import { store } from 'redux/store';
 
 const getExplanationForPath = (path, observation, regulatory, stoppingReasons) => {
   const outputList = [];

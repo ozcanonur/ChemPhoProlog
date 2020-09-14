@@ -11,7 +11,7 @@ import { toggleTooltips } from 'views/Pathway/utils/tooltip';
 import { animatePath } from 'views/Pathway/utils/animation';
 import { resetPathwayVisuals, clearAllTimeouts } from 'views/Pathway/utils/misc';
 
-import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
+import changeSelectedPath from 'redux/actions/Pathway/changeSelectedPath';
 
 const ExtraButtons = () => {
   const cy = useSelector((state) => state.cy);

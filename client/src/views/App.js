@@ -8,8 +8,8 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
-import routes from 'routes';
-import additionalRoutes from 'additionalRoutes';
+import routes from 'variables/routes';
+import additionalRoutes from 'variables/additionalRoutes';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';

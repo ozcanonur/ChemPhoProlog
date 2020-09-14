@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import setPathExplanation from 'actions/Pathway/setPathExplanation';
+import setPathExplanation from 'redux/actions/Pathway/setPathExplanation';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';

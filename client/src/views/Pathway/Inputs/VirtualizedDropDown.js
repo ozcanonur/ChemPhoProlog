@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { store } from 'store';
+import { store } from 'redux/store';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import getApi from 'api/api';
 import perturbagens from 'variables/perturbagens';
-import setSelectedInputs from 'actions/Pathway/setSelectedInputs';
+import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
 
 import ListboxComponent from 'views/Pathway/Inputs/ListBoxComponent';
 

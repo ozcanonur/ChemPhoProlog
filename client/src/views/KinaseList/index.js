@@ -8,10 +8,10 @@ import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 import pick from 'lodash/pick';
 
-import fetchKinaseData from 'actions/KinaseList/fetchKinaseData';
-import changeSelectedKinase from 'actions/KinaseList/changeSelectedKinase';
-import changeCurrentPageKinase from 'actions/KinaseList/changeCurrentPageKinase';
-import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
+import fetchKinaseData from 'redux/actions/KinaseList/fetchKinaseData';
+import changeSelectedKinase from 'redux/actions/KinaseList/changeSelectedKinase';
+import changeCurrentPageKinase from 'redux/actions/KinaseList/changeCurrentPageKinase';
+import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 
 import KinaseListRightPanel from 'views/KinaseList/KinaseListRightPanel';
 import KinaseListPhosphosites from 'views/KinaseList/KinaseListPhosphosites';

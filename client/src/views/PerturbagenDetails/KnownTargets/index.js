@@ -5,7 +5,7 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import getApi from 'api/api';
-import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
+import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 
 const KnownTargets = () => {
   const [tableData, setTableData] = useState([]);

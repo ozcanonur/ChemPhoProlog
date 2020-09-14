@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import addInspectPath from 'actions/Pathway/addInspectPath';
+import addInspectPath from 'redux/actions/Pathway/addInspectPath';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';

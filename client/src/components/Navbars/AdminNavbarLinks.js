@@ -15,8 +15,8 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 
 import getApi from 'api/api';
-import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
-import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
+import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
+import addSidebarRoutePerturbagen from 'redux/actions/Sidebar/addSidebarRoutePerturbagen';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';

@@ -7,10 +7,10 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 
-import fetchPerturbagenData from 'actions/PerturbagenList/fetchPerturbagenData';
-import changeSelectedPerturbagen from 'actions/PerturbagenList/changeSelectedPerturbagen';
-import changeCurrentPagePerturbagen from 'actions/PerturbagenList/changeCurrentPagePerturbagen';
-import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
+import fetchPerturbagenData from 'redux/actions/PerturbagenList/fetchPerturbagenData';
+import changeSelectedPerturbagen from 'redux/actions/PerturbagenList/changeSelectedPerturbagen';
+import changeCurrentPagePerturbagen from 'redux/actions/PerturbagenList/changeCurrentPagePerturbagen';
+import addSidebarRoutePerturbagen from 'redux/actions/Sidebar/addSidebarRoutePerturbagen';
 
 import PerturbagenListRightPanel from 'views/PerturbagenList/PerturbagenListRightPanel';
 

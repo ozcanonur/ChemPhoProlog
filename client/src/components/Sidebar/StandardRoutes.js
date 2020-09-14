@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
 import classNames from 'classnames';
-import routes from 'routes';
+import routes from 'variables/routes';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';

@@ -11,9 +11,9 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import removeSidebarRoute from 'actions/Sidebar/removeSidebarRoute';
+import removeSidebarRoute from 'redux/actions/Sidebar/removeSidebarRoute';
 import { useDispatch, useSelector } from 'react-redux';
-import additionalRoutes from 'additionalRoutes';
+import additionalRoutes from 'variables/additionalRoutes';
 
 import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';

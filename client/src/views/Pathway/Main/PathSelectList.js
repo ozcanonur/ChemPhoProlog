@@ -8,8 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { useSelector, useDispatch } from 'react-redux';
-import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
-import setElementsToAnimate from 'actions/Pathway/setElementsToAnimate';
+import changeSelectedPath from 'redux/actions/Pathway/changeSelectedPath';
+import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
 import { resetPathwayVisuals, clearAllTimeouts } from 'views/Pathway/utils/misc';
 import { getElementsToAnimate, animatePath } from 'views/Pathway/utils/animation';
 

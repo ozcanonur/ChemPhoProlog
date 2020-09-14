@@ -1,4 +1,4 @@
-import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
+import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 import kinases from 'variables/kinases';
 import phosphatases from 'variables/phosphatases';
 
