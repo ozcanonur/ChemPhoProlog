@@ -4,9 +4,7 @@ import { store } from 'store';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import CardGeneric from 'components/Card/CardGeneric';
 
-import ExtraButtons from 'views/Pathway/Main/Buttons/';
 import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';
 
@@ -24,26 +22,16 @@ const Main = React.memo(() => {
     observation: {},
   };
 
-  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
+  const start = store.getState().pathwayInputs.substrate;
 
   const elements = getCytoElements(data);
-  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, substrate);
+  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
   const layout = getCytoLayout();
 
   return (
     <GridContainer direction='row'>
       <GridItem xs={10}>
-        <CardGeneric
-          color='primary'
-          cardTitle='Pathway'
-          cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
-          style={{ height: '55rem' }}
-        >
-          <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
-          <div style={{ position: 'absolute', top: 0, right: 0 }}>
-            <ExtraButtons />
-          </div>
-        </CardGeneric>
+        <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
       </GridItem>
       <GridItem xs={2}>
         <PathSelectList />

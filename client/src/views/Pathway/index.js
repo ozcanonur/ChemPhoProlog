@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 
 import GridContainer from 'components/Grid/GridContainer';
@@ -6,7 +5,7 @@ import GridItem from 'components/Grid/GridItem';
 
 import PathwayInputs from 'views/Pathway/Inputs/';
 import PathwayInformation from 'views/Pathway/Information/';
-import Main from 'views/Pathway/Main/';
+import PathwayMain from 'views/Pathway/Main/';
 
 const PathwayIndex = () => (
   <div style={{ padding: '2em' }}>
@@ -17,7 +16,7 @@ const PathwayIndex = () => (
       <GridItem>
         <GridContainer direction='column'>
           <GridItem>
-            <Main />
+            <PathwayMain />
           </GridItem>
           <GridItem>
             <PathwayInformation />
