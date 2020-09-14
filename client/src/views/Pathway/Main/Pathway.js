@@ -40,7 +40,6 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
   useEffect(() => {
     return () => {
       cy.removeListener('on');
-      // Have to do this timeout because it clashes with bg animation
       clearAllTimeouts();
       hideTooltips();
     };

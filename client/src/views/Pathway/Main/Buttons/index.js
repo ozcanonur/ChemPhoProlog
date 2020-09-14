@@ -9,7 +9,7 @@ import Legend from 'views/Pathway/Main/Buttons/Legend';
 
 import { toggleTooltips } from 'views/Pathway/utils/tooltip';
 import { animatePath } from 'views/Pathway/utils/animation';
-import { resetPathwayVisuals } from 'views/Pathway/utils/misc';
+import { resetPathwayVisuals, clearAllTimeouts } from 'views/Pathway/utils/misc';
 
 import changeSelectedPath from 'actions/Pathway/changeSelectedPath';
 
@@ -59,6 +59,7 @@ const ExtraButtons = () => {
     {
       text: 'Phosphosites',
       onClick: () => {
+        clearAllTimeouts();
         resetPathwayVisuals(cy);
         if (phosphositesOpen) dispatch(changeSelectedPath([]));
         else

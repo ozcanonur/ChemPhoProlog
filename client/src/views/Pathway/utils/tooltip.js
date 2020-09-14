@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line no-unused-vars
 import tippy, { sticky, hideAll as hideTooltips } from 'tippy.js';
@@ -14,19 +13,20 @@ const makeTooltip = (element, content, placement) => {
 
   const dummyDomEle = document.createElement('div');
 
-  return tippy(dummyDomEle, {
+  const tippyInstance = tippy(dummyDomEle, {
     onCreate: (instance) => {
       instance.popperInstance.reference = ref;
     },
     content,
     placement,
+    showOnCreate: true,
     lazy: false, // mandatory
     trigger: 'manual', // mandatory
     arrow: true,
     hideOnClick: false,
     multiple: true,
-    // sticky: true, // causes the route change crash bug
-    // plugins: [sticky],
+    sticky: true, // causes the route change crash bug
+    plugins: [sticky],
     allowHTML: true,
     inertia: true,
     interactive: true,
@@ -34,6 +34,8 @@ const makeTooltip = (element, content, placement) => {
     animation: 'scale',
     theme: 'theme',
   });
+
+  return tippyInstance;
 };
 
 const setupTooltip = (element, content) => {
@@ -44,18 +46,18 @@ const setupTooltip = (element, content) => {
 
 const addStartTooltip = (element, fold_change, pValue) => {
   const content = `Start <br/> fc: ${fold_change} <br/> p: ${pValue}`;
-  setupTooltip(element, content).show();
+  setupTooltip(element, content);
 };
 
 const addPhosphositeTooltip = (element, foldChange, pValue, stoppingReason) => {
   const stopReasonText = stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
   const content = `fc: ${foldChange} <br/> p: ${pValue} <br/> ${stopReasonText}`;
-  setupTooltip(element, content).show();
+  setupTooltip(element, content);
 };
 
 const addEndKPaTooltip = (element, stoppingReason) => {
   const content = `Stop: ${stoppingReason}`;
-  setupTooltip(element, content).show();
+  setupTooltip(element, content);
 };
 
 export const addTooltip = (data, element, isStartNode, isLastNode) => {
