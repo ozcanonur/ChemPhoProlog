@@ -1,4 +1,4 @@
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 
 const formatObservation = (phosphosites, fullObservationData) => {
   const observationInCurrentPaths = fullObservationData.filter((e) => phosphosites.includes(e.substrate));

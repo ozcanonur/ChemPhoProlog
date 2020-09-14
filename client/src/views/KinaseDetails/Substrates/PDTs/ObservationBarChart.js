@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 
 import BarChart from 'views/KinaseDetails/Substrates/PDTs/BarChart';
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 import Lottie from 'react-lottie';
 import animationData from 'assets/lottie/loading2.json';
 

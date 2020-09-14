@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 
 const CircularBarPlot = ({ cell_line }) => {
   const chart = useRef();

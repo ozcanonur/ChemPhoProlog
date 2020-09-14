@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 
 const KnownTargets = () => {

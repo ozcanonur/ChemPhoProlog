@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
 const PhosphositesOfInterestTable = ({ protein }) => {

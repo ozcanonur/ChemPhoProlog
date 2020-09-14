@@ -35,16 +35,16 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     addResizeEventListener(cy, layout);
-    // Cleanup
+  }, [cy]);
+
+  useEffect(() => {
     return () => {
       cy.removeListener('on');
       // Have to do this timeout because it clashes with bg animation
-      setTimeout(() => {
-        clearAllTimeouts();
-      }, 100);
+      clearAllTimeouts();
       hideTooltips();
     };
-  }, [cy]);
+  }, []);
 
   useEffect(() => {
     resetPathwayVisuals(cy);

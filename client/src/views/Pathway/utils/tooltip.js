@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line no-unused-vars
 import tippy, { sticky, hideAll as hideTooltips } from 'tippy.js';
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
@@ -24,8 +25,8 @@ const makeTooltip = (element, content, placement) => {
     arrow: true,
     hideOnClick: false,
     multiple: true,
-    sticky: true,
-    plugins: [sticky],
+    // sticky: true, // causes the route change crash bug
+    // plugins: [sticky],
     allowHTML: true,
     inertia: true,
     interactive: true,

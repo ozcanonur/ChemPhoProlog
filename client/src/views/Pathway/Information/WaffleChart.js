@@ -1,16 +1,11 @@
 import React from 'react';
 
 import { ResponsiveWaffle } from '@nivo/waffle';
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
 
 const Waffle = ({ paths, stoppingReasons }) => {
   const stoppingReasonCounts = {
-    unaffected: 0,
     no_data: 0,
+    unaffected: 0,
     no_prior_knowledge: 0,
     loop: 0,
     unexpectedFC: 0,
@@ -37,7 +32,7 @@ const Waffle = ({ paths, stoppingReasons }) => {
       columns={50}
       fillDirection='left'
       margin={{ top: 10, right: 0, bottom: 0, left: 0 }}
-      colors={['#001233', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#2D4159']}
+      colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
       borderColor={{ from: 'color', modifiers: [['darker', '0.6']] }}
       animate={false}
       legends={[

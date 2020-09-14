@@ -14,7 +14,7 @@ import TrendingDown from '@material-ui/icons/TrendingDown';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
 import addSidebarRoutePerturbagen from 'actions/Sidebar/addSidebarRoutePerturbagen';
 

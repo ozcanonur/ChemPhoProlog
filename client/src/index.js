@@ -10,7 +10,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import App from 'views/App';
 import ParticlesBg from 'particles-bg';
 
-import 'assets/css/material-dashboard-react.css';
+import 'assets/css/style.css';
 
 // const whyDidYouRender = require('@welldone-software/why-did-you-render');
 // whyDidYouRender(React, {

@@ -1,4 +1,4 @@
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 
 export default () => async (dispatch) => {
   const route = '/getPerturbagenList';

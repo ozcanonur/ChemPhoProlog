@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
-import { getApi } from 'api/api';
+import getApi from 'api/api';
 
 import perturbagens from 'views/KinaseDetails/Description/variables/perturbagens';
 
