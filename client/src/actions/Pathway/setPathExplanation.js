@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import phosphatases from 'views/Pathway/variables/phosphatases';
+import phosphatases from 'variables/phosphatases';
 import { store } from 'store';
 
 const getExplanationForPath = (path, observation, regulatory, stoppingReasons) => {

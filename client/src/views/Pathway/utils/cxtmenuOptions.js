@@ -1,6 +1,6 @@
 import addSidebarRouteKinase from 'actions/Sidebar/addSidebarRouteKinase';
-import kinases from 'views/Pathway/variables/kinases';
-import phosphatases from 'views/Pathway/variables/phosphatases';
+import kinases from 'variables/kinases';
+import phosphatases from 'variables/phosphatases';
 
 const cxtmenuOptions = (dispatchFunc) => {
   return {

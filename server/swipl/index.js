@@ -1,12 +1,12 @@
 const parsePaths = require('./parsePaths');
-///////////////////////////////////
-//////////////CONSULT//////////////
-///////////////////////////////////
+
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.split(search).join(replacement);
 };
-
+///////////////////////////////////
+//////////////CONSULT//////////////
+///////////////////////////////////
 const consultFiles = (swipl, files) => {
   files.forEach((file) => {
     swipl.call(`consult("${file}").`);
@@ -70,7 +70,7 @@ const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
     paths.push({ path, explanation: node.Explanation, inhibited: node.Inhibited });
   }
 
-  // Filter phosphosite ends if specified, keep if there are no paths (so only ps start)
+  // Filter phosphosite ends if specified, keep if there are no paths (so only the ps start)
   if (onlyKinaseEnds === 'true') {
     paths = paths.filter((path) => {
       const lastStep = path.path[path.path.length - 1];

@@ -4,8 +4,6 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import getApi from 'api/api';
-import Lottie from 'react-lottie';
-import animationData from 'assets/lottie/loading2.json';
 
 const ObservationData = () => {
   const [tableData, setTableData] = useState([]);
@@ -35,28 +33,18 @@ const ObservationData = () => {
     });
   }, [perturbagen]);
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData,
-  };
-
   return (
     <div style={{ padding: '2em' }}>
       <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
-        {tableData.length === 0 ? (
-          <Lottie options={defaultOptions} height={500} width={500} />
-        ) : (
-          <Table
-            className='my-node'
-            tableHeaderColor='primary'
-            tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
-            tableData={tableData}
-            rowsPerPage={10}
-            currentPage={currentPage}
-            handleChangePage={handleChangePage}
-          />
-        )}
+        <Table
+          className='my-node'
+          tableHeaderColor='primary'
+          tableHead={['Substrate', 'Cell Line', 'Fold change', 'p Value', 'CV']}
+          tableData={tableData}
+          rowsPerPage={10}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
+        />
       </CardGeneric>
     </div>
   );

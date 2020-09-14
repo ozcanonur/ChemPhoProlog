@@ -5,7 +5,7 @@ import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
 import getApi from 'api/api';
 
-import perturbagens from 'views/KinaseDetails/Description/variables/perturbagens';
+import perturbagens from 'variables/perturbagens';
 
 const ObservationHeatMap = ({ row }) => {
   const [observationData, setObservationData] = useState([]);

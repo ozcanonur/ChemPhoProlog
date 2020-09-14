@@ -1,5 +1,5 @@
 import { addTooltip } from 'views/Pathway/utils/tooltip';
-import phosphatases from 'views/Pathway/variables/phosphatases';
+import phosphatases from 'variables/phosphatases';
 
 export const getElementsToAnimate = (cy, selectedPath) => {
   const pathIds = [];

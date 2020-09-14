@@ -31,7 +31,7 @@ const Waffle = ({ paths, stoppingReasons }) => {
       rows={6}
       columns={50}
       fillDirection='left'
-      margin={{ top: 10, right: 0, bottom: 0, left: 0 }}
+      margin={{ top: '50', right: 0, bottom: 0, left: 0 }}
       colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
       borderColor={{ from: 'color', modifiers: [['darker', '0.6']] }}
       animate={false}
@@ -41,7 +41,7 @@ const Waffle = ({ paths, stoppingReasons }) => {
           direction: 'row',
           justify: false,
           translateX: 0,
-          translateY: -5,
+          translateY: -50,
           itemsSpacing: 10,
           itemWidth: 120,
           itemHeight: 20,
