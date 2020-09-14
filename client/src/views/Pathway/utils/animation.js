@@ -2,37 +2,29 @@ import { addTooltip } from 'views/Pathway/utils/tooltip';
 import phosphatases from 'variables/phosphatases';
 
 export const getElementsToAnimate = (cy, selectedPath) => {
-  console.log(selectedPath);
-  const pathIds = [];
+  const elementsToShow = [];
+  const elementsToShowIds = [];
   selectedPath.forEach((node, index) => {
-    // Skip edges
-    if (index % 2 === 0) pathIds.push(node);
-    else {
-      if (node.includes(selectedPath[index - 1])) {
-        // This edge doesn't exist
-        // Add loop elements inside, but they won't show anyway?
-      }
-      pathIds.push(`${node}to${selectedPath[index - 1]}`);
-      pathIds.push(node);
+    if (index % 2 !== 0) {
+      const edgeId = `${node}to${selectedPath[index - 1]}`;
+      elementsToShowIds.push(edgeId);
+
+      const edgeExists = cy.$(`[id='${edgeId}']`).length > 0;
+      if (edgeExists) elementsToShow.push(cy.$(`[id='${edgeId}']`)[0]);
     }
+    elementsToShowIds.push(node);
+    const nodeExists = cy.$(`[id='${node}']`).length > 0;
+    if (nodeExists) elementsToShow.push(cy.$(`[id='${node}']`)[0]);
   });
-
-  const allElements = cy.elements();
-
-  // Sort the animate list according to the pathway ID list (for sequential animation)
-  let elementsToShow = allElements.filter((e) => pathIds.includes(e.data().id));
-  elementsToShow = elementsToShow.sort((x, y) => pathIds.indexOf(x.data().id) - pathIds.indexOf(y.data().id));
 
   // Do not include the starting KPa in fade list (because it looks better)
-  let elementsToFade = cy.collection();
+  let elementsToFade = [];
   if (elementsToShow.length !== 0)
-    elementsToFade = allElements.filter(
-      (e) => !pathIds.includes(e.data().id) && e.data().id !== elementsToShow[0].data().parent
-    );
-
-  elementsToShow.forEach((element) => {
-    console.log(element.data().id);
-  });
+    elementsToFade = cy
+      .elements()
+      .filter(
+        (e) => !elementsToShowIds.includes(e.data().id) && e.data().id !== elementsToShow[0].data().parent
+      );
 
   return { elementsToShow, elementsToFade };
 };

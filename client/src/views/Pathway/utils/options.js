@@ -135,9 +135,9 @@ export const getCytoLayout = () => {
     tile: true,
     // Type of layout animation.
     // The option set is {'during', 'end', false}. During is quite funny
-    animate: false,
+    animate: true,
     // Duration for animate:end
-    animationDuration: 100,
+    animationDuration: 500,
     // These paddings are space between nodes (phosphosites actually)
     tilingPaddingVertical: 20,
     tilingPaddingHorizontal: 10,
@@ -176,22 +176,12 @@ export const getCytoElements = (data) => {
 
   // Avoiding self phosphorylation nodes with indexOf, messes up the layout for some reason?
   // Add them as KPa > KPa though, KPa > self phosphosite doesn't work.
-  const loops = [];
   const edges = Object.keys(data.relations)
     .map((key) => {
       return data.relations[key].map((e) => {
-        const isLoop = e.indexOf(key) !== -1;
-        const id = isLoop ? `${key}to${key}` : `${key}to${e}`;
-        const target = isLoop ? key : e;
-
-        if (isLoop) {
-          loops.push({
-            data: { id: `${key}to${e}`, source: key, target: e },
-            selectable: false,
-            grabbable: false,
-            pannable: false,
-          });
-        }
+        const isLoopEdge = e.indexOf(key) !== -1;
+        const id = isLoopEdge ? `${key}to${key}` : `${key}to${e}`;
+        const target = isLoopEdge ? key : e;
 
         return {
           data: { id, source: key, target },
@@ -203,5 +193,5 @@ export const getCytoElements = (data) => {
     })
     .flat();
 
-  return { elements: [...nodes, ...phosphosites, ...edges], loops };
+  return [...nodes, ...phosphosites, ...edges];
 };

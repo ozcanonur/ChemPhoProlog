@@ -27,7 +27,7 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const Pathway = ({ data, elements, stylesheet, layout, loops }) => {
+const Pathway = ({ data, elements, stylesheet, layout }) => {
   const cy = useSelector((state) => state.cy) || Cytoscape();
 
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
@@ -71,8 +71,6 @@ const Pathway = ({ data, elements, stylesheet, layout, loops }) => {
           // Need this to get a reference to cy object in the component
           if (_cy !== cy) dispatch(setCy(_cy));
           runLayout(_cy, layout);
-          console.log(loops);
-          cy.add(loops);
         }}
         autolock={false}
         elements={elements}

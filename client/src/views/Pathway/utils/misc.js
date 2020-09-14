@@ -31,7 +31,7 @@ export const addResizeEventListener = (cy, layout) => {
     const heightChange = Math.abs(evt.target.height() - height);
 
     // Only run layout again when resize is more than 30px
-    const sizeChanged = widthChange > 30 || heightChange > 30;
+    const sizeChanged = widthChange > 50 || heightChange > 50;
     if (sizeChanged) runLayout(cy, layout);
 
     width = evt.target.width();

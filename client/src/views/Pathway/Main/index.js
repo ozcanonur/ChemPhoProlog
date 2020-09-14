@@ -24,15 +24,14 @@ const Main = React.memo(() => {
 
   const start = store.getState().pathwayInputs.substrate;
 
-  const elements = getCytoElements(data).elements;
+  const elements = getCytoElements(data);
   const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
   const layout = getCytoLayout();
-  const loops = getCytoElements(data).loops;
 
   return (
     <GridContainer direction='row'>
       <GridItem xs={10}>
-        <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} loops={loops} />
+        <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
       </GridItem>
       <GridItem xs={2}>
         <PathSelectList />
