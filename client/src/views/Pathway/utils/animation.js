@@ -5,6 +5,7 @@ export const getElementsToAnimate = (cy, selectedPath) => {
   const elementsToShow = [];
   const elementsToShowIds = [];
   selectedPath.forEach((node, index) => {
+    // Add the edge connecting to the last node along with the node on even indexes
     if (index % 2 !== 0) {
       const edgeId = `${node}to${selectedPath[index - 1]}`;
       elementsToShowIds.push(edgeId);

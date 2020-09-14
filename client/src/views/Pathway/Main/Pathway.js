@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { store } from 'store';
 import setCy from 'actions/Pathway/setCy';
+import setElementsToAnimate from 'actions/Pathway/setElementsToAnimate';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -34,16 +35,24 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    addResizeEventListener(cy, layout);
-  }, [cy]);
-
-  useEffect(() => {
+    // Cleanup listener, timeouts, tooltips
+    // And current selected animation
     return () => {
       cy.removeListener('on');
       clearAllTimeouts();
       hideTooltips();
+      dispatch(
+        setElementsToAnimate({
+          elementsToShow: cy.collection(),
+          elementsToFade: cy.collection(),
+        })
+      );
     };
   }, []);
+
+  useEffect(() => {
+    addResizeEventListener(cy, layout);
+  }, [cy]);
 
   useEffect(() => {
     resetPathwayVisuals(cy);

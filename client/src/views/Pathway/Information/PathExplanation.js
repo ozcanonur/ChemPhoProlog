@@ -41,7 +41,7 @@ const PathDetails = () => {
           className='my-node'
           tableHeaderColor='primary'
           tableHead={['Start', 'Phosphosite', 'End']}
-          tableData={pathExplanation}
+          tableData={pathExplanation.length > 1 ? pathExplanation : []}
           rowsPerPage={10}
           currentPage={currentPage}
           handleChangePage={handleChangePage}
