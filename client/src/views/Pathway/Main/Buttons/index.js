@@ -5,7 +5,7 @@ import Fade from '@material-ui/core/Fade';
 import Button from 'components/CustomButtons/Button';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import Legend from 'views/Pathway/Main/Legend';
+import Legend from 'views/Pathway/Main/Buttons/Legend';
 
 import { toggleTooltips } from 'views/Pathway/utils/tooltip';
 import { animatePath } from 'views/Pathway/utils/animation';

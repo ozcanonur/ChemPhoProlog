@@ -12,14 +12,17 @@ import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
 const useStyles = makeStyles(styles);
 
-const parsePathsToTableData = (paths, stoppingReasons) =>
-  paths.map((path, key) => {
+const parsePathsToTableData = (paths, stoppingReasons) => {
+  const tableData = paths.map((path, key) => {
     const pathLength = path.length;
     const stopNode = path[pathLength - 1];
     const stopReason = stoppingReasons[stopNode];
 
     return [key, stopNode, stopReason, pathLength];
   });
+
+  return tableData.sort((x, y) => y[3] - x[3]);
+};
 
 const PathsTable = () => {
   const classes = useStyles();
@@ -40,7 +43,6 @@ const PathsTable = () => {
   }, [paths, stoppingReasons]);
 
   const [currentPage, setCurrentPage] = useState(0);
-
   const handleChangePage = (_event, newPage) => {
     setCurrentPage(newPage);
   };

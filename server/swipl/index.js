@@ -74,7 +74,8 @@ const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
   if (onlyKinaseEnds === 'true') {
     paths = paths.filter((path) => {
       const lastStep = path.path[path.path.length - 1];
-      const singleNode = path.path.length === 1;
+      const singleNode = path.path.length === 1 && paths.length === 1;
+      if (singleNode) console.log(path);
       const endsWithKPaAndPs = lastStep[4].includes('(');
       const endsWithPs = lastStep[3] === 'na' && lastStep[4] === 'na';
       return !(endsWithKPaAndPs || endsWithPs) || singleNode;

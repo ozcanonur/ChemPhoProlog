@@ -10,15 +10,15 @@ const db = new sqlite3.Database('../chemphopro.db', sqlite3.OPEN_READONLY, (err)
 
 module.exports = db;
 
-const router = express();
+const app = express();
 
-router.use(express.static('../client/build'));
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(require('./routes/index'));
+app.use(express.static('../client/build'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require('./routes/index'));
 
 const port = process.env.PORT || 5000;
-router.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 /////////////////////////////////////////
 /////////////PROLOG//////////////////////

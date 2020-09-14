@@ -11,8 +11,6 @@ import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
-import CardGeneric from 'components/Card/CardGeneric';
-import ExtraButtons from 'views/Pathway/Main/ExtraButtons';
 import {
   runLayout,
   clearAllTimeouts,
@@ -28,7 +26,6 @@ Cytoscape.use(cxtmenu);
 
 const Pathway = ({ data, elements, stylesheet, layout }) => {
   const cy = useSelector((state) => state.cy) || Cytoscape();
-  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -60,30 +57,20 @@ const Pathway = ({ data, elements, stylesheet, layout }) => {
   }, [elements]);
 
   return (
-    <CardGeneric
-      color='primary'
-      cardTitle='Pathway'
-      cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
-      style={{ height: '55rem' }}
-    >
-      <CytoscapeComponent
-        cy={(_cy) => {
-          // Need this to get a reference to cy object in the component
-          if (_cy !== cy) dispatch(setCy(_cy));
-          runLayout(_cy, layout);
-        }}
-        autolock={false}
-        elements={elements}
-        stylesheet={stylesheet}
-        style={{ height: '100%' }}
-        minZoom={0.3}
-        maxZoom={1.2}
-        boxSelectionEnabled
-      />
-      <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <ExtraButtons />
-      </div>
-    </CardGeneric>
+    <CytoscapeComponent
+      cy={(_cy) => {
+        // Need this to get a reference to cy object in the component
+        if (_cy !== cy) dispatch(setCy(_cy));
+        runLayout(_cy, layout);
+      }}
+      autolock={false}
+      elements={elements}
+      stylesheet={stylesheet}
+      style={{ height: '100%' }}
+      minZoom={0.3}
+      maxZoom={1.2}
+      boxSelectionEnabled
+    />
   );
 };
 
