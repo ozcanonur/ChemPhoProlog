@@ -1,11 +1,44 @@
 import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 import kinases from 'variables/kinases';
 import phosphatases from 'variables/phosphatases';
+import { popErrorTooltip } from 'views/Pathway/utils/tooltip';
+import { store } from 'redux/store';
 
-const cxtmenuOptions = (dispatchFunc) => {
+import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
+import getPathwayData from 'redux/actions/Pathway/getPathwayData';
+import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
+import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
+import Cytoscape from 'cytoscape';
+
+const submitPathwayFromSelectedEle = (ele, dispatch) => {
+  const inputs = store.getState().pathwayInputs;
+  const newInputs = { ...inputs, substrate: ele.data().id };
+  const { perturbagen, substrate, onlyKinaseEnds } = newInputs;
+  // Need to get the phosphosite out of its parent or it crashes
+  ele.move({
+    parent: null,
+  });
+  // Dispatch > render new pathway
+  dispatch(setSelectedInputs(newInputs));
+  dispatch(getPathwayData('MCF-7', perturbagen, substrate, onlyKinaseEnds));
+  dispatch(removeAllInspectPaths());
+  dispatch(
+    setElementsToAnimate({
+      elementsToShow: Cytoscape().collection(),
+      elementsToFade: Cytoscape().collection(),
+    })
+  );
+};
+
+const openUniprot = (ele) => {
+  const id = kinases[ele.data().id] || phosphatases[ele.data().id];
+  window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
+};
+
+const cxtmenuOptions = (dispatch) => {
   return {
-    menuRadius: 100,
-    selector: '.KPa',
+    menuRadius: 120,
+    selector: '.KPa, .phosphosite',
     commands: [
       {
         fillColor: 'rgba(0, 0, 0, 0.4)',
@@ -14,23 +47,39 @@ const cxtmenuOptions = (dispatchFunc) => {
           fontWeight: 500,
         },
         select: (ele) => {
-          dispatchFunc(addSidebarRouteKinase(ele.data().id));
+          const { id } = ele.data();
+          if (!id.includes('(')) dispatch(addSidebarRouteKinase(id));
+          else popErrorTooltip(ele, 'Not available for phosphosites', 2000);
         },
         enabled: true,
       },
       {
-        fillColor: 'rgba(45,65,89, 0.7)',
+        fillColor: 'rgba(45,65,89, 0.5)',
         content: 'Go to UniProt',
         contentStyle: {
           fontWeight: 500,
         },
         select: (ele) => {
-          const id = kinases[ele.data().id] || phosphatases[ele.data().id];
-          window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
+          const { id } = ele.data();
+          if (!id.includes('(')) openUniprot(ele);
+          else popErrorTooltip(ele, 'Not available for phosphosites', 2000);
         },
         enabled: true,
       },
-    ], // function( ele ){ return [ /*...*/ ] }, // a function that returns commands or a promise of commands
+      {
+        fillColor: 'rgba(45,65,89, 0.8)',
+        content: 'Pathway from',
+        contentStyle: {
+          fontWeight: 500,
+        },
+        select: (ele) => {
+          const { id } = ele.data();
+          if (!id.includes('(')) popErrorTooltip(ele, 'Only available for phosphosites', 2000);
+          else submitPathwayFromSelectedEle(ele, dispatch);
+        },
+        enabled: true,
+      },
+    ],
     fillColor: 'rgba(0, 0, 0, 0.4)',
     activeFillColor: 'rgba(229,173,6, 0.4)', // the colour used to indicate the selected command
     activePadding: 20, // additional size in pixels for the active command

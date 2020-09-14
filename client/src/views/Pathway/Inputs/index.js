@@ -13,8 +13,8 @@ import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
 import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
-import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
 import getPathwayData from 'redux/actions/Pathway/getPathwayData';
+import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
 import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
 // eslint-disable-next-line no-unused-vars
 
@@ -39,7 +39,6 @@ export default function Inputs() {
       onlyKinaseEnds: false,
     };
     dispatch(setSelectedInputs(initInputs));
-    getPathwayData({ ...initInputs });
   }, [dispatch]);
 
   useEffect(() => {

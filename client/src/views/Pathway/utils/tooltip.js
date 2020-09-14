@@ -44,6 +44,14 @@ const setupTooltip = (element, content) => {
   return tooltip;
 };
 
+export const popErrorTooltip = (element, content, duration) => {
+  const tooltip = setupTooltip(element, content, 'bottom');
+  setTimeout(() => {
+    tooltip.hide();
+  }, duration);
+  return tooltip;
+};
+
 const addStartTooltip = (element, fold_change, pValue) => {
   const content = `Start <br/> fc: ${fold_change} <br/> p: ${pValue}`;
   setupTooltip(element, content);
