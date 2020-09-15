@@ -31,6 +31,7 @@ export default (cell_line, perturbagen, substrate, onlyKinaseEnds) => async (dis
   const observationData = fullObservationData.map((row) =>
     pick(row, ['substrate', 'fold_change', 'p_value'])
   );
+
   const formattedObservation = formatObservation(pathwayResults.phosphosites, observationData);
 
   dispatch({ type: 'GET_PATHWAY_DATA', payload: { observation: formattedObservation, ...pathwayResults } });
