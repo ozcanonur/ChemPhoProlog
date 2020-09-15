@@ -48,8 +48,9 @@ const cxtmenuOptions = (dispatch) => {
         },
         select: (ele) => {
           const { id } = ele.data();
-          if (!id.includes('(')) dispatch(addSidebarRouteKinase(id));
-          else popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          const isPhosphosite = id.includes('(');
+          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          else dispatch(addSidebarRouteKinase(id));
         },
         enabled: true,
       },
@@ -61,8 +62,9 @@ const cxtmenuOptions = (dispatch) => {
         },
         select: (ele) => {
           const { id } = ele.data();
-          if (!id.includes('(')) openUniprot(ele);
-          else popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          const isPhosphosite = id.includes('(');
+          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          else openUniprot(ele);
         },
         enabled: true,
       },
@@ -74,8 +76,9 @@ const cxtmenuOptions = (dispatch) => {
         },
         select: (ele) => {
           const { id } = ele.data();
-          if (!id.includes('(')) popErrorTooltip(ele, 'Only available for phosphosites', 2000);
-          else submitPathwayFromSelectedEle(ele, dispatch);
+          const isPhosphosite = id.includes('(');
+          if (isPhosphosite) submitPathwayFromSelectedEle(ele, dispatch);
+          else popErrorTooltip(ele, 'Only available for phosphosites', 2000);
         },
         enabled: true,
       },

@@ -29,6 +29,7 @@ const convertExpressedIns = (data) => {
       });
     }
 
+    // eslint-disable-next-line no-param-reassign
     row.expressed_in = newField;
   });
 
