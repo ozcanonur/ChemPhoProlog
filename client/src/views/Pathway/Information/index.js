@@ -22,7 +22,7 @@ const Information = () => {
       </GridItem>
       <GridItem>
         <GridContainer direction='row'>
-          <GridItem md>
+          <GridItem xs={12} lg={6}>
             <WaffleChart />
           </GridItem>
           <GridItem xs={12} lg={6}>

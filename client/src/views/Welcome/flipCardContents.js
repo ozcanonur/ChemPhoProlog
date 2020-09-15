@@ -1,10 +1,10 @@
 const cardContents = [
   {
     title: 'Explore Pathways',
-    frontTexts: ['Custom Pathways', 'Browse 56,395 substrates'],
+    frontTexts: ['Custom Pathways', 'Browse 56,395 phosphosites'],
   },
   {
-    title: 'Explore Pathways',
+    title: 'Phosphoproteomics done right!',
     frontTexts: ['Experimental data explained', 'Various statistics'],
   },
   {

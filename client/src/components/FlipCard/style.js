@@ -45,7 +45,6 @@ const FlipCardStyle = {
   },
   card_heading: {
     'font-size': '1rem',
-    'text-transform': 'uppercase',
     'text-align': 'left',
     color: '#fff',
     position: 'absolute',
