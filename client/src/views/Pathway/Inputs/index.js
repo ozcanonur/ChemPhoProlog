@@ -81,7 +81,7 @@ export default function Inputs() {
 
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer direction='row' alignItems='center'>
+      <GridContainer direction='row' alignItems='center' justify='center'>
         {inputTypeList.map((inputType, key) => (
           <GridItem key={key}>
             <VirtualizedDropDown type={inputType} />

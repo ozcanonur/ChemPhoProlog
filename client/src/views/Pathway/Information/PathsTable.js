@@ -2,11 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import addInspectPath from 'redux/actions/Pathway/addInspectPath';
 
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
 import Table from 'components/Table/Table';
 import CardGeneric from 'components/Card/CardGeneric';
-import WaffleChart from 'views/Pathway/Information/WaffleChart';
 
 const parsePathsToTableData = (paths, stoppingReasons) => {
   const tableData = paths.map((path, key) => {
@@ -47,37 +44,23 @@ const PathsTable = () => {
   };
 
   return (
-    <GridContainer direction='column' justify='space-between'>
-      <GridItem>
-        <CardGeneric
-          color='primary'
-          cardTitle='Paths found'
-          cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
-        >
-          <Table
-            className='my-node'
-            tableHeaderColor='primary'
-            tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
-            tableData={tableData}
-            rowsPerPage={5}
-            currentPage={currentPage}
-            handleChangePage={handleChangePage}
-            rowEndArrow
-            handleAddPath={handleAddPath}
-          />
-        </CardGeneric>
-      </GridItem>
-      <GridItem>
-        <CardGeneric
-          color='primary'
-          cardTitle='Stopping Reasons'
-          cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
-          style={{ height: '16rem' }}
-        >
-          <WaffleChart paths={paths} stoppingReasons={stoppingReasons} />
-        </CardGeneric>
-      </GridItem>
-    </GridContainer>
+    <CardGeneric
+      color='primary'
+      cardTitle='Paths found'
+      cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
+    >
+      <Table
+        className='my-node'
+        tableHeaderColor='primary'
+        tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
+        tableData={tableData}
+        rowsPerPage={5}
+        currentPage={currentPage}
+        handleChangePage={handleChangePage}
+        rowEndArrow
+        handleAddPath={handleAddPath}
+      />
+    </CardGeneric>
   );
 };
 

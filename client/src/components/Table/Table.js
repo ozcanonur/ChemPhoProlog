@@ -278,7 +278,7 @@ const CustomTable = (props) => {
           <Search />
         </Button>
       </div>
-      <Table stickyHeader className={classes.table}>
+      <Table className={classes.table}>
         <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
           <TableHeadContent />
         </TableHead>

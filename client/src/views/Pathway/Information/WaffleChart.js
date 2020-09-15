@@ -1,8 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import CardGeneric from 'components/Card/CardGeneric';
 import { ResponsiveWaffle } from '@nivo/waffle';
 
-const Waffle = ({ paths, stoppingReasons }) => {
+const Waffle = () => {
+  const { cellLine, perturbagen, substrate } = useSelector((state) => state.pathwayInputs);
+  const data = useSelector((state) => state.pathwayData) || {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  };
+
+  const { paths, stoppingReasons } = data;
+
   const stoppingReasonCounts = {
     no_data: 0,
     unaffected: 0,
@@ -25,33 +39,40 @@ const Waffle = ({ paths, stoppingReasons }) => {
   });
 
   return (
-    <ResponsiveWaffle
-      data={waffleData}
-      total={totalCount}
-      rows={6}
-      columns={50}
-      fillDirection='left'
-      margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
-      colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
-      borderColor={{ from: 'color', modifiers: [['darker', '0.6']] }}
-      animate={false}
-      legends={[
-        {
-          anchor: 'top',
-          direction: 'row',
-          justify: false,
-          translateX: 0,
-          translateY: -50,
-          itemsSpacing: 10,
-          itemWidth: 120,
-          itemHeight: 20,
-          itemDirection: 'left-to-right',
-          itemOpacity: 0.8,
-          itemTextColor: '#777',
-          symbolSize: 20,
-        },
-      ]}
-    />
+    <CardGeneric
+      color='primary'
+      cardTitle='Stopping Reasons'
+      cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
+      style={{ height: '16rem' }}
+    >
+      <ResponsiveWaffle
+        data={waffleData}
+        total={totalCount}
+        rows={6}
+        columns={50}
+        fillDirection='left'
+        margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
+        colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
+        borderColor={{ from: 'color', modifiers: [['darker', '0.6']] }}
+        animate={false}
+        legends={[
+          {
+            anchor: 'top',
+            direction: 'row',
+            justify: false,
+            translateX: 10,
+            translateY: -50,
+            itemsSpacing: 1,
+            itemWidth: 120,
+            itemHeight: 10,
+            itemDirection: 'left-to-right',
+            itemOpacity: 0.8,
+            itemTextColor: '#777',
+            symbolSize: 10,
+          },
+        ]}
+      />
+    </CardGeneric>
   );
 };
 

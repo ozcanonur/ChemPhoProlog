@@ -54,7 +54,7 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
     <GridContainer direction='column'>
       <GridItem md>
         <GridContainer direction='row' justify='space-evenly'>
-          <GridItem md>
+          <GridItem xs={7}>
             <Card>
               <CardHeader color='warning' stats icon>
                 <CardIcon color='warning'>
@@ -73,16 +73,16 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem md>
-            <div style={{ height: '150px' }}>
+          <GridItem xs={5}>
+            <div style={{ height: '80%' }}>
               <PieChart data={dataNewPerturbagens} colors={colorsNew} />
             </div>
           </GridItem>
         </GridContainer>
       </GridItem>
       <GridItem md>
-        <GridContainer direction='row' justify='space-evenly'>
-          <GridItem md>
+        <GridContainer direction='row'>
+          <GridItem xs={7}>
             <Card>
               <CardHeader color='warning' stats icon>
                 <CardIcon color='warning'>
@@ -101,8 +101,8 @@ const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIco
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem md>
-            <div style={{ height: '150px' }}>
+          <GridItem xs={5}>
+            <div style={{ height: '80%' }}>
               <PieChart data={dataNewSubstrates} colors={colorsNew} />
             </div>
           </GridItem>

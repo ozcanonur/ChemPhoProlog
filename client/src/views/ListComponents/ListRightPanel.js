@@ -14,7 +14,7 @@ const ListRightPanel = (props) => {
   } = props;
 
   return (
-    <CardGeneric color='primary' cardTitle={topHeaderTitle} cardSubtitle={topHeaderSubTitle} style={{ height: 918 }}>
+    <CardGeneric color='primary' cardTitle={topHeaderTitle} cardSubtitle={topHeaderSubTitle}>
       <GridContainer direction='column'>
         <GridItem>
           <CardGeneric color='primary' cardTitle={selectedEleTitle}>
