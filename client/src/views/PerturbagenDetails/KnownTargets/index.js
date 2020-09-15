@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 
 const KnownTargets = () => {
@@ -23,7 +23,7 @@ const KnownTargets = () => {
   const perturbagen = window.location.href.split('/')[4];
 
   useEffect(() => {
-    const route = '/getKnownTargets';
+    const route = '/knownTargets';
     const params = { perturbagen };
 
     getApi(route, params).then((res) => {

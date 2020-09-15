@@ -1,7 +1,8 @@
-import getApi from 'api/api';
+import { getApi } from 'api/api';
+import pick from 'lodash/pick';
 
-const formatObservation = (phosphosites, fullObservationData) => {
-  const observationInCurrentPaths = fullObservationData.filter((e) => phosphosites.includes(e.substrate));
+const formatObservation = (phosphosites, observationData) => {
+  const observationInCurrentPaths = observationData.filter((e) => phosphosites.includes(e.substrate));
 
   const formattedObservation = {};
   // eslint-disable-next-line camelcase
@@ -19,15 +20,18 @@ export default (cell_line, perturbagen, substrate, onlyKinaseEnds) => async (dis
   const pathwayRoute = '/pathway';
   const pathwayParams = { cell_line, perturbagen, substrate, onlyKinaseEnds };
 
-  const observationRoute = '/getObservation';
-  const observationParams = { perturbagen, cell_line, for: 'pathway' };
+  const observationRoute = '/observation';
+  const observationParams = { perturbagen, cell_line };
 
-  const [fullObservationData, pathsResults] = await Promise.all([
+  const [fullObservationData, pathwayResults] = await Promise.all([
     getApi(observationRoute, observationParams),
     getApi(pathwayRoute, pathwayParams),
   ]);
 
-  const formattedObservation = formatObservation(pathsResults.phosphosites, fullObservationData);
+  const observationData = fullObservationData.map((row) =>
+    pick(row, ['substrate', 'fold_change', 'p_value'])
+  );
+  const formattedObservation = formatObservation(pathwayResults.phosphosites, observationData);
 
-  dispatch({ type: 'GET_PATHWAY_DATA', payload: { observation: formattedObservation, ...pathsResults } });
+  dispatch({ type: 'GET_PATHWAY_DATA', payload: { observation: formattedObservation, ...pathwayResults } });
 };

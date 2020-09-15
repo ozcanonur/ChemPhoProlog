@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 
+import pick from 'lodash/pick';
+
 import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 
 import perturbagens from 'variables/perturbagens';
 
@@ -19,11 +21,14 @@ const ObservationHeatMap = ({ row }) => {
     let mounted = true;
 
     const substrate = `${protein}(${residue}${location})`;
-    const route = '/getObservation';
-    const params = { substrate, for: 'heatMap' };
+    const route = '/observation';
+    const params = { substrate, min_fold_change: -888 };
 
     getApi(route, params).then((res) => {
-      if (mounted) setObservationData(res.map(Object.values));
+      const observation = res.map((row) =>
+        pick(row, ['perturbagen', 'substrate', 'cell_line', 'fold_change'])
+      );
+      if (mounted) setObservationData(observation);
     });
 
     return () => {
@@ -31,22 +36,20 @@ const ObservationHeatMap = ({ row }) => {
     };
   }, [location, residue, protein]);
 
-  const createHeatmapObject = (cell_line, data) => {
-    const filtered = data.filter((e) => e[1] === cell_line);
+  const createHeatmapObject = (data, cell_line) => {
+    const filtered = data.filter((e) => e.cell_line === cell_line);
 
     const result = { cell_line };
-
     filtered.forEach((observation) => {
-      const perturbagen = observation[0];
-      const foldChange = observation[2];
-      result[perturbagen] = foldChange;
+      const { perturbagen, fold_change } = observation;
+      result[perturbagen] = fold_change;
     });
 
     return result;
   };
 
   const [obsMCF, obsHL, obsNTERA] = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'].map((cellLine) =>
-    createHeatmapObject(cellLine, observationData)
+    createHeatmapObject(observationData, cellLine)
   );
 
   const heatmapData = [obsNTERA, obsHL, obsMCF];

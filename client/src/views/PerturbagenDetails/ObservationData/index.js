@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 
 const ObservationData = () => {
   const [tableData, setTableData] = useState([]);
@@ -16,8 +16,8 @@ const ObservationData = () => {
   const perturbagen = window.location.href.split('/')[4];
 
   useEffect(() => {
-    const route = '/getObservation';
-    const params = { perturbagen, for: 'obsData' };
+    const route = '/observation';
+    const params = { perturbagen };
 
     getApi(route, params).then((res) => {
       setTableData(

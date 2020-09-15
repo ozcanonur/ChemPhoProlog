@@ -9,7 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 
-import getApi from 'api/api';
+import { getApiWeb } from 'api/api';
 import perturbagens from 'variables/perturbagens';
 import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
 
@@ -41,10 +41,10 @@ export default function Virtualize({ type }) {
 
   useEffect(() => {
     if (type === 'Substrate') {
-      const route = '/getValidObservations';
+      const route = '/validObservation';
       const params = { cell_line: 'MCF-7', perturbagen: inputs.perturbagen };
 
-      getApi(route, params).then((res) => {
+      getApiWeb(route, params).then((res) => {
         setData(res);
       });
     } else if (type === 'Perturbagen') setData(perturbagens);

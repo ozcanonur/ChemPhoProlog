@@ -6,7 +6,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Typography from '@material-ui/core/Typography';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 
 const KnownPerturbagens = () => {
   const kinase = window.location.href.split('/')[4];
@@ -21,7 +21,7 @@ const KnownPerturbagens = () => {
   useEffect(() => {
     let mounted = true;
 
-    const route = '/getKnownPerturbagens';
+    const route = '/knownPerturbagens';
     const params = { kinase };
 
     getApi(route, params).then((res) => {

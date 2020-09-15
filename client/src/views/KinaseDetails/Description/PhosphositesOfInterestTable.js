@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
-const PhosphositesOfInterestTable = ({ protein }) => {
+const PhosphositesOfInterestTable = ({ kinase }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [tableData, setTableData] = useState([]);
 
@@ -16,8 +16,8 @@ const PhosphositesOfInterestTable = ({ protein }) => {
 
   useEffect(() => {
     let mounted = true;
-    const route = '/phosphositesOfInterest';
-    const params = { protein };
+    const route = '/phosphosites';
+    const params = { kinase, detailed: true };
 
     getApi(route, params).then((res) => {
       if (mounted) setTableData(res.map(Object.values));
@@ -26,7 +26,7 @@ const PhosphositesOfInterestTable = ({ protein }) => {
     return () => {
       mounted = false;
     };
-  }, [protein]);
+  }, [kinase]);
 
   return (
     <CardGeneric color='primary' cardTitle='Phosphosites of interest' cardSubtitle='Select a phosphosite'>

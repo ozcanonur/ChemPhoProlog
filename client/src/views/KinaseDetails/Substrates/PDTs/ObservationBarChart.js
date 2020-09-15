@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import getApi from 'api/api';
+import pick from 'lodash/pick';
+
+import { getApi } from 'api/api';
 
 import BarChart from 'views/KinaseDetails/Substrates/PDTs/BarChart';
 
@@ -12,12 +14,13 @@ const ObsForPDTs = ({ row, cell_line }) => {
   useEffect(() => {
     let mounted = true;
 
-    const route = '/getObservation';
-    const params = { substrate: PDT, cell_line, for: 'barChart' };
+    const route = '/observation';
+    const params = { substrate: PDT, cell_line, min_fold_change: -888, min_p_value: -888 };
 
     getApi(route, params).then((res) => {
       if (mounted) {
-        const decimalsCutRes = res.map((e) => {
+        const observation = res.map((row) => pick(row, ['perturbagen', 'fold_change']));
+        const decimalsCutRes = observation.map((e) => {
           return { ...e, fold_change: Math.round(e.fold_change * 1e2) / 1e2 };
         });
 

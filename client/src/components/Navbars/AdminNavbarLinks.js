@@ -14,7 +14,8 @@ import TrendingDown from '@material-ui/icons/TrendingDown';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Button from 'components/CustomButtons/Button';
 
-import getApi from 'api/api';
+import perturbagens from 'variables/perturbagens';
+import { getApiWeb } from 'api/api';
 import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 import addSidebarRoutePerturbagen from 'redux/actions/Sidebar/addSidebarRoutePerturbagen';
 
@@ -82,16 +83,14 @@ const AdminNavbarLinks = () => {
     // Load the data on first focus
     if (searchResults.length === 0) {
       (async () => {
-        const perturbagenRoute = '/getAllPerturbagens';
         const kinaseRoute = '/getAllKinases';
         const substrateRoute = '/getAllSubstrates';
 
-        const results = await Promise.all([
-          getApi(perturbagenRoute),
-          getApi(kinaseRoute),
-          getApi(substrateRoute),
-        ]);
-        setSearchResults(results.flat());
+        const results = await Promise.all([getApiWeb(kinaseRoute), getApiWeb(substrateRoute)]);
+        const perturbagenResults = perturbagens.map((perturbagen) => {
+          return { perturbagen };
+        });
+        setSearchResults([...results.flat(), ...perturbagenResults]);
       })();
     }
   };

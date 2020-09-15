@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import getApi from 'api/api';
+import { getApi } from 'api/api';
 
 const KnownSubstratesTable = () => {
   const kinase = window.location.href.split('/')[4];
@@ -18,7 +18,7 @@ const KnownSubstratesTable = () => {
   useEffect(() => {
     let mounted = true;
 
-    const route = '/getKnownSubstrates';
+    const route = '/knownSubstrates';
     const params = { KPa: kinase };
 
     getApi(route, params).then((res) => {

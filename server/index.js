@@ -15,7 +15,9 @@ const app = express();
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require('./routes/index'));
+
+app.use('/apiWeb', require('./routes/web'));
+app.use('/api', require('./routes/public'));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
