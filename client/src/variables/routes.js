@@ -2,6 +2,7 @@ import Welcome from 'views/Welcome/index';
 import KinaseList from 'views/KinaseList';
 import PerturbagenList from 'views/PerturbagenList';
 import Pathway from 'views/Pathway';
+import API from 'views/API';
 
 import Home from '@material-ui/icons/Home';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
@@ -42,7 +43,7 @@ const routes = [
     path: '/api',
     name: 'API',
     icon: Web,
-    component: Welcome,
+    component: API,
     layout: '/home',
   },
 ];

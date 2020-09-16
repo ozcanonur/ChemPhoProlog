@@ -9,7 +9,7 @@ router.get('/phosphosites', (req, res) => {
 
   let query;
   let fields = [];
-  if (detailed === 'true') {
+  if (kinase && detailed === 'true') {
     query =
       `select distinct x.location, x.residue, x.detected_in, coalesce(y.PsT_effect, 'unknown') as pst_effect, ` +
       `x.reported_substrate_of, x.reported_pdt_of from ` +
@@ -20,10 +20,10 @@ router.get('/phosphosites', (req, res) => {
       `on x.residue = y.residue_type and x.location = y.residue_offset`;
     fields.push(kinase);
     fields.push(kinase);
-  } else {
+  } else if (kinase) {
     query = `select distinct substrate_id as substrate from Substrate where substrate_id like ? order by substrate_id`;
     fields.push(`%${kinase}(%`);
-  }
+  } else return res.status(500).send();
 
   db.all(query, fields, (err, rows) => {
     if (err) throw err;

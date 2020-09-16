@@ -1,6 +1,5 @@
 import {
   drawerWidth,
-  smallDrawerWidth,
   transition,
   boxShadow,
   defaultFont,
