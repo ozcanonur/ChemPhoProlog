@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const parsePaths = (prologOutput) => {
+export const parsePaths = (prologOutput) => {
   const paths = []; // Legit paths Root > KPa > PsonKPa > KPa...
   const relations = {}; // KPa affects phosphosites
   let phosphosites = []; // Phosphosites that just EXIST
@@ -63,5 +63,3 @@ const parsePaths = (prologOutput) => {
 
   return { paths, relations, phosphosites, regulatory, stoppingReasons };
 };
-
-module.exports = parsePaths;

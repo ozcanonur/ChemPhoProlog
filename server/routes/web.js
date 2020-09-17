@@ -1,6 +1,6 @@
-const express = require('express');
-const db = require('../index');
-const path = require('path');
+import express from 'express';
+import { db } from '../main';
+import path from 'path';
 
 const router = new express.Router();
 
@@ -64,4 +64,4 @@ router.get('/*', function (req, res) {
   });
 });
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const parsePaths = require('./parsePaths');
+import { parsePaths } from './parsePaths';
 
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
@@ -39,7 +39,7 @@ const parseHead = (head, extendedHead) => {
 ///////////////////////////////////
 //////////////QUERY////////////////
 ///////////////////////////////////
-const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
+export const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
   // Set directory
   swipl.call(`working_directory(_, "${__dirname.replaceAll('\\', '/')}").`);
 
@@ -87,5 +87,3 @@ const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
   // Parse the final output into data before sending back to client
   return parsePaths(paths);
 };
-
-module.exports = queryProlog;

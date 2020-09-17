@@ -43,7 +43,7 @@ const Waffle = () => {
       color='primary'
       cardTitle='Stopping Reasons'
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
-      style={{ height: '16rem' }}
+      style={{ height: '16rem', marginTop: '3rem' }}
     >
       <ResponsiveWaffle
         data={waffleData}

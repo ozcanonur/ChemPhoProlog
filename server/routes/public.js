@@ -1,5 +1,9 @@
-const express = require('express');
-const db = require('../index');
+import express from 'express';
+import { db } from '../main';
+import _ from 'lodash';
+
+import swipl from 'swipl';
+import { queryProlog } from '../swipl/index';
 
 const router = new express.Router();
 
@@ -23,7 +27,7 @@ router.get('/phosphosites', (req, res) => {
   } else if (kinase) {
     query = `select distinct substrate_id as substrate from Substrate where substrate_id like ? order by substrate_id`;
     fields.push(`%${kinase}(%`);
-  } else return res.status(500).send();
+  } else query = `select substrate_id as substrate from Substrate`;
 
   db.all(query, fields, (err, rows) => {
     if (err) throw err;
@@ -32,22 +36,17 @@ router.get('/phosphosites', (req, res) => {
 });
 
 router.get('/observation', (req, res) => {
-  const {
-    cell_line,
-    perturbagen,
-    substrate,
-    min_fold_change,
-    max_fold_change,
-    min_p_value,
-    max_p_value,
-  } = req.query;
+  const { cell_line, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
 
-  let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation ';
+  let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
   let fields = [];
 
-  if (req.query) {
-    query += 'where ';
+  if (_.isEmpty(req.query)) {
+    const requiredAtLeastOneOf =
+      'cell_line, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
+    return res.status(400).send({ requiredAtLeastOneOf });
   }
+
   if (cell_line) {
     query += 'cell_line = ?';
     fields.push(cell_line);
@@ -123,7 +122,7 @@ router.get('/knownSubstrates', (req, res) => {
 
 // Perturbagen details > Known targets
 router.get('/knownTargets', (req, res) => {
-  const perturbagen = req.query.perturbagen;
+  const { perturbagen } = req.query;
 
   const query = `select kinase, source, score from PK_relationship where perturbagen = ? order by kinase`;
   db.all(query, [perturbagen], (err, rows) => {
@@ -135,6 +134,8 @@ router.get('/knownTargets', (req, res) => {
 // Shared PDTs for kinase @kinasedetails/pdts
 router.get('/pdts', (req, res) => {
   const { kinase, cell_line } = req.query;
+
+  if (!kinase || !cell_line) return res.status(400).send({ requiredFields: 'kinase, cell_line' });
 
   const query =
     `select main.substrate, substrate.uniprot_name, main.confidence, main.shared_with from ` +
@@ -153,16 +154,19 @@ router.get('/pdts', (req, res) => {
 });
 
 // Prolog things
-const queryProlog = require('../swipl/index');
-const swipl = require('swipl');
-
 router.get('/pathway', (req, res) => {
-  const { cellLine, perturbagen, substrate, onlyKinaseEnds } = req.query;
+  const { perturbagen, substrate, onlyKinaseEnds } = req.query;
+  const cellLine = 'MCF7'; // Temporary
 
-  const query = `perturbed_path_init('MCF7', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`;
+  if (!(cellLine && perturbagen && substrate && onlyKinaseEnds)) {
+    const requiredFields = 'cellLine, perturbagen, substrate, onlyKinaseEnds';
+    return res.status(400).send({ requiredFields });
+  }
+
+  const query = `perturbed_path_init('${cellLine}', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`;
   const pathwayData = queryProlog(swipl, query, perturbagen, onlyKinaseEnds);
 
   res.send(pathwayData);
 });
 
-module.exports = router;
+export default router;
