@@ -1,6 +1,5 @@
 import express from 'express';
 import { db } from '../main';
-import path from 'path';
 
 const router = new express.Router();
 
@@ -53,13 +52,6 @@ router.get('/validObservation', (req, res) => {
       ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change, 10).toFixed(2)}`
     );
     res.send(parsedRows);
-  });
-});
-
-// Catch all for deploy
-router.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'), function (err) {
-    if (err) res.status(500).send(err);
   });
 });
 
