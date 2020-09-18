@@ -42,12 +42,11 @@ router.get('/getAllSubstrates', (req, res) => {
 
 // Valid observations
 router.get('/validObservation', (req, res) => {
-  const perturbagen = req.query.perturbagen;
-  const cell_line = req.query.cell_line;
+  const { cellLine, perturbagen } = req.query;
 
   const query =
     'select substrate, fold_change from Observation_valid where perturbagen = ? and cell_line = ? order by fold_change';
-  db.all(query, [perturbagen, cell_line], (err, rows) => {
+  db.all(query, [perturbagen, cellLine], (err, rows) => {
     if (err) throw err;
 
     const parsedRows = rows.map(

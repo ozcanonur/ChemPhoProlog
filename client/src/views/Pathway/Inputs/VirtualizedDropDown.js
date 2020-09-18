@@ -42,14 +42,14 @@ export default function Virtualize({ type }) {
   useEffect(() => {
     if (type === 'Substrate') {
       const route = '/validObservation';
-      const params = { cell_line: 'MCF-7', perturbagen: inputs.perturbagen };
+      const params = { cellLine: inputs.cellLine, perturbagen: inputs.perturbagen };
 
       getApiWeb(route, params).then((res) => {
         setData(res);
       });
     } else if (type === 'Perturbagen') setData(perturbagens);
-    else if (type === 'Cell Line') setData(['MCF7', 'HL60', 'NTERA']);
-  }, [type, inputs.perturbagen]);
+    else if (type === 'Cell Line') setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
+  }, [type, inputs.cellLine, inputs.perturbagen]);
 
   const dispatch = useDispatch();
   const onInputChange = (value) => {
@@ -62,7 +62,6 @@ export default function Virtualize({ type }) {
   };
 
   const getLabel = (type) => {
-    if (type === 'Cell Line') return 'MCF-7';
     if (type === 'Substrate') return `${data.length} Substrates`;
     return type;
   };
@@ -71,7 +70,6 @@ export default function Virtualize({ type }) {
     <Autocomplete
       id={type}
       style={{ width: 300 }}
-      disabled={type === 'Cell Line'}
       disableListWrap
       classes={classes}
       ListboxComponent={ListboxComponent}

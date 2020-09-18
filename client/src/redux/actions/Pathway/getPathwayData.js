@@ -16,12 +16,12 @@ const formatObservation = (phosphosites, observationData) => {
   return formattedObservation;
 };
 
-export default (cell_line, perturbagen, substrate, onlyKinaseEnds) => async (dispatch) => {
+export default (cellLine, perturbagen, substrate, onlyKinaseEnds) => async (dispatch) => {
   const pathwayRoute = '/pathway';
-  const pathwayParams = { cell_line, perturbagen, substrate, onlyKinaseEnds };
+  const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
 
   const observationRoute = '/observation';
-  const observationParams = { perturbagen, cell_line };
+  const observationParams = { perturbagen, cellLine };
 
   const [fullObservationData, pathwayResults] = await Promise.all([
     getApi(observationRoute, observationParams),

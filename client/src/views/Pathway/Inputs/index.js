@@ -33,7 +33,7 @@ export default function Inputs() {
   // Testing purposes, giving std values to inputs
   useEffect(() => {
     const initInputs = {
-      cellLine: 'MCF7',
+      cellLine: 'MCF-7',
       perturbagen: 'Torin',
       substrate: 'AKT1(S473)',
       onlyKinaseEnds: false,
@@ -54,7 +54,7 @@ export default function Inputs() {
   const onSubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
-    dispatch(getPathwayData('MCF-7', perturbagen, substrate, switchChecked));
+    dispatch(getPathwayData(cellLine, perturbagen, substrate, switchChecked));
     dispatch(removeAllInspectPaths());
     dispatch(
       setElementsToAnimate({

@@ -10,3 +10,5 @@ combinedFacts.pl
 perturbs_MCF7_all.pl
 perturbs_MCF7_INmtor.pl
 scratch/
+fulldata.csv
+toydata.csv

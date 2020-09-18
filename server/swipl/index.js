@@ -39,7 +39,12 @@ const parseHead = (head, extendedHead) => {
 ///////////////////////////////////
 //////////////QUERY////////////////
 ///////////////////////////////////
-export const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => {
+export const queryProlog = (swipl, { cellLine, perturbagen, substrate, onlyKinaseEnds }) => {
+  // Fix cell line string because prolog facts have it differently
+  if (cellLine === 'MCF-7') cellLine = 'MCF7';
+  else if (cellLine === 'HL-60') cellLine = 'HL60';
+  else if (cellLine === 'NTERA-2 clone D1') cellLine = 'NTERA';
+
   // Set directory
   swipl.call(`working_directory(_, "${__dirname.replaceAll('\\', '/')}").`);
 
@@ -55,12 +60,13 @@ export const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => 
   ];
 
   // Also consult specific perturbagen observation file if provided
-  if (perturbagen) filesToConsult.push(`./facts/${perturbagen}.pl`);
+  if (perturbagen) filesToConsult.push(`./facts/${cellLine}/${perturbagen}.pl`);
 
   console.log('Consult started');
   consultFiles(swipl, filesToConsult);
 
   // Query
+  const queryString = `perturbed_path_init('${cellLine}', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`;
   const query = new swipl.Query(queryString);
 
   let node = null;
@@ -75,7 +81,7 @@ export const queryProlog = (swipl, queryString, perturbagen, onlyKinaseEnds) => 
     paths = paths.filter((path) => {
       const lastStep = path.path[path.path.length - 1];
       const singleNode = path.path.length === 1 && paths.length === 1;
-      if (singleNode) console.log(path);
+
       const endsWithKPaAndPs = lastStep[4].includes('(');
       const endsWithPs = lastStep[3] === 'na' && lastStep[4] === 'na';
       return !(endsWithKPaAndPs || endsWithPs) || singleNode;

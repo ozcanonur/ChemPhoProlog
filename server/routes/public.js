@@ -36,7 +36,15 @@ router.get('/phosphosites', (req, res) => {
 });
 
 router.get('/observation', (req, res) => {
-  const { cell_line, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
+  const {
+    cellLine,
+    perturbagen,
+    substrate,
+    min_fold_change,
+    max_fold_change,
+    min_p_value,
+    max_p_value,
+  } = req.query;
 
   let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
   let fields = [];
@@ -47,9 +55,9 @@ router.get('/observation', (req, res) => {
     return res.status(400).send({ requiredAtLeastOneOf });
   }
 
-  if (cell_line) {
+  if (cellLine) {
     query += 'cell_line = ?';
-    fields.push(cell_line);
+    fields.push(cellLine);
   }
   if (perturbagen) {
     query += 'perturbagen = ?';
@@ -155,16 +163,14 @@ router.get('/pdts', (req, res) => {
 
 // Prolog things
 router.get('/pathway', (req, res) => {
-  const { perturbagen, substrate, onlyKinaseEnds } = req.query;
-  const cellLine = 'MCF7'; // Temporary
+  const { cellLine, perturbagen, substrate, onlyKinaseEnds } = req.query;
 
   if (!(cellLine && perturbagen && substrate && onlyKinaseEnds)) {
     const requiredFields = 'cellLine, perturbagen, substrate, onlyKinaseEnds';
     return res.status(400).send({ requiredFields });
   }
 
-  const query = `perturbed_path_init('${cellLine}', '${perturbagen}', '${substrate}', Path, Explanation, Inhibited).`;
-  const pathwayData = queryProlog(swipl, query, perturbagen, onlyKinaseEnds);
+  const pathwayData = queryProlog(swipl, { cellLine, perturbagen, substrate, onlyKinaseEnds });
 
   res.send(pathwayData);
 });
