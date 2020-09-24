@@ -166,7 +166,9 @@ export const getCytoElements = (data) => {
   // It removes the compound, so the children also gets devoured
   // Other phosphosites will ALWAYS be a part of a KPa (=compound), so it only matters for the start
   const start = store.getState().pathwayInputs.substrate;
+  // console.log(start);
   const phosphosites = data.phosphosites.map((e) => {
+    console.log(e);
     return {
       data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
       classes: ['phosphosite'],

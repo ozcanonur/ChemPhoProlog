@@ -23,6 +23,7 @@ export default function Inputs() {
   const [switchChecked, setSwitchChecked] = useState(false);
   const inputs = useSelector((state) => state.pathwayInputs);
   const data = useSelector((state) => state.pathwayData);
+  const cy = useSelector((state) => state.cy);
 
   // cellLine: 'MCF7',
   //     perturbagen: 'Trametinib',
@@ -54,6 +55,9 @@ export default function Inputs() {
   const onSubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
+    // Have to move starting phosphosite out of the parent
+    // Or cytoscape diff crashes again, same issue with @cxtmenuOptions/submitPathwayFromSelectedEle
+    cy.$(`[id='${substrate}']`).move({ parent: null });
     dispatch(getPathwayData(cellLine, perturbagen, substrate, switchChecked));
     dispatch(removeAllInspectPaths());
     dispatch(
@@ -72,7 +76,11 @@ export default function Inputs() {
       return (
         <div>
           <p>Loading...</p>
-          <img src={loading_thin} alt='Loading thin' style={{ marginTop: '-17px', marginBottom: '5px' }} />
+          <img
+            src={loading_thin}
+            alt='Loading thin'
+            style={{ marginTop: '-17px', marginBottom: '5px' }}
+          />
         </div>
       );
     if (data && data.paths.length === 1) return 'No paths, try another';
@@ -80,7 +88,11 @@ export default function Inputs() {
   };
 
   return (
-    <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
+    <CardGeneric
+      color='primary'
+      cardTitle='Select inputs'
+      cardSubtitle='Cell Line / Perturbagen / Substrate'
+    >
       <GridContainer direction='row' alignItems='center' justify='center'>
         {inputTypeList.map((inputType, key) => (
           <GridItem key={key}>
@@ -105,7 +117,12 @@ export default function Inputs() {
         <GridItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <FormControlLabel
             control={
-              <Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />
+              <Switch
+                checked={switchChecked}
+                onChange={handleSwitch}
+                name='onlyKinaseEnds'
+                color='primary'
+              />
             }
             label='Only paths ending with a KPa'
           />
