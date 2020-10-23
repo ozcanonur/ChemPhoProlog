@@ -1,22 +1,17 @@
 import { parsePaths } from './parsePaths';
 
 String.prototype.replaceAll = function (search, replacement) {
-  var target = this;
-  return target.split(search).join(replacement);
+  return this.split(search).join(replacement);
 };
-///////////////////////////////////
-//////////////CONSULT//////////////
-///////////////////////////////////
+
+// Consult
 const consultFiles = (swipl, files) => {
   files.forEach((file) => {
     swipl.call(`consult("${file}").`);
   });
 };
-///////////////////////////////////
 
-///////////////////////////////////
-//    Parsing the swipl output   //
-///////////////////////////////////
+// Parsing the swipl output
 const parsePath = (path, pathList) => {
   if (path.tail === null) return pathList;
 
@@ -34,11 +29,8 @@ const parseHead = (head, extendedHead) => {
 
   return extendedHead;
 };
-///////////////////////////////////
 
-///////////////////////////////////
-//////////////QUERY////////////////
-///////////////////////////////////
+// Query
 export const queryProlog = (swipl, { cellLine, perturbagen, substrate, onlyKinaseEnds }) => {
   // Fix cell line string because prolog facts have it differently
   if (cellLine === 'MCF-7') cellLine = 'MCF7';
@@ -56,7 +48,7 @@ export const queryProlog = (swipl, { cellLine, perturbagen, substrate, onlyKinas
     './facts/knownsign_uniq.pl',
     './facts/knowntarget_all.pl',
     './facts/phosphatases.pl',
-    './facts/rules_bottomup.pl',
+    './facts/rules.pl',
   ];
 
   // Also consult specific perturbagen observation file if provided

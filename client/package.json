@@ -1,9 +1,9 @@
 {
   "name": "Chemphoprolog",
-  "version": "1.9.0",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Chemphoprolog",
-  "private": false,
+  "private": true,
   "main": "dist/index.js",
   "dependencies": {
     "@material-ui/core": "4.10.0",

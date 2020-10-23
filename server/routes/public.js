@@ -46,7 +46,8 @@ router.get('/observation', (req, res) => {
     max_p_value,
   } = req.query;
 
-  let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
+  let query =
+    'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
   let fields = [];
 
   if (_.isEmpty(req.query)) {
