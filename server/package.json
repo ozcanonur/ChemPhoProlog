@@ -18,7 +18,6 @@
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "node-localstorage": "^2.1.6",
-    "node-pre-gyp": "^0.15.0",
     "sqlite3": "^5.0.0",
     "swipl": "^1.0.5"
   },

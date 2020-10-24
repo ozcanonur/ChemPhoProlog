@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import { store, persistor } from 'redux/store';
+import { store, persistor } from './redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import App from 'views/App';
-import ParticlesBg from 'particles-bg';
+import App from './views/App';
 
 import 'assets/css/style.css';
 
@@ -28,7 +27,6 @@ ReactDOM.render(
           <Route path='/home' component={App} />
         </Switch>
       </Router>
-      <ParticlesBg type='cobweb' bg />
     </PersistGate>
   </Provider>,
   document.getElementById('root')
