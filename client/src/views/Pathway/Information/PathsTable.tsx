@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import addInspectPath from 'redux/actions/Pathway/addInspectPath';
+import { addInspectPath } from 'actions/pathways';
 
 import Table from 'components/Table/Table';
 import CardGeneric from 'components/Card/CardGeneric';
@@ -18,7 +18,9 @@ const parsePathsToTableData = (paths, stoppingReasons) => {
 };
 
 const PathsTable = () => {
-  const { cellLine, perturbagen, substrate } = useSelector((state) => state.pathwayInputs);
+  const { cellLine, perturbagen, substrate } = useSelector(
+    (state) => state.pathwayInputs
+  );
   const data = useSelector((state) => state.pathwayData) || {
     paths: [],
     relations: {},

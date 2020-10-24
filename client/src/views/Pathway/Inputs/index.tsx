@@ -12,11 +12,12 @@ import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
-import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
-import getPathwayData from 'redux/actions/Pathway/getPathwayData';
-import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
-import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
-// eslint-disable-next-line no-unused-vars
+import {
+  setSelectedInputs,
+  getPathwayData,
+  removeAllInspectPaths,
+  setElementsToAnimate,
+} from 'actions/pathways';
 
 export default function Inputs() {
   const [loading, setLoading] = useState(false);
@@ -114,7 +115,13 @@ export default function Inputs() {
             <ButtonText />
           </Button>
         </GridItem>
-        <GridItem style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <GridItem
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <FormControlLabel
             control={
               <Switch

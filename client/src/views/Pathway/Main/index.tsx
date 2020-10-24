@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { store } from 'redux/store';
+import { store } from 'index';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
@@ -8,7 +8,11 @@ import GridItem from 'components/Grid/GridItem';
 import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';
 
-import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'views/Pathway/utils/options';
+import {
+  getCytoStylesheet,
+  getCytoLayout,
+  getCytoElements,
+} from 'views/Pathway/utils/options';
 
 // Wrapping it up in memo because react-router {match} causes re-render
 // Problematic with cxtmenu > add to sidebar function
@@ -22,16 +26,27 @@ const Main = React.memo(() => {
     observation: {},
   };
 
+  console.log(data);
+  // const start = useSelector((state)=>state.pathwayInputs);
   const start = store.getState().pathwayInputs.substrate;
 
   const elements = getCytoElements(data);
-  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, start);
+  const stylesheet = getCytoStylesheet(
+    data.observation,
+    data.regulatory,
+    start
+  );
   const layout = getCytoLayout();
 
   return (
     <GridContainer direction='row'>
       <GridItem xs={10}>
-        <Pathway data={data} elements={elements} stylesheet={stylesheet} layout={layout} />
+        <Pathway
+          data={data}
+          elements={elements}
+          stylesheet={stylesheet}
+          layout={layout}
+        />
       </GridItem>
       <GridItem xs={2}>
         <PathSelectList />

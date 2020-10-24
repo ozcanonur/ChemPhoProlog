@@ -1,13 +1,16 @@
-import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
 import kinases from 'variables/kinases';
 import phosphatases from 'variables/phosphatases';
 import { popErrorTooltip } from 'views/Pathway/utils/tooltip';
-import { store } from 'redux/store';
+import { store } from 'index';
 
-import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
-import getPathwayData from 'redux/actions/Pathway/getPathwayData';
-import removeAllInspectPaths from 'redux/actions/Pathway/removeAllInspectPaths';
-import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
+import { addSidebarKinase } from 'actions/main';
+import {
+  setSelectedInputs,
+  getPathwayData,
+  removeAllInspectPaths,
+  setElementsToAnimate,
+} from 'actions/pathways';
+
 import Cytoscape from 'cytoscape';
 
 const submitPathwayFromSelectedEle = (ele, dispatch) => {
@@ -49,8 +52,9 @@ const cxtmenuOptions = (dispatch) => {
         select: (ele) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
-          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
-          else dispatch(addSidebarRouteKinase(id));
+          if (isPhosphosite)
+            popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          else dispatch(addSidebarKinase(id));
         },
         enabled: true,
       },
@@ -63,7 +67,8 @@ const cxtmenuOptions = (dispatch) => {
         select: (ele) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
-          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          if (isPhosphosite)
+            popErrorTooltip(ele, 'Not available for phosphosites', 2000);
           else openUniprot(ele);
         },
         enabled: true,

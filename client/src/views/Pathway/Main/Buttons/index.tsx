@@ -9,9 +9,12 @@ import Legend from 'views/Pathway/Main/Buttons/Legend';
 
 import { toggleTooltips } from 'views/Pathway/utils/tooltip';
 import { animatePath } from 'views/Pathway/utils/animation';
-import { resetPathwayVisuals, clearAllTimeouts } from 'views/Pathway/utils/misc';
+import {
+  resetPathwayVisuals,
+  clearAllTimeouts,
+} from 'views/Pathway/utils/misc';
 
-import changeSelectedPath from 'redux/actions/Pathway/changeSelectedPath';
+import { changeSelectedPath } from 'actions/pathways';
 
 const ExtraButtons = () => {
   const cy = useSelector((state) => state.cy);
@@ -78,7 +81,11 @@ const ExtraButtons = () => {
     {
       text: 'Export',
       onClick: async () => {
-        const png64 = await cy.png({ output: 'blob-promise', full: true, scale: 2 });
+        const png64 = await cy.png({
+          output: 'blob-promise',
+          full: true,
+          scale: 2,
+        });
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.href = URL.createObjectURL(new Blob([png64], { type: 'image/png' }));

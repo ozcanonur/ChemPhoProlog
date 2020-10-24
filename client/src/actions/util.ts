@@ -1,8 +1,9 @@
-/* eslint-disable no-nested-ternary */
-import phosphatases from 'variables/phosphatases';
-import { store } from 'redux/store';
-
-const getExplanationForPath = (path, observation, regulatory, stoppingReasons) => {
+export const getExplanationForPath = (
+  path,
+  observation,
+  regulatory,
+  stoppingReasons
+) => {
   const outputList = [];
   let prevBottomKPaActivity = 'inhibited';
 
@@ -11,7 +12,11 @@ const getExplanationForPath = (path, observation, regulatory, stoppingReasons) =
   if (path.length > 0 && path[0].includes('(')) startIndex = 1;
 
   // Add the stop reason
-  outputList.push([`Stopped at ${path[0]}, (${stoppingReasons[path[0]]})`, '', '']);
+  outputList.push([
+    `Stopped at ${path[0]}, (${stoppingReasons[path[0]]})`,
+    '',
+    '',
+  ]);
 
   for (let i = startIndex; i < path.length; i += 2) {
     const topKPa = path[i];
@@ -19,13 +24,19 @@ const getExplanationForPath = (path, observation, regulatory, stoppingReasons) =
     const bottomKPa = path[i + 2];
 
     const topKPaActivity = prevBottomKPaActivity;
-    const topKPaFunction = Object.keys(phosphatases).includes(topKPa) ? 'dephosphorylates' : 'phosphorylates';
+    const topKPaFunction = Object.keys(phosphatases).includes(topKPa)
+      ? 'dephosphorylates'
+      : 'phosphorylates';
 
     const foldChange = observation[midPhosphosite].fold_change;
     const reg = regulatory[midPhosphosite];
 
-    const bottomKPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
-    const bottomKPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
+    const bottomKPaActivated =
+      (foldChange > 0 && reg === 'p_inc') ||
+      (foldChange < 0 && reg === 'p_dec');
+    const bottomKPaInhibited =
+      (foldChange > 0 && reg === 'p_dec') ||
+      (foldChange < 0 && reg === 'p_inc');
     const bottomKPaActivity = bottomKPaActivated
       ? 'activated'
       : bottomKPaInhibited
@@ -50,26 +61,19 @@ const getExplanationForPath = (path, observation, regulatory, stoppingReasons) =
   return outputList;
 };
 
-export default (selectedPath) => {
-  const data = store.getState().pathwayData || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
-
-  const reversedPath = [...selectedPath].reverse();
-  const pathDetails = getExplanationForPath(
-    reversedPath,
-    data.observation,
-    data.regulatory,
-    data.stoppingReasons
+export const formatObservation = (phosphosites, observationData) => {
+  const observationInCurrentPaths = observationData.filter((e) =>
+    phosphosites.includes(e.substrate)
   );
 
-  return {
-    type: 'SET_PATH_EXPLANATION',
-    payload: pathDetails,
-  };
+  const formattedObservation = {};
+  // eslint-disable-next-line camelcase
+  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
+    formattedObservation[substrate] = {
+      fold_change: fold_change.toFixed(2),
+      p_value: p_value.toFixed(2),
+    };
+  });
+
+  return formattedObservation;
 };

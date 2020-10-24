@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import setPathExplanation from 'redux/actions/Pathway/setPathExplanation';
+import { setPathExplanation } from 'actions/pathways';
 
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';

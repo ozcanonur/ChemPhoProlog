@@ -5,7 +5,7 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
 import { getApi } from 'api/api';
-import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
+import { addSidebarKinase } from 'actions/main';
 
 const KnownTargets = () => {
   const [tableData, setTableData] = useState([]);
@@ -17,7 +17,7 @@ const KnownTargets = () => {
 
   const dispatch = useDispatch();
   const handleKinaseAdd = (selection) => {
-    dispatch(addSidebarRouteKinase(selection));
+    dispatch(addSidebarKinase(selection));
   };
 
   const perturbagen = window.location.href.split('/')[4];
@@ -27,13 +27,19 @@ const KnownTargets = () => {
     const params = { perturbagen };
 
     getApi(route, params).then((res) => {
-      setTableData(res.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values));
+      setTableData(
+        res.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values)
+      );
     });
   }, [perturbagen]);
 
   return (
     <div style={{ padding: '2em' }}>
-      <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+      <CardGeneric
+        color='primary'
+        cardTitle='Perturbagens'
+        cardSubtitle='Select a perturbagen'
+      >
         {tableData === [] ? (
           <div>Loading...</div>
         ) : (

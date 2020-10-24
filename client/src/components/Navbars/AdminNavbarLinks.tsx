@@ -16,8 +16,7 @@ import Button from 'components/CustomButtons/Button';
 
 import perturbagens from 'variables/perturbagens';
 import { getApiWeb } from 'api/api';
-import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
-import addSidebarRoutePerturbagen from 'redux/actions/Sidebar/addSidebarRoutePerturbagen';
+import { addSidebarKinase, addSidebarPerturbagen } from 'actions/main';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
@@ -41,15 +40,20 @@ const ItemRenderer = ({ data, index, style }) => {
 
   const dispatch = useDispatch();
   const handleSelect = () => {
-    if (itemType === 'kinase') dispatch(addSidebarRouteKinase(itemName));
-    else if (itemType === 'perturbagen') dispatch(addSidebarRoutePerturbagen(itemName));
+    if (itemType === 'kinase') dispatch(addSidebarKinase(itemName));
+    else if (itemType === 'perturbagen')
+      dispatch(addSidebarPerturbagen(itemName));
     setSearchOpen(false);
   };
 
   return (
     <div style={style}>
       <Link to={redirectTo}>
-        <ListItem button onClick={() => handleSelect()} style={{ color: 'black' }}>
+        <ListItem
+          button
+          onClick={() => handleSelect()}
+          style={{ color: 'black' }}
+        >
           <ListItemIcon>{itemIcon}</ListItemIcon>
           <ListItemText primary={itemName} />
         </ListItem>
@@ -69,7 +73,11 @@ const AdminNavbarLinks = () => {
     if (value === '') setSearchOpen(false);
     else {
       const filteredSearchResults = searchResults.filter(
-        (e) => e[Object.keys(e)[0]].toString().toLowerCase().indexOf(value.toLowerCase()) === 0
+        (e) =>
+          e[Object.keys(e)[0]]
+            .toString()
+            .toLowerCase()
+            .indexOf(value.toLowerCase()) === 0
       );
 
       setFilteredSearchResults(filteredSearchResults);
@@ -86,7 +94,10 @@ const AdminNavbarLinks = () => {
         const kinaseRoute = '/getAllKinases';
         const substrateRoute = '/getAllSubstrates';
 
-        const results = await Promise.all([getApiWeb(kinaseRoute), getApiWeb(substrateRoute)]);
+        const results = await Promise.all([
+          getApiWeb(kinaseRoute),
+          getApiWeb(substrateRoute),
+        ]);
         const perturbagenResults = perturbagens.map((perturbagen) => {
           return { perturbagen };
         });
@@ -109,7 +120,8 @@ const AdminNavbarLinks = () => {
           className: `${classes.margin} ${classes.search}`,
         }}
         inputProps={{
-          placeholder: searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
+          placeholder:
+            searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
           inputProps: {
             'aria-label': 'Search',
             onChange: (e) => handleChange(e.target.value),
@@ -118,7 +130,12 @@ const AdminNavbarLinks = () => {
           },
         }}
       />
-      <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
+      <Button
+        aria-label='edit'
+        justIcon
+        round
+        style={{ background: 'rgba(229,173,6)', color: 'white' }}
+      >
         <Search />
       </Button>
       {searchOpen && filteredSearchResults.length !== 0 ? (

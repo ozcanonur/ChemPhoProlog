@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { store } from 'redux/store';
+import { store } from 'index';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { getApiWeb } from 'api/api';
 import perturbagens from 'variables/perturbagens';
-import setSelectedInputs from 'redux/actions/Pathway/setSelectedInputs';
+import { setSelectedInputs } from 'actions/pathways';
 
 import ListboxComponent from 'views/Pathway/Inputs/ListBoxComponent';
 
@@ -42,20 +42,25 @@ export default function Virtualize({ type }) {
   useEffect(() => {
     if (type === 'Substrate') {
       const route = '/validObservation';
-      const params = { cellLine: inputs.cellLine, perturbagen: inputs.perturbagen };
+      const params = {
+        cellLine: inputs.cellLine,
+        perturbagen: inputs.perturbagen,
+      };
 
       getApiWeb(route, params).then((res) => {
         setData(res);
       });
     } else if (type === 'Perturbagen') setData(perturbagens);
-    else if (type === 'Cell Line') setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
+    else if (type === 'Cell Line')
+      setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
   }, [type, inputs.cellLine, inputs.perturbagen]);
 
   const dispatch = useDispatch();
   const onInputChange = (value) => {
     let newInputs;
     if (type === 'Substrate') newInputs = { ...inputs, substrate: value };
-    else if (type === 'Perturbagen') newInputs = { ...inputs, perturbagen: value };
+    else if (type === 'Perturbagen')
+      newInputs = { ...inputs, perturbagen: value };
     else if (type === 'Cell Line') newInputs = { ...inputs, cellLine: value };
 
     dispatch(setSelectedInputs(newInputs));
@@ -75,7 +80,9 @@ export default function Virtualize({ type }) {
       ListboxComponent={ListboxComponent}
       renderGroup={renderGroup}
       options={data}
-      renderInput={(params) => <TextField {...params} variant='outlined' label={getLabel(type)} />}
+      renderInput={(params) => (
+        <TextField {...params} variant='outlined' label={getLabel(type)} />
+      )}
       renderOption={(option) => <Typography noWrap>{option}</Typography>}
       onInputChange={(_e, value) => onInputChange(value.split(',')[0])}
     />

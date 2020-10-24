@@ -25,16 +25,16 @@ const StandardRoutes = () => {
     const activePro = ' ';
 
     const listItemClasses = classNames({
-      [` ${classes.orange}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.orange}`]: activeRoute(prop.path),
     });
 
     const whiteFontClasses = classNames({
-      [` ${classes.whiteFont}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.whiteFont}`]: activeRoute(prop.path),
     });
 
     return (
       <div key={key}>
-        <NavLink to={prop.layout + prop.path} className={activePro + classes.item} activeClassName='active'>
+        <NavLink to={prop.path} className={activePro + classes.item} activeClassName='active'>
           <ListItem button className={classes.itemLink + listItemClasses}>
             {typeof prop.icon === 'string' ? (
               <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>

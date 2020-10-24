@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import swipl from 'swipl';
 import { queryProlog } from '../swipl/index';
+import { parsePaths } from '../swipl/parsePathsNew';
 
 const router = new express.Router();
 
@@ -171,9 +172,12 @@ router.get('/pathway', (req, res) => {
     return res.status(400).send({ requiredFields });
   }
 
-  const pathwayData = queryProlog(swipl, { cellLine, perturbagen, substrate, onlyKinaseEnds });
-
-  res.send(pathwayData);
+  const query = `select path, explanation, inhibited from Paths where cellLine = ? and perturbagen = ? and substrate = ?`;
+  db.all(query, [cellLine, perturbagen, substrate], (err, rows) => {
+    if (err) throw err;
+    const parsed = parsePaths(rows);
+    res.send(parsed);
+  });
 });
 
 export default router;

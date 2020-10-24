@@ -12,39 +12,34 @@ import TrendingDown from '@material-ui/icons/TrendingDown';
 
 const routes = [
   {
-    path: '/welcome',
+    path: '/home',
     name: 'Home',
     icon: Home,
     component: Welcome,
-    layout: '/home',
   },
   {
-    path: '/kinaseList',
+    path: '/kinases',
     name: 'Kinases',
     icon: PanoramaHorizontal,
     component: KinaseList,
-    layout: '/home',
   },
   {
-    path: '/perturbagenList',
+    path: '/perturbagens',
     name: 'Perturbagens',
     icon: Healing,
     component: PerturbagenList,
-    layout: '/home',
   },
   {
-    path: '/pathway',
+    path: '/pathways',
     name: 'Pathways',
     icon: TrendingDown,
     component: Pathway,
-    layout: '/home',
   },
   {
     path: '/api',
     name: 'API',
     icon: Web,
     component: API,
-    layout: '/home',
   },
 ];
 

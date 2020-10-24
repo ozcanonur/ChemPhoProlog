@@ -11,7 +11,7 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import removeSidebarRoute from 'redux/actions/Sidebar/removeSidebarRoute';
+import { removeSidebarRoute } from 'actions/main';
 import { useDispatch, useSelector } from 'react-redux';
 import additionalRoutes from 'variables/additionalRoutes';
 
@@ -68,20 +68,34 @@ const ExtraRoute = ({ route }) => {
               }}
             >
               <RemoveCircleOutlineIcon
-                style={{ color: 'white', cursor: 'pointer', marginLeft: '0.6em' }}
+                style={{
+                  color: 'white',
+                  cursor: 'pointer',
+                  marginLeft: '0.6em',
+                }}
                 onClick={() => handleSelectedTabRemove(currentTitle)}
               />
               <ListItemText
                 primary={currentTitle}
                 className={classNames(classes.itemText, whiteFontClasses)}
                 disableTypography
-                style={{ textAlign: 'left', marginLeft: '1em', cursor: 'pointer' }}
+                style={{
+                  textAlign: 'left',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
+                }}
                 onClick={handleOpen}
               />
               {open ? (
-                <ExpandLessIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
+                <ExpandLessIcon
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  onClick={handleOpen}
+                />
               ) : (
-                <ExpandMoreIcon style={{ color: 'white', cursor: 'pointer' }} onClick={handleOpen} />
+                <ExpandMoreIcon
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  onClick={handleOpen}
+                />
               )}
             </ListItem>
           ) : undefined}
@@ -93,9 +107,15 @@ const ExtraRoute = ({ route }) => {
             >
               <ListItem button className={classes.itemLink + listItemClasses}>
                 {typeof prop.icon === 'string' ? (
-                  <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
+                  <Icon
+                    className={classNames(classes.itemIcon, whiteFontClasses)}
+                  >
+                    {prop.icon}
+                  </Icon>
                 ) : (
-                  <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
+                  <prop.icon
+                    className={classNames(classes.itemIcon, whiteFontClasses)}
+                  />
                 )}
                 <ListItemText
                   primary={prop.name}
@@ -116,7 +136,9 @@ const ExtraRoutes = ({ type }) => {
 
   const extraSidebarRoutes = useSelector((state) => state.extraSidebarRoutes);
   const getExtraRoutes = (type) =>
-    extraSidebarRoutes.filter((e) => e.type === type).map((e) => additionalRoutes(type, e.name));
+    extraSidebarRoutes
+      .filter((e) => e.type === type)
+      .map((e) => additionalRoutes(type, e.name));
   const extraRoutes = getExtraRoutes(type);
 
   const brand = (type) => {
@@ -134,7 +156,12 @@ const ExtraRoutes = ({ type }) => {
   };
 
   return (
-    <Slide in={extraRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
+    <Slide
+      in={extraRoutes.length !== 0}
+      direction='left'
+      mountOnEnter
+      unmountOnExit
+    >
       <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
         {brand(type)}
         {extraRoutes.map((route, key) => (

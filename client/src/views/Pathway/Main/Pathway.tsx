@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { store } from 'redux/store';
-import setCy from 'redux/actions/Pathway/setCy';
-import setElementsToAnimate from 'redux/actions/Pathway/setElementsToAnimate';
+import { store } from 'index';
+import { setCy, setElementsToAnimate, setCxtMenu } from 'actions/pathways';
 
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -22,7 +21,6 @@ import {
   addResizeEventListener,
 } from 'views/Pathway/utils/misc';
 import cxtmenuOptions from 'views/Pathway/utils/cxtmenuOptions';
-import setCxtMenu from 'redux/actions/Pathway/setCxtMenu';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);

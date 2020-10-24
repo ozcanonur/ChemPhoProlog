@@ -8,10 +8,12 @@ import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 import pick from 'lodash/pick';
 
-import fetchKinaseData from 'redux/actions/KinaseList/fetchKinaseData';
-import changeSelectedKinase from 'redux/actions/KinaseList/changeSelectedKinase';
-import changeCurrentPageKinase from 'redux/actions/KinaseList/changeCurrentPageKinase';
-import addSidebarRouteKinase from 'redux/actions/Sidebar/addSidebarRouteKinase';
+import {
+  fetchKinaseData,
+  changeSelectedKinase,
+  changeCurrentPageKinase,
+  addSidebarKinase,
+} from 'actions/main';
 
 import KinaseListRightPanel from 'views/KinaseList/KinaseListRightPanel';
 import KinaseListPhosphosites from 'views/KinaseList/KinaseListPhosphosites';
@@ -40,7 +42,9 @@ const convertExpressedIns = (data) => {
 const KinaseList = () => {
   const data = useSelector((state) => state.kinaseData);
   const tableData = useMemo(() => {
-    const relevantFieldsPicked = data.map((e) => pick(e, ['kinase_name', 'expressed_in', 'uniprot_id']));
+    const relevantFieldsPicked = data.map((e) =>
+      pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])
+    );
     return convertExpressedIns(relevantFieldsPicked).map(Object.values);
   }, [data]);
 
@@ -55,7 +59,9 @@ const KinaseList = () => {
     dispatch(changeSelectedKinase(selection));
   };
 
-  const selectedInfo = data.filter((item) => item.kinase_name === selectedItem)[0];
+  const selectedInfo = data.filter(
+    (item) => item.kinase_name === selectedItem
+  )[0];
 
   // Current page
   const currentPage = useSelector((state) => state.currentPageKinase);
@@ -75,13 +81,17 @@ const KinaseList = () => {
   }, [selectedItem]);
 
   const handleKinaseAdd = (selection) => {
-    dispatch(addSidebarRouteKinase(selection));
+    dispatch(addSidebarKinase(selection));
   };
 
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem xs={12} lg={6}>
-        <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase'>
+        <CardGeneric
+          color='primary'
+          cardTitle='Kinases'
+          cardSubtitle='Select a kinase'
+        >
           {data === [] ? (
             <div>Loading...</div>
           ) : (
@@ -106,7 +116,9 @@ const KinaseList = () => {
       <GridItem xs={12} lg={6}>
         <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
           <div>
-            {selectedInfo !== undefined ? <KinaseListRightPanel selectedInfo={selectedInfo} /> : null}
+            {selectedInfo !== undefined ? (
+              <KinaseListRightPanel selectedInfo={selectedInfo} />
+            ) : null}
           </div>
         </Slide>
       </GridItem>

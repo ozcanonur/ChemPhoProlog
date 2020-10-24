@@ -7,7 +7,7 @@ import PathwayInputs from 'views/Pathway/Inputs/';
 import PathwayInformation from 'views/Pathway/Information/';
 import PathwayMain from 'views/Pathway/Main/';
 
-const PathwayIndex = () => (
+const PathwayIndex = (): JSX.Element => (
   <div style={{ padding: '2em' }}>
     <GridContainer direction='column'>
       <GridItem>

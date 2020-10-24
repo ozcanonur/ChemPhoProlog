@@ -1,4 +1,4 @@
-import { store } from 'redux/store';
+import { store } from 'index';
 
 export const getCytoStylesheet = (observation, regulatory, start) => [
   {
@@ -64,7 +64,8 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e) => (observation[e.data().id].fold_change > 0 ? 'red' : 'green'),
+      backgroundColor: (e) =>
+        observation[e.data().id].fold_change > 0 ? 'red' : 'green',
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e) => {
@@ -168,7 +169,6 @@ export const getCytoElements = (data) => {
   const start = store.getState().pathwayInputs.substrate;
   // console.log(start);
   const phosphosites = data.phosphosites.map((e) => {
-    console.log(e);
     return {
       data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
       classes: ['phosphosite'],

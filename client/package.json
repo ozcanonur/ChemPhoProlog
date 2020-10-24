@@ -1,5 +1,5 @@
 {
-  "name": "Chemphoprolog",
+  "name": "chemphoprolog",
   "version": "1.0.0",
   "license": "MIT",
   "description": "Chemphoprolog",
@@ -26,6 +26,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/redux": "^3.6.0",
+    "@types/redux-devtools-extension": "^2.13.2",
     "axios": "^0.19.2",
     "classnames": "2.2.6",
     "cytoscape": "^3.15.2",
@@ -39,6 +40,7 @@
     "history": "4.10.1",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
+    "particles-bg": "^2.5.0",
     "perfect-scrollbar": "1.5.0",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
@@ -53,6 +55,7 @@
     "react-window": "^1.8.5",
     "recompose": "^0.30.0",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "tippy.js": "5.2.1",
@@ -63,26 +66,23 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "lint:check": "eslint . --ext=js,jsx;  exit 0",
-    "lint:fix": "eslint . --ext=js,jsx --fix;  exit 0",
-    "build-package-css": "cp src/assets/css/material-dashboard-react.css dist/material-dashboard-react.css",
-    "build-package": "npm run build-package-css && babel src --out-dir dist",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
     "@welldone-software/why-did-you-render": "^4.3.1",
-    "eslint": "6.8",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "2.21.2",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-jsx-a11y": "6.3.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.1.0",
-    "gulp": "4.0.2",
-    "gulp-append-prepend": "1.0.8",
-    "prettier": "^2.1.1",
+    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "prettier": "^2.1.2",
     "source-map-explorer": "^2.5.0"
   },
   "browserslist": {
@@ -91,7 +91,11 @@
       "not dead",
       "not op_mini all"
     ],
-    "development": []
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "proxy": "http://localhost:5000/"
 }

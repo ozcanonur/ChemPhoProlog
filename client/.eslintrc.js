@@ -1,35 +1,40 @@
 module.exports = {
+  extends: [
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended',
+    'prettier',
+    'prettier/react',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+  ],
+  plugins: ['react', '@typescript-eslint', 'jest'],
   env: {
     browser: true,
     es6: true,
+    jest: true,
   },
-  extends: ['airbnb', 'airbnb/hooks', 'prettier', 'eslint:recommended', 'plugin:react/recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2020,
+    ecmaVersion: 2018,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
-  plugins: ['react', 'prettier'],
   rules: {
-    'react/prop-types': 'off',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    'no-shadow': 'off',
-    'react/no-array-index-key': 'off',
-    camelcase: 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'react/jsx-indent': 'off',
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        paths: ['src'],
+    'linebreak-style': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
       },
-    },
+    ],
   },
 };

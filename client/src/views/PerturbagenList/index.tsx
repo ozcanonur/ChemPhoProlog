@@ -7,10 +7,12 @@ import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
 
-import fetchPerturbagenData from 'redux/actions/PerturbagenList/fetchPerturbagenData';
-import changeSelectedPerturbagen from 'redux/actions/PerturbagenList/changeSelectedPerturbagen';
-import changeCurrentPagePerturbagen from 'redux/actions/PerturbagenList/changeCurrentPagePerturbagen';
-import addSidebarRoutePerturbagen from 'redux/actions/Sidebar/addSidebarRoutePerturbagen';
+import {
+  fetchPerturbagenData,
+  changeSelectedPerturbagen,
+  changeCurrentPagePerturbagen,
+  addSidebarPerturbagen,
+} from 'actions/main';
 
 import PerturbagenListRightPanel from 'views/PerturbagenList/PerturbagenListRightPanel';
 
@@ -50,7 +52,7 @@ const PerturbagenList = () => {
   }, [selectedItem]);
 
   const handlePerturbagenAdd = (selection) => {
-    dispatch(addSidebarRoutePerturbagen(selection));
+    dispatch(addSidebarPerturbagen(selection));
   };
 
   return (
@@ -85,7 +87,9 @@ const PerturbagenList = () => {
       <GridItem sm={12} lg={6}>
         <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
           <div>
-            {selectedInfo !== undefined ? <PerturbagenListRightPanel selectedInfo={selectedInfo} /> : null}
+            {selectedInfo !== undefined ? (
+              <PerturbagenListRightPanel selectedInfo={selectedInfo} />
+            ) : null}
           </div>
         </Slide>
       </GridItem>
