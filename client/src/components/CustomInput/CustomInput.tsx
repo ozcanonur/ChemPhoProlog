@@ -10,11 +10,11 @@ import Clear from '@material-ui/icons/Clear';
 import Check from '@material-ui/icons/Check';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/customInputStyle';
+import styles from 'components/CustomInput/customInputStyle';
 
 const useStyles = makeStyles(styles);
 
-export default function CustomInput(props) {
+const CustomInput = (props) => {
   const classes = useStyles();
   const {
     formControlProps,
@@ -47,7 +47,11 @@ export default function CustomInput(props) {
       style={{ marginLeft: '0.5em', marginTop: 0, marginBottom: 0 }}
     >
       {labelText !== undefined ? (
-        <InputLabel className={classes.labelRoot + labelClasses} htmlFor={id} {...labelProps}>
+        <InputLabel
+          className={classes.labelRoot + labelClasses}
+          htmlFor={id}
+          {...labelProps}
+        >
           {labelText}
         </InputLabel>
       ) : null}
@@ -70,4 +74,6 @@ export default function CustomInput(props) {
       ) : null}
     </FormControl>
   );
-}
+};
+
+export default CustomInput;

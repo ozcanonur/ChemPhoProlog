@@ -6,7 +6,7 @@ import Table from 'components/Table/Table';
 import { getApi } from 'api/api';
 import ObservationHeatMap from 'views/KinaseDetails/Description/ObservationHeatMap';
 
-const PhosphositesOfInterestTable = ({ kinase }) => {
+const PhosphositesOfInterestTable = ({ kinase }): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(0);
   const [tableData, setTableData] = useState([]);
 
@@ -29,7 +29,11 @@ const PhosphositesOfInterestTable = ({ kinase }) => {
   }, [kinase]);
 
   return (
-    <CardGeneric color='primary' cardTitle='Phosphosites of interest' cardSubtitle='Select a phosphosite'>
+    <CardGeneric
+      color='primary'
+      cardTitle='Phosphosites of interest'
+      cardSubtitle='Select a phosphosite'
+    >
       {tableData.length === 0 ? (
         <div>No entries found.</div>
       ) : (

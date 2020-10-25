@@ -7,7 +7,7 @@ import KnownSubstrates from 'views/KinaseDetails/Substrates/KnownSubstrates/';
 import BugReport from '@material-ui/icons/BugReport';
 import Code from '@material-ui/icons/Code';
 
-const Substrates = () => {
+const Substrates = (): JSX.Element => {
   return (
     <div style={{ padding: '2em' }}>
       <CustomTabs

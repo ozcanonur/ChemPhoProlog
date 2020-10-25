@@ -21,7 +21,7 @@ import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/tableStyle';
+import styles from 'components/Table/tableStyle';
 
 const useStyles = makeStyles(styles);
 
@@ -49,26 +49,42 @@ const Row = (props) => {
 
   const ExpandButton = () => (
     <TableCell className={classes.tableCell}>
-      <IconButton aria-label='expand row' size='small' onClick={() => handleExpandButton()}>
+      <IconButton
+        aria-label='expand row'
+        size='small'
+        onClick={() => handleExpandButton()}
+      >
         {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
       </IconButton>
     </TableCell>
   );
 
   const SelectionButton = () => (
-    <IconButton aria-label='expand row' size='small' onClick={() => handleSelection(row[0])}>
+    <IconButton
+      aria-label='expand row'
+      size='small'
+      onClick={() => handleSelection(row[0])}
+    >
       <KeyboardArrowRight />
     </IconButton>
   );
 
   const AddButton = () => (
-    <IconButton aria-label='expand row' size='small' onClick={() => handleAdd(row[0])}>
+    <IconButton
+      aria-label='expand row'
+      size='small'
+      onClick={() => handleAdd(row[0])}
+    >
       <AddCircleOutline />
     </IconButton>
   );
 
   const AddButtonPath = () => (
-    <Button onClick={() => handleAddPath(row)} size='sm' style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}>
+    <Button
+      onClick={() => handleAddPath(row)}
+      size='sm'
+      style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}
+    >
       Add to inspection
     </Button>
   );
@@ -80,7 +96,10 @@ const Row = (props) => {
         <TableCell className={classes.tableCell} key={key}>
           {firstRowOnClick ? (
             <Link
-              style={{ color: key === 0 ? '#0066CC' : 'inherit', textDecoration: 'none' }}
+              style={{
+                color: key === 0 ? '#0066CC' : 'inherit',
+                textDecoration: 'none',
+              }}
               to={`/home/${row[0]}/description`}
               onClick={() => {
                 handleAdd(row[0]);
@@ -108,7 +127,8 @@ const Row = (props) => {
         key={row}
         className={classes.tableBodyRow}
         style={{
-          backgroundColor: row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
+          backgroundColor:
+            row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
         }}
       >
         <RowBody />
@@ -205,7 +225,11 @@ const CustomTable = (props) => {
   const filterByTermAndSetTableData = (event) => {
     const key = handleAddPath ? 1 : 0;
     const filtered = tableData.filter(
-      (row) => row[key].toString().toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
+      (row) =>
+        row[key]
+          .toString()
+          .toLowerCase()
+          .indexOf(event.target.value.toLowerCase()) === 0
     );
     handleChangePage(null, 0);
     setFilteredList(filtered);
@@ -214,7 +238,8 @@ const CustomTable = (props) => {
   const TableHeadContent = () => (
     <TableRow className={classes.tableHeadRow}>
       {tableHead.map((prop, key) => {
-        const textAlign = key === tableHead.length - 1 && rowEndArrow ? 'center' : 'inherit';
+        const textAlign =
+          key === tableHead.length - 1 && rowEndArrow ? 'center' : 'inherit';
         return (
           <TableCell
             className={`${classes.tableCell} ${classes.tableHeadCell}`}
@@ -230,22 +255,24 @@ const CustomTable = (props) => {
   );
 
   const TableBodyContent = () =>
-    filteredList.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage).map((row, key) => (
-      <Row
-        key={key}
-        {...{
-          row,
-          rowEndArrow,
-          handleSelection,
-          handleAdd,
-          cell_line,
-          firstRowOnClick,
-          ExtraContent,
-          selectedItem,
-          handleAddPath,
-        }}
-      />
-    ));
+    filteredList
+      .slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
+      .map((row, key) => (
+        <Row
+          key={key}
+          {...{
+            row,
+            rowEndArrow,
+            handleSelection,
+            handleAdd,
+            cell_line,
+            firstRowOnClick,
+            ExtraContent,
+            selectedItem,
+            handleAddPath,
+          }}
+        />
+      ));
 
   const TablePaginationContent = () => (
     <TablePagination
@@ -274,7 +301,12 @@ const CustomTable = (props) => {
             },
           }}
         />
-        <Button aria-label='edit' justIcon round style={{ background: 'rgba(229,173,6)', color: 'white' }}>
+        <Button
+          aria-label='edit'
+          justIcon
+          round
+          style={{ background: 'rgba(229,173,6)', color: 'white' }}
+        >
           <Search />
         </Button>
       </div>

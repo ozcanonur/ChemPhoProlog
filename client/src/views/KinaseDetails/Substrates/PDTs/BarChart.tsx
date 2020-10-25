@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ResponsiveBar } from '@nivo/bar';
 
-const BarChart = ({ data }) => (
+const BarChart = ({ data }): JSX.Element => (
   <ResponsiveBar
     data={data}
     keys={['fold_change']}

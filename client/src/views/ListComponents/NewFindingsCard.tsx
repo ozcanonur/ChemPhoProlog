@@ -1,4 +1,9 @@
 import React from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import Warning from '@material-ui/icons/Warning';
+import NewReleases from '@material-ui/icons/NewReleases';
+import TrendingDown from '@material-ui/icons/TrendingDown';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -7,19 +12,58 @@ import CardHeader from 'components/Card/CardHeader';
 import CardIcon from 'components/Card/CardIcon';
 import CardFooter from 'components/Card/CardFooter';
 import Danger from 'components/Typography/Danger';
-
-import Warning from '@material-ui/icons/Warning';
-import NewReleases from '@material-ui/icons/NewReleases';
-import TrendingDown from '@material-ui/icons/TrendingDown';
-
 import PieChart from 'views/ListComponents/PieChart';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+const useStyles = makeStyles({
+  cardCategory: {
+    color: '#999',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    paddingTop: '10px',
+    marginBottom: '0',
+  },
+  cardTitle: {
+    color: '#3C4858',
+    marginTop: '0px',
+    minHeight: 'auto',
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontWeight: 400,
+      lineHeight: '1',
+    },
+  },
+  stats: {
+    color: '#999',
+    display: 'inline-flex',
+    fontSize: '12px',
+    lineHeight: '22px',
+    '& svg': {
+      top: '4px',
+      width: '16px',
+      height: '16px',
+      position: 'relative',
+      marginRight: '3px',
+      marginLeft: '3px',
+    },
+    '& .fab,& .fas,& .far,& .fal,& .material-icons': {
+      top: '4px',
+      fontSize: '16px',
+      position: 'relative',
+      marginRight: '3px',
+      marginLeft: '3px',
+    },
+  },
+});
 
-const useStyles = makeStyles(styles);
-
-const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIconText }) => {
+const NewFindingsCard = ({
+  leftIconTitle,
+  leftIconText,
+  rightIconTitle,
+  rightIconText,
+}): JSX.Element => {
   const classes = useStyles();
 
   const dataNewPerturbagens = [

@@ -8,7 +8,7 @@ import {
   warningColor,
   whiteColor,
   grayColor,
-} from 'assets/jss/dashboardStyle';
+} from 'assets/dashboardStyle';
 
 const headerStyle = () => ({
   appBar: {

@@ -10,9 +10,21 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles({
+  cardTitleWhite: {
+    color: '#fff',
+    marginTop: '0px',
+    minHeight: 'auto',
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontWeight: '400',
+      lineHeight: '1',
+    },
+  },
+});
 
 const navigationTexts = [
   'The diverse and highly complex nature of modern phosphoproteomics research produces a',
@@ -23,7 +35,7 @@ const navigationTexts = [
   'Of analytical approaches. In this study we propose novel logic-based algorithms that',
 ];
 
-const HowToNavigate = () => {
+const HowToNavigate = (): JSX.Element => {
   const classes = useStyles();
   return (
     <Card>
@@ -32,8 +44,8 @@ const HowToNavigate = () => {
       </CardHeader>
       <CardBody>
         <List>
-          {navigationTexts.map((e, key) => (
-            <ListItem key={key}>
+          {navigationTexts.map((e) => (
+            <ListItem key={e}>
               <ListItemIcon>
                 <KeyboardArrowRight />
               </ListItemIcon>

@@ -2,7 +2,12 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import { nodes, borders, areas, lines } from 'views/Pathway/Main/Buttons/Legend/variables';
+import {
+  nodes,
+  borders,
+  areas,
+  lines,
+} from 'views/Pathway/Main/Buttons/Legend/variables';
 import Node from 'views/Pathway/Main/Buttons/Legend/Node';
 import Border from 'views/Pathway/Main/Buttons/Legend/Border';
 import Area from 'views/Pathway/Main/Buttons/Legend/Area';

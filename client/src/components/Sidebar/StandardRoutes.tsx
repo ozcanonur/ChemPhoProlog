@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import routes from 'variables/routes';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
+import styles from 'components/Sidebar/sidebarStyle';
 
 const useStyles = makeStyles(styles);
 
@@ -34,12 +34,20 @@ const StandardRoutes = () => {
 
     return (
       <div key={key}>
-        <NavLink to={prop.path} className={activePro + classes.item} activeClassName='active'>
+        <NavLink
+          to={prop.path}
+          className={activePro + classes.item}
+          activeClassName='active'
+        >
           <ListItem button className={classes.itemLink + listItemClasses}>
             {typeof prop.icon === 'string' ? (
-              <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>{prop.icon}</Icon>
+              <Icon className={classNames(classes.itemIcon, whiteFontClasses)}>
+                {prop.icon}
+              </Icon>
             ) : (
-              <prop.icon className={classNames(classes.itemIcon, whiteFontClasses)} />
+              <prop.icon
+                className={classNames(classes.itemIcon, whiteFontClasses)}
+              />
             )}
             <ListItemText
               primary={prop.name}

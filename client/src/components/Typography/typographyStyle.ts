@@ -1,4 +1,11 @@
-import { defaultFont, primaryColor, infoColor, successColor, warningColor, grayColor } from 'assets/jss/dashboardStyle';
+import {
+  defaultFont,
+  primaryColor,
+  infoColor,
+  successColor,
+  warningColor,
+  grayColor,
+} from 'assets/dashboardStyle';
 
 const typographyStyle = {
   defaultFontStyle: {

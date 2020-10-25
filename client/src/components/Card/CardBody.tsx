@@ -1,22 +1,24 @@
 import React from 'react';
-import classNames from 'classnames';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/cardBodyStyle';
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles({
+  cardBody: {
+    padding: '0.9375rem 20px',
+    flex: '1 1 auto',
+    WebkitBoxFlex: 1,
+    position: 'relative',
+  },
+});
 
-export default function CardBody(props) {
+const CardBody = (props): JSX.Element => {
   const classes = useStyles();
-  const { className, children, plain, profile, ...rest } = props;
-  const cardBodyClasses = classNames({
-    [classes.cardBody]: true,
-    [classes.cardBodyPlain]: plain,
-    [classes.cardBodyProfile]: profile,
-    [className]: className !== undefined,
-  });
+  const { className, children, ...rest } = props;
+
   return (
-    <div className={cardBodyClasses} {...rest}>
+    <div className={classes.cardBody} {...rest}>
       {children}
     </div>
   );
-}
+};
+
+export default CardBody;

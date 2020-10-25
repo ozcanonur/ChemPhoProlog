@@ -1,4 +1,9 @@
-import { primaryColor, successColor, grayColor, defaultFont } from 'assets/jss/dashboardStyle';
+import {
+  primaryColor,
+  successColor,
+  grayColor,
+  defaultFont,
+} from 'assets/dashboardStyle';
 
 const customInputStyle = {
   disabled: {

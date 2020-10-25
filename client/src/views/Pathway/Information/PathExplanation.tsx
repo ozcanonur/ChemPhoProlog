@@ -6,7 +6,7 @@ import { setPathExplanation } from 'actions/pathways';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-const PathDetails = () => {
+const PathDetails = (): JSX.Element => {
   const { perturbagen } = useSelector((state) => state.pathwayInputs);
   const selectedPath = useSelector((state) => state.selectedPath);
   const pathExplanation = useSelector((state) => state.pathExplanation);

@@ -3,11 +3,11 @@ import React from 'react';
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/buttonStyle';
+import styles from 'components/CustomButtons/buttonStyle';
 
 const useStyles = makeStyles(styles);
 
-export default function RegularButton(props) {
+const RegularButton = (props): JSX.Element => {
   const classes = useStyles();
   const {
     color,
@@ -40,4 +40,6 @@ export default function RegularButton(props) {
       {children}
     </Button>
   );
-}
+};
+
+export default RegularButton;

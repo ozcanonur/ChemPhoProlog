@@ -19,7 +19,7 @@ import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
+import styles from 'components/Sidebar/sidebarStyle';
 
 const useStyles = makeStyles(styles);
 

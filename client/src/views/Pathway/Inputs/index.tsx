@@ -19,7 +19,7 @@ import {
   setElementsToAnimate,
 } from 'actions/pathways';
 
-export default function Inputs() {
+export default function Inputs(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [switchChecked, setSwitchChecked] = useState(false);
   const inputs = useSelector((state) => state.pathwayInputs);

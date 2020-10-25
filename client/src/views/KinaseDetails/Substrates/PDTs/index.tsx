@@ -10,7 +10,7 @@ import CardGeneric from 'components/Card/CardGeneric';
 import CircularBarPlot from 'views/KinaseDetails/Substrates/PDTs/CircularBarPlot';
 import PDTTable from 'views/KinaseDetails/Substrates/PDTs/PDTTable';
 
-const PDTs = () => {
+const PDTs = (): JSX.Element => {
   const kinase = window.location.href.split('/')[4];
 
   const CircularCard = ({ cell_line }) => (

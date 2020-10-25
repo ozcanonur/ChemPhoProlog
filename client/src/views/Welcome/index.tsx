@@ -2,7 +2,6 @@ import React from 'react';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-
 import FlipCard from 'components/FlipCard/FlipCard';
 import TopText from 'views/Welcome/TopText';
 import MidTextFindings from 'views/Welcome/MidTextFindings';
@@ -11,14 +10,14 @@ import BezzLab from 'views/Welcome/BezzLab';
 
 import flipCardContents from 'views/Welcome/flipCardContents';
 
-const Welcome = () => {
+const Welcome = (): JSX.Element => {
   const [
-    pathwayCard_1,
-    pathwayCard_2,
-    browseCard_1,
-    browseCard_2,
-    detailsCard_1,
-    detailsCard_2,
+    pathwayCard1,
+    pathwayCard2,
+    browseCard1,
+    browseCard2,
+    detailsCard1,
+    detailsCard2,
   ] = flipCardContents;
 
   return (
@@ -29,10 +28,10 @@ const Welcome = () => {
       <GridItem style={{ marginTop: '2rem' }}>
         <GridContainer direction='row'>
           <GridItem md>
-            <FlipCard content={pathwayCard_1} />
+            <FlipCard content={pathwayCard1} />
           </GridItem>
           <GridItem md>
-            <FlipCard content={pathwayCard_2} />
+            <FlipCard content={pathwayCard2} />
           </GridItem>
         </GridContainer>
       </GridItem>
@@ -42,10 +41,10 @@ const Welcome = () => {
       <GridItem style={{ marginTop: '2rem' }}>
         <GridContainer direction='row'>
           <GridItem md>
-            <FlipCard content={browseCard_1} />
+            <FlipCard content={browseCard1} />
           </GridItem>
           <GridItem md>
-            <FlipCard content={browseCard_2} />
+            <FlipCard content={browseCard2} />
           </GridItem>
         </GridContainer>
       </GridItem>
@@ -55,10 +54,10 @@ const Welcome = () => {
       <GridItem style={{ marginTop: '2rem' }}>
         <GridContainer direction='row'>
           <GridItem md>
-            <FlipCard content={detailsCard_1} />
+            <FlipCard content={detailsCard1} />
           </GridItem>
           <GridItem md>
-            <FlipCard content={detailsCard_2} />
+            <FlipCard content={detailsCard2} />
           </GridItem>
         </GridContainer>
       </GridItem>

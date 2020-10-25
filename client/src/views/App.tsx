@@ -1,24 +1,41 @@
 import React from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import Navbar from 'components/Navbars/Navbar';
 import Sidebar from 'components/Sidebar/Sidebar';
-
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 import routes from 'variables/routes';
 import additionalRoutes from 'variables/additionalRoutes';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
+const useStyles = makeStyles({
+  wrapper: {
+    position: 'relative',
+    top: '0',
+    height: '100vh',
+  },
+  mainPanel: {
+    width: `calc(100% - 260px)`,
+    overflow: 'auto',
+    position: 'relative',
+    float: 'right',
+    transition: 'all .2s ease-in-out',
+    maxHeight: '100%',
+    overflowScrolling: 'touch',
+  },
+  map: {
+    marginTop: '70px',
+    overflow: 'hidden',
+  },
+});
 
-const useStyles = makeStyles(styles);
-
-const Home = () => {
+const Home = (): JSX.Element => {
   const classes = useStyles();
 
-  const extraSidebarRoutes = useSelector((state) => state.extraSidebarRoutes);
+  const extraSidebarRoutes = useSelector(
+    (state: RootState) => state.extraSidebarRoutes
+  );
+
   const getExtraRoutes = () =>
     extraSidebarRoutes.map(({ type, name }) => additionalRoutes(type, name));
   const allRoutes = [...routes, ...getExtraRoutes().flat()];
@@ -30,8 +47,12 @@ const Home = () => {
         <Navbar routes={allRoutes} />
         <div className={classes.map}>
           <Switch>
-            {allRoutes.map((prop, key) => (
-              <Route key={key} path={prop.path} component={prop.component} />
+            {allRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+              />
             ))}
             <Redirect from='/' to='/home' />
           </Switch>

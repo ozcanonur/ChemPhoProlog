@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
-const PieChart = ({ data, colors }) => (
+const PieChart = ({ data, colors }): JSX.Element => (
   <ResponsivePie
     data={data}
     margin={{ top: 0, right: 0, bottom: 0, left: 15 }}

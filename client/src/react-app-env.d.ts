@@ -1,5 +1,7 @@
 /// <reference types="react-scripts" />
 
+declare module '*.PNG';
+
 interface SidebarRoute {
   type: string;
   name: string;

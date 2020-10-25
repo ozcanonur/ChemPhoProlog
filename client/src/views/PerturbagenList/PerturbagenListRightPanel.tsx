@@ -3,7 +3,7 @@ import React from 'react';
 import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
 import ListRightPanel from 'views/ListComponents/ListRightPanel';
 
-const PerturbagenListRightPanel = ({ selectedInfo }) => {
+const PerturbagenListRightPanel = ({ selectedInfo }): JSX.Element => {
   const findingsProps = {
     leftIconTitle: 'New Targets',
     leftIconText: '12',

@@ -5,7 +5,7 @@ import Table from 'components/Table/Table';
 
 import { getApi } from 'api/api';
 
-const ObservationData = () => {
+const ObservationData = (): JSX.Element => {
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -35,7 +35,11 @@ const ObservationData = () => {
 
   return (
     <div style={{ padding: '2em' }}>
-      <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+      <CardGeneric
+        color='primary'
+        cardTitle='Perturbagens'
+        cardSubtitle='Select a perturbagen'
+      >
         <Table
           className='my-node'
           tableHeaderColor='primary'

@@ -9,7 +9,7 @@ import { getApi } from 'api/api';
 
 import perturbagens from 'variables/perturbagens';
 
-const ObservationHeatMap = ({ row }) => {
+const ObservationHeatMap = ({ row }): JSX.Element => {
   const [observationData, setObservationData] = useState([]);
 
   const protein = window.location.href.split('/')[4];
@@ -48,9 +48,11 @@ const ObservationHeatMap = ({ row }) => {
     return result;
   };
 
-  const [obsMCF, obsHL, obsNTERA] = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'].map((cellLine) =>
-    createHeatmapObject(observationData, cellLine)
-  );
+  const [obsMCF, obsHL, obsNTERA] = [
+    'MCF-7',
+    'HL-60',
+    'NTERA-2 clone D1',
+  ].map((cellLine) => createHeatmapObject(observationData, cellLine));
 
   const heatmapData = [obsNTERA, obsHL, obsMCF];
 

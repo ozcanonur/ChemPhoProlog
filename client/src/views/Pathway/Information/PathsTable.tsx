@@ -17,7 +17,7 @@ const parsePathsToTableData = (paths, stoppingReasons) => {
   return tableData.sort((x, y) => y[3] - x[3]);
 };
 
-const PathsTable = () => {
+const PathsTable = (): JSX.Element => {
   const { cellLine, perturbagen, substrate } = useSelector(
     (state) => state.pathwayInputs
   );

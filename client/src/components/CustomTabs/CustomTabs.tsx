@@ -8,7 +8,7 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/customTabsStyle';
+import styles from 'components/CustomTabs/customTabsStyle';
 
 const useStyles = makeStyles(styles);
 

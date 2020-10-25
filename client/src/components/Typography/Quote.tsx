@@ -2,7 +2,7 @@ import React from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import styles from 'assets/jss/material-dashboard-react/components/typographyStyle';
+import styles from 'components/Typography/typographyStyle';
 
 const useStyles = makeStyles(styles);
 

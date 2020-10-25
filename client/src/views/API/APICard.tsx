@@ -4,7 +4,7 @@ import React from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Typography from '@material-ui/core/Typography';
 
-const APICard = ({ content }) => {
+const APICard = ({ content }): JSX.Element => {
   const { cardTitle, header, text } = content;
 
   return (

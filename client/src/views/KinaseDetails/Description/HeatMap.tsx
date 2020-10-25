@@ -4,7 +4,7 @@ import { ResponsiveHeatMap } from '@nivo/heatmap';
 
 import * as d3 from 'd3';
 
-const HeatMap = ({ data, indexBy, keys }) => (
+const HeatMap = ({ data, indexBy, keys }): JSX.Element => (
   <ResponsiveHeatMap
     data={data}
     indexBy={indexBy}

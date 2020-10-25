@@ -16,8 +16,8 @@ import {
 
 import PerturbagenListRightPanel from 'views/PerturbagenList/PerturbagenListRightPanel';
 
-const PerturbagenList = () => {
-  const data = useSelector((state) => state.perturbagenData);
+const PerturbagenList = (): JSX.Element => {
+  const data = useSelector((state: RootState) => state.perturbagenData);
   const tableData = useMemo(() => {
     return data.map(Object.values);
   }, [data]);
@@ -28,15 +28,19 @@ const PerturbagenList = () => {
   }, [data, dispatch]);
 
   // Currently selected item
-  const selectedItem = useSelector((state) => state.selectedPerturbagen);
+  const selectedItem = useSelector(
+    (state: RootState) => state.selectedPerturbagen
+  );
   const handleSelection = (selection) => {
     dispatch(changeSelectedPerturbagen(selection));
   };
   const selectedInfo = data.filter((item) => item.name === selectedItem)[0];
 
   // Current page
-  const currentPage = useSelector((state) => state.currentPagePerturbagen);
-  const handlePageChange = (event, page) => {
+  const currentPage = useSelector(
+    (state: RootState) => state.currentPagePerturbagen
+  );
+  const handlePageChange = (_, page) => {
     dispatch(changeCurrentPagePerturbagen(page));
   };
 

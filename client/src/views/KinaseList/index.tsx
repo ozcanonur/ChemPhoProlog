@@ -39,7 +39,7 @@ const convertExpressedIns = (data) => {
 };
 
 // Kinase List on the Home page
-const KinaseList = () => {
+const KinaseList = (): JSX.Element => {
   const data = useSelector((state) => state.kinaseData);
   const tableData = useMemo(() => {
     const relevantFieldsPicked = data.map((e) =>

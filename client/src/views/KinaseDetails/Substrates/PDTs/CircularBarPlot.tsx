@@ -67,7 +67,9 @@ const CircularBarPlot = ({ cell_line }) => {
     };
 
     scale.range = function (_) {
-      return arguments.length ? (linear.range(_.map(square)), scale) : linear.range().map(Math.sqrt);
+      return arguments.length
+        ? (linear.range(_.map(square)), scale)
+        : linear.range().map(Math.sqrt);
     };
 
     scale.ticks = linear.ticks;
@@ -90,7 +92,14 @@ const CircularBarPlot = ({ cell_line }) => {
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
-    .attr('transform', 'translate(' + (width / 2 + margin.left) + ',' + (height / 2 + margin.top) + ')');
+    .attr(
+      'transform',
+      'translate(' +
+        (width / 2 + margin.left) +
+        ',' +
+        (height / 2 + margin.top) +
+        ')'
+    );
 
   // Scales
   var x = d3
@@ -144,7 +153,10 @@ const CircularBarPlot = ({ cell_line }) => {
     .enter()
     .append('g')
     .attr('text-anchor', function (d) {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'end' : 'start';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
+        Math.PI
+        ? 'end'
+        : 'start';
     })
     .attr('transform', function (d) {
       return (
@@ -161,7 +173,8 @@ const CircularBarPlot = ({ cell_line }) => {
       return d.Kinase;
     })
     .attr('transform', function (d) {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
+        Math.PI
         ? 'rotate(180)'
         : 'rotate(0)';
     })

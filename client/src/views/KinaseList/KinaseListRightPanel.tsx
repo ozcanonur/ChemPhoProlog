@@ -3,7 +3,7 @@ import React from 'react';
 import ListRightPanel from 'views/ListComponents/ListRightPanel';
 import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
 
-const KinaseDescriptionBody = ({ selectedInfo }) => (
+const KinaseDescriptionBody = ({ selectedInfo }): JSX.Element => (
   <>
     <p>{selectedInfo.description}</p>
     <p>
@@ -21,7 +21,7 @@ const KinaseDescriptionBody = ({ selectedInfo }) => (
   </>
 );
 
-const KinaseListRightPanel = ({ selectedInfo }) => {
+const KinaseListRightPanel = ({ selectedInfo }): JSX.Element => {
   const newFindingsProps = {
     leftIconTitle: 'New Perturbagens',
     leftIconText: '6',
@@ -33,7 +33,9 @@ const KinaseListRightPanel = ({ selectedInfo }) => {
     topHeaderTitle: 'Kinase Specification',
     topHeaderSubTitle: 'Details',
     selectedEleTitle: selectedInfo.kinase_name,
-    selectedEleDetailsBody: <KinaseDescriptionBody selectedInfo={selectedInfo} />,
+    selectedEleDetailsBody: (
+      <KinaseDescriptionBody selectedInfo={selectedInfo} />
+    ),
     selectedEleDetailsBottomBody: <NewFindingsCard {...newFindingsProps} />,
   };
 

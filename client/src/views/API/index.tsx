@@ -5,7 +5,7 @@ import GridItem from 'components/Grid/GridItem';
 import typography from './Typography';
 import APICard from './APICard';
 
-const API = () => {
+const API = (): JSX.Element => {
   const [
     pathway,
     observation,

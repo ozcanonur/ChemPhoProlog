@@ -5,7 +5,7 @@ import Table from 'components/Table/Table';
 
 import { getApi } from 'api/api';
 
-const KnownSubstratesTable = () => {
+const KnownSubstratesTable = (): JSX.Element => {
   const kinase = window.location.href.split('/')[4];
 
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
@@ -39,7 +39,11 @@ const KnownSubstratesTable = () => {
       {knownSubstrateData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
-        <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
+        <CardGeneric
+          color='primary'
+          cardTitle='Known Substrates'
+          cardSubtitle='Select a substrate'
+        >
           <Table
             className='my-node'
             tableHeaderColor='primary'

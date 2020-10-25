@@ -1,4 +1,4 @@
-import { whiteColor } from 'assets/jss/dashboardStyle';
+import { whiteColor } from 'assets/dashboardStyle';
 
 const customTabsStyle = {
   cardTitle: {

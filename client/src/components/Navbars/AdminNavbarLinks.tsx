@@ -19,7 +19,7 @@ import { getApiWeb } from 'api/api';
 import { addSidebarKinase, addSidebarPerturbagen } from 'actions/main';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
+import styles from 'components/Navbars/headerLinksStyle';
 
 const useStyles = makeStyles(styles);
 

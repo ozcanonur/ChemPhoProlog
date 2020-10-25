@@ -7,7 +7,7 @@ import Table from 'components/Table/Table';
 import { getApi } from 'api/api';
 import { addSidebarKinase } from 'actions/main';
 
-const KnownTargets = () => {
+const KnownTargets = (): JSX.Element => {
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 

@@ -5,7 +5,7 @@ import {
   infoColor,
   grayColor,
   defaultFont,
-} from 'assets/jss/dashboardStyle';
+} from 'assets/dashboardStyle';
 
 const tableStyle = (theme) => ({
   warningTableHeader: {

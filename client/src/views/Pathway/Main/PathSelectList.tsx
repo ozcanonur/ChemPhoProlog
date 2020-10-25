@@ -19,9 +19,28 @@ import {
 } from 'views/Pathway/utils/animation';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles({
+  cardTitleWhite: {
+    color: '#fff',
+    marginTop: '0px',
+    minHeight: 'auto',
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontWeight: '400',
+      lineHeight: '1',
+    },
+  },
+  cardCategoryWhite: {
+    color: `rgba(255,255,255,.62)`,
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
+  },
+});
 
 const PathSelectList = () => {
   const classes = useStyles();

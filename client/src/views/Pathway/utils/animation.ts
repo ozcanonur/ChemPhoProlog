@@ -24,7 +24,9 @@ export const getElementsToAnimate = (cy, selectedPath) => {
     elementsToFade = cy
       .elements()
       .filter(
-        (e) => !elementsToShowIds.includes(e.data().id) && e.data().id !== elementsToShow[0].data().parent
+        (e) =>
+          !elementsToShowIds.includes(e.data().id) &&
+          e.data().id !== elementsToShow[0].data().parent
       );
 
   return { elementsToShow, elementsToFade };
@@ -36,8 +38,10 @@ const getParentActivityClass = (element, observation, regulatory) => {
   const foldChange = observation[id].fold_change;
   const reg = regulatory[id];
 
-  const KPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
-  const KPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
+  const KPaActivated =
+    (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
+  const KPaInhibited =
+    (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
 
   if (KPaActivated) return 'highlightedKPaActivated';
   if (KPaInhibited) return 'highlightedKPaInhibited';
@@ -46,7 +50,9 @@ const getParentActivityClass = (element, observation, regulatory) => {
 };
 
 const addEdgeStyle = (element) => {
-  const sourceIsPhosphatase = Object.keys(phosphatases).includes(element.data().source);
+  const sourceIsPhosphatase = Object.keys(phosphatases).includes(
+    element.data().source
+  );
 
   if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
   else element.addClass('highlightedKinaseEdge');
@@ -57,11 +63,21 @@ const addPhosphositeStyle = (element) => {
 };
 
 const addPhosphositeParentStyle = (element, observation, regulatory) => {
-  const parentActivityClass = getParentActivityClass(element, observation, regulatory);
+  const parentActivityClass = getParentActivityClass(
+    element,
+    observation,
+    regulatory
+  );
   element.parent().addClass(parentActivityClass);
 };
 
-export const animatePath = (elementsToAnimate, data, duration, showTooltips, showParentActivity) => {
+export const animatePath = (
+  elementsToAnimate,
+  data,
+  duration,
+  showTooltips,
+  showParentActivity
+) => {
   const { regulatory, observation } = data;
   const { elementsToShow, elementsToFade } = elementsToAnimate;
 
@@ -74,12 +90,14 @@ export const animatePath = (elementsToAnimate, data, duration, showTooltips, sho
       const element = elementsToShow[i];
 
       const isEdge = element.data().target !== undefined;
-      const isPhosphosite = element.data().id.includes('(') && !element.data().target;
+      const isPhosphosite =
+        element.data().id.includes('(') && !element.data().target;
 
       if (isEdge) addEdgeStyle(element);
       else if (isPhosphosite) {
         addPhosphositeStyle(element);
-        if (showParentActivity) addPhosphositeParentStyle(element, observation, regulatory);
+        if (showParentActivity)
+          addPhosphositeParentStyle(element, observation, regulatory);
       }
 
       if (showTooltips) {

@@ -4,7 +4,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import CardGeneric from 'components/Card/CardGeneric';
 
-const ListRightPanel = (props) => {
+const ListRightPanel = (props): JSX.Element => {
   const {
     topHeaderTitle,
     topHeaderSubTitle,
@@ -14,7 +14,11 @@ const ListRightPanel = (props) => {
   } = props;
 
   return (
-    <CardGeneric color='primary' cardTitle={topHeaderTitle} cardSubtitle={topHeaderSubTitle}>
+    <CardGeneric
+      color='primary'
+      cardTitle={topHeaderTitle}
+      cardSubtitle={topHeaderSubTitle}
+    >
       <GridContainer direction='column'>
         <GridItem>
           <CardGeneric color='primary' cardTitle={selectedEleTitle}>

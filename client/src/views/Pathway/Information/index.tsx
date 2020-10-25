@@ -7,7 +7,7 @@ import PathsTable from 'views/Pathway/Information/PathsTable';
 import PathExplanation from 'views/Pathway/Information/PathExplanation';
 import WaffleChart from 'views/Pathway/Information/WaffleChart';
 
-const Information = () => {
+const Information = (): JSX.Element => {
   return (
     <GridContainer direction='row'>
       <GridItem xs={12} lg={6}>

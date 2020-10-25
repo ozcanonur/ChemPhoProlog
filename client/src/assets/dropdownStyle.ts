@@ -6,7 +6,7 @@ import {
   blackColor,
   grayColor,
   hexToRgb,
-} from 'assets/jss/dashboardStyle';
+} from 'assets/dashboardStyle';
 
 const dropdownStyle = (theme) => ({
   buttonLink: {

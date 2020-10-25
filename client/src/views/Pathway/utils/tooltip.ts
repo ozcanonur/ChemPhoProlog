@@ -40,7 +40,9 @@ const makeTooltip = (element, content, placement) => {
 
 const setupTooltip = (element, content) => {
   const tooltip = makeTooltip(element, content, 'bottom');
-  element.on('tap', () => (tooltip.state.isVisible ? tooltip.hide() : tooltip.show()));
+  element.on('tap', () =>
+    tooltip.state.isVisible ? tooltip.hide() : tooltip.show()
+  );
   return tooltip;
 };
 
@@ -58,7 +60,8 @@ const addStartTooltip = (element, fold_change, pValue) => {
 };
 
 const addPhosphositeTooltip = (element, foldChange, pValue, stoppingReason) => {
-  const stopReasonText = stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
+  const stopReasonText =
+    stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
   const content = `fc: ${foldChange} <br/> p: ${pValue} <br/> ${stopReasonText}`;
   setupTooltip(element, content);
 };
@@ -72,7 +75,8 @@ export const addTooltip = (data, element, isStartNode, isLastNode) => {
   const { stoppingReasons, observation } = data;
   const { id } = element.data();
 
-  const isPhosphosite = element.data().id.includes('(') && !element.data().target;
+  const isPhosphosite =
+    element.data().id.includes('(') && !element.data().target;
   const isKPa = element.data().parent === undefined;
 
   // At last node and it's a KPa
@@ -83,7 +87,8 @@ export const addTooltip = (data, element, isStartNode, isLastNode) => {
     const stoppingReason = stoppingReasons[id];
 
     if (isStartNode) addStartTooltip(element, foldChange, pValue);
-    else if (isLastNode) addPhosphositeTooltip(element, foldChange, pValue, stoppingReason);
+    else if (isLastNode)
+      addPhosphositeTooltip(element, foldChange, pValue, stoppingReason);
     else addPhosphositeTooltip(element, foldChange, pValue);
   }
 };
@@ -91,6 +96,7 @@ export const addTooltip = (data, element, isStartNode, isLastNode) => {
 export const toggleTooltips = (data, elementsToAnimate) => {
   clearAllTimeouts();
 
-  if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();
+  if (document.getElementsByClassName('tippy-popper').length !== 0)
+    hideTooltips();
   else animatePath(elementsToAnimate, data, 0, true, true);
 };
