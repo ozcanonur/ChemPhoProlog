@@ -1,12 +1,10 @@
 import express from 'express';
-import { db } from '../main';
+import db from '../db';
 import _ from 'lodash';
 
-import swipl from 'swipl';
-import { queryProlog } from '../swipl/index';
-import { parsePaths } from '../swipl/parsePathsNew';
+import { parsePaths } from './util';
 
-const router = new express.Router();
+const router = express.Router();
 
 // Kinase List > Sites
 router.get('/phosphosites', (req, res) => {

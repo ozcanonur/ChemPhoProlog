@@ -22,10 +22,11 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2,
   whitelist: ['selectedKinase', 'selectedPerturbagen', 'extraSidebarRoutes'],
 };
-
+// WOOP, PERSIST NEEDS TO GET BACK
+//  <PersistGate loading={<p>Loading...</p>} persistor={persistor}></PersistGate>
 // eslint-disable-next-line import/prefer-default-export
 export const store = createStore(
-  persistReducer(persistConfig, reducers),
+  reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
@@ -35,13 +36,11 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-      <Router history={hist}>
-        <Switch>
-          <Route path='/' component={App} />
-        </Switch>
-      </Router>
-    </PersistGate>
+    <Router history={hist}>
+      <Switch>
+        <Route path='/' component={App} />
+      </Switch>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

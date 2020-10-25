@@ -1,7 +1,7 @@
 import express from 'express';
-import { db } from '../main';
+import db from '../db';
 
-const router = new express.Router();
+const router = express.Router();
 
 // Kinase List
 router.get('/getKinaseList', (req, res) => {
@@ -49,7 +49,7 @@ router.get('/validObservation', (req, res) => {
     if (err) throw err;
 
     const parsedRows = rows.map(
-      ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change, 10).toFixed(2)}`
+      ({ substrate, fold_change }) => `${substrate}, fc: ${parseFloat(fold_change).toFixed(2)}`
     );
     res.send(parsedRows);
   });
