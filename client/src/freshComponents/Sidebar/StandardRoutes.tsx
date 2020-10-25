@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import routes from 'variables/routes';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'components/Sidebar/sidebarStyle';
+import styles from './sidebarStyles';
 
 const useStyles = makeStyles(styles);
 

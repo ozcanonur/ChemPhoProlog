@@ -6,7 +6,7 @@ import Table from 'components/Table/Table';
 import { getApi } from 'api/api';
 
 const KnownSubstratesTable = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);

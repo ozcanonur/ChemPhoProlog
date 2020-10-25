@@ -5,6 +5,8 @@ html * {
 
 html {
   font-size: 16px;
+  --scrollbarBG: rgb(32, 34, 37);
+  --thumbBG: rgb(99, 102, 105);
 }
 
 @media (max-width: 1440px) {
@@ -102,23 +104,17 @@ input[type='file'] > input[type='button']::-moz-focus-inner {
   outline: 0 !important;
 }
 
-@media (max-width: 991px) {
-  body,
-  html {
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  #bodyClick {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    opacity: 0;
-    top: 0;
-    left: auto;
-    right: 260px;
-    content: '';
-    z-index: 9999;
-    overflow-x: hidden;
-  }
+*::-webkit-scrollbar {
+  width: 11px;
+}
+* {
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
 }

@@ -11,7 +11,7 @@ import CircularBarPlot from 'views/KinaseDetails/Substrates/PDTs/CircularBarPlot
 import PDTTable from 'views/KinaseDetails/Substrates/PDTs/PDTTable';
 
 const PDTs = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   const CircularCard = ({ cell_line }) => (
     <CardGeneric

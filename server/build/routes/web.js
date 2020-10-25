@@ -45,8 +45,8 @@ router.get('/getAllSubstrates', function (req, res) {
 // Valid observations
 router.get('/validObservation', function (req, res) {
     var _a = req.query, cellLine = _a.cellLine, perturbagen = _a.perturbagen;
-    var query = 'select substrate, fold_change from Observation_valid where perturbagen = ? and cell_line = ? order by fold_change';
-    db_1.default.all(query, [perturbagen, cellLine], function (err, rows) {
+    var query = 'select substrate, fold_change from pathCounts where cell_line = ? and perturbagen = ? order by maxDepth desc';
+    db_1.default.all(query, [cellLine, perturbagen], function (err, rows) {
         if (err)
             throw err;
         var parsedRows = rows.map(function (_a) {

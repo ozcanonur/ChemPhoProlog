@@ -12,7 +12,7 @@ import perturbagens from 'variables/perturbagens';
 const ObservationHeatMap = ({ row }): JSX.Element => {
   const [observationData, setObservationData] = useState([]);
 
-  const protein = window.location.href.split('/')[4];
+  const protein = window.location.href.split('/')[3];
 
   const location = row[0];
   const residue = row[1];

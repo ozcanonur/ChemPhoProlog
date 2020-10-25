@@ -100,7 +100,7 @@ const Row = (props) => {
                 color: key === 0 ? '#0066CC' : 'inherit',
                 textDecoration: 'none',
               }}
-              to={`/home/${row[0]}/description`}
+              to={`/${row[0]}/description`}
               onClick={() => {
                 handleAdd(row[0]);
               }}

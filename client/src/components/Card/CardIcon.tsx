@@ -41,6 +41,25 @@ const useStyles = makeStyles({
       boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0, 18, 51,.4)`,
     },
   },
+  cardHeaderIcon: {
+    '&$warningCardHeader,&$successCardHeader,&$infoCardHeader,&$primaryCardHeader': {
+      background: 'transparent',
+      boxShadow: 'none',
+    },
+    '& i,& .material-icons': {
+      width: '33px',
+      height: '33px',
+      textAlign: 'center',
+      lineHeight: '33px',
+    },
+    '& svg': {
+      width: '24px',
+      height: '24px',
+      textAlign: 'center',
+      lineHeight: '33px',
+      margin: '5px 4px 0px',
+    },
+  },
 });
 
 const CardIcon = (props): JSX.Element => {

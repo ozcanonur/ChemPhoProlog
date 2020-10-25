@@ -22,28 +22,24 @@ const additionalRoutes = (type, selection) => {
         name: 'Description',
         icon: InfoIcon,
         component: KinaseDetailsDescription,
-        layout: '/home',
       },
       {
         path: `/${selection}/substrates`,
         name: 'Substrates',
         icon: PanoramaHorizontalIcon,
         component: KinaseDetailsSubstrates,
-        layout: '/home',
       },
       {
         path: `/${selection}/knownPerturbagens`,
         name: 'Known Perturbagens',
         icon: PerturbagenIcon,
         component: KinaseDetailsKnownPerturbagens,
-        layout: '/home',
       },
       {
         path: `/${selection}/newPerturbagens`,
         name: 'New Perturbagens',
         icon: PerturbagenIcon,
         component: WelcomePage,
-        layout: '/home',
       },
     ];
   }
@@ -54,28 +50,24 @@ const additionalRoutes = (type, selection) => {
         name: 'Description',
         icon: InfoIcon,
         component: PerturbagenDetailsDescription,
-        layout: '/home',
       },
       {
         path: `/${selection}/knownTargets`,
         name: 'Known Targets',
         icon: PerturbagenIcon,
         component: PerturbagenDetailsKnownTargets,
-        layout: '/home',
       },
       {
         path: `/${selection}/newTargets`,
         name: 'New Targets',
         icon: PerturbagenIcon,
         component: PerturbagenDetailsNewTargets,
-        layout: '/home',
       },
       {
         path: `/${selection}/observationData`,
         name: 'Observation data',
         icon: PanoramaHorizontalIcon,
         component: PerturbagenDetailsObservationData,
-        layout: '/home',
       },
     ];
   }

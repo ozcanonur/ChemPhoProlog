@@ -20,9 +20,15 @@ const useStyles = makeStyles({
   },
 });
 
-const Card = (props): JSX.Element => {
+interface Props {
+  [x: string]: any;
+}
+
+const Card = (props: Props): JSX.Element => {
   const classes = useStyles();
+
   const { children, ...rest } = props;
+
   return (
     <div className={classes.card} {...rest}>
       {children}

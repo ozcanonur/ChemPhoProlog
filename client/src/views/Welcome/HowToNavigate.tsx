@@ -44,8 +44,8 @@ const HowToNavigate = (): JSX.Element => {
       </CardHeader>
       <CardBody>
         <List>
-          {navigationTexts.map((e) => (
-            <ListItem key={e}>
+          {navigationTexts.map((e, key) => (
+            <ListItem key={key}>
               <ListItemIcon>
                 <KeyboardArrowRight />
               </ListItemIcon>

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { getApi } from 'api/api';
 
 const KnownPerturbagens = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   const [knownPerturbagenData, setKnownPerturbagenData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);

@@ -8,7 +8,7 @@ const CircularBarPlot = ({ cell_line }) => {
   const chart = useRef();
 
   const [PDTs, setPDTs] = useState([]);
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;

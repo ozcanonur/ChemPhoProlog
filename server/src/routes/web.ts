@@ -44,8 +44,8 @@ router.get('/validObservation', (req, res) => {
   const { cellLine, perturbagen } = req.query;
 
   const query =
-    'select substrate, fold_change from Observation_valid where perturbagen = ? and cell_line = ? order by fold_change';
-  db.all(query, [perturbagen, cellLine], (err, rows) => {
+    'select substrate, fold_change from pathCounts where cell_line = ? and perturbagen = ? order by maxDepth desc';
+  db.all(query, [cellLine, perturbagen], (err, rows) => {
     if (err) throw err;
 
     const parsedRows = rows.map(

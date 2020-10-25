@@ -19,7 +19,7 @@ import logo from 'assets/img/reactlogo.png';
 import classNames from 'classnames';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'components/Sidebar/sidebarStyle';
+import styles from 'freshComponents/Sidebar/sidebarStyles';
 
 const useStyles = makeStyles(styles);
 
@@ -29,7 +29,7 @@ const ExtraRoute = ({ route }) => {
   const [open, setOpen] = useState(true);
 
   // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
+  const activeRoute = (routeName: string) => {
     return window.location.href.indexOf(routeName) > -1;
   };
 
@@ -41,11 +41,11 @@ const ExtraRoute = ({ route }) => {
     const activePro = ' ';
 
     const listItemClasses = classNames({
-      [` ${classes.orange}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.orange}`]: activeRoute(prop.path),
     });
 
     const whiteFontClasses = classNames({
-      [` ${classes.whiteFont}`]: activeRoute(prop.layout + prop.path),
+      [` ${classes.whiteFont}`]: activeRoute(prop.path),
     });
 
     const currentTitle = prop.path.split('/')[1];
@@ -101,7 +101,7 @@ const ExtraRoute = ({ route }) => {
           ) : undefined}
           <Collapse in={open} timeout='auto' unmountOnExit>
             <NavLink
-              to={prop.layout + prop.path}
+              to={prop.path}
               className={activePro + classes.item}
               activeClassName='active'
             >

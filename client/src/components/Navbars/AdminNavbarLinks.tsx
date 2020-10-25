@@ -29,7 +29,7 @@ const ItemRenderer = ({ data, index, style }) => {
   const itemName = item[Object.keys(item)[0]];
   const itemType = Object.keys(item)[0];
 
-  let redirectTo = `/home/${itemName}/description`;
+  let redirectTo = `/{itemName}/description`;
   let itemIcon;
   if (itemType === 'kinase') itemIcon = <PanoramaHorizontal />;
   else if (itemType === 'perturbagen') itemIcon = <Healing />;

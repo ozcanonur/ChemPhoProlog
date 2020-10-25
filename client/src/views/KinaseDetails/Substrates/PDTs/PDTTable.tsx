@@ -14,7 +14,7 @@ const PDTTable = ({ cell_line }): JSX.Element => {
   };
 
   const [PDTs, setPDTs] = useState([]);
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;

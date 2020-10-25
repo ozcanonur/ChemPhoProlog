@@ -3,7 +3,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from 'components/Navbars/Navbar';
-import Sidebar from 'components/Sidebar/Sidebar';
+import Sidebar from 'freshComponents/Sidebar/Sidebar';
 
 import routes from 'variables/routes';
 import additionalRoutes from 'variables/additionalRoutes';

@@ -7,7 +7,7 @@ import CardGeneric from 'components/Card/CardGeneric';
 import PhosphositesOfInterestTable from 'views/KinaseDetails/Description/PhosphositesOfInterestTable';
 
 const Description = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[4];
+  const kinase = window.location.href.split('/')[3];
 
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
