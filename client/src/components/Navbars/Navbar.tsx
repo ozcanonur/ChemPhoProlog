@@ -21,7 +21,7 @@ const Navbar = ({ routes }) => {
 
     routes.map((prop) => {
       if (window.location.href.indexOf(prop.path) !== -1) name = prop.name;
-      if (window.location.href.split('/').length > 5)
+      if (window.location.href.split('/').length > 4)
         [, , , term] = window.location.href.split('/');
       return null;
     });

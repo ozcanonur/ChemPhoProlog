@@ -20,7 +20,7 @@ const KnownTargets = (): JSX.Element => {
     dispatch(addSidebarKinase(selection));
   };
 
-  const perturbagen = window.location.href.split('/')[4];
+  const perturbagen = window.location.href.split('/')[3];
 
   useEffect(() => {
     const route = '/knownTargets';

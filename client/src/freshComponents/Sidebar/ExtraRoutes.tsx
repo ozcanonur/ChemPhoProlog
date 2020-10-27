@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, history, useHistory } from 'react-router-dom';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -55,6 +55,10 @@ const ExtraRoute = ({ route }) => {
       dispatch(removeSidebarRoute(item));
     };
 
+    const history = useHistory();
+    const redirectToDescription = () => {
+      if (history.location.pathname !== prop.path) history.push(prop.path);
+    };
     return (
       <Slide in={true} key={key} direction='left' mountOnEnter unmountOnExit>
         <div>
@@ -84,7 +88,7 @@ const ExtraRoute = ({ route }) => {
                   marginLeft: '1em',
                   cursor: 'pointer',
                 }}
-                onClick={handleOpen}
+                onClick={redirectToDescription}
               />
               {open ? (
                 <ExpandLessIcon

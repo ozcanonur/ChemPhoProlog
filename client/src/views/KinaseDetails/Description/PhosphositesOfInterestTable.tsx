@@ -31,7 +31,7 @@ const PhosphositesOfInterestTable = ({ kinase }): JSX.Element => {
   return (
     <CardGeneric
       color='primary'
-      cardTitle='Phosphosites of interest'
+      cardTitle={`Phosphosites on ${kinase}`}
       cardSubtitle='Select a phosphosite'
     >
       {tableData.length === 0 ? (

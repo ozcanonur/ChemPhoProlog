@@ -35,12 +35,6 @@ const additionalRoutes = (type, selection) => {
         icon: PerturbagenIcon,
         component: KinaseDetailsKnownPerturbagens,
       },
-      {
-        path: `/${selection}/newPerturbagens`,
-        name: 'New Perturbagens',
-        icon: PerturbagenIcon,
-        component: WelcomePage,
-      },
     ];
   }
   if (type === 'perturbagen') {
@@ -56,18 +50,6 @@ const additionalRoutes = (type, selection) => {
         name: 'Known Targets',
         icon: PerturbagenIcon,
         component: PerturbagenDetailsKnownTargets,
-      },
-      {
-        path: `/${selection}/newTargets`,
-        name: 'New Targets',
-        icon: PerturbagenIcon,
-        component: PerturbagenDetailsNewTargets,
-      },
-      {
-        path: `/${selection}/observationData`,
-        name: 'Observation data',
-        icon: PanoramaHorizontalIcon,
-        component: PerturbagenDetailsObservationData,
       },
     ];
   }

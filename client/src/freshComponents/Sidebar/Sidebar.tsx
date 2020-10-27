@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -14,6 +15,18 @@ const useStyles = makeStyles(sidebarStyles);
 
 const Sidebar = (): JSX.Element => {
   const classes = useStyles();
+
+  const ref = useRef(null);
+
+  const additionalRoutes = useSelector(
+    (state: RootState) => state.extraSidebarRoutes
+  );
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behaviour: 'smooth' });
+    }
+  }, [additionalRoutes]);
 
   return (
     <Drawer
@@ -37,6 +50,7 @@ const Sidebar = (): JSX.Element => {
           <StandardRoutes />
           <ExtraRoutes type='kinase' />
           <ExtraRoutes type='perturbagen' />
+          <div ref={ref} />
         </List>
       </div>
       <div

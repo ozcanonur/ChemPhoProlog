@@ -1,12 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-
 import pick from 'lodash/pick';
-
 import HeatMap from 'views/KinaseDetails/Description/HeatMap';
 
 import { getApi } from 'api/api';
-
 import perturbagens from 'variables/perturbagens';
 
 const ObservationHeatMap = ({ row }): JSX.Element => {
@@ -61,9 +58,35 @@ const ObservationHeatMap = ({ row }): JSX.Element => {
       {observationData.length === 0 ? (
         <div>No observation data for this site</div>
       ) : (
-        <div style={{ height: '20em' }}>
-          <HeatMap data={heatmapData} indexBy='cell_line' keys={perturbagens} />
-        </div>
+        <>
+          <div style={{ height: '20em' }}>
+            <HeatMap
+              data={heatmapData}
+              indexBy='cell_line'
+              keys={perturbagens}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '5px',
+            }}
+          >
+            <div style={{ marginRight: '10px' }}>(-) Fold change</div>
+            <div
+              style={{
+                backgroundColor: 'black',
+                height: 20,
+                width: 300,
+                background:
+                  'linear-gradient(90deg, rgba(144,2,84,1) 0%, rgba(255,255,255,1) 50%, rgba(49,112,27,1) 100%)',
+              }}
+            />
+            <div style={{ marginLeft: '10px' }}>(+) Fold change</div>
+          </div>
+        </>
       )}
     </div>
   );
