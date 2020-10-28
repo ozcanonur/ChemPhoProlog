@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import GridItem from 'components/Grid/GridItem';
@@ -6,19 +6,16 @@ import GridContainer from 'components/Grid/GridContainer';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 import Slide from '@material-ui/core/Slide';
-import pick from 'lodash/pick';
 import axios from 'axios';
 
-import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
-import { shortenExpressedIns } from 'utils/utils';
-import KinaseListPhosphosites from './KinaseListPhosphosites';
 
-// Kinase List on the Home page
-const KinaseList = (): JSX.Element => {
-  const [data, setData] = useState<Kinase[]>([]);
+import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
+
+const PerturbagenList = (): JSX.Element => {
+  const [data, setData] = useState<Perturbagen[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedKinase, setSelectedKinase] = useState('');
+  const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
   // Fetch data on render
@@ -26,7 +23,7 @@ const KinaseList = (): JSX.Element => {
     let mounted = true;
 
     axios
-      .get('/apiWeb/getKinaseList')
+      .get('/apiWeb/getPerturbagenList')
       .then((res) => {
         if (mounted) setData(res.data);
       })
@@ -39,10 +36,7 @@ const KinaseList = (): JSX.Element => {
 
   // Table data
   const tableData = useMemo(() => {
-    const relevantFieldsPicked = data.map((e) =>
-      pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])
-    );
-    return shortenExpressedIns(relevantFieldsPicked).map(Object.values);
+    return data.map(Object.values);
   }, [data]);
 
   // On page change
@@ -51,39 +45,39 @@ const KinaseList = (): JSX.Element => {
   };
 
   // Select item
-  const handleSelection = (kinase: string) => {
-    setSelectedKinase(kinase);
+  const handleSelection = (perturbagen: string) => {
+    setSelectedPerturbagen(perturbagen);
   };
 
   // Right panel animation
   useEffect(() => {
     setRightPanelOpen(false);
 
-    if (selectedKinase !== '') {
+    if (selectedPerturbagen !== '') {
       setTimeout(() => {
         setRightPanelOpen(true);
       }, 250);
     }
-  }, [selectedKinase]);
+  }, [selectedPerturbagen]);
 
-  // Get specific information about this kinase to display in the right panel
+  // Get specific information about this perturbagen to display in the right panel
   const selectedInfo = useMemo(() => {
-    return data.find((item) => item.kinase_name === selectedKinase);
-  }, [data, selectedKinase]);
+    return data.find((item) => item.name === selectedPerturbagen);
+  }, [data, selectedPerturbagen]);
 
   // Handler for adding to the sidebar
   const dispatch = useDispatch();
-  const handleKinaseAdd = (kinase: string) => {
-    dispatch(addSidebarRoute('kinase', kinase));
+  const handlePerturbagenAdd = (perturbagen: string) => {
+    dispatch(addSidebarRoute('perturbagen', perturbagen));
   };
 
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
-      <GridItem xs={12} lg={6}>
+      <GridItem sm={12} lg={6}>
         <CardGeneric
           color='primary'
-          cardTitle='Kinases'
-          cardSubtitle='Select a kinase'
+          cardTitle='Perturbagens'
+          cardSubtitle='Select a perturbagen'
         >
           {tableData.length === 0 ? (
             <div>Loading...</div>
@@ -91,54 +85,49 @@ const KinaseList = (): JSX.Element => {
             <Table
               className='my-node'
               tableHeaderColor='primary'
-              tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
+              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
               tableData={tableData}
               rowsPerPage={10}
-              currentPage={currentPage}
-              handleChangePage={handlePageChange}
               rowEndArrow
               handleSelection={handleSelection}
-              handleAdd={handleKinaseAdd}
+              handleAdd={handlePerturbagenAdd}
+              currentPage={currentPage}
+              handleChangePage={handlePageChange}
               firstRowOnClick
-              ExtraContent={KinaseListPhosphosites}
-              selectedItem={selectedKinase}
+              selectedItem={selectedPerturbagen}
             />
           )}
         </CardGeneric>
       </GridItem>
-      <GridItem xs={12} lg={6}>
+      <GridItem sm={12} lg={6}>
         <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
           <div>
             {selectedInfo !== undefined ? (
               <CardGeneric
                 color='primary'
-                cardTitle='Kinase Specification'
+                cardTitle='Perturbagen Specification'
                 cardSubtitle='Details'
               >
                 <GridContainer direction='column'>
                   <GridItem>
-                    <CardGeneric color='primary' cardTitle={selectedKinase}>
-                      <p>{selectedInfo.description}</p>
-                      <p>
-                        <strong>Families: </strong>
-                        {selectedInfo.families}
-                      </p>
-                      <p>
-                        <strong>Alternative names: </strong>
-                        {selectedInfo.gene_synonyms}
-                      </p>
-                      <p>
-                        <strong>Detected in: </strong>
-                        {selectedInfo.expressed_in}
-                      </p>
+                    <CardGeneric
+                      color='primary'
+                      cardTitle={selectedPerturbagen}
+                    >
+                      <div style={{ textAlign: 'center' }}>
+                        <img
+                          src={`https://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`}
+                          alt='Perturbagen'
+                        />
+                      </div>
                     </CardGeneric>
                   </GridItem>
                   <GridItem>
                     <NewFindingsCard
-                      leftIconTitle='New Perturbagens'
-                      leftIconText='6'
-                      rightIconText='24'
+                      leftIconTitle='New Targets'
+                      leftIconText='12'
                       rightIconTitle='New PDTs'
+                      rightIconText='34'
                     />
                   </GridItem>
                 </GridContainer>
@@ -151,4 +140,4 @@ const KinaseList = (): JSX.Element => {
   );
 };
 
-export default KinaseList;
+export default PerturbagenList;

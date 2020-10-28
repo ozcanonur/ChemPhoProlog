@@ -20,6 +20,13 @@ interface Kinase {
   uniprot_name?: string;
 }
 
+interface Perturbagen {
+  action: string;
+  chemspider_id: string;
+  name: string;
+  synonyms: string;
+}
+
 interface RootState {
   kinaseData: any;
   selectedKinase: string;

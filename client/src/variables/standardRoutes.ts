@@ -1,6 +1,6 @@
 import Welcome from 'views/Welcome/index';
 import KinaseList from 'freshComponents/Kinases/Kinases';
-import PerturbagenList from 'views/PerturbagenList';
+import PerturbagenList from 'freshComponents/Perturbagens/Perturbagens';
 import Pathway from 'views/Pathway';
 import API from 'views/API';
 
