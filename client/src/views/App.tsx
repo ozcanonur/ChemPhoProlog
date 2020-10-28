@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import Navbar from 'components/Navbars/Navbar';
 import Sidebar from 'freshComponents/Sidebar/Sidebar';
 
-import routes from 'variables/routes';
-import additionalRoutes from 'variables/additionalRoutes';
+import routes from 'variables/standardRoutes';
+import additionalRoutes from 'variables/generateSubRoutes';
 
 const useStyles = makeStyles({
   wrapper: {

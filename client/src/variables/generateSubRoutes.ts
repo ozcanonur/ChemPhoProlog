@@ -1,20 +1,24 @@
-import WelcomePage from 'views/Welcome';
-
 import KinaseDetailsDescription from 'views/KinaseDetails/Description/';
 import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/';
 import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/';
 
 import PerturbagenDetailsDescription from 'views/PerturbagenDetails/Description';
 import PerturbagenDetailsKnownTargets from 'views/PerturbagenDetails/KnownTargets';
-import PerturbagenDetailsNewTargets from 'views/PerturbagenDetails/NewTargets';
-import PerturbagenDetailsObservationData from 'views/PerturbagenDetails/ObservationData';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
 import InfoIcon from '@material-ui/icons/Info';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import { SvgIconTypeMap } from '@material-ui/core';
 
-// eslint-disable-next-line consistent-return
-const additionalRoutes = (type, selection) => {
+interface Route {
+  path: string;
+  name: string;
+  icon: OverridableComponent<SvgIconTypeMap>;
+  component: () => JSX.Element;
+}
+
+const generateSubRoutes = (type: string, selection: string): Route[] => {
   if (type === 'kinase') {
     return [
       {
@@ -37,22 +41,20 @@ const additionalRoutes = (type, selection) => {
       },
     ];
   }
-  if (type === 'perturbagen') {
-    return [
-      {
-        path: `/${selection}/description`,
-        name: 'Description',
-        icon: InfoIcon,
-        component: PerturbagenDetailsDescription,
-      },
-      {
-        path: `/${selection}/knownTargets`,
-        name: 'Known Targets',
-        icon: PerturbagenIcon,
-        component: PerturbagenDetailsKnownTargets,
-      },
-    ];
-  }
+  return [
+    {
+      path: `/${selection}/description`,
+      name: 'Description',
+      icon: InfoIcon,
+      component: PerturbagenDetailsDescription,
+    },
+    {
+      path: `/${selection}/knownTargets`,
+      name: 'Known Targets',
+      icon: PerturbagenIcon,
+      component: PerturbagenDetailsKnownTargets,
+    },
+  ];
 };
 
-export default additionalRoutes;
+export default generateSubRoutes;

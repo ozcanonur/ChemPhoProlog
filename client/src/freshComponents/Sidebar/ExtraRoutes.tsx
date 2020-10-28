@@ -1,178 +1,118 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
-import { NavLink, history, useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
 import Collapse from '@material-ui/core/Collapse';
-import Slide from '@material-ui/core/Slide';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import { removeSidebarRoute } from 'actions/main';
-import { useDispatch, useSelector } from 'react-redux';
-import additionalRoutes from 'variables/additionalRoutes';
-
-import logo from 'assets/img/reactlogo.png';
-import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import styles from 'freshComponents/Sidebar/sidebarStyles';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import { SvgIconTypeMap } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-const ExtraRoute = ({ route }) => {
+interface Route {
+  path: string;
+  name: string;
+  icon: OverridableComponent<SvgIconTypeMap>;
+  component: () => JSX.Element;
+}
+
+interface TitleProps {
+  route: Route;
+  expanded: boolean;
+  toggleExpand: () => void;
+}
+
+const ExtraRouteTitle = ({ route, expanded, toggleExpand }: TitleProps) => {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(true);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName: string) => {
-    return window.location.href.indexOf(routeName) > -1;
+  const redirectToDescription = () => {
+    if (history.location.pathname !== route.path) history.push(route.path);
   };
 
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  return route.map((prop, key) => {
-    const activePro = ' ';
-
-    const listItemClasses = classNames({
-      [` ${classes.orange}`]: activeRoute(prop.path),
-    });
-
-    const whiteFontClasses = classNames({
-      [` ${classes.whiteFont}`]: activeRoute(prop.path),
-    });
-
-    const currentTitle = prop.path.split('/')[1];
-
-    const dispatch = useDispatch();
-    const handleSelectedTabRemove = (item) => {
-      dispatch(removeSidebarRoute(item));
-    };
-
-    const history = useHistory();
-    const redirectToDescription = () => {
-      if (history.location.pathname !== prop.path) history.push(prop.path);
-    };
-    return (
-      <Slide in={true} key={key} direction='left' mountOnEnter unmountOnExit>
-        <div>
-          {key === 0 ? (
-            <ListItem
-              key={currentTitle}
-              style={{
-                marginTop: '1em',
-                textAlign: 'center',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              }}
-            >
-              <RemoveCircleOutlineIcon
-                style={{
-                  color: 'white',
-                  cursor: 'pointer',
-                  marginLeft: '0.6em',
-                }}
-                onClick={() => handleSelectedTabRemove(currentTitle)}
-              />
-              <ListItemText
-                primary={currentTitle}
-                className={classNames(classes.itemText, whiteFontClasses)}
-                disableTypography
-                style={{
-                  textAlign: 'left',
-                  marginLeft: '1em',
-                  cursor: 'pointer',
-                }}
-                onClick={redirectToDescription}
-              />
-              {open ? (
-                <ExpandLessIcon
-                  style={{ color: 'white', cursor: 'pointer' }}
-                  onClick={handleOpen}
-                />
-              ) : (
-                <ExpandMoreIcon
-                  style={{ color: 'white', cursor: 'pointer' }}
-                  onClick={handleOpen}
-                />
-              )}
-            </ListItem>
-          ) : undefined}
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <NavLink
-              to={prop.path}
-              className={activePro + classes.item}
-              activeClassName='active'
-            >
-              <ListItem button className={classes.itemLink + listItemClasses}>
-                {typeof prop.icon === 'string' ? (
-                  <Icon
-                    className={classNames(classes.itemIcon, whiteFontClasses)}
-                  >
-                    {prop.icon}
-                  </Icon>
-                ) : (
-                  <prop.icon
-                    className={classNames(classes.itemIcon, whiteFontClasses)}
-                  />
-                )}
-                <ListItemText
-                  primary={prop.name}
-                  className={classNames(classes.itemText, whiteFontClasses)}
-                  disableTypography
-                />
-              </ListItem>
-            </NavLink>
-          </Collapse>
-        </div>
-      </Slide>
-    );
-  });
-};
-
-const ExtraRoutes = ({ type }) => {
-  const classes = useStyles();
-
-  const extraSidebarRoutes = useSelector((state) => state.extraSidebarRoutes);
-  const getExtraRoutes = (type) =>
-    extraSidebarRoutes
-      .filter((e) => e.type === type)
-      .map((e) => additionalRoutes(type, e.name));
-  const extraRoutes = getExtraRoutes(type);
-
-  const brand = (type) => {
-    const text = type === 'kinase' ? 'Kinases' : 'Perturbagens';
-    return (
-      <div className={classes.logo}>
-        <a href='# ' className={classNames(classes.logoLink)}>
-          <div className={classes.logoImage}>
-            <img src={logo} alt='logo' className={classes.img} />
-          </div>
-          {text}
-        </a>
-      </div>
-    );
+  const currentTitle = route.path.split('/')[1];
+  const handleRouteRemove = () => {
+    dispatch(removeSidebarRoute(currentTitle));
   };
 
   return (
-    <Slide
-      in={extraRoutes.length !== 0}
-      direction='left'
-      mountOnEnter
-      unmountOnExit
-    >
-      <div style={{ marginTop: '1em', borderTop: '1px solid white' }}>
-        {brand(type)}
-        {extraRoutes.map((route, key) => (
-          <ExtraRoute route={route} key={key} />
-        ))}
-      </div>
-    </Slide>
+    <ListItem className={classes.titleListItem}>
+      <RemoveCircleOutlineIcon
+        className={classes.removeIcon}
+        onClick={handleRouteRemove}
+      />
+      <ListItemText
+        primary={currentTitle}
+        className={classes.titleItemText}
+        disableTypography
+        onClick={redirectToDescription}
+      />
+      {expanded ? (
+        <ExpandLessIcon className={classes.expandIcon} onClick={toggleExpand} />
+      ) : (
+        <ExpandMoreIcon className={classes.expandIcon} onClick={toggleExpand} />
+      )}
+    </ListItem>
+  );
+};
+
+interface Props {
+  routes: Route[];
+}
+
+const ExtraRoutes = ({ routes }: Props) => {
+  const classes = useStyles();
+
+  const [expanded, setExpanded] = useState(true);
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <>
+      {routes.map((route, index) => {
+        const listItemClasses =
+          window.location.href.indexOf(route.path) > -1
+            ? `${classes.itemLink} ${classes.orange}`
+            : `${classes.itemLink}`;
+
+        return (
+          <div key={route.path}>
+            {index === 0 ? (
+              <ExtraRouteTitle
+                route={route}
+                expanded={expanded}
+                toggleExpand={toggleExpand}
+              />
+            ) : null}
+            <Collapse in={expanded} timeout='auto' mountOnEnter unmountOnExit>
+              <NavLink to={route.path} className={classes.item}>
+                <ListItem button className={listItemClasses}>
+                  <route.icon className={classes.itemIcon} />
+                  <ListItemText
+                    primary={route.name}
+                    className={classes.itemText}
+                    disableTypography
+                  />
+                </ListItem>
+              </NavLink>
+            </Collapse>
+          </div>
+        );
+      })}
+    </>
   );
 };
 

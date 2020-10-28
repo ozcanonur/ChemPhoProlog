@@ -140,6 +140,33 @@ const sidebarStyle = createStyles({
     width: '100%',
     bottom: '13px',
   },
+  extraSidebarContainer: {
+    marginTop: '1em',
+    borderTop: '1px solid white',
+  },
+  titleListItem: {
+    marginTop: '1em',
+    textAlign: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  removeIcon: {
+    color: 'white',
+    cursor: 'pointer',
+    marginLeft: '0.6em',
+  },
+  titleItemText: {
+    margin: '0',
+    lineHeight: '30px',
+    fontSize: '14px',
+    color: '#fff',
+    textAlign: 'left',
+    marginLeft: '1em',
+    cursor: 'pointer',
+  },
+  expandIcon: {
+    color: 'white',
+    cursor: 'pointer',
+  },
 });
 
 export default sidebarStyle;
