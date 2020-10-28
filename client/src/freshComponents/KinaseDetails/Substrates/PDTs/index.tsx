@@ -5,33 +5,20 @@ import BugReport from '@material-ui/icons/BugReport';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import CardGeneric from 'components/Card/CardGeneric';
 
-import CircularBarPlot from 'views/KinaseDetails/Substrates/PDTs/CircularBarPlot';
-import PDTTable from 'views/KinaseDetails/Substrates/PDTs/PDTTable';
+import CircularBarPlot from './CircularBarPlot';
+import PDTTable from './PDTTable';
 
 const PDTs = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[3];
-
-  const CircularCard = ({ cell_line }) => (
-    <CardGeneric
-      color='primary'
-      cardTitle={`PDT Commonality in ${cell_line}`}
-      cardSubtitle={`Between ${kinase} and other kinases`}
-    >
-      <CircularBarPlot cell_line={cell_line} />
-    </CardGeneric>
-  );
-
   const cellLines = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'];
 
   return (
     <GridContainer direction='column'>
       <GridItem md>
         <GridContainer direction='row'>
-          {cellLines.map((cellLine, key) => (
-            <GridItem md key={key}>
-              <CircularCard cell_line={cellLine} />
+          {cellLines.map((cellLine) => (
+            <GridItem md key={cellLine}>
+              <CircularBarPlot cellLine={cellLine} />
             </GridItem>
           ))}
         </GridContainer>
@@ -43,7 +30,7 @@ const PDTs = (): JSX.Element => {
             return {
               tabName: cellLine,
               tabIcon: BugReport,
-              tabContent: <PDTTable cell_line={cellLine} />,
+              tabContent: <PDTTable cellLine={cellLine} />,
             };
           })}
         />

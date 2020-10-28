@@ -3,34 +3,39 @@ import React, { useState, useEffect } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { getApi } from 'api/api';
-import ObservationBarChart from 'views/KinaseDetails/Substrates/PDTs/ObservationBarChart';
+import axios from 'axios';
+import ObservationBarChart from './ObservationBarChart';
 
-const PDTTable = ({ cell_line }): JSX.Element => {
+interface Props {
+  cellLine: string;
+}
+
+const PDTTable = ({ cellLine }: Props): JSX.Element => {
+  const [PDTs, setPDTs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handlePageChange = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  const [PDTs, setPDTs] = useState([]);
   const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;
-    const route = '/pdts';
-    const params = { kinase, cell_line };
 
-    getApi(route, params).then((res) => {
-      if (mounted) {
-        setPDTs(res);
-      }
-    });
+    axios
+      .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
+      .then((res) => {
+        if (mounted) setPDTs(res.data);
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       mounted = false;
     };
-  }, [kinase, cell_line]);
+  }, [kinase, cellLine]);
+
+  const handlePageChange = (_event: Event, newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const tableData = PDTs.map(Object.values);
 
   return (
     <CardGeneric
@@ -38,7 +43,7 @@ const PDTTable = ({ cell_line }): JSX.Element => {
       cardTitle='Putative Downstream Targets'
       cardSubtitle='Select a substrate'
     >
-      {PDTs.length === 0 ? (
+      {tableData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
         <Table
@@ -51,11 +56,11 @@ const PDTTable = ({ cell_line }): JSX.Element => {
             'Confidence',
             'Shared with',
           ]}
-          tableData={PDTs.map(Object.values)}
+          tableData={tableData}
           rowsPerPage={10}
           currentPage={currentPage}
           handlePageChange={handlePageChange}
-          cell_line={cell_line}
+          cell_line={cellLine}
           ExtraContent={ObservationBarChart}
         />
       )}

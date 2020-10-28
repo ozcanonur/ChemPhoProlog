@@ -1,7 +1,6 @@
 import KinaseDetailsDescription from 'freshComponents/KinaseDetails/Description/';
 import KinaseDetailsKnownPerturbagens from 'freshComponents/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
-import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/';
-
+import KinaseDetailsSubstrates from 'freshComponents/KinaseDetails/Substrates/Substrates';
 import PerturbagenDetailsDescription from 'freshComponents/PerturbagenDetails/Description/Description';
 import PerturbagenDetailsKnownTargets from 'freshComponents/PerturbagenDetails/KnownTargets/KnownTargets';
 

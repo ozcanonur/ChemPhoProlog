@@ -3,40 +3,43 @@ import React, { useEffect, useState } from 'react';
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
 
-import { getApi } from 'api/api';
+import axios from 'axios';
+
+interface KnownSubstrate {
+  PsT: string;
+  sources: string;
+}
 
 const KnownSubstratesTable = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[3];
-
-  const [knownSubstrateData, setKnownSubstrateData] = useState([]);
+  const [data, setData] = useState<KnownSubstrate[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handlePageChange = (event, newPage) => {
+  const kinase = window.location.href.split('/')[3];
+
+  const handlePageChange = (_event: Event, newPage: number) => {
     setCurrentPage(newPage);
   };
 
   useEffect(() => {
     let mounted = true;
 
-    const route = '/knownSubstrates';
-    const params = { KPa: kinase };
-
-    getApi(route, params).then((res) => {
-      const tableData = res.map(Object.values);
-
-      if (mounted) {
-        setKnownSubstrateData(tableData);
-      }
-    });
+    axios
+      .get('/api/knownSubstrates', { params: { KPa: kinase } })
+      .then((res) => {
+        if (mounted) setData(res.data);
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       mounted = false;
     };
   }, [kinase]);
 
+  const tableData = data.map(Object.values);
+
   return (
     <>
-      {knownSubstrateData.length === 0 ? (
+      {tableData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
         <CardGeneric
@@ -48,7 +51,7 @@ const KnownSubstratesTable = (): JSX.Element => {
             className='my-node'
             tableHeaderColor='primary'
             tableHead={['Substrate', 'Sources']}
-            tableData={knownSubstrateData}
+            tableData={tableData}
             rowsPerPage={10}
             currentPage={currentPage}
             handlePageChange={handlePageChange}

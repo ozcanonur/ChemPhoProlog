@@ -1,39 +1,46 @@
-/* eslint-disable*/
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-import { getApi } from 'api/api';
+import CardGeneric from 'components/Card/CardGeneric';
+import axios from 'axios';
 
-const CircularBarPlot = ({ cell_line }) => {
-  const chart = useRef();
+interface Props {
+  cellLine: string;
+}
 
-  const [PDTs, setPDTs] = useState([]);
+interface PDT {
+  confidence: string;
+  shared_with: string;
+  substrate: string;
+  uniprot_name: string;
+}
+
+const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
+  const [PDTs, setPDTs] = useState<PDT[]>([]);
   const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;
-    const route = '/pdts';
-    const params = { kinase, cell_line };
 
-    getApi(route, params).then((res) => {
-      if (mounted) {
-        setPDTs(res);
-      }
-    });
+    axios
+      .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
+      .then((res) => {
+        if (mounted) setPDTs(res.data);
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       mounted = false;
     };
-  }, [kinase, cell_line]);
+  }, [kinase, cellLine]);
 
-  let sharedWithList = [];
+  const sharedWithList: string[] = [];
   PDTs.forEach((entry) => {
     const { shared_with } = entry;
-    if (shared_with !== null) sharedWithList.push(shared_with.split(', '));
+    if (shared_with !== null) sharedWithList.push(...shared_with.split(', '));
   });
-  sharedWithList = sharedWithList.flat();
 
-  const sharedWithCount = {};
+  const sharedWithCount: { [key: string]: number } = {};
   sharedWithList.forEach((shared) => {
     sharedWithCount[shared] = (sharedWithCount[shared] || 0) + 1;
   });
@@ -46,6 +53,8 @@ const CircularBarPlot = ({ cell_line }) => {
   });
 
   const data = chartData.sort((x, y) => y.Count - x.Count);
+
+  const chart = useRef<HTMLDivElement>(null);
 
   function square(x) {
     return x * x;
@@ -181,7 +190,15 @@ const CircularBarPlot = ({ cell_line }) => {
     .style('font-size', '11px')
     .attr('alignment-baseline', 'middle');
 
-  return <div style={{ textAlign: 'center' }} ref={chart}></div>;
+  return (
+    <CardGeneric
+      color='primary'
+      cardTitle={`PDT Commonality in ${cellLine}`}
+      cardSubtitle={`Between ${kinase} and other kinases`}
+    >
+      <div style={{ textAlign: 'center' }} ref={chart}></div>;
+    </CardGeneric>
+  );
 };
 
 export default CircularBarPlot;
