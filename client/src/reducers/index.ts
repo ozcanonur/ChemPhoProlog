@@ -1,14 +1,6 @@
 import { combineReducers } from 'redux';
 
-import {
-  currentPageKinase,
-  currentPagePerturbagen,
-  extraSidebarRoutes,
-  kinaseData,
-  perturbagenData,
-  selectedKinase,
-  selectedPerturbagen,
-} from './main';
+import { extraSidebarRoutes } from './main';
 
 import {
   cxtMenu,
@@ -23,12 +15,6 @@ import {
 
 export default combineReducers({
   // main
-  kinaseData,
-  selectedKinase,
-  currentPageKinase,
-  perturbagenData,
-  selectedPerturbagen,
-  currentPagePerturbagen,
   extraSidebarRoutes,
   // pathways
   pathsInspectList: inspectList,

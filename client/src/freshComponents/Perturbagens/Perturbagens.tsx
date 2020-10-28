@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import { addSidebarRoute } from 'actions/main';
 
-import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
+import NewFindingsCard from 'freshComponents/Misc/NewFindingsCard';
 
 const PerturbagenList = (): JSX.Element => {
   const [data, setData] = useState<Perturbagen[]>([]);

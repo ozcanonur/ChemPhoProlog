@@ -1,5 +1,3 @@
-import { getApiWeb } from 'api/api';
-
 export const addSidebarRoute = (type: string, name: string) => {
   return {
     type: 'ADD_SIDEBAR_ROUTE',
@@ -26,46 +24,4 @@ export const removeSidebarRoute = (name: string) => {
     type: 'REMOVE_SIDEBAR_ROUTE',
     payload: name,
   };
-};
-
-export const changeCurrentPagePerturbagen = (page) => {
-  return {
-    type: 'CHANGE_CURRENT_PAGE_PERTURBAGEN',
-    payload: page,
-  };
-};
-
-export const changeSelectedPerturbagen = (selection) => {
-  return {
-    type: 'CHANGE_SELECTED_PERTURBAGEN',
-    payload: selection,
-  };
-};
-
-export const fetchPerturbagenData = () => async (dispatch) => {
-  const route = '/getPerturbagenList';
-  const response = await getApiWeb(route);
-
-  dispatch({ type: 'FETCH_PERTURBAGEN_DATA', payload: response });
-};
-
-export const changeCurrentPageKinase = (page) => {
-  return {
-    type: 'CHANGE_CURRENT_PAGE_KINASE',
-    payload: page,
-  };
-};
-
-export const changeSelectedKinase = (selection) => {
-  return {
-    type: 'CHANGE_SELECTED_KINASE',
-    payload: selection,
-  };
-};
-
-export const fetchKinaseData = () => async (dispatch) => {
-  const route = '/getKinaseList';
-  const response = await getApiWeb(route);
-
-  dispatch({ type: 'FETCH_KINASE_DATA', payload: response });
 };

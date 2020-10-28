@@ -2,7 +2,7 @@ import React from 'react';
 
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import typography from './Typography';
+import typography from '../../variables/apiTexts';
 import APICard from './APICard';
 
 const API = (): JSX.Element => {

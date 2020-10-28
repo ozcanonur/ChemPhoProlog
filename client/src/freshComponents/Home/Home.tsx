@@ -1,14 +1,13 @@
 import React from 'react';
-
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import FlipCard from 'components/FlipCard/FlipCard';
-import TopText from 'views/Welcome/TopText';
-import MidTextFindings from 'views/Welcome/MidTextFindings';
-import HowToNavigate from 'views/Welcome/HowToNavigate';
-import BezzLab from 'views/Welcome/BezzLab';
 
-import flipCardContents from 'views/Welcome/flipCardContents';
+import flipCardContents from 'variables/flipCardContents';
+import TopText from './TopText';
+import MidTextFindings from './MidTextFindings';
+import HowToNavigate from './HowToNavigate';
+import BezzLab from './BezzLab';
 
 const Welcome = (): JSX.Element => {
   const [

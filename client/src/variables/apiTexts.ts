@@ -1,4 +1,4 @@
-const typography = [
+const apiTexts = [
   {
     cardTitle: 'Pathway',
     header: `GET /api/pathway`,
@@ -41,4 +41,4 @@ const typography = [
   },
 ];
 
-export default typography;
+export default apiTexts;

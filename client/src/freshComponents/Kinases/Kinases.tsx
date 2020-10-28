@@ -9,7 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import pick from 'lodash/pick';
 import axios from 'axios';
 
-import NewFindingsCard from 'views/ListComponents/NewFindingsCard';
+import NewFindingsCard from 'freshComponents/Misc/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import { shortenExpressedIns } from 'utils/utils';
 import KinaseListPhosphosites from './KinaseListPhosphosites';
