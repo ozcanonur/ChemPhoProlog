@@ -27,6 +27,15 @@ interface Perturbagen {
   synonyms: string;
 }
 
+interface Observation {
+  cell_line: string;
+  cv?: number;
+  fold_change: number;
+  p_value?: number;
+  perturbagen: string;
+  substrate: string;
+}
+
 interface RootState {
   kinaseData: any;
   selectedKinase: string;

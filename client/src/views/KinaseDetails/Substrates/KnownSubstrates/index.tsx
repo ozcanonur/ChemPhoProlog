@@ -11,7 +11,7 @@ const KnownSubstratesTable = (): JSX.Element => {
   const [knownSubstrateData, setKnownSubstrateData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handleChangePage = (event, newPage) => {
+  const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -51,7 +51,7 @@ const KnownSubstratesTable = (): JSX.Element => {
             tableData={knownSubstrateData}
             rowsPerPage={10}
             currentPage={currentPage}
-            handleChangePage={handleChangePage}
+            handlePageChange={handlePageChange}
           />
         </CardGeneric>
       )}

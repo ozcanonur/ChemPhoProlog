@@ -17,7 +17,7 @@ const PathDetails = (): JSX.Element => {
   }, [dispatch, selectedPath]);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const handleChangePage = (_event, newPage) => {
+  const handlePageChange = (_event, newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -35,7 +35,7 @@ const PathDetails = (): JSX.Element => {
         tableData={pathExplanation.length > 1 ? pathExplanation : []}
         rowsPerPage={10}
         currentPage={currentPage}
-        handleChangePage={handleChangePage}
+        handlePageChange={handlePageChange}
       />
     </CardGeneric>
   );

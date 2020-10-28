@@ -92,7 +92,7 @@ const PerturbagenList = (): JSX.Element => {
               handleSelection={handleSelection}
               handleAdd={handlePerturbagenAdd}
               currentPage={currentPage}
-              handleChangePage={handlePageChange}
+              handlePageChange={handlePageChange}
               firstRowOnClick
               selectedItem={selectedPerturbagen}
             />

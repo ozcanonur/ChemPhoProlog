@@ -1,9 +1,9 @@
-import KinaseDetailsDescription from 'views/KinaseDetails/Description/';
-import KinaseDetailsKnownPerturbagens from 'views/KinaseDetails/KnownPerturbagens/';
+import KinaseDetailsDescription from 'freshComponents/KinaseDetails/Description/';
+import KinaseDetailsKnownPerturbagens from 'freshComponents/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
 import KinaseDetailsSubstrates from 'views/KinaseDetails/Substrates/';
 
-import PerturbagenDetailsDescription from 'views/PerturbagenDetails/Description';
-import PerturbagenDetailsKnownTargets from 'views/PerturbagenDetails/KnownTargets';
+import PerturbagenDetailsDescription from 'freshComponents/PerturbagenDetails/Description/Description';
+import PerturbagenDetailsKnownTargets from 'freshComponents/PerturbagenDetails/KnownTargets/KnownTargets';
 
 import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';

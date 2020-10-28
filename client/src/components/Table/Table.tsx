@@ -156,7 +156,7 @@ const CustomTable = (props) => {
     tableHeaderColor,
     tableData,
     currentPage,
-    handleChangePage,
+    handlePageChange,
     handleAdd,
     rowEndArrow,
     handleSelection,
@@ -231,7 +231,7 @@ const CustomTable = (props) => {
           .toLowerCase()
           .indexOf(event.target.value.toLowerCase()) === 0
     );
-    handleChangePage(null, 0);
+    handlePageChange(null, 0);
     setFilteredList(filtered);
   };
 
@@ -281,7 +281,7 @@ const CustomTable = (props) => {
       count={filteredList.length}
       rowsPerPage={rowsPerPage}
       page={currentPage}
-      onChangePage={handleChangePage}
+      onChangePage={handlePageChange}
       onChangeRowsPerPage={handleChangeRowsPerPage}
     />
   );

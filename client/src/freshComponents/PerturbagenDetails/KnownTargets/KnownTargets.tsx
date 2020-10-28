@@ -3,35 +3,52 @@ import { useDispatch } from 'react-redux';
 
 import CardGeneric from 'components/Card/CardGeneric';
 import Table from 'components/Table/Table';
+import axios from 'axios';
 
-import { getApi } from 'api/api';
-import { addSidebarKinase } from 'actions/main';
+import { addSidebarRoute } from 'actions/main';
+
+interface KnownTarget {
+  kinase: string;
+  score: number;
+  source: string;
+}
 
 const KnownTargets = (): JSX.Element => {
-  const [tableData, setTableData] = useState([]);
+  const [data, setData] = useState<KnownTarget[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handleChangePage = (event, newPage) => {
+  const perturbagen = window.location.href.split('/')[3];
+
+  // Fetch the data
+  useEffect(() => {
+    let mounted = true;
+
+    axios
+      .get('/api/knownTargets', { params: { perturbagen } })
+      .then((res) => {
+        console.log(res.data);
+        if (mounted) setData(res.data);
+      })
+      .catch((err) => console.error(err));
+
+    return () => {
+      mounted = false;
+    };
+  }, [perturbagen]);
+
+  const handlePageChange = (_event: Event, newPage: number) => {
     setCurrentPage(newPage);
   };
 
   const dispatch = useDispatch();
-  const handleKinaseAdd = (selection) => {
-    dispatch(addSidebarKinase(selection));
+  const handleKinaseAdd = (kinase: string) => {
+    dispatch(addSidebarRoute('kinase', kinase));
   };
 
-  const perturbagen = window.location.href.split('/')[3];
-
-  useEffect(() => {
-    const route = '/knownTargets';
-    const params = { perturbagen };
-
-    getApi(route, params).then((res) => {
-      setTableData(
-        res.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values)
-      );
-    });
-  }, [perturbagen]);
+  // Table component wants it in this format
+  const tableData = data
+    .map((e) => ({ ...e, score: e.score.toFixed(2) }))
+    .map(Object.values);
 
   return (
     <div style={{ padding: '2em' }}>
@@ -52,7 +69,7 @@ const KnownTargets = (): JSX.Element => {
             collapsible={false}
             currentPage={currentPage}
             firstRowOnClick
-            handleChangePage={handleChangePage}
+            handlePageChange={handlePageChange}
             handleAdd={handleKinaseAdd}
           />
         )}

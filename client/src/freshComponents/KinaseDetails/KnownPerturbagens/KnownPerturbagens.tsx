@@ -5,38 +5,44 @@ import Table from 'components/Table/Table';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
-import { getApi } from 'api/api';
+interface KnownPerturbagen {
+  perturbagen: string;
+  score: number;
+  source: string;
+}
 
 const KnownPerturbagens = (): JSX.Element => {
-  const kinase = window.location.href.split('/')[3];
-
-  const [knownPerturbagenData, setKnownPerturbagenData] = useState([]);
+  const [data, setData] = useState<KnownPerturbagen[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
+  const kinase = window.location.href.split('/')[3];
 
+  // Fetch the data
   useEffect(() => {
     let mounted = true;
 
-    const route = '/knownPerturbagens';
-    const params = { kinase };
-
-    getApi(route, params).then((res) => {
-      const tableData = res
-        .map((e) => ({ ...e, score: e.score.toFixed(2) }))
-        .map(Object.values);
-      if (mounted) {
-        setKnownPerturbagenData(tableData);
-      }
-    });
+    axios
+      .get('/api/knownPerturbagens', { params: { kinase } })
+      .then((res) => {
+        if (mounted) setData(res.data);
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       mounted = false;
     };
   }, [kinase]);
+
+  // Table wants the data in this format :/
+  const tableData = data
+    .map((e) => ({ ...e, score: e.score.toFixed(2) }))
+    .map(Object.values);
+
+  const handlePageChange = (_event: Event, newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <GridContainer
@@ -50,17 +56,17 @@ const KnownPerturbagens = (): JSX.Element => {
           cardTitle='Known Perturbagens'
           cardSubtitle='Select a perturbagen'
         >
-          {knownPerturbagenData.length === 0 ? (
+          {tableData.length === 0 ? (
             <div>No entries found</div>
           ) : (
             <Table
               className='my-node'
               tableHeaderColor='primary'
               tableHead={['Perturbagen', 'Source', 'Score']}
-              tableData={knownPerturbagenData}
+              tableData={tableData}
               rowsPerPage={10}
               currentPage={currentPage}
-              handleChangePage={handleChangePage}
+              handlePageChange={handlePageChange}
             />
           )}
         </CardGeneric>

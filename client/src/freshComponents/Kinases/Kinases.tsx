@@ -95,7 +95,7 @@ const KinaseList = (): JSX.Element => {
               tableData={tableData}
               rowsPerPage={10}
               currentPage={currentPage}
-              handleChangePage={handlePageChange}
+              handlePageChange={handlePageChange}
               rowEndArrow
               handleSelection={handleSelection}
               handleAdd={handleKinaseAdd}

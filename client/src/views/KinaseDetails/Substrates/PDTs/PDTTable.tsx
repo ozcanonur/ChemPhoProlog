@@ -9,7 +9,7 @@ import ObservationBarChart from 'views/KinaseDetails/Substrates/PDTs/Observation
 const PDTTable = ({ cell_line }): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handleChangePage = (event, newPage) => {
+  const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -54,7 +54,7 @@ const PDTTable = ({ cell_line }): JSX.Element => {
           tableData={PDTs.map(Object.values)}
           rowsPerPage={10}
           currentPage={currentPage}
-          handleChangePage={handleChangePage}
+          handlePageChange={handlePageChange}
           cell_line={cell_line}
           ExtraContent={ObservationBarChart}
         />

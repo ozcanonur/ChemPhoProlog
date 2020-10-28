@@ -36,7 +36,7 @@ const PathsTable = (): JSX.Element => {
   }, [paths, stoppingReasons]);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const handleChangePage = (_event, newPage) => {
+  const handlePageChange = (_event, newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -58,7 +58,7 @@ const PathsTable = (): JSX.Element => {
         tableData={tableData}
         rowsPerPage={5}
         currentPage={currentPage}
-        handleChangePage={handleChangePage}
+        handlePageChange={handlePageChange}
         rowEndArrow
         handleAddPath={handleAddPath}
       />
