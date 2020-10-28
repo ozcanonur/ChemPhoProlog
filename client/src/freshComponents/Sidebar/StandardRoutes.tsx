@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { SvgIconTypeMap } from '@material-ui/core';
 
-import styles from './sidebarStyles';
+import styles from './styles/sidebarStyles';
 
 const useStyles = makeStyles(styles);
 

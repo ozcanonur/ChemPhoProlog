@@ -1,7 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import sidebarStyles from './sidebarStyles';
+import sidebarStyles from './styles/sidebarStyles';
 
 const useStyles = makeStyles(sidebarStyles);
 

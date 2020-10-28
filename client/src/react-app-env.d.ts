@@ -7,6 +7,19 @@ interface SidebarRoute {
   name: string;
 }
 
+interface Kinase {
+  description?: string;
+  expressed_in: string;
+  families?: string;
+  gene_name?: string;
+  gene_synonyms?: string;
+  kinase_name: string;
+  length?: number;
+  sequence?: string;
+  uniprot_id: string;
+  uniprot_name?: string;
+}
+
 interface RootState {
   kinaseData: any;
   selectedKinase: string;

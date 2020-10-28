@@ -1,17 +1,17 @@
 import { uniqWith } from 'lodash';
 
-export const extraSidebarRoutes = (state = [], action) => {
-  const filterDuplicates = (type, itemName) =>
-    uniqWith(
-      [...state, { type, name: itemName }],
-      (x, y) => x.type === y.type && x.name === y.name
-    );
+const addUniqueRoute = (state, type, itemName) =>
+  uniqWith(
+    [...state, { type, name: itemName }],
+    (x, y) => x.type === y.type && x.name === y.name
+  );
 
+export const extraSidebarRoutes = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_KINASE_SIDEBAR_ROUTE':
-      return filterDuplicates('kinase', action.payload);
+    case 'ADD_SIDEBAR_ROUTE':
+      return addUniqueRoute(state, action.payload.type, action.payload.name);
     case 'ADD_PERTURBAGEN_SIDEBAR_ROUTE':
-      return filterDuplicates('perturbagen', action.payload);
+      return addUniqueRoute(state, 'perturbagen', action.payload);
     case 'REMOVE_SIDEBAR_ROUTE':
       return state.filter((e) => e.name !== action.payload);
     default:

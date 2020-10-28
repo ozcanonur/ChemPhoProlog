@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ import { removeSidebarRoute } from 'actions/main';
 import { useDispatch } from 'react-redux';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'freshComponents/Sidebar/sidebarStyles';
+import styles from 'freshComponents/Sidebar/styles/sidebarStyles';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { SvgIconTypeMap } from '@material-ui/core';
 
@@ -72,7 +71,7 @@ interface Props {
   routes: Route[];
 }
 
-const ExtraRoutes = ({ routes }: Props) => {
+const ExtraRoutes = ({ routes }: Props): JSX.Element => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState(true);

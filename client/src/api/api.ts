@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-export const getApiWeb = async (route, params) => {
+interface Params {
+  [key: string]: string;
+}
+
+export const getApiWeb = async (route: string, params?: Params) => {
   const response = await axios.get(`/apiWeb${route}`, {
     params,
   });
@@ -9,7 +13,7 @@ export const getApiWeb = async (route, params) => {
   return response.data;
 };
 
-export const getApi = async (route, params) => {
+export const getApi = async (route: string, params?: Params) => {
   const response = await axios.get(`/api${route}`, {
     params,
   });

@@ -1,5 +1,12 @@
 import { getApiWeb } from 'api/api';
 
+export const addSidebarRoute = (type: string, name: string) => {
+  return {
+    type: 'ADD_SIDEBAR_ROUTE',
+    payload: { type, name },
+  };
+};
+
 export const addSidebarKinase = (kinase) => {
   return {
     type: 'ADD_KINASE_SIDEBAR_ROUTE',
@@ -14,10 +21,10 @@ export const addSidebarPerturbagen = (perturbagen) => {
   };
 };
 
-export const removeSidebarRoute = (item) => {
+export const removeSidebarRoute = (name: string) => {
   return {
     type: 'REMOVE_SIDEBAR_ROUTE',
-    payload: item,
+    payload: name,
   };
 };
 
