@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 
-import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
-import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
-import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
-import Button from 'freshComponents/Misc/CustomButton/Button';
+import CardGeneric from 'components/Misc/Card/CardGeneric';
+import GridItem from 'components/Misc/CustomGrid/GridItem';
+import GridContainer from 'components/Misc/CustomGrid/GridContainer';
+import Button from 'components/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Cytoscape from 'cytoscape';
@@ -102,9 +102,7 @@ export default function Inputs(): JSX.Element {
         ))}
         <GridItem>
           <Button
-            onClick={() => {
-              onSubmit();
-            }}
+            onClick={onSubmit}
             style={{
               width: '200px',
               backgroundColor: 'rgba(229,173,6)',

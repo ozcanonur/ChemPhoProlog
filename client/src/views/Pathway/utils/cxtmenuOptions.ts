@@ -3,7 +3,7 @@ import phosphatases from 'variables/phosphatases';
 import { popErrorTooltip } from 'views/Pathway/utils/tooltip';
 import { store } from 'index';
 
-import { addSidebarKinase } from 'actions/main';
+import { addSidebarRoute } from 'actions/main';
 import {
   setSelectedInputs,
   getPathwayData,
@@ -54,7 +54,7 @@ const cxtmenuOptions = (dispatch) => {
           const isPhosphosite = id.includes('(');
           if (isPhosphosite)
             popErrorTooltip(ele, 'Not available for phosphosites', 2000);
-          else dispatch(addSidebarKinase(id));
+          else dispatch(addSidebarRoute('kinase', id));
         },
         enabled: true,
       },

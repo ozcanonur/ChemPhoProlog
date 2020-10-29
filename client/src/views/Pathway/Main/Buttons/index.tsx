@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Fade from '@material-ui/core/Fade';
-import Button from 'freshComponents/Misc/CustomButton/Button';
-import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
-import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import Button from 'components/Misc/CustomButton/Button';
+import GridContainer from 'components/Misc/CustomGrid/GridContainer';
+import GridItem from 'components/Misc/CustomGrid/GridItem';
 import Legend from 'views/Pathway/Main/Buttons/Legend';
 
 import { toggleTooltips } from 'views/Pathway/utils/tooltip';

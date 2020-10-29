@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPathExplanation } from 'actions/pathways';
 
-import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
-import Table from 'freshComponents/Misc/CustomTable/Table';
+import CardGeneric from 'components/Misc/Card/CardGeneric';
+import Table from 'components/Misc/CustomTable/Table';
 
 const PathDetails = (): JSX.Element => {
   const { perturbagen } = useSelector((state) => state.pathwayInputs);

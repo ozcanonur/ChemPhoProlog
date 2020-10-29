@@ -11,7 +11,7 @@ import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
-import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import CardGeneric from 'components/Misc/Card/CardGeneric';
 import ExtraButtons from 'views/Pathway/Main/Buttons/';
 
 import {

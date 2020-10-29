@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addInspectPath } from 'actions/pathways';
 
-import Table from 'freshComponents/Misc/CustomTable/Table';
-import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import Table from 'components/Misc/CustomTable/Table';
+import CardGeneric from 'components/Misc/Card/CardGeneric';
 
 const parsePathsToTableData = (paths, stoppingReasons) => {
   const tableData = paths.map((path, key) => {

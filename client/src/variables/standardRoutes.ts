@@ -1,8 +1,8 @@
-import Home from 'freshComponents/Home/Home';
-import Kinases from 'freshComponents/Kinases/Kinases';
-import Perturbagens from 'freshComponents/Perturbagens/Perturbagens';
+import Home from 'components/Home/Home';
+import Kinases from 'components/Kinases/Kinases';
+import Perturbagens from 'components/Perturbagens/Perturbagens';
 import Pathways from 'views/Pathway';
-import API from 'freshComponents/API';
+import API from 'components/API';
 
 import HomeIcon from '@material-ui/icons/Home';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';

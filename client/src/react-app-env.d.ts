@@ -1,10 +1,19 @@
 /// <reference types="react-scripts" />
 
-declare module '*.PNG';
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.gif';
 
 interface SidebarRoute {
   type: string;
   name: string;
+}
+
+interface Route {
+  path: string;
+  name: string;
+  icon: OverridableComponent<SvgIconTypeMap>;
+  component: () => JSX.Element;
 }
 
 interface Kinase {
@@ -37,15 +46,9 @@ interface Observation {
 }
 
 interface RootState {
-  kinaseData: any;
-  selectedKinase: string;
-  currentPageKinase: number;
-  perturbagenData: any;
-  selectedPerturbagen: string;
-  currentPagePerturbagen: number;
   extraSidebarRoutes: SidebarRoute[];
   // pathways
-  pathsInspectList: inspectList;
+  pathsInspectList: any;
   selectedPath: any;
   pathwayData: any;
   pathwayInputs: any;
