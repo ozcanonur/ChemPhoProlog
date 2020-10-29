@@ -5,29 +5,20 @@ import Card from './Card';
 import CardBody from './CardBody';
 import CardHeader from './CardHeader';
 
-const useStyles = makeStyles({
-  cardTitleWhite: {
-    color: '#fff',
-    marginTop: '0px',
-    minHeight: 'auto',
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
-  cardCategoryWhite: {
-    color: `rgba(255,255,255,.62)`,
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-});
+import cardStyles from './styles/card';
 
-const CardGeneric = (props): JSX.Element => {
+const useStyles = makeStyles(cardStyles);
+
+interface Props {
+  color?: string;
+  cardTitle?: string;
+  cardSubtitle?: string;
+  children?: any;
+  style?: any;
+  headerStyle?: any;
+}
+
+const CardGeneric = (props: Props): JSX.Element => {
   const classes = useStyles();
   const {
     color,

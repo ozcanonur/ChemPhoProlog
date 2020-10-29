@@ -26,7 +26,6 @@ const KnownTargets = (): JSX.Element => {
     axios
       .get('/api/knownTargets', { params: { perturbagen } })
       .then((res) => {
-        console.log(res.data);
         if (mounted) setData(res.data);
       })
       .catch((err) => console.error(err));
@@ -61,7 +60,6 @@ const KnownTargets = (): JSX.Element => {
           <div>Loading...</div>
         ) : (
           <Table
-            className='my-node'
             tableHeaderColor='primary'
             tableHead={['Kinase', 'Source', 'Score']}
             tableData={tableData}

@@ -29,7 +29,6 @@ const PathDetails = (): JSX.Element => {
       style={{ opacity: selectedPath.length === 0 ? 0.5 : 1 }}
     >
       <Table
-        className='my-node'
         tableHeaderColor='primary'
         tableHead={['Start', 'Phosphosite', 'End']}
         tableData={pathExplanation.length > 1 ? pathExplanation : []}

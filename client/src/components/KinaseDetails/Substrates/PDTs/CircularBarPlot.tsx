@@ -36,6 +36,7 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
 
   const sharedWithList: string[] = [];
   PDTs.forEach((entry) => {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { shared_with } = entry;
     if (shared_with !== null) sharedWithList.push(...shared_with.split(', '));
   });
@@ -72,6 +73,7 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     };
 
     scale.nice = function (count) {
+      // eslint-disable-next-line no-sequences
       return linear.nice(count), scale;
     };
 

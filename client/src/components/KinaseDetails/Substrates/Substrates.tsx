@@ -2,7 +2,7 @@ import React from 'react';
 import BugReport from '@material-ui/icons/BugReport';
 import Code from '@material-ui/icons/Code';
 
-import CustomTabs from 'components/Misc/CustomTab/CustomTabs';
+import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import PDTs from 'components/KinaseDetails/Substrates/PDTs/';
 import KnownSubstrates from 'components/KinaseDetails/Substrates/KnownSubstrates';
 

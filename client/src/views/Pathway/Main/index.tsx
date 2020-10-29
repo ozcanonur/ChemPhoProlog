@@ -26,7 +26,6 @@ const Main = React.memo(() => {
     observation: {},
   };
 
-  console.log(data);
   // const start = useSelector((state)=>state.pathwayInputs);
   const start = store.getState().pathwayInputs.substrate;
 

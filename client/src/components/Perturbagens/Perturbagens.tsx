@@ -83,7 +83,6 @@ const PerturbagenList = (): JSX.Element => {
             <div>Loading...</div>
           ) : (
             <Table
-              className='my-node'
               tableHeaderColor='primary'
               tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
               tableData={tableData}

@@ -48,7 +48,6 @@ const KnownSubstratesTable = (): JSX.Element => {
           cardSubtitle='Select a substrate'
         >
           <Table
-            className='my-node'
             tableHeaderColor='primary'
             tableHead={['Substrate', 'Sources']}
             tableData={tableData}

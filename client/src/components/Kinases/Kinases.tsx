@@ -89,7 +89,6 @@ const KinaseList = (): JSX.Element => {
             <div>Loading...</div>
           ) : (
             <Table
-              className='my-node'
               tableHeaderColor='primary'
               tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
               tableData={tableData}

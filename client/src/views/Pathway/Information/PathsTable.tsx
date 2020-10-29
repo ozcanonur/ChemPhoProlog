@@ -52,7 +52,6 @@ const PathsTable = (): JSX.Element => {
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
     >
       <Table
-        className='my-node'
         tableHeaderColor='primary'
         tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
         tableData={tableData}

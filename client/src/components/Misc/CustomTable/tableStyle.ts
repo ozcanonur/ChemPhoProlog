@@ -1,4 +1,6 @@
-const tableStyle = {
+import createStyles from '@material-ui/core/styles/createStyles';
+
+const tableStyle = createStyles({
   warningTableHeader: {
     color: '#FFC107',
   },
@@ -59,6 +61,6 @@ const tableStyle = {
     outline: 'none',
     verticalAlign: 'middle',
   },
-};
+});
 
 export default tableStyle;

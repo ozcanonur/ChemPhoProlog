@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CustomTabs from 'components/Misc/CustomTab/CustomTabs';
+import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import BugReport from '@material-ui/icons/BugReport';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';

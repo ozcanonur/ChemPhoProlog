@@ -76,7 +76,6 @@ const Description = (): JSX.Element => {
             <div>No entries found.</div>
           ) : (
             <Table
-              className='my-node'
               tableHeaderColor='primary'
               tableHead={[
                 'Obs. Data',
