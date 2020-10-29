@@ -1,18 +1,19 @@
 import React from 'react';
-
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 
-const styles = {
+const useStyles = makeStyles({
   grid: {
     margin: '0 -15px !important',
     width: 'unset',
   },
-};
+});
 
-const useStyles = makeStyles(styles);
+interface Props {
+  children: JSX.Element;
+}
 
-export default function GridContainer(props) {
+const GridContainer = (props: Props): JSX.Element => {
   const classes = useStyles();
   const { children, ...rest } = props;
   return (
@@ -20,4 +21,6 @@ export default function GridContainer(props) {
       {children}
     </Grid>
   );
-}
+};
+
+export default GridContainer;

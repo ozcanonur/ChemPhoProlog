@@ -2,11 +2,20 @@ import React from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import styles from 'components/Typography/typographyStyle';
+const useStyles = makeStyles({
+  defaultFontStyle: {
+    fontSize: '14px',
+  },
+  warningText: {
+    color: '#FFC107',
+  },
+});
 
-const useStyles = makeStyles(styles);
+interface Props {
+  children: JSX.Element;
+}
 
-export default function Danger(props) {
+const Danger = (props: Props): JSX.Element => {
   const classes = useStyles();
   const { children } = props;
   return (
@@ -14,4 +23,6 @@ export default function Danger(props) {
       {children}
     </div>
   );
-}
+};
+
+export default Danger;
