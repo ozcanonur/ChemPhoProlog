@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-import CardGeneric from 'components/Card/CardGeneric';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
 import axios from 'axios';
 
 interface Props {

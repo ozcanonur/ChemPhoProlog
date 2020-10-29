@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardGeneric from 'components/Card/CardGeneric';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
 import bezzLab from 'assets/img/bezzlab_twitter.PNG';
 
 const BezzLab = (): JSX.Element => {

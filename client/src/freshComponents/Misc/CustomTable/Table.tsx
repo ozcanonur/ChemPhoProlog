@@ -11,8 +11,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
-import Button from 'components/CustomButtons/Button';
-import CustomInput from 'components/CustomInput/CustomInput';
+import Button from 'freshComponents/Misc/CustomButton/Button';
+import CustomInput from 'freshComponents/Misc/CustomInput/CustomInput';
 
 import Search from '@material-ui/icons/Search';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -21,7 +21,7 @@ import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'components/Table/tableStyle';
+import styles from 'freshComponents/Misc/CustomTable/tableStyle';
 
 const useStyles = makeStyles(styles);
 

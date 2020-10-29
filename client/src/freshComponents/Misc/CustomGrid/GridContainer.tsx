@@ -9,11 +9,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface Props {
-  children: JSX.Element;
-}
-
-const GridContainer = (props: Props): JSX.Element => {
+const GridContainer = (props: any): JSX.Element => {
   const classes = useStyles();
   const { children, ...rest } = props;
   return (

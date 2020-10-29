@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardGeneric from 'components/Card/CardGeneric';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
 import Typography from '@material-ui/core/Typography';
 
 const TopText = (): JSX.Element => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import CardGeneric from 'components/Card/CardGeneric';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
 import { ResponsiveWaffle } from '@nivo/waffle';
 
 const Waffle = (): JSX.Element => {

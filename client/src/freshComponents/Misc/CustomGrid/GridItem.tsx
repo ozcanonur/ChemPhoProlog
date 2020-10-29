@@ -8,11 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface Props {
-  children: JSX.Element;
-}
-
-const GridItem = (props: Props): JSX.Element => {
+const GridItem = (props: any): JSX.Element => {
   const classes = useStyles();
   const { children, ...rest } = props;
   return (

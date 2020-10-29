@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import CardGeneric from 'components/Card/CardGeneric';
-import Table from 'components/Table/Table';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import Table from 'freshComponents/Misc/CustomTable/Table';
 import axios from 'axios';
 
 import ObservationHeatMap from './ObservationHeatMap';

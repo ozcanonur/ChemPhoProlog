@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
+import Card from 'freshComponents/Misc/Card/Card';
+import CardBody from 'freshComponents/Misc/Card/CardBody';
+import CardHeader from 'freshComponents/Misc/Card/CardHeader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';

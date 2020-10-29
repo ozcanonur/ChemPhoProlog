@@ -11,15 +11,15 @@ import Healing from '@material-ui/icons/Healing';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import CustomInput from 'components/CustomInput/CustomInput';
-import Button from 'components/CustomButtons/Button';
+import CustomInput from 'freshComponents/Misc/CustomInput/CustomInput';
+import Button from 'freshComponents/Misc/CustomButton/Button';
 
 import perturbagens from 'variables/perturbagens';
 import { getApiWeb } from 'api/api';
 import { addSidebarKinase, addSidebarPerturbagen } from 'actions/main';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'components/Navbars/headerLinksStyle';
+import styles from 'freshComponents/Navbar/headerLinksStyle';
 
 const useStyles = makeStyles(styles);
 

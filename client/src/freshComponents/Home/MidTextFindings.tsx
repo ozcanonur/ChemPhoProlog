@@ -1,13 +1,13 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
 import Typography from '@material-ui/core/Typography';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
-import CardIcon from 'components/Card/CardIcon';
+import Card from 'freshComponents/Misc/Card/Card';
+import CardHeader from 'freshComponents/Misc/Card/CardHeader';
+import CardBody from 'freshComponents/Misc/Card/CardBody';
+import CardIcon from 'freshComponents/Misc/Card/CardIcon';
 import NewReleases from '@material-ui/icons/NewReleases';
 
 const useStyles = makeStyles({

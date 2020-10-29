@@ -1,7 +1,7 @@
 import React from 'react';
 
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
 
 import PathsTable from 'views/Pathway/Information/PathsTable';
 import PathExplanation from 'views/Pathway/Information/PathExplanation';

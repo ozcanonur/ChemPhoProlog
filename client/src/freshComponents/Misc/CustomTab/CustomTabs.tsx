@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
+import Card from 'freshComponents/Misc/Card/Card';
+import CardBody from 'freshComponents/Misc/Card/CardBody';
+import CardHeader from 'freshComponents/Misc/Card/CardHeader';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 

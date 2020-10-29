@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { store } from 'index';
 
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
 
 import Pathway from 'views/Pathway/Main/Pathway';
 import PathSelectList from 'views/Pathway/Main/PathSelectList';

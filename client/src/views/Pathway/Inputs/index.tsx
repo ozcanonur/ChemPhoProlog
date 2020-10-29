@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 
-import CardGeneric from 'components/Card/CardGeneric';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import Button from 'components/CustomButtons/Button';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import Button from 'freshComponents/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Cytoscape from 'cytoscape';

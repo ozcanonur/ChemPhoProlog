@@ -1,7 +1,7 @@
 import React from 'react';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import FlipCard from 'components/FlipCard/FlipCard';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import FlipCard from 'freshComponents/Misc/FlipCard/FlipCard';
 
 import flipCardContents from 'variables/flipCardContents';
 import TopText from './TopText';

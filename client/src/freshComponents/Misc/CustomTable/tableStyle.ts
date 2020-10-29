@@ -1,27 +1,18 @@
-import {
-  warningColor,
-  primaryColor,
-  successColor,
-  infoColor,
-  grayColor,
-  defaultFont,
-} from 'assets/dashboardStyle';
-
-const tableStyle = (theme) => ({
+const tableStyle = {
   warningTableHeader: {
-    color: warningColor[0],
+    color: '#FFC107',
   },
   primaryTableHeader: {
-    color: primaryColor[0],
+    color: '#001233',
   },
   successTableHeader: {
-    color: successColor[0],
+    color: '#2D4159',
   },
   infoTableHeader: {
-    color: infoColor[0],
+    color: '#00acc1',
   },
   grayTableHeader: {
-    color: grayColor[0],
+    color: '#999',
   },
   table: {
     marginBottom: '0',
@@ -33,13 +24,15 @@ const tableStyle = (theme) => ({
   },
   tableHeadCell: {
     color: 'inherit',
-    ...defaultFont,
+    fontWeight: 300,
+    lineHeight: '1.5em',
     '&, &$tableCell': {
       fontSize: '1em',
     },
   },
   tableCell: {
-    ...defaultFont,
+    fontWeight: 300,
+    lineHeight: '1.5em',
     minHeight: '1.72857143',
     padding: '12px 8px',
     verticalAlign: 'middle',
@@ -48,7 +41,7 @@ const tableStyle = (theme) => ({
   },
   tableResponsive: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: '2px',
     overflowX: 'auto',
   },
   tableHeadRow: {
@@ -66,6 +59,6 @@ const tableStyle = (theme) => ({
     outline: 'none',
     verticalAlign: 'middle',
   },
-});
+};
 
 export default tableStyle;

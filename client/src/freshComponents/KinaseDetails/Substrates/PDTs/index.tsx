@@ -1,10 +1,10 @@
 import React from 'react';
 
-import CustomTabs from 'components/CustomTabs/CustomTabs';
+import CustomTabs from 'freshComponents/Misc/CustomTab/CustomTabs';
 import BugReport from '@material-ui/icons/BugReport';
 
-import GridContainer from 'components/Grid/GridContainer';
-import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
 
 import CircularBarPlot from './CircularBarPlot';
 import PDTTable from './PDTTable';

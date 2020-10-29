@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import CardGeneric from 'components/Card/CardGeneric';
-import Table from 'components/Table/Table';
+import GridItem from 'freshComponents/Misc/CustomGrid/GridItem';
+import GridContainer from 'freshComponents/Misc/CustomGrid/GridContainer';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import Table from 'freshComponents/Misc/CustomTable/Table';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
 
 import { addSidebarRoute } from 'actions/main';
 
-import NewFindingsCard from 'freshComponents/Misc/NewFindingsCard';
+import NewFindingsCard from 'freshComponents/Misc/NewFindings/NewFindingsCard';
 
 const PerturbagenList = (): JSX.Element => {
   const [data, setData] = useState<Perturbagen[]>([]);

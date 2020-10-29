@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
+import Card from 'freshComponents/Misc/Card/Card';
+import CardHeader from 'freshComponents/Misc/Card/CardHeader';
+import CardBody from 'freshComponents/Misc/Card/CardBody';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

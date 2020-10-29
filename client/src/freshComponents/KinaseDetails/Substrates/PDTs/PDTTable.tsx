@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import CardGeneric from 'components/Card/CardGeneric';
-import Table from 'components/Table/Table';
+import CardGeneric from 'freshComponents/Misc/Card/CardGeneric';
+import Table from 'freshComponents/Misc/CustomTable/Table';
 
 import axios from 'axios';
 import ObservationBarChart from './ObservationBarChart';
