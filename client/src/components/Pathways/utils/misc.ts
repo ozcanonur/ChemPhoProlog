@@ -1,15 +1,19 @@
 import { hideAll as hideTooltips } from 'tippy.js';
+import { Core, LayoutOptions } from 'cytoscape';
 
-export const clearAllTimeouts = () => {
+export const clearAllTimeouts = (): void => {
   for (let i = 0; i < 100000; i += 1) clearTimeout(i);
 };
 
-export const runLayout = (cy, layout) => {
+export const runLayout = (cy: Core | null, layout: LayoutOptions): void => {
+  if (!cy) return;
+
   cy.layout(layout).run();
   cy.fit();
 };
 
-export const resetPathwayVisuals = (cy) => {
+export const resetPathwayVisuals = (cy: Core | null): void => {
+  if (!cy) return;
   // Remove the previous highlighting/tooltips if any
   hideTooltips();
   cy.elements().forEach((e) => {
@@ -23,7 +27,11 @@ export const resetPathwayVisuals = (cy) => {
   });
 };
 
-export const addResizeEventListener = (cy, layout) => {
+export const addResizeEventListener = (
+  cy: Core | null,
+  layout: LayoutOptions
+): void => {
+  if (!cy) return;
   let width = cy.width();
   let height = cy.height();
   cy.on('resize', (evt) => {

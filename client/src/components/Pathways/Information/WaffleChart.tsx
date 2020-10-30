@@ -6,9 +6,10 @@ import { ResponsiveWaffle } from '@nivo/waffle';
 
 const Waffle = (): JSX.Element => {
   const { cellLine, perturbagen, substrate } = useSelector(
-    (state) => state.pathwayInputs
+    (state: RootState) => state.pathwayInputs
   );
-  const data = useSelector((state) => state.pathwayData) || {
+
+  const data = useSelector((state: RootState) => state.pathwayData) || {
     paths: [],
     relations: {},
     phosphosites: [],
@@ -19,7 +20,7 @@ const Waffle = (): JSX.Element => {
 
   const { paths, stoppingReasons } = data;
 
-  const stoppingReasonCounts = {
+  const stoppingReasonCounts: { [key: string]: number } = {
     no_data: 0,
     unaffected: 0,
     no_prior_knowledge: 0,
@@ -62,8 +63,9 @@ const Waffle = (): JSX.Element => {
           '#4F0EAB',
           '#001233',
         ]}
-        borderColor={{ from: 'color', modifiers: [['darker', '0.6']] }}
+        borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
         animate={false}
+        // @ts-ignore
         legends={[
           {
             anchor: 'top',

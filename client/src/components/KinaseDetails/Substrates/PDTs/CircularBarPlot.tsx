@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread */
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
@@ -57,27 +58,30 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
 
   const chart = useRef<HTMLDivElement>(null);
 
-  function square(x) {
+  function square(x: number) {
     return x * x;
   }
 
   function radial() {
     const linear = d3.scaleLinear();
 
-    function scale(x) {
+    function scale(x: any) {
+      // @ts-ignore
       return Math.sqrt(linear(x));
     }
 
-    scale.domain = function (_) {
+    scale.domain = (_: any) => {
+      // @ts-ignore
       return arguments.length ? (linear.domain(_), scale) : linear.domain();
     };
 
-    scale.nice = function (count) {
+    scale.nice = (count: any) => {
       // eslint-disable-next-line no-sequences
       return linear.nice(count), scale;
     };
 
-    scale.range = function (_) {
+    scale.range = (_: any) => {
+      // @ts-ignore
       return arguments.length
         ? (linear.range(_.map(square)), scale)
         : linear.range().map(Math.sqrt);
@@ -90,14 +94,14 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
   }
 
   // set the dimensions and margins of the graph
-  var margin = { top: 100, right: 0, bottom: 0, left: 0 },
-    width = 400 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom,
-    innerRadius = 70,
-    outerRadius = Math.min(width, height) / 2;
+  const margin = { top: 100, right: 0, bottom: 0, left: 0 };
+  const width = 400 - margin.left - margin.right;
+  const height = 400 - margin.top - margin.bottom;
+  const innerRadius = 70;
+  const outerRadius = Math.min(width, height) / 2;
 
   // append the svg object
-  var svg = d3
+  const svg = d3
     .select(chart.current)
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -105,20 +109,16 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     .append('g')
     .attr(
       'transform',
-      'translate(' +
-        (width / 2 + margin.left) +
-        ',' +
-        (height / 2 + margin.top) +
-        ')'
+      `translate(${width / 2 + margin.left},${height / 2 + margin.top})`
     );
 
   // Scales
-  var x = d3
+  const x = d3
     .scaleBand()
     .range([0, 2 * Math.PI])
     .align(0)
     .domain(
-      data.map(function (d) {
+      data.map((d) => {
         return d.Kinase;
       })
     );
@@ -128,7 +128,8 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     data.map((e) => e.Count)
   );
 
-  var y = radial().range([innerRadius, outerRadius]).domain([0, maxValue]);
+  // @ts-ignore
+  const y = radial().range([innerRadius, outerRadius]).domain([0, maxValue]);
 
   // Add the bars
   svg
@@ -140,16 +141,19 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     .attr('fill', 'rgba(45,65,89, 1)')
     .attr(
       'd',
+      // @ts-ignore
       d3
         .arc()
         .innerRadius(innerRadius)
-        .outerRadius(function (d) {
-          return y(d['Count']);
+        .outerRadius((d: any) => {
+          return y(d.Count);
         })
-        .startAngle(function (d) {
+        // @ts-ignore
+        .startAngle((d: any) => {
           return x(d.Kinase);
         })
-        .endAngle(function (d) {
+        .endAngle((d: any) => {
+          // @ts-ignore
           return x(d.Kinase) + x.bandwidth();
         })
         .padAngle(0.01)
@@ -163,27 +167,26 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     .data(data)
     .enter()
     .append('g')
-    .attr('text-anchor', function (d) {
+    .attr('text-anchor', (d) => {
+      // @ts-ignore
       return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
         Math.PI
         ? 'end'
         : 'start';
     })
-    .attr('transform', function (d) {
+    .attr('transform', (d) => {
       return (
-        'rotate(' +
-        (((x(d.Kinase) + x.bandwidth() / 2) * 180) / Math.PI - 90) +
-        ')' +
-        'translate(' +
-        (y(d['Count']) + 10) +
-        ',0)'
+        // @ts-ignore
+        `rotate(${((x(d.Kinase) + x.bandwidth() / 2) * 180) / Math.PI - 90})` +
+        `translate(${y(d.Count) + 10},0)`
       );
     })
     .append('text')
-    .text(function (d) {
+    .text((d) => {
       return d.Kinase;
     })
-    .attr('transform', function (d) {
+    .attr('transform', (d) => {
+      // @ts-ignore
       return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
         Math.PI
         ? 'rotate(180)'
@@ -198,7 +201,7 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
       cardTitle={`PDT Commonality in ${cellLine}`}
       cardSubtitle={`Between ${kinase} and other kinases`}
     >
-      <div style={{ textAlign: 'center' }} ref={chart}></div>;
+      <div style={{ textAlign: 'center' }} ref={chart} />;
     </CardGeneric>
   );
 };

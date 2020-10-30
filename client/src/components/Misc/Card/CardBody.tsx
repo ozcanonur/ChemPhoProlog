@@ -8,6 +8,7 @@ const useStyles = makeStyles(cardStyles);
 interface Props {
   children?: any;
   className?: string;
+  style?: any;
 }
 
 const CardBody = (props: Props): JSX.Element => {

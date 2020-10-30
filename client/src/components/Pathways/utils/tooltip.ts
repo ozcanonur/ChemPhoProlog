@@ -1,20 +1,28 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line no-unused-vars
-import tippy, { sticky, hideAll as hideTooltips } from 'tippy.js';
+import tippy, { sticky, hideAll as hideTooltips, Instance } from 'tippy.js';
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 import './tooltip.css';
-import { animatePath } from 'views/Pathway/utils/animation';
-import { clearAllTimeouts } from 'views/Pathway/utils/misc';
+import { animatePath } from 'components/Pathways/utils/animation';
+import { clearAllTimeouts } from 'components/Pathways/utils/misc';
+import { Collection, NodeSingular } from 'cytoscape';
 
-const makeTooltip = (element, content, placement) => {
+const makeTooltip = (
+  element: NodeSingular,
+  content: string,
+  placement: string
+) => {
+  // @ts-ignore
   const ref = element.popperRef();
 
   const dummyDomEle = document.createElement('div');
 
+  // @ts-ignore
   const tippyInstance = tippy(dummyDomEle, {
     onCreate: (instance) => {
+      // @ts-ignore
       instance.popperInstance.reference = ref;
     },
     content,
@@ -38,7 +46,7 @@ const makeTooltip = (element, content, placement) => {
   return tippyInstance;
 };
 
-const setupTooltip = (element, content) => {
+const setupTooltip = (element: NodeSingular, content: string) => {
   const tooltip = makeTooltip(element, content, 'bottom');
   element.on('tap', () =>
     tooltip.state.isVisible ? tooltip.hide() : tooltip.show()
@@ -46,32 +54,50 @@ const setupTooltip = (element, content) => {
   return tooltip;
 };
 
-export const popErrorTooltip = (element, content, duration) => {
-  const tooltip = setupTooltip(element, content, 'bottom');
+export const popErrorTooltip = (
+  element: NodeSingular,
+  content: string,
+  duration: number
+): Instance => {
+  const tooltip = setupTooltip(element, content);
   setTimeout(() => {
     tooltip.hide();
   }, duration);
   return tooltip;
 };
 
-const addStartTooltip = (element, fold_change, pValue) => {
+const addStartTooltip = (
+  element: NodeSingular,
+  fold_change: string,
+  pValue: string
+) => {
   const content = `Start <br/> fc: ${fold_change} <br/> p: ${pValue}`;
   setupTooltip(element, content);
 };
 
-const addPhosphositeTooltip = (element, foldChange, pValue, stoppingReason) => {
+const addPhosphositeTooltip = (
+  element: NodeSingular,
+  foldChange: string,
+  pValue: string,
+  stoppingReason?: string
+) => {
   const stopReasonText =
     stoppingReason !== undefined ? `Stopped: ${stoppingReason}` : '';
   const content = `fc: ${foldChange} <br/> p: ${pValue} <br/> ${stopReasonText}`;
   setupTooltip(element, content);
 };
 
-const addEndKPaTooltip = (element, stoppingReason) => {
+const addEndKPaTooltip = (element: NodeSingular, stoppingReason: string) => {
   const content = `Stop: ${stoppingReason}`;
   setupTooltip(element, content);
 };
 
-export const addTooltip = (data, element, isStartNode, isLastNode) => {
+export const addTooltip = (
+  data: Pathway.PathwayData,
+  element: NodeSingular,
+  isStartNode: boolean,
+  isLastNode: boolean
+): void => {
   const { stoppingReasons, observation } = data;
   const { id } = element.data();
 
@@ -93,7 +119,10 @@ export const addTooltip = (data, element, isStartNode, isLastNode) => {
   }
 };
 
-export const toggleTooltips = (data, elementsToAnimate) => {
+export const toggleTooltips = (
+  data: Pathway.PathwayData,
+  elementsToAnimate: { elementsToShow: Collection; elementsToFade: Collection }
+): void => {
   clearAllTimeouts();
 
   if (document.getElementsByClassName('tippy-popper').length !== 0)

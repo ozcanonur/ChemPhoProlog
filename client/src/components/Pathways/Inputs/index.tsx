@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 
@@ -10,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Cytoscape from 'cytoscape';
 import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
-import VirtualizedDropDown from 'views/Pathway/Inputs/VirtualizedDropDown';
+import VirtualizedDropDown from 'components/Pathways/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setSelectedInputs,
@@ -19,17 +20,12 @@ import {
   setElementsToAnimate,
 } from 'actions/pathways';
 
-export default function Inputs(): JSX.Element {
+const Inputs = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [switchChecked, setSwitchChecked] = useState(false);
-  const inputs = useSelector((state) => state.pathwayInputs);
-  const data = useSelector((state) => state.pathwayData);
-  const cy = useSelector((state) => state.cy);
-
-  // cellLine: 'MCF7',
-  //     perturbagen: 'Trametinib',
-  //     substrate: 'MYC(S62)',
-  //     onlyKinaseEnds: false,
+  const inputs = useSelector((state: RootState) => state.pathwayInputs);
+  const data = useSelector((state: RootState) => state.pathwayData);
+  const cy = useSelector((state: RootState) => state.cy);
 
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
@@ -54,6 +50,7 @@ export default function Inputs(): JSX.Element {
   };
 
   const onSubmit = () => {
+    if (!cy) return;
     // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
     // Have to move starting phosphosite out of the parent
@@ -84,8 +81,7 @@ export default function Inputs(): JSX.Element {
           />
         </div>
       );
-    if (data && data.paths.length === 1) return 'No paths, try another';
-    return 'Get pathway';
+    return <p>Get pathway</p>;
   };
 
   return (
@@ -135,4 +131,6 @@ export default function Inputs(): JSX.Element {
       </GridContainer>
     </CardGeneric>
   );
-}
+};
+
+export default Inputs;

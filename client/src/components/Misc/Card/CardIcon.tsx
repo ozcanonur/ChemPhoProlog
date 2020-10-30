@@ -17,7 +17,9 @@ const CardIcon = (props: Props): JSX.Element => {
   const { className, children, color, ...rest } = props;
   const cardIconClasses = classNames({
     [classes.cardIcon]: true,
+    // @ts-ignore
     [classes[`${color}CardHeader`]]: color,
+    // @ts-ignore
     [className]: className !== undefined,
   });
   return (

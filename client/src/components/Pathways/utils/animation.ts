@@ -1,9 +1,23 @@
-import { addTooltip } from 'views/Pathway/utils/tooltip';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable consistent-return */
+import { addTooltip } from 'components/Pathways/utils/tooltip';
 import phosphatases from 'variables/phosphatases';
+import {
+  Core,
+  Collection,
+  SingularElementArgument,
+  SingularElementReturnValue,
+  CollectionReturnValue,
+} from 'cytoscape';
 
-export const getElementsToAnimate = (cy, selectedPath) => {
-  const elementsToShow = [];
-  const elementsToShowIds = [];
+export const getElementsToAnimate = (
+  cy: Core | null,
+  selectedPath: string[]
+) => {
+  if (!cy) return;
+
+  const elementsToShow: SingularElementReturnValue[] = [];
+  const elementsToShowIds: string[] = [];
   selectedPath.forEach((node, index) => {
     // Add the edge connecting to the last node along with the node on even indexes
     if (index % 2 !== 0) {
@@ -19,7 +33,7 @@ export const getElementsToAnimate = (cy, selectedPath) => {
   });
 
   // Do not include the starting KPa in fade list (because it looks better)
-  let elementsToFade = [];
+  let elementsToFade: CollectionReturnValue = cy.collection();
   if (elementsToShow.length !== 0)
     elementsToFade = cy
       .elements()
@@ -29,13 +43,17 @@ export const getElementsToAnimate = (cy, selectedPath) => {
           e.data().id !== elementsToShow[0].data().parent
       );
 
-  return { elementsToShow, elementsToFade };
+  return { elementsToShow: cy.collection(elementsToShow), elementsToFade };
 };
 
-const getParentActivityClass = (element, observation, regulatory) => {
+const getParentActivityClass = (
+  element: SingularElementArgument,
+  observation: Pathway.PathwayObservation,
+  regulatory: Pathway.Regulatory
+) => {
   const { id } = element.data();
 
-  const foldChange = observation[id].fold_change;
+  const foldChange = parseFloat(observation[id].fold_change);
   const reg = regulatory[id];
 
   const KPaActivated =
@@ -49,7 +67,7 @@ const getParentActivityClass = (element, observation, regulatory) => {
   return 'highlightedKPaConflicting';
 };
 
-const addEdgeStyle = (element) => {
+const addEdgeStyle = (element: SingularElementArgument) => {
   const sourceIsPhosphatase = Object.keys(phosphatases).includes(
     element.data().source
   );
@@ -58,26 +76,35 @@ const addEdgeStyle = (element) => {
   else element.addClass('highlightedKinaseEdge');
 };
 
-const addPhosphositeStyle = (element) => {
+const addPhosphositeStyle = (element: SingularElementArgument) => {
   element.addClass('highlightedPhosphosite');
 };
 
-const addPhosphositeParentStyle = (element, observation, regulatory) => {
+const addPhosphositeParentStyle = (
+  element: SingularElementArgument,
+  observation: Pathway.PathwayObservation,
+  regulatory: Pathway.Regulatory
+) => {
   const parentActivityClass = getParentActivityClass(
     element,
     observation,
     regulatory
   );
+  // @ts-ignore
   element.parent().addClass(parentActivityClass);
 };
 
 export const animatePath = (
-  elementsToAnimate,
-  data,
-  duration,
-  showTooltips,
-  showParentActivity
-) => {
+  elementsToAnimate:
+    | { elementsToShow: Collection; elementsToFade: Collection }
+    | undefined,
+  data: Pathway.PathwayData,
+  duration: number,
+  showTooltips: boolean,
+  showParentActivity: boolean
+): void => {
+  if (!elementsToAnimate) return;
+
   const { regulatory, observation } = data;
   const { elementsToShow, elementsToFade } = elementsToAnimate;
 
@@ -100,7 +127,7 @@ export const animatePath = (
           addPhosphositeParentStyle(element, observation, regulatory);
       }
 
-      if (showTooltips) {
+      if (showTooltips && element.isNode()) {
         const isStartNode = i === 0;
         const isLastNode = i === elementsToShow.length - 1;
         addTooltip(data, element, isStartNode, isLastNode);

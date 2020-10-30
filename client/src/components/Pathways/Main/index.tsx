@@ -4,20 +4,18 @@ import { store } from 'index';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
-
-import Pathway from 'views/Pathway/Main/Pathway';
-import PathSelectList from 'views/Pathway/Main/PathSelectList';
-
+import Pathway from 'components/Pathways/Main/Pathway';
+import PathSelectList from 'components/Pathways/Main/PathSelectList';
 import {
   getCytoStylesheet,
   getCytoLayout,
   getCytoElements,
-} from 'views/Pathway/utils/options';
+} from 'components/Pathways/utils/options';
 
 // Wrapping it up in memo because react-router {match} causes re-render
 // Problematic with cxtmenu > add to sidebar function
 const Main = React.memo(() => {
-  const data = useSelector((state) => state.pathwayData) || {
+  const data = useSelector((state: RootState) => state.pathwayData) || {
     paths: [],
     relations: {},
     phosphosites: [],
@@ -26,7 +24,6 @@ const Main = React.memo(() => {
     observation: {},
   };
 
-  // const start = useSelector((state)=>state.pathwayInputs);
   const start = store.getState().pathwayInputs.substrate;
 
   const elements = getCytoElements(data);

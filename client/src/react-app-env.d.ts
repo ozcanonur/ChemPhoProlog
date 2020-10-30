@@ -3,6 +3,9 @@
 declare module '*.png';
 declare module '*.jpg';
 declare module '*.gif';
+declare module 'cytoscape-cose-bilkent';
+declare module 'cytoscape-popper';
+declare module 'cytoscape-cxtmenu';
 
 interface SidebarRoute {
   type: string;
@@ -45,14 +48,34 @@ interface Observation {
   substrate: string;
 }
 
+namespace Pathway {
+  interface PathwayObservation {
+    [substrate: string]: { fold_change: string; p_value: string };
+  }
+  type Paths = string[][];
+  type Phosphosites = string[];
+  type Regulatory = { [substrate: string]: string };
+  type Relations = { [Kpa: string]: string[] };
+  type StoppingReasons = { [node: string]: string };
+
+  interface PathwayData {
+    observation: PathwayObservation;
+    paths: Paths;
+    phosphosites: Phosphosites;
+    regulatory: Regulatory;
+    relations: Relations;
+    stoppingReasons: StoppingReasons;
+  }
+}
+
 interface RootState {
   extraSidebarRoutes: SidebarRoute[];
   // pathways
-  pathsInspectList: any;
+  pathsInspectList: string[][];
   selectedPath: any;
-  pathwayData: any;
+  pathwayData: Pathway.PathwayData;
   pathwayInputs: any;
-  cy: any;
+  cy: import('cytoscape').Core | null;
   elementsToAnimate: any;
   cxtMenu: any;
   pathExplanation: any;

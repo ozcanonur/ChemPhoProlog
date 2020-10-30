@@ -1,19 +1,20 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-const Border = ({ color, text }) => (
+interface Props {
+  color: string;
+  text: string;
+}
+
+const Area = ({ color, text }: Props): JSX.Element => (
   <Grid container direction='row'>
     <Grid item>
-      <span
+      <div
         style={{
-          height: '20px',
           width: '20px',
-          borderRadius: '50%',
-          borderStyle: 'dotted',
-          borderColor: color,
-          borderWidth: '2',
-          display: 'inline-block',
-          boxSizing: 'border-box',
+          height: '20px',
+          backgroundColor: color,
+          opacity: 0.4,
         }}
       />
     </Grid>
@@ -23,4 +24,4 @@ const Border = ({ color, text }) => (
   </Grid>
 );
 
-export default Border;
+export default Area;

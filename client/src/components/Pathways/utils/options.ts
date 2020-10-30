@@ -1,11 +1,20 @@
+import {
+  ElementDefinition,
+  LayoutOptions,
+  NodeSingular,
+  Stylesheet,
+} from 'cytoscape';
 import { store } from 'index';
 
-export const getCytoStylesheet = (observation, regulatory, start) => [
+export const getCytoStylesheet = (
+  observation: Pathway.PathwayObservation,
+  regulatory: Pathway.Regulatory,
+  start: string
+): Stylesheet[] => [
   {
     selector: 'node',
     style: {
       content: 'data(id)',
-      fontFamily: 'Roboto',
     },
   },
   {
@@ -21,11 +30,11 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
     selector: '.phosphosite',
     style: {
       content: 'data(id)',
-      width: (e) => (e.data().id === start ? 60 : 30),
-      height: (e) => (e.data().id === start ? 60 : 30),
-      backgroundColor: (e) => {
+      width: (e: NodeSingular) => (e.data().id === start ? 60 : 30),
+      height: (e: NodeSingular) => (e.data().id === start ? 60 : 30),
+      backgroundColor: (e: NodeSingular) => {
         if (e.data().id === start) {
-          const fc = parseFloat(observation[e.data().id].fold_change, 10);
+          const fc = parseFloat(observation[e.data().id].fold_change);
           if (fc < 0) return '#006400';
           if (fc > 0) return '#650000';
         }
@@ -36,8 +45,7 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: '.KPa',
     style: {
-      fontSize: 20,
-      'compound-sizing-wrt-labels': 'include',
+      'font-size': 20,
     },
   },
   {
@@ -64,28 +72,28 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e) =>
-        observation[e.data().id].fold_change > 0 ? 'red' : 'green',
+      backgroundColor: (e: NodeSingular) =>
+        parseFloat(observation[e.data().id].fold_change) > 0 ? 'red' : 'green',
       'border-width': 10,
       'border-style': 'dashed',
-      'border-color': (e) => {
+      'border-color': (e: NodeSingular) => {
         const reg = regulatory[e.data().id];
         if (reg === 'p_inc') return '#006400';
         if (reg === 'p_dec') return '#650000';
         return '#505050';
       },
-      width: (e) => (e.data().id === start ? 60 : 40),
-      height: (e) => (e.data().id === start ? 60 : 40),
+      width: (e: NodeSingular) => (e.data().id === start ? 60 : 40),
+      height: (e: NodeSingular) => (e.data().id === start ? 60 : 40),
       'transition-property': 'width height border-width',
-      'transition-duration': '0.2s',
+      'transition-duration': 0.2,
       'transition-timing-function': 'ease-out',
     },
   },
   {
     selector: '.highlightedKinaseEdge',
     style: {
-      lineColor: 'green',
-      lineStyle: 'dashed',
+      'line-color': 'green',
+      'line-style': 'dashed',
       'target-arrow-color': 'green',
       'arrow-scale': 2,
     },
@@ -93,8 +101,8 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
   {
     selector: '.highlightedPhosphataseEdge',
     style: {
-      lineColor: 'red',
-      lineStyle: 'dashed',
+      'line-color': 'red',
+      'line-style': 'dashed',
       'target-arrow-color': 'red',
       'arrow-scale': 2,
     },
@@ -108,9 +116,10 @@ export const getCytoStylesheet = (observation, regulatory, start) => [
   },
 ];
 
-export const getCytoLayout = () => {
+export const getCytoLayout = (): LayoutOptions => {
   return {
     name: 'cose-bilkent',
+    // @ts-ignore
     quality: 'proof',
     randomize: false,
     fit: true,
@@ -151,27 +160,28 @@ export const getCytoLayout = () => {
     // Initial cooling factor for incremental layout
     initialEnergyOnIncremental: 0.1,
     // Called on `layoutready`
-    ready: () => {},
-    // Called on `layoutstop`
-    stop: () => {},
+    // ready: () => {},
+    // // Called on `layoutstop`
+    // stop: () => {},
   };
 };
 
-export const getCytoElements = (data) => {
+export const getCytoElements = (
+  data: Pathway.PathwayData
+): ElementDefinition[] => {
   // KPas
   const nodes = Object.keys(data.relations).map((e) => {
-    return { data: { id: e }, classes: ['KPa'], selectable: false };
+    return { data: { id: e }, classes: 'KPa', selectable: false };
   });
 
   // Need to put the start node OUTSIDE a compound or the diff() in Cytoscape-react messes up
   // It removes the compound, so the children also gets devoured
   // Other phosphosites will ALWAYS be a part of a KPa (=compound), so it only matters for the start
   const start = store.getState().pathwayInputs.substrate;
-  // console.log(start);
   const phosphosites = data.phosphosites.map((e) => {
     return {
       data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
-      classes: ['phosphosite'],
+      classes: 'phosphosite',
       selectable: false,
     };
   });

@@ -3,9 +3,9 @@ import React from 'react';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 
-import PathsTable from 'views/Pathway/Information/PathsTable';
-import PathExplanation from 'views/Pathway/Information/PathExplanation';
-import WaffleChart from 'views/Pathway/Information/WaffleChart';
+import PathsTable from 'components/Pathways/Information/PathsTable';
+import PathExplanation from 'components/Pathways/Information/PathExplanation';
+import WaffleChart from 'components/Pathways/Information/WaffleChart';
 
 const Information = (): JSX.Element => {
   return (

@@ -2,10 +2,10 @@ import phosphatases from 'variables/phosphatases';
 
 /* eslint-disable no-nested-ternary */
 export const getExplanationForPath = (
-  path,
-  observation,
-  regulatory,
-  stoppingReasons
+  path: any,
+  observation: any,
+  regulatory: any,
+  stoppingReasons: any
 ) => {
   const outputList = [];
   let prevBottomKPaActivity = 'inhibited';
@@ -64,19 +64,22 @@ export const getExplanationForPath = (
   return outputList;
 };
 
-export const formatObservation = (phosphosites, observationData) => {
-  const observationInCurrentPaths = observationData.filter((e) =>
+export const formatObservation = (phosphosites: any, observationData: any) => {
+  const observationInCurrentPaths = observationData.filter((e: any) =>
     phosphosites.includes(e.substrate)
   );
 
   const formattedObservation = {};
   // eslint-disable-next-line camelcase
-  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
-    formattedObservation[substrate] = {
-      fold_change: fold_change.toFixed(2),
-      p_value: p_value.toFixed(2),
-    };
-  });
+  observationInCurrentPaths.forEach(
+    ({ substrate, fold_change, p_value }: any) => {
+      // @ts-ignore
+      formattedObservation[substrate] = {
+        fold_change: fold_change.toFixed(2),
+        p_value: p_value.toFixed(2),
+      };
+    }
+  );
 
   return formattedObservation;
 };

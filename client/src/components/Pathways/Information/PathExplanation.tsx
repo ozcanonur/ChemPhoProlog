@@ -7,9 +7,13 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 
 const PathDetails = (): JSX.Element => {
-  const { perturbagen } = useSelector((state) => state.pathwayInputs);
-  const selectedPath = useSelector((state) => state.selectedPath);
-  const pathExplanation = useSelector((state) => state.pathExplanation);
+  const { perturbagen } = useSelector(
+    (state: RootState) => state.pathwayInputs
+  );
+  const selectedPath = useSelector((state: RootState) => state.selectedPath);
+  const pathExplanation = useSelector(
+    (state: RootState) => state.pathExplanation
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -17,7 +21,7 @@ const PathDetails = (): JSX.Element => {
   }, [dispatch, selectedPath]);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const handlePageChange = (_event, newPage) => {
+  const handlePageChange = (_event: Event, newPage: number) => {
     setCurrentPage(newPage);
   };
 

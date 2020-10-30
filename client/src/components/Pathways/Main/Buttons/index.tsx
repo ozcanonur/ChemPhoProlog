@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -5,20 +6,20 @@ import Fade from '@material-ui/core/Fade';
 import Button from 'components/Misc/CustomButton/Button';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
-import Legend from 'views/Pathway/Main/Buttons/Legend';
+import Legend from 'components/Pathways/Main/Buttons/Legend';
 
-import { toggleTooltips } from 'views/Pathway/utils/tooltip';
-import { animatePath } from 'views/Pathway/utils/animation';
+import { toggleTooltips } from 'components/Pathways/utils/tooltip';
+import { animatePath } from 'components/Pathways/utils/animation';
 import {
   resetPathwayVisuals,
   clearAllTimeouts,
-} from 'views/Pathway/utils/misc';
+} from 'components/Pathways/utils/misc';
 
 import { changeSelectedPath } from 'actions/pathways';
 
-const ExtraButtons = () => {
-  const cy = useSelector((state) => state.cy);
-  const data = useSelector((state) => state.pathwayData) || {
+const ExtraButtons = (): JSX.Element => {
+  const cy = useSelector((state: RootState) => state.cy);
+  const data = useSelector((state: RootState) => state.pathwayData) || {
     paths: [],
     relations: {},
     phosphosites: [],
@@ -27,7 +28,9 @@ const ExtraButtons = () => {
     observation: {},
   };
 
-  const elementsToAnimate = useSelector((state) => state.elementsToAnimate);
+  const elementsToAnimate = useSelector(
+    (state: RootState) => state.elementsToAnimate
+  );
 
   const [legendOpen, setLegendOpen] = useState(false);
   const [faded, setFaded] = useState(false);
@@ -62,6 +65,7 @@ const ExtraButtons = () => {
     {
       text: 'Phosphosites',
       onClick: () => {
+        if (!cy) return;
         clearAllTimeouts();
         resetPathwayVisuals(cy);
         if (phosphositesOpen) dispatch(changeSelectedPath([]));
@@ -81,7 +85,9 @@ const ExtraButtons = () => {
     {
       text: 'Export',
       onClick: async () => {
+        if (!cy) return;
         const png64 = await cy.png({
+          // @ts-ignore
           output: 'blob-promise',
           full: true,
           scale: 2,

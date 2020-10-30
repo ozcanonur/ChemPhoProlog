@@ -4,14 +4,14 @@ import { pick } from 'lodash';
 import { store } from 'index';
 import { formatObservation, getExplanationForPath } from './util';
 
-export const addInspectPath = (path) => {
+export const addInspectPath = (path: any) => {
   return {
     type: 'ADD_INSPECT_PATH',
     payload: path,
   };
 };
 
-export const changeSelectedPath = (path) => {
+export const changeSelectedPath = (path: any) => {
   return {
     type: 'CHANGE_SELECTED_PATH',
     payload: path,
@@ -19,11 +19,11 @@ export const changeSelectedPath = (path) => {
 };
 
 export const getPathwayData = (
-  cellLine,
-  perturbagen,
-  substrate,
-  onlyKinaseEnds
-) => async (dispatch) => {
+  cellLine: any,
+  perturbagen: any,
+  substrate: any,
+  onlyKinaseEnds: any
+): any => async (dispatch: any) => {
   const pathwayRoute = '/pathway';
   const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
 
@@ -35,7 +35,7 @@ export const getPathwayData = (
     getApi(pathwayRoute, pathwayParams),
   ]);
 
-  const observationData = fullObservationData.map((row) =>
+  const observationData = fullObservationData.map((row: any) =>
     pick(row, ['substrate', 'fold_change', 'p_value'])
   );
 
@@ -56,28 +56,28 @@ export const removeAllInspectPaths = () => {
   };
 };
 
-export const setCxtMenu = (cxtMenu) => {
+export const setCxtMenu = (cxtMenu: any) => {
   return {
     type: 'SET_CXT_MENU',
     payload: cxtMenu,
   };
 };
 
-export const setCy = (cy) => {
+export const setCy = (cy: any) => {
   return {
     type: 'SET_CY',
     payload: cy,
   };
 };
 
-export const setElementsToAnimate = (elementsToAnimate) => {
+export const setElementsToAnimate = (elementsToAnimate: any) => {
   return {
     type: 'SET_ELEMENTS_TO_ANIMATE',
     payload: elementsToAnimate,
   };
 };
 
-export const setPathExplanation = (selectedPath) => {
+export const setPathExplanation = (selectedPath: any) => {
   const data = store.getState().pathwayData || {
     paths: [],
     relations: {},
@@ -101,7 +101,7 @@ export const setPathExplanation = (selectedPath) => {
   };
 };
 
-export const setSelectedInputs = (inputs) => {
+export const setSelectedInputs = (inputs: any) => {
   return {
     type: 'SET_SELECTED_INPUTS',
     payload: inputs,

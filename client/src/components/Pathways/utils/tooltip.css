@@ -1,0 +1,8 @@
+.tippy-tooltip.theme-theme:hover {
+  opacity: 0.2;
+}
+
+.tippy-tooltip.theme-theme {
+  font-size: 12px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}

@@ -29,6 +29,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    '@typescript-eslint/ban-ts-comment': 'off',
     'no-console': 'off',
     'linebreak-style': 'off',
     'react/jsx-props-no-spreading': 'off',

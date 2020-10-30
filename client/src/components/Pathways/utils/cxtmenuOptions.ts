@@ -1,6 +1,6 @@
 import kinases from 'variables/kinases';
 import phosphatases from 'variables/phosphatases';
-import { popErrorTooltip } from 'views/Pathway/utils/tooltip';
+import { popErrorTooltip } from 'components/Pathways/utils/tooltip';
 import { store } from 'index';
 
 import { addSidebarRoute } from 'actions/main';
@@ -11,9 +11,13 @@ import {
   setElementsToAnimate,
 } from 'actions/pathways';
 
-import Cytoscape from 'cytoscape';
+import Cytoscape, { NodeSingular } from 'cytoscape';
+import { Dispatch } from 'react';
 
-const submitPathwayFromSelectedEle = (ele, dispatch) => {
+const submitPathwayFromSelectedEle = (
+  ele: NodeSingular,
+  dispatch: Dispatch<any>
+) => {
   const inputs = store.getState().pathwayInputs;
   const newInputs = { ...inputs, substrate: ele.data().id };
   const { perturbagen, substrate, onlyKinaseEnds } = newInputs;
@@ -33,12 +37,12 @@ const submitPathwayFromSelectedEle = (ele, dispatch) => {
   );
 };
 
-const openUniprot = (ele) => {
+const openUniprot = (ele: NodeSingular) => {
   const id = kinases[ele.data().id] || phosphatases[ele.data().id];
   window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
 };
 
-const cxtmenuOptions = (dispatch) => {
+const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
   return {
     menuRadius: 120,
     selector: '.KPa, .phosphosite',
@@ -49,7 +53,7 @@ const cxtmenuOptions = (dispatch) => {
         contentStyle: {
           fontWeight: 500,
         },
-        select: (ele) => {
+        select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
           if (isPhosphosite)
@@ -64,7 +68,7 @@ const cxtmenuOptions = (dispatch) => {
         contentStyle: {
           fontWeight: 500,
         },
-        select: (ele) => {
+        select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
           if (isPhosphosite)
@@ -79,7 +83,7 @@ const cxtmenuOptions = (dispatch) => {
         contentStyle: {
           fontWeight: 500,
         },
-        select: (ele) => {
+        select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
           if (isPhosphosite) submitPathwayFromSelectedEle(ele, dispatch);

@@ -17,6 +17,7 @@ interface Props {
   className?: string;
   style?: any;
   onClick?: any;
+  disabled?: boolean;
 }
 
 const RegularButton = (props: Props): JSX.Element => {
@@ -24,10 +25,13 @@ const RegularButton = (props: Props): JSX.Element => {
   const { color, round, children, size, justIcon, className, ...rest } = props;
   const btnClasses = classNames({
     [classes.button]: true,
+    // @ts-ignore
     [classes[size]]: size,
+    // @ts-ignore
     [classes[color]]: color,
     [classes.round]: round,
     [classes.justIcon]: justIcon,
+    // @ts-ignore
     [className]: className,
   });
   return (

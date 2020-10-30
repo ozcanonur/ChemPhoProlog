@@ -78,7 +78,9 @@ const CustomTable = (props: Props): JSX.Element => {
 
     const obj = {};
     range(0, length).forEach((x) => {
+      // @ts-ignore
       if (x === 0) obj[x] = true;
+      // @ts-ignore
       else obj[x] = false;
     });
 
@@ -86,7 +88,9 @@ const CustomTable = (props: Props): JSX.Element => {
   };
 
   // Sort state
-  const [sortedAsc, setSortedAsc] = useState(createSortState());
+  const [sortedAsc, setSortedAsc] = useState<{ [key: string]: boolean }>(
+    createSortState()
+  );
 
   const handleSort = (key: number) => {
     // eslint-disable-next-line no-param-reassign
@@ -157,6 +161,7 @@ const CustomTable = (props: Props): JSX.Element => {
         </Button>
       </div>
       <Table className={classes.table}>
+        {/* @ts-ignore */}
         <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
           <Head
             content={tableHead}

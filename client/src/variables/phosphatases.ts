@@ -1,4 +1,4 @@
-const phosphatases = {
+const phosphatases: { [key: string]: string } = {
   PPP2R3B: 'Q9Y5P8',
   PPP2R3C: 'Q969Q6',
   PPP4R3A: 'Q6IN85',

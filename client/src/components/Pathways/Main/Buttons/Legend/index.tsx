@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
@@ -7,13 +8,13 @@ import {
   borders,
   areas,
   lines,
-} from 'views/Pathway/Main/Buttons/Legend/variables';
-import Node from 'views/Pathway/Main/Buttons/Legend/Node';
-import Border from 'views/Pathway/Main/Buttons/Legend/Border';
-import Area from 'views/Pathway/Main/Buttons/Legend/Area';
-import Line from 'views/Pathway/Main/Buttons/Legend/Line';
+} from 'components/Pathways/Main/Buttons/Legend/variables';
+import Node from 'components/Pathways/Main/Buttons/Legend/Node';
+import Border from 'components/Pathways/Main/Buttons/Legend/Border';
+import Area from 'components/Pathways/Main/Buttons/Legend/Area';
+import Line from 'components/Pathways/Main/Buttons/Legend/Line';
 
-const Legend = () => {
+const Legend = (): JSX.Element => {
   const legends = [
     {
       variable: nodes,
@@ -38,8 +39,8 @@ const Legend = () => {
       {legends.map(({ variable, Component }, key) => (
         <Grid item key={key}>
           <Grid container direction='row' style={{ width: '400px' }}>
-            {variable.map(({ color, text }, key) => (
-              <Grid item key={key} xs={4}>
+            {variable.map(({ color, text }, key2) => (
+              <Grid item key={key2} xs={4}>
                 <Component color={color} text={text} />
               </Grid>
             ))}

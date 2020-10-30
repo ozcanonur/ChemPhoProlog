@@ -1,7 +1,7 @@
-import Cytoscape from 'cytoscape';
+import Cytoscape, { Core } from 'cytoscape';
 import { uniqWith } from 'lodash';
 
-export const cxtMenu = (state = null, action) => {
+export const cxtMenu = (state = null, action: any) => {
   switch (action.type) {
     case 'SET_CXT_MENU':
       return action.payload;
@@ -10,7 +10,7 @@ export const cxtMenu = (state = null, action) => {
   }
 };
 
-export const cy = (state = null, action) => {
+export const cy = (state: Core | null = null, action: any) => {
   switch (action.type) {
     case 'SET_CY':
       return action.payload;
@@ -24,7 +24,7 @@ export const elementsToAnimate = (
     elementsToShow: Cytoscape().collection(),
     elementsToFade: Cytoscape().collection(),
   },
-  action
+  action: any
 ) => {
   switch (action.type) {
     case 'SET_ELEMENTS_TO_ANIMATE':
@@ -41,7 +41,7 @@ export const inputs = (
     substrate: '',
     onlyKinaseEnds: true,
   },
-  action
+  action: any
 ) => {
   switch (action.type) {
     case 'SET_SELECTED_INPUTS':
@@ -51,7 +51,7 @@ export const inputs = (
   }
 };
 
-export const inspectList = (state = [], action) => {
+export const inspectList = (state = [], action: any) => {
   const filterDuplicates = () =>
     uniqWith([...state, action.payload], (x, y) => {
       const xId = x[0];
@@ -69,7 +69,7 @@ export const inspectList = (state = [], action) => {
   }
 };
 
-export const pathExplanation = (state = [], action) => {
+export const pathExplanation = (state = [], action: any) => {
   switch (action.type) {
     case 'SET_PATH_EXPLANATION':
       return action.payload;
@@ -78,7 +78,7 @@ export const pathExplanation = (state = [], action) => {
   }
 };
 
-export const pathwayData = (state = null, action) => {
+export const pathwayData = (state = null, action: any) => {
   switch (action.type) {
     case 'GET_PATHWAY_DATA':
       return action.payload;
@@ -87,7 +87,7 @@ export const pathwayData = (state = null, action) => {
   }
 };
 
-export const selectedPath = (state = [], action) => {
+export const selectedPath = (state = [], action: any) => {
   switch (action.type) {
     case 'CHANGE_SELECTED_PATH':
       return action.payload;

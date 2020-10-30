@@ -1,5 +1,5 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
-
 import Card from 'components/Misc/Card/Card';
 import CardBody from 'components/Misc/Card/CardBody';
 import CardHeader from 'components/Misc/Card/CardHeader';
@@ -12,11 +12,11 @@ import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
 import {
   resetPathwayVisuals,
   clearAllTimeouts,
-} from 'views/Pathway/utils/misc';
+} from 'components/Pathways/utils/misc';
 import {
   getElementsToAnimate,
   animatePath,
-} from 'views/Pathway/utils/animation';
+} from 'components/Pathways/utils/animation';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -42,16 +42,18 @@ const useStyles = makeStyles({
   },
 });
 
-const PathSelectList = () => {
+const PathSelectList = (): JSX.Element => {
   const classes = useStyles();
 
-  const data = useSelector((state) => state.pathwayData);
-  const pathsInspectList = useSelector((state) => state.pathsInspectList);
-  const cy = useSelector((state) => state.cy);
+  const data = useSelector((state: RootState) => state.pathwayData);
+  const pathsInspectList = useSelector(
+    (state: RootState) => state.pathsInspectList
+  );
+  const cy = useSelector((state: RootState) => state.cy);
 
   const dispatch = useDispatch();
-  const pathOnClick = (id) => {
-    const selectedPath = data.paths[id];
+  const pathOnClick = (id: string) => {
+    const selectedPath = data.paths[parseInt(id, 10)];
     dispatch(changeSelectedPath(selectedPath));
 
     const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
@@ -59,7 +61,7 @@ const PathSelectList = () => {
 
     resetPathwayVisuals(cy);
     clearAllTimeouts();
-    animatePath(elementsToAnimate, data, 50, true, true, dispatch);
+    animatePath(elementsToAnimate, data, 50, true, true);
   };
 
   return (

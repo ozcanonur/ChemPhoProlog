@@ -1,4 +1,4 @@
-const kinases = {
+const kinases: { [key: string]: string } = {
   AAK1: 'Q2M2I8',
   ABL1: 'P00519',
   ABL2: 'P42684',

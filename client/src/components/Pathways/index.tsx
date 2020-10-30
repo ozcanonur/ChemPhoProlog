@@ -3,9 +3,9 @@ import React from 'react';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 
-import PathwayInputs from 'views/Pathway/Inputs/';
-import PathwayInformation from 'views/Pathway/Information/';
-import PathwayMain from 'views/Pathway/Main/';
+import PathwayInputs from 'components/Pathways/Inputs';
+import PathwayInformation from 'components/Pathways/Information';
+import PathwayMain from 'components/Pathways/Main';
 
 const PathwayIndex = (): JSX.Element => (
   <div style={{ padding: '2em' }}>

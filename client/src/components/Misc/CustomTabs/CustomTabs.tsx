@@ -45,6 +45,7 @@ const CustomTab = (props: Props): JSX.Element => {
         {title !== undefined ? <div className={cardTitle}>{title}</div> : null}
         <Tabs
           value={value}
+          // @ts-ignore
           onChange={handleChange}
           classes={{
             root: classes.tabsRoot,

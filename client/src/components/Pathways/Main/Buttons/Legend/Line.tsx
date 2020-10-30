@@ -1,7 +1,12 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-const Line = ({ color, text }) => (
+interface Props {
+  color: string;
+  text: string;
+}
+
+const Line = ({ color, text }: Props): JSX.Element => (
   <Grid container direction='row'>
     <Grid item>
       <hr

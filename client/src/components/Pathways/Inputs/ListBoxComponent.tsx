@@ -1,12 +1,11 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { useTheme } from '@material-ui/core/styles';
 import { VariableSizeList } from 'react-window';
 
-function renderRow(props) {
+function renderRow(props: any) {
   const { data, index, style } = props;
   return React.cloneElement(data[index], {
     style: {
@@ -18,15 +17,16 @@ function renderRow(props) {
 
 const OuterElementContext = React.createContext({});
 
-const OuterElementType = React.forwardRef((props, ref) => {
+const OuterElementType = React.forwardRef((props, ref: any) => {
   const outerProps = React.useContext(OuterElementContext);
   return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function useResetCache(data) {
+function useResetCache(data: any) {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    if (ref.current != null) {
+    if (ref.current !== null) {
+      // @ts-ignore
       ref.current.resetAfterIndex(0, true);
     }
   }, [data]);
@@ -34,7 +34,10 @@ function useResetCache(data) {
 }
 
 // Adapter for react-window
-const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) {
+const ListboxComponent = React.forwardRef(function ListboxComponent(
+  props: any,
+  ref: any
+) {
   const { children, ...other } = props;
   const itemData = React.Children.toArray(children);
   const theme = useTheme();
@@ -42,7 +45,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(props, ref) 
   const itemCount = itemData.length;
   const itemSize = smUp ? 36 : 48;
 
-  const getChildSize = (child) => {
+  const getChildSize = (child: any) => {
     if (React.isValidElement(child) && child.type === ListSubheader) {
       return 48;
     }

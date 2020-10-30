@@ -5,7 +5,10 @@ import { addInspectPath } from 'actions/pathways';
 import Table from 'components/Misc/CustomTable/Table';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 
-const parsePathsToTableData = (paths, stoppingReasons) => {
+const parsePathsToTableData = (
+  paths: Pathway.Paths,
+  stoppingReasons: Pathway.StoppingReasons
+) => {
   const tableData = paths.map((path, key) => {
     const pathLength = path.length;
     const stopNode = path[pathLength - 1];
@@ -14,14 +17,15 @@ const parsePathsToTableData = (paths, stoppingReasons) => {
     return [key, stopNode, stopReason, pathLength];
   });
 
+  // @ts-ignore
   return tableData.sort((x, y) => y[3] - x[3]);
 };
 
 const PathsTable = (): JSX.Element => {
   const { cellLine, perturbagen, substrate } = useSelector(
-    (state) => state.pathwayInputs
+    (state: RootState) => state.pathwayInputs
   );
-  const data = useSelector((state) => state.pathwayData) || {
+  const data = useSelector((state: RootState) => state.pathwayData) || {
     paths: [],
     relations: {},
     phosphosites: [],
@@ -36,12 +40,12 @@ const PathsTable = (): JSX.Element => {
   }, [paths, stoppingReasons]);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const handlePageChange = (_event, newPage) => {
+  const handlePageChange = (_event: Event, newPage: number) => {
     setCurrentPage(newPage);
   };
 
   const dispatch = useDispatch();
-  const handleAddPath = (row) => {
+  const handleAddPath = (row: string[]) => {
     dispatch(addInspectPath(row));
   };
 
@@ -54,6 +58,7 @@ const PathsTable = (): JSX.Element => {
       <Table
         tableHeaderColor='primary'
         tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', 'Inspect']}
+        // @ts-ignore
         tableData={tableData}
         rowsPerPage={5}
         currentPage={currentPage}

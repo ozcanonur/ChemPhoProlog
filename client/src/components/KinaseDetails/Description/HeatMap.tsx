@@ -41,6 +41,7 @@ const HeatMap = ({ data, indexBy, keys }: Props): JSX.Element => (
     maxValue={16}
     colors={colors}
     padding={3}
+    // @ts-ignore
     nanColor='rgb(235, 237, 240)'
   />
 );

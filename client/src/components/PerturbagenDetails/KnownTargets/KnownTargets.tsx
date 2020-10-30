@@ -64,7 +64,6 @@ const KnownTargets = (): JSX.Element => {
             tableHead={['Kinase', 'Source', 'Score']}
             tableData={tableData}
             rowsPerPage={10}
-            collapsible={false}
             currentPage={currentPage}
             firstRowOnClick
             handlePageChange={handlePageChange}

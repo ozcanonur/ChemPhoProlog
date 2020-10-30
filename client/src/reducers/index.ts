@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-
 import { extraSidebarRoutes } from './main';
 
 import {
