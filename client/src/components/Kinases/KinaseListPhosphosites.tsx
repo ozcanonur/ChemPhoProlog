@@ -1,13 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
-
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import zip from 'lodash/zip';
+import { zip } from 'lodash';
 import axios from 'axios';
 
 import kinaseListPhosphositesStyles from './styles/kinaseListPhosphosites';
@@ -15,7 +14,7 @@ import kinaseListPhosphositesStyles from './styles/kinaseListPhosphosites';
 const useStyles = makeStyles(kinaseListPhosphositesStyles);
 
 interface Props {
-  row: any;
+  row: string[];
 }
 
 const KinaseListPhosphosites = ({ row }: Props): JSX.Element => {

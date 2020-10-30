@@ -1,4 +1,4 @@
-import KinaseDetailsDescription from 'components/KinaseDetails/Description/';
+import KinaseDetailsDescription from 'components/KinaseDetails/Description/Description';
 import KinaseDetailsKnownPerturbagens from 'components/KinaseDetails/KnownPerturbagens/KnownPerturbagens';
 import KinaseDetailsSubstrates from 'components/KinaseDetails/Substrates/Substrates';
 import PerturbagenDetailsDescription from 'components/PerturbagenDetails/Description/Description';

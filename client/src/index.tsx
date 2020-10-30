@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -35,13 +36,30 @@ export const store = createStore(
 
 const hist = createBrowserHistory();
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiIconButton: {
+      sizeSmall: {
+        padding: 0,
+      },
+    },
+    MuiTableCell: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
+});
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hist}>
-      <Switch>
-        <Route path='/' component={App} />
-      </Switch>
-    </Router>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <Router history={hist}>
+        <Switch>
+          <Route path='/' component={App} />
+        </Switch>
+      </Router>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );

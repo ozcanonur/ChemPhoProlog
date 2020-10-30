@@ -3,7 +3,7 @@ import BugReport from '@material-ui/icons/BugReport';
 import Code from '@material-ui/icons/Code';
 
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
-import PDTs from 'components/KinaseDetails/Substrates/PDTs/';
+import PDTs from 'components/KinaseDetails/Substrates/PDTs/PDTs';
 import KnownSubstrates from 'components/KinaseDetails/Substrates/KnownSubstrates';
 
 const Substrates = (): JSX.Element => {

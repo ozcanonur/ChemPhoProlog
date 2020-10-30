@@ -8,11 +8,12 @@ const kinaseListPhosphositesStyles = createStyles({
     color: 'inherit',
     '&, &$tableCell': {
       fontSize: '1em',
+      fontWeight: 400,
     },
   },
   tableCell: {
     minHeight: '1.72857143',
-    padding: '12px 8px',
+    padding: '10px 0px',
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
   },

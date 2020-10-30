@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-import axios from 'axios';
-
 import { addSidebarRoute } from 'actions/main';
 
 interface KnownTarget {
@@ -15,9 +15,11 @@ interface KnownTarget {
 
 const KnownTargets = (): JSX.Element => {
   const [data, setData] = useState<KnownTarget[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const perturbagen = window.location.href.split('/')[3];
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // Fetch the data
   useEffect(() => {
@@ -35,19 +37,19 @@ const KnownTargets = (): JSX.Element => {
     };
   }, [perturbagen]);
 
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
-
-  const dispatch = useDispatch();
-  const handleKinaseAdd = (kinase: string) => {
-    dispatch(addSidebarRoute('kinase', kinase));
-  };
-
   // Table component wants it in this format
   const tableData = data
     .map((e) => ({ ...e, score: e.score.toFixed(2) }))
     .map(Object.values);
+
+  const clickableCells: {
+    [key: string]: (kinaseName: string) => void;
+  } = {
+    '0': (kinaseName: string) => {
+      dispatch(addSidebarRoute('kinase', kinaseName));
+      history.push(`/${kinaseName}/description`);
+    },
+  };
 
   return (
     <div style={{ padding: '2em' }}>
@@ -60,14 +62,11 @@ const KnownTargets = (): JSX.Element => {
           <div>Loading...</div>
         ) : (
           <Table
-            tableHeaderColor='primary'
+            id={`${perturbagen}_KnownTargets`}
             tableHead={['Kinase', 'Source', 'Score']}
             tableData={tableData}
-            rowsPerPage={10}
-            currentPage={currentPage}
-            firstRowOnClick
-            handlePageChange={handlePageChange}
-            handleAdd={handleKinaseAdd}
+            clickableCells={clickableCells}
+            searchIndex={0}
           />
         )}
       </CardGeneric>

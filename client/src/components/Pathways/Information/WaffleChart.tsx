@@ -48,41 +48,43 @@ const Waffle = (): JSX.Element => {
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
       style={{ height: '16rem', marginTop: '3rem' }}
     >
-      <ResponsiveWaffle
-        data={waffleData}
-        total={totalCount}
-        rows={6}
-        columns={50}
-        fillDirection='left'
-        margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
-        colors={[
-          '#2D4159',
-          '#00acc1',
-          '#B55560',
-          '#e5ad06',
-          '#4F0EAB',
-          '#001233',
-        ]}
-        borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
-        animate={false}
-        // @ts-ignore
-        legends={[
-          {
-            anchor: 'top',
-            direction: 'row',
-            justify: false,
-            translateX: 10,
-            translateY: -50,
-            itemsSpacing: 1,
-            itemWidth: 120,
-            itemHeight: 10,
-            itemDirection: 'left-to-right',
-            itemOpacity: 0.8,
-            itemTextColor: '#777',
-            symbolSize: 10,
-          },
-        ]}
-      />
+      <div style={{ height: '9rem' }}>
+        <ResponsiveWaffle
+          data={waffleData}
+          total={totalCount}
+          rows={6}
+          columns={50}
+          fillDirection='left'
+          margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
+          colors={[
+            '#2D4159',
+            '#00acc1',
+            '#B55560',
+            '#e5ad06',
+            '#4F0EAB',
+            '#001233',
+          ]}
+          borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
+          animate={false}
+          // @ts-ignore
+          legends={[
+            {
+              anchor: 'top',
+              direction: 'row',
+              justify: false,
+              translateX: 10,
+              translateY: -50,
+              itemsSpacing: 1,
+              itemWidth: 100,
+              itemHeight: 10,
+              itemDirection: 'left-to-right',
+              itemOpacity: 0.8,
+              itemTextColor: '#777',
+              symbolSize: 10,
+            },
+          ]}
+        />
+      </div>
     </CardGeneric>
   );
 };

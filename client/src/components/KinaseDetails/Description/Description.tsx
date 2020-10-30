@@ -21,7 +21,6 @@ const Description = (): JSX.Element => {
   const kinase = window.location.href.split('/')[3];
 
   const [data, setData] = useState<PhosphositeOnKinase[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   // Fetch the data
   useEffect(() => {
@@ -37,11 +36,6 @@ const Description = (): JSX.Element => {
       mounted = false;
     };
   }, [kinase]);
-
-  // Handle page change
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
 
   // Table component wants it in this format :/
   const tableData = data.map(Object.values);
@@ -76,7 +70,7 @@ const Description = (): JSX.Element => {
             <div>No entries found.</div>
           ) : (
             <Table
-              tableHeaderColor='primary'
+              id={`${kinase}_PhosphositesOfInterest`}
               tableHead={[
                 'Obs. Data',
                 'Location',
@@ -87,10 +81,8 @@ const Description = (): JSX.Element => {
                 'Reported PDT of',
               ]}
               tableData={tableData}
-              rowsPerPage={10}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-              ExtraContent={ObservationHeatMap}
+              RowExpandableContentLeft={ObservationHeatMap}
+              searchIndex={0}
             />
           )}
         </CardGeneric>

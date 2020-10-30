@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable func-names */
 /* eslint-disable prefer-spread */
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
@@ -66,22 +68,19 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     const linear = d3.scaleLinear();
 
     function scale(x: any) {
-      // @ts-ignore
       return Math.sqrt(linear(x));
     }
 
-    scale.domain = (_: any) => {
-      // @ts-ignore
+    scale.domain = function (_: any) {
       return arguments.length ? (linear.domain(_), scale) : linear.domain();
     };
 
-    scale.nice = (count: any) => {
+    scale.nice = function (count: any) {
       // eslint-disable-next-line no-sequences
       return linear.nice(count), scale;
     };
 
-    scale.range = (_: any) => {
-      // @ts-ignore
+    scale.range = function (_: any) {
       return arguments.length
         ? (linear.range(_.map(square)), scale)
         : linear.range().map(Math.sqrt);
@@ -128,7 +127,6 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     data.map((e) => e.Count)
   );
 
-  // @ts-ignore
   const y = radial().range([innerRadius, outerRadius]).domain([0, maxValue]);
 
   // Add the bars
@@ -141,19 +139,16 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     .attr('fill', 'rgba(45,65,89, 1)')
     .attr(
       'd',
-      // @ts-ignore
       d3
         .arc()
         .innerRadius(innerRadius)
         .outerRadius((d: any) => {
           return y(d.Count);
         })
-        // @ts-ignore
         .startAngle((d: any) => {
           return x(d.Kinase);
         })
         .endAngle((d: any) => {
-          // @ts-ignore
           return x(d.Kinase) + x.bandwidth();
         })
         .padAngle(0.01)
@@ -168,7 +163,6 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     .enter()
     .append('g')
     .attr('text-anchor', (d) => {
-      // @ts-ignore
       return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
         Math.PI
         ? 'end'
@@ -176,7 +170,6 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
     })
     .attr('transform', (d) => {
       return (
-        // @ts-ignore
         `rotate(${((x(d.Kinase) + x.bandwidth() / 2) * 180) / Math.PI - 90})` +
         `translate(${y(d.Count) + 10},0)`
       );
@@ -186,7 +179,6 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
       return d.Kinase;
     })
     .attr('transform', (d) => {
-      // @ts-ignore
       return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
         Math.PI
         ? 'rotate(180)'

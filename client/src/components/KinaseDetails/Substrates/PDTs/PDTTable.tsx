@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-
-import axios from 'axios';
 import ObservationBarChart from './ObservationBarChart';
 
 interface Props {
@@ -12,13 +11,12 @@ interface Props {
 
 const PDTTable = ({ cellLine }: Props): JSX.Element => {
   const [PDTs, setPDTs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;
-
+    console.log('useeffect');
     axios
       .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
       .then((res) => {
@@ -30,10 +28,6 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
       mounted = false;
     };
   }, [kinase, cellLine]);
-
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
 
   const tableData = PDTs.map(Object.values);
 
@@ -47,7 +41,7 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
         <div>No entries found.</div>
       ) : (
         <Table
-          tableHeaderColor='primary'
+          id={`${cellLine}_${kinase}_PDTTable`}
           tableHead={[
             'Obs.Data',
             'Substrate',
@@ -56,11 +50,7 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
             'Shared with',
           ]}
           tableData={tableData}
-          rowsPerPage={10}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-          cell_line={cellLine}
-          ExtraContent={ObservationBarChart}
+          RowExpandableContentLeft={ObservationBarChart(cellLine)}
         />
       )}
     </CardGeneric>

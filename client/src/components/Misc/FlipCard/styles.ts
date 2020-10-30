@@ -96,7 +96,7 @@ const flipCardStyles = createStyles({
   },
   card_price_value: {
     'font-size': '6rem',
-    'font-weight': 100,
+    'font-weight': 300,
   },
   img: {
     width: '50rem',

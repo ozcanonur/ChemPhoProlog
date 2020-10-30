@@ -15,7 +15,6 @@ interface KnownPerturbagen {
 
 const KnownPerturbagens = (): JSX.Element => {
   const [data, setData] = useState<KnownPerturbagen[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const kinase = window.location.href.split('/')[3];
 
@@ -40,10 +39,6 @@ const KnownPerturbagens = (): JSX.Element => {
     .map((e) => ({ ...e, score: e.score.toFixed(2) }))
     .map(Object.values);
 
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
-
   return (
     <GridContainer
       direction='row'
@@ -60,12 +55,9 @@ const KnownPerturbagens = (): JSX.Element => {
             <div>No entries found</div>
           ) : (
             <Table
-              tableHeaderColor='primary'
+              id={`${kinase}_KnownPerturbagens`}
               tableHead={['Perturbagen', 'Source', 'Score']}
               tableData={tableData}
-              rowsPerPage={10}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
             />
           )}
         </CardGeneric>

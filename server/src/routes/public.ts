@@ -45,13 +45,12 @@ router.get('/observation', (req, res) => {
     max_p_value,
   } = req.query;
 
-  let query =
-    'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
+  let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
   let fields = [];
 
   if (_.isEmpty(req.query)) {
     const requiredAtLeastOneOf =
-      'cell_line, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
+      'cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
     return res.status(400).send({ requiredAtLeastOneOf });
   }
 
@@ -85,6 +84,8 @@ router.get('/observation', (req, res) => {
   }
 
   query = query.split('?').join('? and ').slice(0, -4);
+
+  console.log(query);
 
   db.all(query, fields, (err, rows) => {
     if (err) throw err;

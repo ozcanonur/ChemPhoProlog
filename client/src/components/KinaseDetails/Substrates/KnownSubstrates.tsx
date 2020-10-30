@@ -12,13 +12,8 @@ interface KnownSubstrate {
 
 const KnownSubstratesTable = (): JSX.Element => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   const kinase = window.location.href.split('/')[3];
-
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
 
   useEffect(() => {
     let mounted = true;
@@ -48,12 +43,9 @@ const KnownSubstratesTable = (): JSX.Element => {
           cardSubtitle='Select a substrate'
         >
           <Table
-            tableHeaderColor='primary'
+            id={`${kinase}_KnownSubstrates`}
             tableHead={['Substrate', 'Sources']}
             tableData={tableData}
-            rowsPerPage={10}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
           />
         </CardGeneric>
       )}

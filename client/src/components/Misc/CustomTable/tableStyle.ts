@@ -36,10 +36,9 @@ const tableStyle = createStyles({
     fontWeight: 300,
     lineHeight: '1.5em',
     minHeight: '1.72857143',
-    padding: '12px 8px',
+    padding: 0,
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
-    // minWidth: '5em',
   },
   tableResponsive: {
     width: '100%',
@@ -60,6 +59,11 @@ const tableStyle = createStyles({
     display: 'table-row',
     outline: 'none',
     verticalAlign: 'middle',
+  },
+  tableCellClickableContent: {
+    cursor: 'pointer',
+    color: '#0066CC',
+    display: 'inline',
   },
 });
 

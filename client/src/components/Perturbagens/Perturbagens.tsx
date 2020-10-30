@@ -1,22 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Slide from '@material-ui/core/Slide';
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
 
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-import Slide from '@material-ui/core/Slide';
-import axios from 'axios';
-
-import { addSidebarRoute } from 'actions/main';
-
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
+import { addSidebarRoute } from 'actions/main';
+import { useLocalStorage } from 'utils/customHooks';
 
 const PerturbagenList = (): JSX.Element => {
   const [data, setData] = useState<Perturbagen[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
-  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage(
+    'selectedPerturbagen',
+    ''
+  );
+  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage(
+    'perturbagenRightPanelOpen',
+    false
+  );
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // Fetch data on render
   useEffect(() => {
@@ -39,16 +51,6 @@ const PerturbagenList = (): JSX.Element => {
     return data.map(Object.values);
   }, [data]);
 
-  // On page change
-  const handlePageChange = (_event: Event, page: number) => {
-    setCurrentPage(page);
-  };
-
-  // Select item
-  const handleSelection = (perturbagen: string) => {
-    setSelectedPerturbagen(perturbagen);
-  };
-
   // Right panel animation
   useEffect(() => {
     setRightPanelOpen(false);
@@ -65,10 +67,41 @@ const PerturbagenList = (): JSX.Element => {
     return data.find((item) => item.name === selectedPerturbagen);
   }, [data, selectedPerturbagen]);
 
-  // Handler for adding to the sidebar
-  const dispatch = useDispatch();
-  const handlePerturbagenAdd = (perturbagen: string) => {
-    dispatch(addSidebarRoute('perturbagen', perturbagen));
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const perturbagenName = row[0];
+
+    const addToSidebar = () => {
+      dispatch(addSidebarRoute('perturbagen', perturbagenName));
+    };
+
+    const selectRow = () => {
+      setSelectedPerturbagen(perturbagenName);
+    };
+
+    return (
+      <>
+        <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
+          <AddCircleOutline />
+        </IconButton>
+        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+          <KeyboardArrowRight />
+        </IconButton>
+      </>
+    );
+  };
+
+  const clickableCells: {
+    [key: string]: (perturbagenName: string) => void;
+  } = {
+    '0': (perturbagenName: string) => {
+      dispatch(addSidebarRoute('perturbagen', perturbagenName));
+      history.push(`/${perturbagenName}/description`);
+    },
+    '1': (chemspiderId: string) => {
+      window.open(`https://chemspider.com/${chemspiderId}`, '_blank');
+    },
   };
 
   return (
@@ -83,17 +116,13 @@ const PerturbagenList = (): JSX.Element => {
             <div>Loading...</div>
           ) : (
             <Table
-              tableHeaderColor='primary'
-              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+              id='Perturbagens'
+              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms']}
               tableData={tableData}
-              rowsPerPage={10}
-              rowEndArrow
-              handleSelection={handleSelection}
-              handleAdd={handlePerturbagenAdd}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-              firstRowOnClick
+              RowContentRight={RowContentRight}
+              clickableCells={clickableCells}
               selectedItem={selectedPerturbagen}
+              searchIndex={0}
             />
           )}
         </CardGeneric>

@@ -29,6 +29,7 @@ const headerStyle = createStyles({
     flex: 1,
   },
   title: {
+    fontWeight: 300,
     letterSpacing: 'unset',
     lineHeight: '30px',
     fontSize: '18px',

@@ -11,6 +11,7 @@ import Search from '@material-ui/icons/Search';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TablePagination from '@material-ui/core/TablePagination';
 
+import { useLocalStorage } from 'utils/customHooks';
 import Button from 'components/Misc/CustomButton/Button';
 import CustomInput from 'components/Misc/CustomInput/CustomInput';
 import styles from 'components/Misc/CustomTable/tableStyle';
@@ -20,43 +21,35 @@ import Head from './TableHead';
 const useStyles = makeStyles(styles);
 
 interface Props {
+  id: string;
   tableHead: string[];
-  tableHeaderColor: string;
   tableData: string[][];
-  currentPage: number;
-  firstRowOnClick?: boolean;
-  ExtraContent?: any;
-  cell_line?: string;
+  RowContentRight?: ({ row }: { row: string[] }) => JSX.Element;
+  RowExpandableContentLeft?: ({ row }: { row: string[] }) => JSX.Element;
+  clickableCells?: {
+    [key: string]: (name: string) => void;
+  };
+  searchIndex: number;
   selectedItem?: string;
-  rowEndArrow?: boolean;
-  rowsPerPage: number;
-  handlePageChange: any;
-  handleAdd?: any;
-  handleSelection?: any;
-  handleAddPath?: any;
 }
 
 const CustomTable = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   const {
+    id,
     tableHead,
-    tableHeaderColor,
     tableData,
-    currentPage,
-    rowEndArrow,
-    firstRowOnClick,
-    ExtraContent,
-    cell_line,
+    RowContentRight,
+    RowExpandableContentLeft,
+    clickableCells,
+    searchIndex,
     selectedItem,
-    handlePageChange,
-    handleAdd,
-    handleSelection,
-    handleAddPath,
   } = props;
 
   const [filteredList, setFilteredList] = useState<string[][]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useLocalStorage(`${id}_currentPage`, 0);
 
   useEffect(() => {
     setFilteredList(tableData);
@@ -68,13 +61,21 @@ const CustomTable = (props: Props): JSX.Element => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  // On page change
+  const handlePageChange = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
+
   /*-------------------------*/
-  // Sorting
+  // Sorting, WOOP, sort state
   // Currently displayed values, filtered by the search field
   const createSortState = () => {
     let { length } = tableHead;
-    if (ExtraContent) length -= 1;
-    if (rowEndArrow) length -= 1;
+    if (RowExpandableContentLeft) length -= 1;
+    // if (rowEndArrow) length -= 1;
 
     const obj = {};
     range(0, length).forEach((x) => {
@@ -94,7 +95,7 @@ const CustomTable = (props: Props): JSX.Element => {
 
   const handleSort = (key: number) => {
     // eslint-disable-next-line no-param-reassign
-    if (ExtraContent) key -= 1;
+    if (RowExpandableContentLeft) key -= 1;
 
     let sortedList = [];
     if (!sortedAsc[key]) {
@@ -121,12 +122,14 @@ const CustomTable = (props: Props): JSX.Element => {
   // Filtering
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (value: string) => {
-    const key = handleAddPath ? 1 : 0;
     const filtered = tableData.filter(
       (row) =>
-        row[key].toString().toLowerCase().indexOf(value.toLowerCase()) === 0
+        row[searchIndex]
+          .toString()
+          .toLowerCase()
+          .indexOf(value.toLowerCase()) === 0
     );
-    handlePageChange(null, 0);
+    setCurrentPage(0);
     setFilteredList(filtered);
   };
 
@@ -145,7 +148,6 @@ const CustomTable = (props: Props): JSX.Element => {
           inputProps={{
             placeholder: 'Search',
             inputProps: {
-              'aria-label': 'Search',
               onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
                 filterByTermAndSetTableData(event.target.value),
             },
@@ -161,29 +163,18 @@ const CustomTable = (props: Props): JSX.Element => {
         </Button>
       </div>
       <Table className={classes.table}>
-        {/* @ts-ignore */}
-        <TableHead className={classes[`${tableHeaderColor}TableHeader`]}>
-          <Head
-            content={tableHead}
-            rowEndArrow={rowEndArrow}
-            handleSort={handleSort}
-          />
+        <TableHead className={classes.primaryTableHeader}>
+          <Head content={tableHead} handleSort={handleSort} />
         </TableHead>
         <TableBody>
           {slicedTableData.map((row, key) => (
             <Row
               key={key}
-              {...{
-                row,
-                rowEndArrow,
-                handleSelection,
-                handleAdd,
-                cell_line,
-                firstRowOnClick,
-                ExtraContent,
-                selectedItem,
-                handleAddPath,
-              }}
+              row={row}
+              RowContentRight={RowContentRight}
+              RowExpandableContentLeft={RowExpandableContentLeft}
+              clickableCells={clickableCells}
+              selectedItem={selectedItem}
             />
           ))}
         </TableBody>
@@ -193,7 +184,7 @@ const CustomTable = (props: Props): JSX.Element => {
         component='div'
         count={filteredList.length}
         rowsPerPage={rowsPerPage}
-        page={currentPage}
+        page={filteredList.length > 0 ? currentPage : 0}
         onChangePage={handlePageChange}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

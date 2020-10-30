@@ -1,25 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import IconButton from '@material-ui/core/IconButton';
+import Slide from '@material-ui/core/Slide';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { pick } from 'lodash';
+import axios from 'axios';
 
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-import Slide from '@material-ui/core/Slide';
-import pick from 'lodash/pick';
-import axios from 'axios';
-
+import { useLocalStorage } from 'utils/customHooks';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
-import { shortenExpressedIns } from 'utils/utils';
 import KinaseListPhosphosites from './KinaseListPhosphosites';
 
 // Kinase List on the Home page
 const KinaseList = (): JSX.Element => {
   const [data, setData] = useState<Kinase[]>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [selectedKinase, setSelectedKinase] = useState('');
-  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  const [selectedKinase, setSelectedKinase] = useLocalStorage(
+    'selectedKinase',
+    ''
+  );
+  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage(
+    'kinaseRightPanelOpen',
+    false
+  );
+
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   // Fetch data on render
   useEffect(() => {
@@ -42,18 +54,8 @@ const KinaseList = (): JSX.Element => {
     const relevantFieldsPicked = data.map((e) =>
       pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])
     );
-    return shortenExpressedIns(relevantFieldsPicked).map(Object.values);
+    return relevantFieldsPicked.map(Object.values);
   }, [data]);
-
-  // On page change
-  const handlePageChange = (_event: Event, page: number) => {
-    setCurrentPage(page);
-  };
-
-  // Select item
-  const handleSelection = (kinase: string) => {
-    setSelectedKinase(kinase);
-  };
 
   // Right panel animation
   useEffect(() => {
@@ -71,10 +73,41 @@ const KinaseList = (): JSX.Element => {
     return data.find((item) => item.kinase_name === selectedKinase);
   }, [data, selectedKinase]);
 
-  // Handler for adding to the sidebar
-  const dispatch = useDispatch();
-  const handleKinaseAdd = (kinase: string) => {
-    dispatch(addSidebarRoute('kinase', kinase));
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const kinaseName = row[0];
+
+    const addToSidebar = () => {
+      dispatch(addSidebarRoute('kinase', kinaseName));
+    };
+
+    const selectRow = () => {
+      setSelectedKinase(kinaseName);
+    };
+
+    return (
+      <>
+        <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
+          <AddCircleOutline />
+        </IconButton>
+        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+          <KeyboardArrowRight />
+        </IconButton>
+      </>
+    );
+  };
+
+  const clickableCells: {
+    [key: string]: (kinaseName: string) => void;
+  } = {
+    '0': (kinaseName: string) => {
+      dispatch(addSidebarRoute('kinase', kinaseName));
+      history.push(`/${kinaseName}/description`);
+    },
+    '2': (uniprotId: string) => {
+      window.open(`https://www.uniprot.org/uniprot/${uniprotId}`, '_blank');
+    },
   };
 
   return (
@@ -89,17 +122,13 @@ const KinaseList = (): JSX.Element => {
             <div>Loading...</div>
           ) : (
             <Table
-              tableHeaderColor='primary'
-              tableHead={['Sites', 'Name', 'Expressed', 'Uniprot ID', '']}
+              id='Kinases'
+              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID']}
               tableData={tableData}
-              rowsPerPage={10}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-              rowEndArrow
-              handleSelection={handleSelection}
-              handleAdd={handleKinaseAdd}
-              firstRowOnClick
-              ExtraContent={KinaseListPhosphosites}
+              RowExpandableContentLeft={KinaseListPhosphosites}
+              RowContentRight={RowContentRight}
+              clickableCells={clickableCells}
+              searchIndex={0}
               selectedItem={selectedKinase}
             />
           )}

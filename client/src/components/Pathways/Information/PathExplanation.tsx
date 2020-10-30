@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPathExplanation } from 'actions/pathways';
 
@@ -20,11 +20,6 @@ const PathDetails = (): JSX.Element => {
     dispatch(setPathExplanation(selectedPath));
   }, [dispatch, selectedPath]);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const handlePageChange = (_event: Event, newPage: number) => {
-    setCurrentPage(newPage);
-  };
-
   return (
     <CardGeneric
       color='primary'
@@ -33,12 +28,9 @@ const PathDetails = (): JSX.Element => {
       style={{ opacity: selectedPath.length === 0 ? 0.5 : 1 }}
     >
       <Table
-        tableHeaderColor='primary'
+        id='PathDetails'
         tableHead={['Start', 'Phosphosite', 'End']}
         tableData={pathExplanation.length > 1 ? pathExplanation : []}
-        rowsPerPage={10}
-        currentPage={currentPage}
-        handlePageChange={handlePageChange}
       />
     </CardGeneric>
   );

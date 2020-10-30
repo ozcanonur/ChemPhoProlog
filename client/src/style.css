@@ -118,3 +118,24 @@ input[type='file'] > input[type='button']::-moz-focus-inner {
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto'), url('./assets/fonts/Roboto-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), url('./assets/fonts/Roboto-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto'), url('./assets/fonts/Roboto-Medium.woff') format('woff');
+}
