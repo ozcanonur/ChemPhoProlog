@@ -5,6 +5,7 @@ chemphopro.db
 client/documentation/
 .vscode/
 client/build/
+server/build/
 facts/
 combinedFacts.pl
 perturbs_MCF7_all.pl
