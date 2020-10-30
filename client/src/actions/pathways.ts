@@ -1,84 +1,44 @@
-import { getApi } from 'api/api';
+import axios from 'axios';
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { pick } from 'lodash';
-
+import { CollectionReturnValue, Core } from 'cytoscape';
 import { store } from 'index';
 import { formatObservation, getExplanationForPath } from './util';
 
-export const addInspectPath = (path: any) => {
+import {
+  ACTION,
+  AddInspectPathAction,
+  ChangeSelectedPathAction,
+  GetPathwayDataAction,
+  RemoveAllInspectPathsAction,
+  SetCxtMenuAction,
+  SetCyAction,
+  SetElementsToAnimateAction,
+  SetPathExplanationAction,
+  SetSelectedInputsAction,
+} from './types';
+
+export const addInspectPath = (path: string[]): AddInspectPathAction => {
   return {
-    type: 'ADD_INSPECT_PATH',
+    type: ACTION.ADD_INSPECT_PATH,
     payload: path,
   };
 };
 
-export const changeSelectedPath = (path: any) => {
+export const changeSelectedPath = (
+  path: string[]
+): ChangeSelectedPathAction => {
   return {
-    type: 'CHANGE_SELECTED_PATH',
+    type: ACTION.CHANGE_SELECTED_PATH,
     payload: path,
   };
 };
 
-export const getPathwayData = (
-  cellLine: any,
-  perturbagen: any,
-  substrate: any,
-  onlyKinaseEnds: any
-): any => async (dispatch: any) => {
-  const pathwayRoute = '/pathway';
-  const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
-
-  const observationRoute = '/observation';
-  const observationParams = { perturbagen, cellLine };
-
-  const [fullObservationData, pathwayResults] = await Promise.all([
-    getApi(observationRoute, observationParams),
-    getApi(pathwayRoute, pathwayParams),
-  ]);
-
-  const observationData = fullObservationData.map((row: any) =>
-    pick(row, ['substrate', 'fold_change', 'p_value'])
-  );
-
-  const formattedObservation = formatObservation(
-    pathwayResults.phosphosites,
-    observationData
-  );
-
-  dispatch({
-    type: 'GET_PATHWAY_DATA',
-    payload: { observation: formattedObservation, ...pathwayResults },
-  });
-};
-
-export const removeAllInspectPaths = () => {
-  return {
-    type: 'REMOVE_ALL_INSPECT_PATHS',
-  };
-};
-
-export const setCxtMenu = (cxtMenu: any) => {
-  return {
-    type: 'SET_CXT_MENU',
-    payload: cxtMenu,
-  };
-};
-
-export const setCy = (cy: any) => {
-  return {
-    type: 'SET_CY',
-    payload: cy,
-  };
-};
-
-export const setElementsToAnimate = (elementsToAnimate: any) => {
-  return {
-    type: 'SET_ELEMENTS_TO_ANIMATE',
-    payload: elementsToAnimate,
-  };
-};
-
-export const setPathExplanation = (selectedPath: any) => {
-  const data = store.getState().pathwayData || {
+export const setPathExplanation = (
+  selectedPath: string[]
+): SetPathExplanationAction => {
+  const data: Pathway.PathwayData = store.getState().pathwayData || {
     paths: [],
     relations: {},
     phosphosites: [],
@@ -96,14 +56,113 @@ export const setPathExplanation = (selectedPath: any) => {
   );
 
   return {
-    type: 'SET_PATH_EXPLANATION',
+    type: ACTION.SET_PATH_EXPLANATION,
     payload: pathDetails,
   };
 };
 
-export const setSelectedInputs = (inputs: any) => {
+export const setCxtMenu = (cxtMenu: CxtMenu): SetCxtMenuAction => {
   return {
-    type: 'SET_SELECTED_INPUTS',
+    type: ACTION.SET_CXT_MENU,
+    payload: cxtMenu,
+  };
+};
+
+const fetchPathwayData = async (params: {
+  cellLine: string;
+  perturbagen: string;
+  substrate: string;
+  onlyKinaseEnds: boolean;
+}) => {
+  try {
+    const response = await axios.get<Pathway.PathwayDataFromAPI>(
+      '/api/pathway',
+      { params }
+    );
+    return response.data;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+const fetchObservationData = async (params: {
+  perturbagen: string;
+  cellLine: string;
+}) => {
+  try {
+    const response = await axios.get('/api/observation', {
+      params,
+    });
+    // Pick relevant fields only
+    const parsedResponse = response.data.map((row: Observation) =>
+      pick(row, ['substrate', 'fold_change', 'p_value'])
+    );
+    return parsedResponse;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const getPathwayData = (
+  cellLine: string,
+  perturbagen: string,
+  substrate: string,
+  onlyKinaseEnds: boolean
+): ThunkAction<void, RootState, unknown, GetPathwayDataAction> => async (
+  dispatch: Dispatch
+) => {
+  const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
+  const observationParams = { perturbagen, cellLine };
+
+  const [pathwayData, observationData] = await Promise.all([
+    fetchPathwayData(pathwayParams),
+    fetchObservationData(observationParams),
+  ]);
+
+  if (!pathwayData || !observationData) return;
+
+  const formattedObservation = formatObservation(
+    pathwayData.phosphosites,
+    observationData
+  );
+
+  dispatch({
+    type: ACTION.GET_PATHWAY_DATA,
+    payload: { observation: formattedObservation, ...pathwayData },
+  });
+};
+
+export const removeAllInspectPaths = (): RemoveAllInspectPathsAction => {
+  return {
+    type: ACTION.REMOVE_ALL_INSPECT_PATHS,
+  };
+};
+
+export const setCy = (cy: Core): SetCyAction => {
+  return {
+    type: ACTION.SET_CY,
+    payload: cy,
+  };
+};
+
+export const setElementsToAnimate = (elementsToAnimate: {
+  elementsToShow: CollectionReturnValue;
+  elementsToFade: CollectionReturnValue;
+}): SetElementsToAnimateAction => {
+  return {
+    type: ACTION.SET_ELEMENTS_TO_ANIMATE,
+    payload: elementsToAnimate,
+  };
+};
+
+export const setSelectedInputs = (inputs: {
+  cellLine: string;
+  perturbagen: string;
+  substrate: string;
+  onlyKinaseEnds: boolean;
+}): SetSelectedInputsAction => {
+  return {
+    type: ACTION.SET_SELECTED_INPUTS,
     payload: inputs,
   };
 };

@@ -1,3 +1,5 @@
+import { CollectionReturnValue, Core } from 'cytoscape';
+
 export enum ACTION {
   // main
   ADD_SIDEBAR_ROUTE,
@@ -24,104 +26,54 @@ export type RemoveSidebarRouteAction = {
   payload: { name: string };
 };
 
-// export type ChangeSelectedPathAction = {
-//   type: ACTION.CHANGE_SELECTED_PATH;
-//   payload: {}
-// }
+export type AddInspectPathAction = {
+  type: ACTION.ADD_INSPECT_PATH;
+  payload: string[];
+};
 
-// export const changeSelectedPath = (path) => {
-//   return {
-//     type: 'CHANGE_SELECTED_PATH',
-//     payload: path,
-//   };
-// };
+export type ChangeSelectedPathAction = {
+  type: ACTION.CHANGE_SELECTED_PATH;
+  payload: string[];
+};
 
-// export const getPathwayData = (
-//   cellLine,
-//   perturbagen,
-//   substrate,
-//   onlyKinaseEnds
-// ) => async (dispatch) => {
-//   const pathwayRoute = '/pathway';
-//   const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
+export type GetPathwayDataAction = {
+  type: ACTION.GET_PATHWAY_DATA;
+  payload: Pathway.PathwayData;
+};
 
-//   const observationRoute = '/observation';
-//   const observationParams = { perturbagen, cellLine };
+export type SetCxtMenuAction = {
+  type: ACTION.SET_CXT_MENU;
+  payload: CxtMenu;
+};
 
-//   const [fullObservationData, pathwayResults] = await Promise.all([
-//     getApi(observationRoute, observationParams),
-//     getApi(pathwayRoute, pathwayParams),
-//   ]);
+export type RemoveAllInspectPathsAction = {
+  type: ACTION.REMOVE_ALL_INSPECT_PATHS;
+};
 
-//   const observationData = fullObservationData.map((row) =>
-//     pick(row, ['substrate', 'fold_change', 'p_value'])
-//   );
+export type SetCyAction = {
+  type: ACTION.SET_CY;
+  payload: Core;
+};
 
-//   const formattedObservation = formatObservation(
-//     pathwayResults.phosphosites,
-//     observationData
-//   );
+export type SetElementsToAnimateAction = {
+  type: ACTION.SET_ELEMENTS_TO_ANIMATE;
+  payload: {
+    elementsToShow: CollectionReturnValue;
+    elementsToFade: CollectionReturnValue;
+  };
+};
 
-//   dispatch({
-//     type: 'GET_PATHWAY_DATA',
-//     payload: { observation: formattedObservation, ...pathwayResults },
-//   });
-// };
+export type SetPathExplanationAction = {
+  type: ACTION.SET_PATH_EXPLANATION;
+  payload: string[][];
+};
 
-// export const removeAllInspectPaths = () => {
-//   return {
-//     type: 'REMOVE_ALL_INSPECT_PATHS',
-//   };
-// };
-
-// export const setCxtMenu = (cxtMenu) => {
-//   return {
-//     type: 'SET_CXT_MENU',
-//     payload: cxtMenu,
-//   };
-// };
-
-// export const setCy = (cy) => {
-//   return {
-//     type: 'SET_CY',
-//     payload: cy,
-//   };
-// };
-
-// export const setElementsToAnimate = (elementsToAnimate) => {
-//   return {
-//     type: 'SET_ELEMENTS_TO_ANIMATE',
-//     payload: elementsToAnimate,
-//   };
-// };
-
-// export const setPathExplanation = (selectedPath) => {
-//   const data = store.getState().pathwayData || {
-//     paths: [],
-//     relations: {},
-//     phosphosites: [],
-//     regulatory: {},
-//     stoppingReasons: {},
-//     observation: {},
-//   };
-
-//   const reversedPath = [...selectedPath].reverse();
-//   const pathDetails = getExplanationForPath(
-//     reversedPath,
-//     data.observation,
-//     data.regulatory,
-//     data.stoppingReasons
-//   );
-
-//   return {
-//     type: 'SET_PATH_EXPLANATION',
-//     payload: pathDetails,
-//   };
-// };
-
-// export const setSelectedInputs = (inputs) => {
-//   return {
-//     type: 'SET_SELECTED_INPUTS',
-//     payload: inputs,
-//   };
-// };
+export type SetSelectedInputsAction = {
+  type: ACTION.SET_SELECTED_INPUTS;
+  payload: {
+    cellLine: string;
+    perturbagen: string;
+    substrate: string;
+    onlyKinaseEnds: boolean;
+  };
+};

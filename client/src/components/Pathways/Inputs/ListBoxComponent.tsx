@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+// @ts-nocheck
 /* eslint-disable react/display-name */
 import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -17,12 +19,12 @@ function renderRow(props: any) {
 
 const OuterElementContext = React.createContext({});
 
-const OuterElementType = React.forwardRef((props, ref: any) => {
+const OuterElementType = React.forwardRef((props, ref) => {
   const outerProps = React.useContext(OuterElementContext);
   return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function useResetCache(data: any) {
+function useResetCache(data) {
   const ref = React.useRef(null);
   React.useEffect(() => {
     if (ref.current !== null) {
@@ -35,8 +37,8 @@ function useResetCache(data: any) {
 
 // Adapter for react-window
 const ListboxComponent = React.forwardRef(function ListboxComponent(
-  props: any,
-  ref: any
+  props,
+  ref
 ) {
   const { children, ...other } = props;
   const itemData = React.Children.toArray(children);
@@ -45,7 +47,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
   const itemCount = itemData.length;
   const itemSize = smUp ? 36 : 48;
 
-  const getChildSize = (child: any) => {
+  const getChildSize = (child) => {
     if (React.isValidElement(child) && child.type === ListSubheader) {
       return 48;
     }

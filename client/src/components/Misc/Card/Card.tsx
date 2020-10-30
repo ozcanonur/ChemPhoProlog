@@ -5,11 +5,7 @@ import cardStyles from './styles/card';
 
 const useStyles = makeStyles(cardStyles);
 
-interface Props {
-  [x: string]: any;
-}
-
-const Card = (props: Props): JSX.Element => {
+const Card = (props: any): JSX.Element => {
   const classes = useStyles();
 
   const { children, ...rest } = props;

@@ -45,7 +45,7 @@ const Navbar = ({ routes }: Props): JSX.Element => {
           <GridItem>
             <div className={classes.flex}>
               <Button color='transparent' className={classes.title}>
-                {currentNav || ''}
+                <p>{currentNav || ''}</p>
               </Button>
             </div>
           </GridItem>

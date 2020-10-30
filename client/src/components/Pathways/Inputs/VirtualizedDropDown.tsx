@@ -9,7 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 
-import { getApiWeb } from 'api/api';
+import axios from 'axios';
 import perturbagens from 'variables/perturbagens';
 import { setSelectedInputs } from 'actions/pathways';
 
@@ -43,19 +43,27 @@ const Virtualize = ({ type }: Props): JSX.Element => {
   const inputs = store.getState().pathwayInputs;
 
   useEffect(() => {
+    let mounted = true;
+
     if (type === 'Substrate') {
-      const route = '/validObservation';
       const params = {
         cellLine: inputs.cellLine,
         perturbagen: inputs.perturbagen,
       };
 
-      getApiWeb(route, params).then((res) => {
-        setData(res);
-      });
+      axios
+        .get('/apiWeb/validObservation', { params })
+        .then((res) => {
+          if (mounted) setData(res.data);
+        })
+        .catch((err) => console.error(err));
     } else if (type === 'Perturbagen') setData(perturbagens);
     else if (type === 'Cell Line')
       setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
+
+    return () => {
+      mounted = false;
+    };
   }, [type, inputs.cellLine, inputs.perturbagen]);
 
   const dispatch = useDispatch();
@@ -66,6 +74,7 @@ const Virtualize = ({ type }: Props): JSX.Element => {
       newInputs = { ...inputs, perturbagen: value };
     else if (type === 'Cell Line') newInputs = { ...inputs, cellLine: value };
 
+    if (!newInputs) return;
     dispatch(setSelectedInputs(newInputs));
   };
 

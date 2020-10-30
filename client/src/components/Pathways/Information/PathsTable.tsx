@@ -55,7 +55,7 @@ const PathsTable = (): JSX.Element => {
         size='sm'
         style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}
       >
-        Add to inspection
+        <div>Add to inspection</div>
       </Button>
     );
   };

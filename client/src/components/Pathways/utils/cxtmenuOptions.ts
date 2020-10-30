@@ -20,14 +20,14 @@ const submitPathwayFromSelectedEle = (
 ) => {
   const inputs = store.getState().pathwayInputs;
   const newInputs = { ...inputs, substrate: ele.data().id };
-  const { perturbagen, substrate, onlyKinaseEnds } = newInputs;
+  const { cellLine, perturbagen, substrate, onlyKinaseEnds } = newInputs;
   // Need to get the phosphosite out of its parent or it crashes
   ele.move({
     parent: null,
   });
   // Dispatch > render new pathway
   dispatch(setSelectedInputs(newInputs));
-  dispatch(getPathwayData('MCF-7', perturbagen, substrate, onlyKinaseEnds));
+  dispatch(getPathwayData(cellLine, perturbagen, substrate, onlyKinaseEnds));
   dispatch(removeAllInspectPaths());
   dispatch(
     setElementsToAnimate({

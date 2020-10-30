@@ -1,7 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState } from 'react';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';

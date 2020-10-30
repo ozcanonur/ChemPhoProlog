@@ -2,11 +2,11 @@ import phosphatases from 'variables/phosphatases';
 
 /* eslint-disable no-nested-ternary */
 export const getExplanationForPath = (
-  path: any,
-  observation: any,
-  regulatory: any,
-  stoppingReasons: any
-) => {
+  path: string[],
+  observation: Pathway.PathwayObservation,
+  regulatory: Pathway.Regulatory,
+  stoppingReasons: Pathway.StoppingReasons
+): string[][] => {
   const outputList = [];
   let prevBottomKPaActivity = 'inhibited';
 
@@ -31,7 +31,7 @@ export const getExplanationForPath = (
       ? 'dephosphorylates'
       : 'phosphorylates';
 
-    const foldChange = observation[midPhosphosite].fold_change;
+    const foldChange = parseFloat(observation[midPhosphosite].fold_change);
     const reg = regulatory[midPhosphosite];
 
     const bottomKPaActivated =
@@ -64,22 +64,24 @@ export const getExplanationForPath = (
   return outputList;
 };
 
-export const formatObservation = (phosphosites: any, observationData: any) => {
-  const observationInCurrentPaths = observationData.filter((e: any) =>
+export const formatObservation = (
+  phosphosites: Pathway.Phosphosites,
+  observationData: Observation[]
+): Pathway.PathwayObservation => {
+  const observationInCurrentPaths = observationData.filter((e: Observation) =>
     phosphosites.includes(e.substrate)
   );
 
-  const formattedObservation = {};
+  const formattedObservation: {
+    [key: string]: { fold_change: string; p_value: string };
+  } = {};
   // eslint-disable-next-line camelcase
-  observationInCurrentPaths.forEach(
-    ({ substrate, fold_change, p_value }: any) => {
-      // @ts-ignore
-      formattedObservation[substrate] = {
-        fold_change: fold_change.toFixed(2),
-        p_value: p_value.toFixed(2),
-      };
-    }
-  );
+  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
+    formattedObservation[substrate] = {
+      fold_change: fold_change.toFixed(2),
+      p_value: p_value.toFixed(2),
+    };
+  });
 
   return formattedObservation;
 };

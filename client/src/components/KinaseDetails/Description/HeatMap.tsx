@@ -10,7 +10,7 @@ interface Props {
   keys: string[];
 }
 
-const colors: any = d3.scaleSequential(d3.interpolatePiYG);
+const colors = d3.scaleSequential(d3.interpolatePiYG);
 
 const HeatMap = ({ data, indexBy, keys }: Props): JSX.Element => (
   <ResponsiveHeatMap
@@ -39,6 +39,7 @@ const HeatMap = ({ data, indexBy, keys }: Props): JSX.Element => (
     margin={{ top: 80, right: 10, bottom: 10, left: 120 }}
     minValue={-16}
     maxValue={16}
+    // @ts-ignore
     colors={colors}
     padding={3}
     // @ts-ignore

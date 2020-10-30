@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -8,12 +8,12 @@ const useStyles = makeStyles(cardStyles);
 
 interface Props {
   className?: string;
-  children?: any;
+  children?: JSX.Element | JSX.Element[];
   color?: string;
   plain?: boolean;
   stats?: boolean;
-  icon?: any;
-  style?: any;
+  icon?: boolean;
+  style?: CSSProperties;
 }
 
 const CardHeader = (props: Props): JSX.Element => {

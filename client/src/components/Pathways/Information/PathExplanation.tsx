@@ -31,6 +31,7 @@ const PathDetails = (): JSX.Element => {
         id='PathDetails'
         tableHead={['Start', 'Phosphosite', 'End']}
         tableData={pathExplanation.length > 1 ? pathExplanation : []}
+        searchIndex={0}
       />
     </CardGeneric>
   );

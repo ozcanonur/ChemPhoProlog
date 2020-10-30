@@ -67,20 +67,20 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
   function radial() {
     const linear = d3.scaleLinear();
 
-    function scale(x: any) {
+    function scale(x) {
       return Math.sqrt(linear(x));
     }
 
-    scale.domain = function (_: any) {
+    scale.domain = function (_) {
       return arguments.length ? (linear.domain(_), scale) : linear.domain();
     };
 
-    scale.nice = function (count: any) {
+    scale.nice = function (count) {
       // eslint-disable-next-line no-sequences
       return linear.nice(count), scale;
     };
 
-    scale.range = function (_: any) {
+    scale.range = function (_) {
       return arguments.length
         ? (linear.range(_.map(square)), scale)
         : linear.range().map(Math.sqrt);
@@ -142,13 +142,13 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
       d3
         .arc()
         .innerRadius(innerRadius)
-        .outerRadius((d: any) => {
+        .outerRadius((d) => {
           return y(d.Count);
         })
-        .startAngle((d: any) => {
+        .startAngle((d) => {
           return x(d.Kinase);
         })
-        .endAngle((d: any) => {
+        .endAngle((d) => {
           return x(d.Kinase) + x.bandwidth();
         })
         .padAngle(0.01)

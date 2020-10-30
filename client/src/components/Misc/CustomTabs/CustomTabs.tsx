@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import classNames from 'classnames';
@@ -42,7 +43,7 @@ const CustomTab = (props: Props): JSX.Element => {
   return (
     <Card plain={plainTabs}>
       <CardHeader color={headerColor} plain={plainTabs}>
-        {title !== undefined ? <div className={cardTitle}>{title}</div> : null}
+        {title ? <div className={cardTitle}>{title}</div> : undefined}
         <Tabs
           value={value}
           // @ts-ignore
@@ -55,7 +56,7 @@ const CustomTab = (props: Props): JSX.Element => {
           variant='fullWidth'
           scrollButtons='auto'
         >
-          {tabs.map((tab, key) => {
+          {tabs.map((tab) => {
             let icon = {};
             if (tab.tabIcon) {
               icon = {

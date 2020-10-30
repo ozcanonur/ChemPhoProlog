@@ -58,6 +58,7 @@ const KnownPerturbagens = (): JSX.Element => {
               id={`${kinase}_KnownPerturbagens`}
               tableHead={['Perturbagen', 'Source', 'Score']}
               tableData={tableData}
+              searchIndex={0}
             />
           )}
         </CardGeneric>

@@ -7,6 +7,8 @@ declare module 'cytoscape-cose-bilkent';
 declare module 'cytoscape-popper';
 declare module 'cytoscape-cxtmenu';
 
+type CxtMenu = never;
+
 interface SidebarRoute {
   type: string;
   name: string;
@@ -43,7 +45,7 @@ interface Observation {
   cell_line: string;
   cv?: number;
   fold_change: number;
-  p_value?: number;
+  p_value: number;
   perturbagen: string;
   substrate: string;
 }
@@ -66,17 +68,33 @@ namespace Pathway {
     relations: Relations;
     stoppingReasons: StoppingReasons;
   }
+
+  interface PathwayDataFromAPI {
+    paths: Paths;
+    phosphosites: Phosphosites;
+    regulatory: Regulatory;
+    relations: Relations;
+    stoppingReasons: StoppingReasons;
+  }
 }
 
 interface RootState {
   extraSidebarRoutes: SidebarRoute[];
   // pathways
   pathsInspectList: string[][];
-  selectedPath: any;
+  selectedPath: string[];
   pathwayData: Pathway.PathwayData;
-  pathwayInputs: any;
+  pathwayInputs: {
+    cellLine: string;
+    perturbagen: string;
+    substrate: string;
+    onlyKinaseEnds: boolean;
+  };
   cy: import('cytoscape').Core | null;
-  elementsToAnimate: any;
-  cxtMenu: any;
-  pathExplanation: any;
+  elementsToAnimate: {
+    elementsToShow: import('cytoscape').CollectionReturnValue;
+    elementsToFade: import('cytoscape').CollectionReturnValue;
+  };
+  cxtMenu: CxtMenu;
+  pathExplanation: string[][];
 }

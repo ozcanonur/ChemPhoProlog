@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
@@ -11,12 +11,12 @@ const useStyles = makeStyles(buttonStyles);
 interface Props {
   color?: string;
   round?: boolean;
-  children?: any;
+  children?: JSX.Element | JSX.Element[];
   size?: string;
   justIcon?: boolean;
   className?: string;
-  style?: any;
-  onClick?: any;
+  style?: CSSProperties;
+  onClick?: () => void;
   disabled?: boolean;
 }
 

@@ -16,7 +16,6 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
 
   useEffect(() => {
     let mounted = true;
-    console.log('useeffect');
     axios
       .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
       .then((res) => {
@@ -51,6 +50,7 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
           ]}
           tableData={tableData}
           RowExpandableContentLeft={ObservationBarChart(cellLine)}
+          searchIndex={0}
         />
       )}
     </CardGeneric>

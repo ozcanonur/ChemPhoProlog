@@ -2,20 +2,20 @@
 import React from 'react';
 import classNames from 'classnames';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+import FormControl, { FormControlProps } from '@material-ui/core/FormControl';
+import InputLabel, { InputLabelProps } from '@material-ui/core/InputLabel';
+import Input, { InputProps } from '@material-ui/core/Input';
 
 import customInputStyles from './styles';
 
 const useStyles = makeStyles(customInputStyles);
 
 interface Props {
-  formControlProps?: any;
+  formControlProps?: FormControlProps;
   labelText?: string;
   id?: string;
-  labelProps?: any;
-  inputProps?: any;
+  labelProps?: InputLabelProps;
+  inputProps?: InputProps;
   error?: boolean;
   success?: boolean;
   onChange?: () => void;
@@ -44,10 +44,14 @@ const CustomInput = (props: Props): JSX.Element => {
     [classes.underline]: true,
   });
 
+  const formControlClassName = formControlProps?.className
+    ? `${formControlProps.className} ${classes.formControl}`
+    : classes.formControl;
+
   return (
     <FormControl
       {...formControlProps}
-      className={`${formControlProps.className} ${classes.formControl}`}
+      className={formControlClassName}
       style={{ marginLeft: '0.5em', marginTop: 0, marginBottom: 0 }}
     >
       {labelText !== undefined ? (

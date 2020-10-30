@@ -46,6 +46,7 @@ const KnownSubstratesTable = (): JSX.Element => {
             id={`${kinase}_KnownSubstrates`}
             tableHead={['Substrate', 'Sources']}
             tableData={tableData}
+            searchIndex={0}
           />
         </CardGeneric>
       )}

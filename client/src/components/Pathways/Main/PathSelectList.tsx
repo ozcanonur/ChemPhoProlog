@@ -57,6 +57,7 @@ const PathSelectList = (): JSX.Element => {
     dispatch(changeSelectedPath(selectedPath));
 
     const elementsToAnimate = getElementsToAnimate(cy, selectedPath);
+    if (!elementsToAnimate) return;
     dispatch(setElementsToAnimate(elementsToAnimate));
 
     resetPathwayVisuals(cy);

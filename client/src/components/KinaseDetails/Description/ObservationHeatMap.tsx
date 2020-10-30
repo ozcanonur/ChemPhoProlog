@@ -12,7 +12,7 @@ import observationHeatMapStyles from './styles/observationHeatMap';
 const useStyles = makeStyles(observationHeatMapStyles);
 
 interface Props {
-  row: any;
+  row: string[];
 }
 
 const ObservationHeatMap = ({ row }: Props): JSX.Element => {
