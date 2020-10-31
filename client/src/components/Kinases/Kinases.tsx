@@ -99,13 +99,13 @@ const KinaseList = (): JSX.Element => {
   };
 
   const clickableCells: {
-    [key: string]: (kinaseName: string) => void;
+    [key: string]: (field: string) => void;
   } = {
-    '0': (kinaseName: string) => {
+    '0': (kinaseName) => {
       dispatch(addSidebarRoute('kinase', kinaseName));
       history.push(`/${kinaseName}/description`);
     },
-    '2': (uniprotId: string) => {
+    '2': (uniprotId) => {
       window.open(`https://www.uniprot.org/uniprot/${uniprotId}`, '_blank');
     },
   };

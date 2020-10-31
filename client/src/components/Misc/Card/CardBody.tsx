@@ -6,7 +6,7 @@ import cardStyles from './styles/card';
 const useStyles = makeStyles(cardStyles);
 
 interface Props {
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[] | string;
   className?: string;
   style?: CSSProperties;
 }

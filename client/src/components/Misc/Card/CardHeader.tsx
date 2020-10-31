@@ -8,7 +8,7 @@ const useStyles = makeStyles(cardStyles);
 
 interface Props {
   className?: string;
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[] | string;
   color?: string;
   plain?: boolean;
   stats?: boolean;

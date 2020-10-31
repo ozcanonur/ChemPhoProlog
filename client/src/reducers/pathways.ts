@@ -1,4 +1,4 @@
-import Cytoscape, { CollectionReturnValue, Core } from 'cytoscape';
+import cytoscape, { CollectionReturnValue, Core } from 'cytoscape';
 import { uniqWith } from 'lodash';
 
 import {
@@ -14,7 +14,7 @@ import {
   SetSelectedInputsAction,
 } from 'actions/types';
 
-export const cxtMenu = (state = null, action: SetCxtMenuAction): any => {
+export const cxtMenu = (state = null, action: SetCxtMenuAction): CxtMenu => {
   switch (action.type) {
     case ACTION.SET_CXT_MENU:
       return action.payload;
@@ -49,8 +49,8 @@ export const cy = (
 
 export const elementsToAnimate = (
   state = {
-    elementsToShow: Cytoscape().collection(),
-    elementsToFade: Cytoscape().collection(),
+    elementsToShow: cytoscape().collection(),
+    elementsToFade: cytoscape().collection(),
   },
   action: SetElementsToAnimateAction
 ): {

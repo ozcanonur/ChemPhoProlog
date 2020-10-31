@@ -7,7 +7,9 @@ import webRouter from './routes/web';
 
 const app = express();
 
-app.use(express.static('../client/build'));
+const clientBuildPath = path.join(__dirname, '../../client/build');
+
+app.use(express.static(clientBuildPath));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -15,8 +17,8 @@ app.use('/api', publicRouter);
 app.use('/apiWeb', webRouter);
 
 // Catch all for deploy
-app.get('/*', function (_, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
+app.get('/*', function (_req, res) {
+  res.sendFile(clientBuildPath + '/index.html', function (err) {
     if (err) res.status(500).send(err);
   });
 });

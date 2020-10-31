@@ -11,7 +11,7 @@ const useStyles = makeStyles(buttonStyles);
 interface Props {
   color?: string;
   round?: boolean;
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[] | string;
   size?: string;
   justIcon?: boolean;
   className?: string;

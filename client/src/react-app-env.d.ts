@@ -7,7 +7,7 @@ declare module 'cytoscape-cose-bilkent';
 declare module 'cytoscape-popper';
 declare module 'cytoscape-cxtmenu';
 
-type CxtMenu = never;
+type CxtMenu = any;
 
 interface SidebarRoute {
   type: string;
