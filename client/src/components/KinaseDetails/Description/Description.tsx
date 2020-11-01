@@ -122,7 +122,7 @@ const Description = (): JSX.Element => {
                 'Reported PDT of',
               ]}
               tableData={tableData}
-              RowExpandableContentLeft={ObservationHeatMap}
+              RowExpandableContentLeft={ObservationHeatMap(false)}
               searchIndex={0}
             />
           )}

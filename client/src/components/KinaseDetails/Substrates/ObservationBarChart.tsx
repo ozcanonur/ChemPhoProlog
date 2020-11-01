@@ -66,14 +66,13 @@ const ObservationBarChart = (cellLine: string) => {
     const [pkData, setPkData] = useState<PkData[]>([]);
 
     const kinase = window.location.href.split('/')[3];
-    console.log(pkData);
-    const PDT = row[0];
+    const substrate = row[0];
 
     useEffect(() => {
       let mounted = true;
 
       Promise.all([
-        fetchObservation(PDT, cellLine),
+        fetchObservation(substrate, cellLine),
         fetchKnownPerturbagens(kinase),
       ]).then(([resObs, resPk]) => {
         if (mounted && resObs && resPk) {
@@ -85,7 +84,7 @@ const ObservationBarChart = (cellLine: string) => {
       return () => {
         mounted = false;
       };
-    }, [PDT, kinase]);
+    }, [substrate, kinase]);
 
     return (
       <div style={{ height: '400px' }}>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
+import ObservationHeatMap from 'components/KinaseDetails/Description/ObservationHeatMap';
 import { setSelectedInputs } from 'actions/pathways';
-
-import axios from 'axios';
 
 interface KnownSubstrate {
   PsT: string;
@@ -81,10 +81,11 @@ const KnownSubstratesTable = (): JSX.Element => {
         >
           <Table
             id={`${kinase}_KnownSubstrates`}
-            tableHead={['Substrate', 'Sources']}
+            tableHead={['Obs.Data', 'Substrate', 'Sources']}
             tableData={tableData}
             searchIndex={0}
             RowContentRight={RowContentRight}
+            RowExpandableContentLeft={ObservationHeatMap(true)}
           />
         </CardGeneric>
       )}
