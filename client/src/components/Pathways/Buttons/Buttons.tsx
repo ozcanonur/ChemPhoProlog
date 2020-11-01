@@ -1,12 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Fade from '@material-ui/core/Fade';
 import Button from 'components/Misc/CustomButton/Button';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
-import Legend from 'components/Pathways/Main/Buttons/Legend/Legend';
+import Legend from 'components/Pathways/Buttons/Legend/Legend';
 
 import { toggleTooltips } from 'components/Pathways/utils/tooltip';
 import { animatePath } from 'components/Pathways/utils/animation';
@@ -16,17 +17,19 @@ import {
 } from 'components/Pathways/utils/misc';
 
 import { changeSelectedPath } from 'actions/pathways';
+import { Core } from 'cytoscape';
+import buttonsStyles from './style';
 
-const ExtraButtons = (): JSX.Element => {
-  const cy = useSelector((state: RootState) => state.cy);
-  const data = useSelector((state: RootState) => state.pathwayData) || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
+const useStyles = makeStyles(buttonsStyles);
+
+interface Props {
+  cy: Core;
+}
+
+const ExtraButtons = ({ cy }: Props): JSX.Element => {
+  const classes = useStyles();
+
+  const data = useSelector((state: RootState) => state.pathwayData);
 
   const elementsToAnimate = useSelector(
     (state: RootState) => state.elementsToAnimate
@@ -102,16 +105,15 @@ const ExtraButtons = (): JSX.Element => {
   ];
 
   return (
-    <div style={{ padding: '1em' }}>
+    <div className={classes.container}>
       <GridContainer direction='column'>
         {buttonList.map(({ text, onClick, state, disabled }, key) => (
           <GridItem key={key}>
             <Button
               onClick={onClick}
               disabled={disabled}
+              className={classes.button}
               style={{
-                width: '100px',
-                backgroundColor: 'rgba(45,65,89, 0.7)',
                 borderLeft: state ? '5px solid #e5ad06' : 'inherit',
               }}
             >
@@ -120,15 +122,7 @@ const ExtraButtons = (): JSX.Element => {
           </GridItem>
         ))}
         <Fade in={legendOpen}>
-          <div
-            style={{
-              position: 'absolute',
-              top: 10,
-              right: 130,
-              pointerEvents: 'none',
-              padding: '10px',
-            }}
-          >
+          <div className={classes.legendContainer}>
             <Legend />
           </div>
         </Fade>

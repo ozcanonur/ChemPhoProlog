@@ -4,7 +4,6 @@ import {
   NodeSingular,
   Stylesheet,
 } from 'cytoscape';
-import { store } from 'index';
 
 export const getCytoStylesheet = (
   observation: Pathway.PathwayObservation,
@@ -167,7 +166,8 @@ export const getCytoLayout = (): LayoutOptions => {
 };
 
 export const getCytoElements = (
-  data: Pathway.PathwayData
+  data: Pathway.PathwayData,
+  substrate: string
 ): ElementDefinition[] => {
   // KPas
   const nodes = Object.keys(data.relations).map((e) => {
@@ -177,10 +177,9 @@ export const getCytoElements = (
   // Need to put the start node OUTSIDE a compound or the diff() in Cytoscape-react messes up
   // It removes the compound, so the children also gets devoured
   // Other phosphosites will ALWAYS be a part of a KPa (=compound), so it only matters for the start
-  const start = store.getState().pathwayInputs.substrate;
   const phosphosites = data.phosphosites.map((e) => {
     return {
-      data: { id: e, parent: e !== start ? e.split('(')[0] : undefined },
+      data: { id: e, parent: e !== substrate ? e.split('(')[0] : undefined },
       classes: 'phosphosite',
       selectable: false,
     };

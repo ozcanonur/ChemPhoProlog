@@ -18,6 +18,7 @@ const submitPathwayFromSelectedEle = (
   ele: NodeSingular,
   dispatch: Dispatch<any>
 ) => {
+  // @ts-ignore
   const inputs = store.getState().pathwayInputs;
   const newInputs = { ...inputs, substrate: ele.data().id };
   const { cellLine, perturbagen, substrate, onlyKinaseEnds } = newInputs;

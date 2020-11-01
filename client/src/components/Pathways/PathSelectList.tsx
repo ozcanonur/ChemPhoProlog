@@ -19,6 +19,7 @@ import {
 } from 'components/Pathways/utils/animation';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Core } from 'cytoscape';
 
 const useStyles = makeStyles({
   cardTitleWhite: {
@@ -42,14 +43,17 @@ const useStyles = makeStyles({
   },
 });
 
-const PathSelectList = (): JSX.Element => {
+interface Props {
+  cy: Core;
+}
+
+const PathSelectList = ({ cy }: Props): JSX.Element => {
   const classes = useStyles();
 
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector(
     (state: RootState) => state.pathsInspectList
   );
-  const cy = useSelector((state: RootState) => state.cy);
 
   const dispatch = useDispatch();
   const pathOnClick = (id: string) => {

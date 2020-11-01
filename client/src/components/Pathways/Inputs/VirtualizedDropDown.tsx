@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+// @ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { store } from 'index';

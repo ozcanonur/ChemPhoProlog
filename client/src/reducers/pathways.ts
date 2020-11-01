@@ -1,4 +1,4 @@
-import cytoscape, { CollectionReturnValue, Core } from 'cytoscape';
+import cytoscape, { CollectionReturnValue } from 'cytoscape';
 import { uniqWith } from 'lodash';
 
 import {
@@ -8,7 +8,6 @@ import {
   GetPathwayDataAction,
   RemoveAllInspectPathsAction,
   SetCxtMenuAction,
-  SetCyAction,
   SetElementsToAnimateAction,
   SetPathExplanationAction,
   SetSelectedInputsAction,
@@ -24,23 +23,18 @@ export const cxtMenu = (state = null, action: SetCxtMenuAction): CxtMenu => {
 };
 
 export const pathwayData = (
-  state = null,
+  state = {
+    paths: [],
+    relations: {},
+    phosphosites: [],
+    regulatory: {},
+    stoppingReasons: {},
+    observation: {},
+  },
   action: GetPathwayDataAction
 ): Pathway.PathwayData | null => {
   switch (action.type) {
     case ACTION.GET_PATHWAY_DATA:
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-export const cy = (
-  state: Core | null = null,
-  action: SetCyAction
-): Core | null => {
-  switch (action.type) {
-    case ACTION.SET_CY:
       return action.payload;
     default:
       return state;

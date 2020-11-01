@@ -8,11 +8,11 @@ import {
   borders,
   areas,
   lines,
-} from 'components/Pathways/Main/Buttons/Legend/variables';
-import Node from 'components/Pathways/Main/Buttons/Legend/Node';
-import Border from 'components/Pathways/Main/Buttons/Legend/Border';
-import Area from 'components/Pathways/Main/Buttons/Legend/Area';
-import Line from 'components/Pathways/Main/Buttons/Legend/Line';
+} from 'components/Pathways/Buttons/Legend/variables';
+import Node from 'components/Pathways/Buttons/Legend/Node';
+import Border from 'components/Pathways/Buttons/Legend/Border';
+import Area from 'components/Pathways/Buttons/Legend/Area';
+import Line from 'components/Pathways/Buttons/Legend/Line';
 
 const Legend = (): JSX.Element => {
   const legends = [

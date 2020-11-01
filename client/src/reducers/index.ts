@@ -3,7 +3,6 @@ import { extraSidebarRoutes } from './main';
 
 import {
   cxtMenu,
-  cy,
   elementsToAnimate,
   inputs,
   inspectList,
@@ -20,7 +19,6 @@ export default combineReducers({
   selectedPath,
   pathwayData,
   pathwayInputs: inputs,
-  cy,
   elementsToAnimate,
   cxtMenu,
   pathExplanation,

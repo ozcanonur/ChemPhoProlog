@@ -1,4 +1,4 @@
-import { CollectionReturnValue, Core } from 'cytoscape';
+import { CollectionReturnValue } from 'cytoscape';
 
 export enum ACTION {
   // main
@@ -48,11 +48,6 @@ export type SetCxtMenuAction = {
 
 export type RemoveAllInspectPathsAction = {
   type: ACTION.REMOVE_ALL_INSPECT_PATHS;
-};
-
-export type SetCyAction = {
-  type: ACTION.SET_CY;
-  payload: Core;
 };
 
 export type SetElementsToAnimateAction = {

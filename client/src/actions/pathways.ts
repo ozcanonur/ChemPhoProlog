@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { pick } from 'lodash';
-import { CollectionReturnValue, Core } from 'cytoscape';
+import { CollectionReturnValue } from 'cytoscape';
 import { store } from 'index';
 import { formatObservation, getExplanationForPath } from './util';
 
@@ -13,7 +13,6 @@ import {
   GetPathwayDataAction,
   RemoveAllInspectPathsAction,
   SetCxtMenuAction,
-  SetCyAction,
   SetElementsToAnimateAction,
   SetPathExplanationAction,
   SetSelectedInputsAction,
@@ -135,13 +134,6 @@ export const getPathwayData = (
 export const removeAllInspectPaths = (): RemoveAllInspectPathsAction => {
   return {
     type: ACTION.REMOVE_ALL_INSPECT_PATHS,
-  };
-};
-
-export const setCy = (cy: Core): SetCyAction => {
-  return {
-    type: ACTION.SET_CY,
-    payload: cy,
   };
 };
 

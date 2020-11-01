@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -9,7 +10,7 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import Button from 'components/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import Cytoscape from 'cytoscape';
+import Cytoscape, { Core } from 'cytoscape';
 import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'components/Pathways/Inputs/VirtualizedDropDown';
@@ -20,14 +21,22 @@ import {
   removeAllInspectPaths,
   setElementsToAnimate,
 } from 'actions/pathways';
+import inputsStyles from './style';
 
-const Inputs = (): JSX.Element => {
+interface Props {
+  cy: Core;
+}
+
+const useStyles = makeStyles(inputsStyles);
+
+const Inputs = ({ cy }: Props): JSX.Element => {
+  const classes = useStyles();
+
   const [loading, setLoading] = useState(false);
   const [switchChecked, setSwitchChecked] = useState(false);
   const [error, setError] = useState('');
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
-  const cy = useSelector((state: RootState) => state.cy);
 
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
@@ -85,16 +94,7 @@ const Inputs = (): JSX.Element => {
           </GridItem>
         ))}
         <GridItem>
-          <Button
-            onClick={onSubmit}
-            style={{
-              width: '200px',
-              backgroundColor: 'rgba(229,173,6)',
-              color: 'white',
-              height: '50px',
-              position: 'relative',
-            }}
-          >
+          <Button onClick={onSubmit} className={classes.button}>
             <>
               {loading ? (
                 <div>
@@ -102,33 +102,17 @@ const Inputs = (): JSX.Element => {
                   <img
                     src={loading_thin}
                     alt='Loading thin'
-                    style={{ marginTop: '-17px', marginBottom: '5px' }}
+                    className={classes.img}
                   />
                 </div>
               ) : (
                 <p>Get pathway</p>
               )}
-              {error ? (
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: '-20px',
-                    color: 'red',
-                  }}
-                >
-                  {error}
-                </div>
-              ) : undefined}
+              {error ? <div className={classes.error}>{error}</div> : undefined}
             </>
           </Button>
         </GridItem>
-        <GridItem
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <GridItem className={classes.switchContainer}>
           <FormControlLabel
             control={
               <Switch
