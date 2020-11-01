@@ -4,7 +4,7 @@ import tippy, { sticky, hideAll as hideTooltips, Instance } from 'tippy.js';
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
-import './tooltip.css';
+import 'style.css';
 import { animatePath } from 'components/Pathways/utils/animation';
 import { clearAllTimeouts } from 'components/Pathways/utils/misc';
 import { Collection, NodeSingular } from 'cytoscape';

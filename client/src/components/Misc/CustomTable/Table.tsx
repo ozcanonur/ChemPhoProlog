@@ -75,7 +75,6 @@ const CustomTable = (props: Props): JSX.Element => {
   const createSortState = () => {
     let { length } = tableHead;
     if (RowExpandableContentLeft) length -= 1;
-    // if (rowEndArrow) length -= 1;
 
     const obj = {};
     range(0, length).forEach((x) => {

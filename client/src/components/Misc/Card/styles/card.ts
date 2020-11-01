@@ -9,7 +9,7 @@ const cardStyles = createStyles({
     color: `rgba(0,0,0, 0.87)`,
     background: '#fff',
     width: '100%',
-    boxShadow: `0 1px 4px 0 rgba(0,0,0, 0.14)`,
+    boxShadow: `0 2px 4px 0 rgba(0,0,0, 0.2)`,
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
@@ -182,6 +182,7 @@ const cardStyles = createStyles({
       marginTop: '-20px',
       marginRight: '15px',
       float: 'left',
+      boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0, 18, 51,.4)`,
     },
   },
 });

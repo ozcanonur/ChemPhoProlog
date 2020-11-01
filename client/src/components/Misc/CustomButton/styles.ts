@@ -89,6 +89,7 @@ const buttonStyles = createStyles({
     height: '41px',
     minWidth: '41px',
     width: '41px',
+    boxShadow: '0 3px 5px 0 rgba(0,0,0,0.2)',
     '& .fab,& .fas,& .far,& .fal,& svg,& .material-icons': {
       marginRight: '0px',
     },

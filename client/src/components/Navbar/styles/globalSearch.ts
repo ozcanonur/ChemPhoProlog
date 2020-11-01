@@ -87,6 +87,7 @@ const headerLinksStyle = createStyles({
   },
   searchWrapper: {
     display: 'inline-block',
+    marginTop: '20px',
   },
 });
 

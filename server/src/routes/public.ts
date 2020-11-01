@@ -35,22 +35,13 @@ router.get('/phosphosites', (req, res) => {
 });
 
 router.get('/observation', (req, res) => {
-  const {
-    cellLine,
-    perturbagen,
-    substrate,
-    min_fold_change,
-    max_fold_change,
-    min_p_value,
-    max_p_value,
-  } = req.query;
+  const { cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
 
   let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
   let fields = [];
 
   if (_.isEmpty(req.query)) {
-    const requiredAtLeastOneOf =
-      'cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
+    const requiredAtLeastOneOf = 'cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
     return res.status(400).send({ requiredAtLeastOneOf });
   }
 
@@ -85,8 +76,6 @@ router.get('/observation', (req, res) => {
 
   query = query.split('?').join('? and ').slice(0, -4);
 
-  console.log(query);
-
   db.all(query, fields, (err, rows) => {
     if (err) throw err;
     res.send(rows);
@@ -97,11 +86,11 @@ router.get('/observation', (req, res) => {
 router.get('/knownPerturbagens', (req, res) => {
   const { kinase } = req.query;
 
-  let query = 'select perturbagen, source, score from PK_relationship ';
+  let query = 'select perturbagen, source, score, chemspider_id, action, synonyms from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
   let fields = [];
 
   if (kinase) {
-    query += 'where kinase = ? order by perturbagen';
+    query += 'where PK_relationship.kinase = ? order by perturbagen';
     fields.push(kinase);
   }
 

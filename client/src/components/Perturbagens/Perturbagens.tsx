@@ -128,14 +128,19 @@ const PerturbagenList = (): JSX.Element => {
         </CardGeneric>
       </GridItem>
       <GridItem sm={12} lg={6}>
-        <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-          <div>
-            {selectedInfo !== undefined ? (
-              <CardGeneric
-                color='primary'
-                cardTitle='Perturbagen Specification'
-                cardSubtitle='Details'
-              >
+        <CardGeneric
+          color='primary'
+          cardTitle='Perturbagen Specification'
+          cardSubtitle='Details'
+        >
+          <Slide
+            in={rightPanelOpen}
+            direction='left'
+            mountOnEnter
+            unmountOnExit
+          >
+            <div>
+              {selectedInfo !== undefined ? (
                 <GridContainer direction='column'>
                   <GridItem>
                     <CardGeneric
@@ -159,10 +164,10 @@ const PerturbagenList = (): JSX.Element => {
                     />
                   </GridItem>
                 </GridContainer>
-              </CardGeneric>
-            ) : null}
-          </div>
-        </Slide>
+              ) : null}
+            </div>
+          </Slide>
+        </CardGeneric>
       </GridItem>
     </GridContainer>
   );

@@ -4,7 +4,6 @@ html * {
 }
 
 html {
-  font-size: 16px;
   --scrollbarBG: rgb(32, 34, 37);
   --thumbBG: rgb(99, 102, 105);
 }
@@ -138,4 +137,13 @@ input[type='file'] > input[type='button']::-moz-focus-inner {
   font-style: normal;
   font-weight: 500;
   src: local('Roboto'), url('./assets/fonts/Roboto-Medium.woff') format('woff');
+}
+
+.tippy-tooltip.theme-theme:hover {
+  opacity: 0.2;
+}
+
+.tippy-tooltip.theme-theme {
+  font-size: 12px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }

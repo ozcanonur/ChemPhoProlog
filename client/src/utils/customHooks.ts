@@ -37,7 +37,7 @@ export const useWhyDidYouUpdate = (name: string, props): void => {
   });
 };
 
-export const useLocalStorage = (key: string, initialValue) => {
+export const useLocalStorage = (key: string, initialValue: any) => {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {

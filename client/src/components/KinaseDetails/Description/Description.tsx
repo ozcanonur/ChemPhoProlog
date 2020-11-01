@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -17,20 +18,61 @@ interface PhosphositeOnKinase {
   residue: string;
 }
 
+interface KinaseInfo {
+  description: string;
+  families: string;
+  gene_synonyms: string;
+  expressed_in: string;
+}
+
 const Description = (): JSX.Element => {
   const kinase = window.location.href.split('/')[3];
 
-  const [data, setData] = useState<PhosphositeOnKinase[]>([]);
+  const [phosphosites, setPhosphosites] = useState<PhosphositeOnKinase[]>([]);
+  const [kinaseInfo, setKinaseInfo] = useState<KinaseInfo>({
+    description: '',
+    families: '',
+    gene_synonyms: '',
+    expressed_in: '',
+  });
+
+  const fetchPhosphosites = async () => {
+    try {
+      const response = await axios.get<PhosphositeOnKinase[]>(
+        '/api/phosphosites',
+        {
+          params: { kinase, detailed: true },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  const fetchKinaseInfo = async () => {
+    try {
+      const response = await axios.get<KinaseInfo>('/apiWeb/kinaseInfo', {
+        params: { kinase },
+      });
+      return response.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
 
   // Fetch the data
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/api/phosphosites', { params: { kinase, detailed: true } })
-      .then((res) => {
-        if (mounted) setData(res.data);
-      });
+    Promise.all([fetchPhosphosites(), fetchKinaseInfo()]).then(
+      ([resPho, resKinase]) => {
+        if (mounted && resPho && resKinase) {
+          setPhosphosites(resPho);
+          setKinaseInfo(resKinase);
+        }
+      }
+    );
 
     return () => {
       mounted = false;
@@ -38,26 +80,25 @@ const Description = (): JSX.Element => {
   }, [kinase]);
 
   // Table component wants it in this format :/
-  const tableData = data.map(Object.values);
+  const tableData = phosphosites.map(Object.values);
 
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
-        <CardGeneric
-          color='primary'
-          cardTitle='PLACEHOLDER'
-          cardSubtitle='placeholder'
-        >
-          The diverse and highly complex nature of modern phosphoproteomics
-          research produces a high volume of data. Chemical phosphoproteomics
-          especially, is amenable to a variety of analytical approaches. In this
-          study we propose novel logic-based algorithms that overcome the
-          limitations of existing tools used for analysis of these types of
-          datasets. Initially we developed a first order deductive, logic-based
-          model and populated it with a scoring system, with which we were able
-          to expand from its initially Boolean nature. This allowed us to
-          identify 16 previously unreported inhibitor-kinase relationships which
-          could offer novel therapeutic targets for
+        <CardGeneric color='primary' cardTitle={kinase}>
+          <p>{kinaseInfo.description}</p>
+          <p>
+            <strong>Families: </strong>
+            {kinaseInfo.families}
+          </p>
+          <p>
+            <strong>Alternative names: </strong>
+            {kinaseInfo.gene_synonyms}
+          </p>
+          <p>
+            <strong>Detected in: </strong>
+            {kinaseInfo.expressed_in}
+          </p>
         </CardGeneric>
       </GridItem>
       <GridItem>

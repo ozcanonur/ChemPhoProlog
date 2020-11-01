@@ -1,20 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import Slide from '@material-ui/core/Slide';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import axios from 'axios';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
-import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+import { addSidebarRoute } from 'actions/main';
 
 interface KnownPerturbagen {
   perturbagen: string;
   score: number;
   source: string;
+  chemspider_id: string;
+  action: string;
+  synonyms: string;
 }
 
 const KnownPerturbagens = (): JSX.Element => {
   const [data, setData] = useState<KnownPerturbagen[]>([]);
+  const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
 
@@ -36,8 +47,67 @@ const KnownPerturbagens = (): JSX.Element => {
 
   // Table wants the data in this format :/
   const tableData = data
+    .map(({ perturbagen, score, source, chemspider_id }) => {
+      return { perturbagen, score, source, chemspider_id };
+    })
     .map((e) => ({ ...e, score: e.score.toFixed(2) }))
     .map(Object.values);
+
+  // Get specific information about this perturbagen to display in the right panel
+  const perturbagenInfo = useMemo(() => {
+    return data.find((item) => item.perturbagen === selectedPerturbagen);
+  }, [data, selectedPerturbagen]);
+
+  // Right panel animation
+  useEffect(() => {
+    setRightPanelOpen(false);
+
+    if (selectedPerturbagen !== '') {
+      setTimeout(() => {
+        setRightPanelOpen(true);
+      }, 250);
+    }
+  }, [selectedPerturbagen]);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const perturbagenName = row[0];
+
+    const addToSidebar = () => {
+      dispatch(addSidebarRoute('perturbagen', perturbagenName));
+    };
+
+    const selectRow = () => {
+      setSelectedPerturbagen(perturbagenName);
+    };
+
+    return (
+      <>
+        <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
+          <AddCircleOutline />
+        </IconButton>
+        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+          <KeyboardArrowRight />
+        </IconButton>
+      </>
+    );
+  };
+
+  const clickableCells: {
+    [key: string]: (perturbagenName: string) => void;
+  } = {
+    '0': (perturbagenName: string) => {
+      dispatch(addSidebarRoute('perturbagen', perturbagenName));
+      history.push(`/${perturbagenName}/description`);
+    },
+    '3': (chemspiderId: string) => {
+      window.open(`https://chemspider.com/${chemspiderId}`, '_blank');
+    },
+  };
 
   return (
     <GridContainer
@@ -56,9 +126,12 @@ const KnownPerturbagens = (): JSX.Element => {
           ) : (
             <Table
               id={`${kinase}_KnownPerturbagens`}
-              tableHead={['Perturbagen', 'Source', 'Score']}
+              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID']}
               tableData={tableData}
               searchIndex={0}
+              clickableCells={clickableCells}
+              RowContentRight={RowContentRight}
+              selectedItem={selectedPerturbagen}
             />
           )}
         </CardGeneric>
@@ -69,22 +142,46 @@ const KnownPerturbagens = (): JSX.Element => {
           cardTitle='Perturbagen Info'
           cardSubtitle='Details'
         >
-          <Typography variant='body1'>
-            The diverse and highly complex nature of modern phosphoproteomics
-            research produces a high volume of data. Chemical phosphoproteomics
-            especially, is amenable to a variety of analytical approaches. In
-            this study we propose novel logic-based algorithms that overcome the
-            limitations of existing tools used for analysis of these types of
-            datasets. Initially we developed a first order deductive,
-            logic-based model and populated it with a scoring system, with which
-            we were able to expand from its initially Boolean nature. This
-            allowed us to identify 16 previously unreported inhibitor-kinase
-            relationships which could offer novel therapeutic targets for
-            further investigation. We also present the model and its findings in
-            a human readable and 18 explanation-integrated manner. This offers
-            an open-source model blueprint to act as a resource 19 for its
-            application in more and diverse data sets.
-          </Typography>
+          <Slide
+            in={rightPanelOpen}
+            direction='left'
+            mountOnEnter
+            unmountOnExit
+          >
+            <div>
+              {perturbagenInfo !== undefined ? (
+                <GridContainer direction='column'>
+                  <GridItem>
+                    <CardGeneric
+                      color='primary'
+                      cardTitle={selectedPerturbagen}
+                    >
+                      <div style={{ textAlign: 'center' }}>
+                        <img
+                          src={`https://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`}
+                          alt='Perturbagen'
+                        />
+                      </div>
+                    </CardGeneric>
+                  </GridItem>
+                  <GridItem>
+                    <p>
+                      <strong>Chemspider ID: </strong>
+                      {perturbagenInfo.chemspider_id}
+                    </p>
+                    <p>
+                      <strong>Families: </strong>
+                      {perturbagenInfo.action}
+                    </p>
+                    <p>
+                      <strong>Alternative names: </strong>
+                      {perturbagenInfo.synonyms}
+                    </p>
+                  </GridItem>
+                </GridContainer>
+              ) : null}
+            </div>
+          </Slide>
         </CardGeneric>
       </GridItem>
     </GridContainer>

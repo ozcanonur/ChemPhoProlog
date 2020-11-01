@@ -135,14 +135,19 @@ const KinaseList = (): JSX.Element => {
         </CardGeneric>
       </GridItem>
       <GridItem xs={12} lg={6}>
-        <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
-          <div>
-            {selectedInfo !== undefined ? (
-              <CardGeneric
-                color='primary'
-                cardTitle='Kinase Specification'
-                cardSubtitle='Details'
-              >
+        <CardGeneric
+          color='primary'
+          cardTitle='Kinase Specification'
+          cardSubtitle='Details'
+        >
+          <Slide
+            in={rightPanelOpen}
+            direction='left'
+            mountOnEnter
+            unmountOnExit
+          >
+            <div>
+              {selectedInfo !== undefined ? (
                 <GridContainer direction='column'>
                   <GridItem>
                     <CardGeneric color='primary' cardTitle={selectedKinase}>
@@ -170,10 +175,10 @@ const KinaseList = (): JSX.Element => {
                     />
                   </GridItem>
                 </GridContainer>
-              </CardGeneric>
-            ) : null}
-          </div>
-        </Slide>
+              ) : null}
+            </div>
+          </Slide>
+        </CardGeneric>
       </GridItem>
     </GridContainer>
   );
