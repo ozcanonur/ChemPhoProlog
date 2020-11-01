@@ -70,7 +70,7 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
   return (
     <CardGeneric
       color='primary'
-      cardTitle='Putative Downstream Targets'
+      cardTitle={`Putative Downstream Targets of ${kinase}`}
       cardSubtitle='Select a substrate'
     >
       {tableData.length === 0 ? (

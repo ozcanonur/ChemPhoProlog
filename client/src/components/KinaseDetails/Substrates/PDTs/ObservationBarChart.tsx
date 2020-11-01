@@ -2,59 +2,98 @@
 import React, { useState, useEffect } from 'react';
 import pick from 'lodash/pick';
 import axios from 'axios';
-import { ResponsiveBar } from '@nivo/bar';
+import { BarDatum, ResponsiveBar } from '@nivo/bar';
 
 interface Props {
   row: string[];
 }
 
+interface ObsData {
+  fold_change: number;
+  perturbagen: string;
+}
+
+interface PkData {
+  kinase: string;
+  perturbagen: string;
+  source: string;
+  score: string;
+}
+
+const formatObservation = (data: Observation[]) => {
+  const relevantFieldsPicked = data.map((e) =>
+    pick(e, ['perturbagen', 'fold_change'])
+  );
+  const decimalsCutRes = relevantFieldsPicked.map((e) => {
+    return {
+      ...e,
+      fold_change: Math.round(e.fold_change * 1e2) / 1e2,
+    };
+  });
+  return decimalsCutRes;
+};
+
+const fetchKnownPerturbagens = async (kinase: string) => {
+  try {
+    const response = await axios.get('/api/knownPerturbagens', {
+      params: { kinase },
+    });
+    return response.data;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+const fetchObservation = async (substrate: string, cellLine: string) => {
+  try {
+    const response = await axios.get('/api/observation', {
+      params: { substrate, cellLine, min_fold_change: -888, min_p_value: -888 },
+    });
+    return response.data;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+const getLabel = (perturbagen: string, pkData: PkData[]) => {
+  const hasIndicator = pkData.some((row) => row.perturbagen === perturbagen);
+  return hasIndicator ? '*' : '';
+};
+
 const ObservationBarChart = (cellLine: string) => {
   return ({ row }: Props): JSX.Element => {
-    const [data, setData] = useState<Observation[]>([]);
+    const [obsData, setObsData] = useState<ObsData[]>([]);
+    const [pkData, setPkData] = useState<PkData[]>([]);
 
+    const kinase = window.location.href.split('/')[3];
+    console.log(pkData);
     const PDT = row[0];
 
     useEffect(() => {
       let mounted = true;
 
-      axios
-        .get('/api/observation', {
-          params: {
-            substrate: PDT,
-            cellLine,
-            min_fold_change: -888,
-            min_p_value: -888,
-          },
-        })
-        .then((res) => {
-          if (mounted) {
-            const observation = res.data.map((e: Observation) =>
-              pick(e, ['perturbagen', 'fold_change'])
-            );
-            const decimalsCutRes = observation.map((e: Observation) => {
-              return {
-                ...e,
-                fold_change: Math.round(e.fold_change * 1e2) / 1e2,
-              };
-            });
-
-            setData(decimalsCutRes);
-          }
-        })
-        .catch((err) => console.error(err));
+      Promise.all([
+        fetchObservation(PDT, cellLine),
+        fetchKnownPerturbagens(kinase),
+      ]).then(([resObs, resPk]) => {
+        if (mounted && resObs && resPk) {
+          setObsData(formatObservation(resObs));
+          setPkData(resPk);
+        }
+      });
 
       return () => {
         mounted = false;
       };
-    }, [PDT]);
+    }, [PDT, kinase]);
 
     return (
       <div style={{ height: '400px' }}>
-        {data.length === 0 ? (
+        {obsData.length === 0 ? (
           'No observation data'
         ) : (
           <ResponsiveBar
-            data={data}
+            data={obsData}
             keys={['fold_change']}
             indexBy='perturbagen'
             margin={{ top: 20, right: 0, bottom: 100, left: 65 }}
@@ -77,7 +116,8 @@ const ObservationBarChart = (cellLine: string) => {
               legendPosition: 'middle',
               legendOffset: -50,
             }}
-            enableLabel={false}
+            label={(d: BarDatum) => getLabel(d.indexValue.toString(), pkData)}
+            labelTextColor='black'
             animate
             motionStiffness={90}
             motionDamping={15}

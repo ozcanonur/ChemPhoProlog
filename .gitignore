@@ -7,11 +7,6 @@ client/documentation/
 client/build/
 server/build/
 facts/
-combinedFacts.pl
-perturbs_MCF7_all.pl
-perturbs_MCF7_INmtor.pl
-scratch/
 fulldata.csv
 toydata.csv
 chemphopro_old.db
-debug.log
