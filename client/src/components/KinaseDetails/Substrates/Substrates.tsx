@@ -1,5 +1,5 @@
 import React from 'react';
-import BugReport from '@material-ui/icons/BugReport';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import Code from '@material-ui/icons/Code';
 
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
@@ -14,7 +14,7 @@ const Substrates = (): JSX.Element => {
         tabs={[
           {
             tabName: 'Known Substrates',
-            tabIcon: BugReport,
+            tabIcon: TrendingDownIcon,
             tabContent: <KnownSubstrates />,
           },
           {

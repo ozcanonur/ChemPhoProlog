@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
-import BugReport from '@material-ui/icons/BugReport';
+import LayersIcon from '@material-ui/icons/Layers';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -29,7 +29,7 @@ const PDTs = (): JSX.Element => {
           tabs={cellLines.map((cellLine) => {
             return {
               tabName: cellLine,
-              tabIcon: BugReport,
+              tabIcon: LayersIcon,
               tabContent: <PDTTable cellLine={cellLine} />,
             };
           })}

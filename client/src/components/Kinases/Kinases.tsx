@@ -2,8 +2,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import IconButton from '@material-ui/core/IconButton';
 import Slide from '@material-ui/core/Slide';
+import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { pick } from 'lodash';

@@ -94,7 +94,7 @@ const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
 
   // set the dimensions and margins of the graph
   const margin = { top: 100, right: 0, bottom: 0, left: 0 };
-  const width = 400 - margin.left - margin.right;
+  const width = 320 - margin.left - margin.right;
   const height = 400 - margin.top - margin.bottom;
   const innerRadius = 70;
   const outerRadius = Math.min(width, height) / 2;

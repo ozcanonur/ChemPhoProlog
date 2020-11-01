@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
@@ -23,21 +24,22 @@ import {
 const Inputs = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [switchChecked, setSwitchChecked] = useState(false);
+  const [error, setError] = useState('');
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
   const cy = useSelector((state: RootState) => state.cy);
 
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
-  useEffect(() => {
-    const initInputs = {
-      cellLine: 'MCF-7',
-      perturbagen: 'Torin',
-      substrate: 'AKT1(S473)',
-      onlyKinaseEnds: false,
-    };
-    dispatch(setSelectedInputs(initInputs));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const initInputs = {
+  //     cellLine: 'MCF-7',
+  //     perturbagen: 'Torin',
+  //     substrate: 'AKT1(S473)',
+  //     onlyKinaseEnds: false,
+  //   };
+  //   dispatch(setSelectedInputs(initInputs));
+  // }, [dispatch]);
 
   useEffect(() => {
     setLoading(false);
@@ -51,8 +53,10 @@ const Inputs = (): JSX.Element => {
 
   const onSubmit = () => {
     if (!cy) return;
-    // eslint-disable-next-line no-unused-vars
     const { cellLine, perturbagen, substrate } = inputs;
+    if (!cellLine) return setError(`Cell Line can't be empty`);
+    if (!perturbagen) return setError(`Perturbagen can't be empty`);
+    if (!substrate) return setError(`Substrate can't be empty`);
     // Have to move starting phosphosite out of the parent
     // Or cytoscape diff crashes again, same issue with @cxtmenuOptions/submitPathwayFromSelectedEle
     cy.$(`[id='${substrate}']`).move({ parent: null });
@@ -65,23 +69,7 @@ const Inputs = (): JSX.Element => {
       })
     );
     setLoading(true);
-  };
-
-  const inputTypeList = ['Cell Line', 'Perturbagen', 'Substrate'];
-
-  const ButtonText = () => {
-    if (loading)
-      return (
-        <div>
-          <p>Loading...</p>
-          <img
-            src={loading_thin}
-            alt='Loading thin'
-            style={{ marginTop: '-17px', marginBottom: '5px' }}
-          />
-        </div>
-      );
-    return <p>Get pathway</p>;
+    setError('');
   };
 
   return (
@@ -91,7 +79,7 @@ const Inputs = (): JSX.Element => {
       cardSubtitle='Cell Line / Perturbagen / Substrate'
     >
       <GridContainer direction='row' alignItems='center' justify='center'>
-        {inputTypeList.map((inputType, key) => (
+        {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType, key) => (
           <GridItem key={key}>
             <VirtualizedDropDown type={inputType} />
           </GridItem>
@@ -104,9 +92,34 @@ const Inputs = (): JSX.Element => {
               backgroundColor: 'rgba(229,173,6)',
               color: 'white',
               height: '50px',
+              position: 'relative',
             }}
           >
-            <ButtonText />
+            <>
+              {loading ? (
+                <div>
+                  <p>Loading...</p>
+                  <img
+                    src={loading_thin}
+                    alt='Loading thin'
+                    style={{ marginTop: '-17px', marginBottom: '5px' }}
+                  />
+                </div>
+              ) : (
+                <p>Get pathway</p>
+              )}
+              {error ? (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '-20px',
+                    color: 'red',
+                  }}
+                >
+                  {error}
+                </div>
+              ) : undefined}
+            </>
           </Button>
         </GridItem>
         <GridItem

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Button from 'components/Misc/CustomButton/Button';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
+import { setSelectedInputs } from 'actions/pathways';
 import ObservationBarChart from './ObservationBarChart';
 
 interface Props {
@@ -30,6 +34,39 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
 
   const tableData = PDTs.map(Object.values);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const substrate = row[0];
+
+    const goToPathways = () => {
+      dispatch(
+        setSelectedInputs({
+          substrate,
+          cellLine,
+          perturbagen: '',
+          onlyKinaseEnds: false,
+        })
+      );
+      history.push('/pathways');
+    };
+
+    return (
+      <Button
+        onClick={goToPathways}
+        size='sm'
+        style={{
+          backgroundColor: 'rgba(45, 65, 89, 0.7)',
+          boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+        }}
+      >
+        <div>Go to pathways</div>
+      </Button>
+    );
+  };
+
   return (
     <CardGeneric
       color='primary'
@@ -49,6 +86,7 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
             'Shared with',
           ]}
           tableData={tableData}
+          RowContentRight={RowContentRight}
           RowExpandableContentLeft={ObservationBarChart(cellLine)}
           searchIndex={0}
         />
