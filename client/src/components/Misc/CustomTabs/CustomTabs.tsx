@@ -27,7 +27,7 @@ interface Props {
   tabs: ITab[];
 }
 
-const CustomTab = (props: Props): JSX.Element => {
+const CustomTab = (props: Props) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (_event: Event, index: number) => {

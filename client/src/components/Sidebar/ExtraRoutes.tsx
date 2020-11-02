@@ -71,7 +71,7 @@ interface Props {
   routes: Route[];
 }
 
-const ExtraRoutes = ({ routes }: Props): JSX.Element => {
+const ExtraRoutes = ({ routes }: Props) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState(true);

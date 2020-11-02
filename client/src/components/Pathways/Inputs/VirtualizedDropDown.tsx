@@ -10,7 +10,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 
-import axios from 'axios';
+import { fetchFromApi } from 'api/api';
 import perturbagens from 'variables/perturbagens';
 import { setSelectedInputs } from 'actions/pathways';
 
@@ -37,7 +37,7 @@ interface Props {
   type: string;
 }
 
-const Virtualize = ({ type }: Props): JSX.Element => {
+const Virtualize = ({ type }: Props) => {
   const classes = useStyles();
 
   const [data, setData] = useState<string[]>([]);
@@ -47,17 +47,12 @@ const Virtualize = ({ type }: Props): JSX.Element => {
     let mounted = true;
 
     if (type === 'Substrate') {
-      const params = {
+      fetchFromApi('/apiWeb/validObservation', {
         cellLine: inputs.cellLine,
         perturbagen: inputs.perturbagen,
-      };
-
-      axios
-        .get('/apiWeb/validObservation', { params })
-        .then((res) => {
-          if (mounted) setData(res.data);
-        })
-        .catch((err) => console.error(err));
+      }).then((res) => {
+        if (mounted && res) setData(res);
+      });
     } else if (type === 'Perturbagen') setData(perturbagens);
     else if (type === 'Cell Line')
       setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);

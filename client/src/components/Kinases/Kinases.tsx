@@ -6,9 +6,8 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { pick } from 'lodash';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -17,9 +16,10 @@ import { useLocalStorage } from 'utils/customHooks';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import KinaseListPhosphosites from './KinaseListPhosphosites';
+import { formatTableData, findKinaseInfo } from './helpers';
 
 // Kinase List on the Home page
-const KinaseList = (): JSX.Element => {
+const KinaseList = () => {
   const [data, setData] = useState<Kinase[]>([]);
   const [selectedKinase, setSelectedKinase] = useLocalStorage(
     'selectedKinase',
@@ -37,12 +37,9 @@ const KinaseList = (): JSX.Element => {
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/apiWeb/getKinaseList')
-      .then((res) => {
-        if (mounted) setData(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/apiWeb/getKinaseList').then((res) => {
+      if (mounted) setData(res);
+    });
 
     return () => {
       mounted = false;
@@ -51,10 +48,7 @@ const KinaseList = (): JSX.Element => {
 
   // Table data
   const tableData = useMemo(() => {
-    const relevantFieldsPicked = data.map((e) =>
-      pick(e, ['kinase_name', 'expressed_in', 'uniprot_id'])
-    );
-    return relevantFieldsPicked.map(Object.values);
+    return formatTableData(data);
   }, [data]);
 
   // Right panel animation
@@ -70,7 +64,7 @@ const KinaseList = (): JSX.Element => {
 
   // Get specific information about this kinase to display in the right panel
   const selectedInfo = useMemo(() => {
-    return data.find((item) => item.kinase_name === selectedKinase);
+    return findKinaseInfo(data, selectedKinase);
   }, [data, selectedKinase]);
 
   // Button on the right of the row
@@ -110,6 +104,26 @@ const KinaseList = (): JSX.Element => {
     },
   };
 
+  const KinaseDescription = () => {
+    return selectedInfo ? (
+      <>
+        <p>{selectedInfo.description}</p>
+        <p>
+          <strong>Families: </strong>
+          {selectedInfo.families}
+        </p>
+        <p>
+          <strong>Alternative names: </strong>
+          {selectedInfo.gene_synonyms}
+        </p>
+        <p>
+          <strong>Detected in: </strong>
+          {selectedInfo.expressed_in}
+        </p>
+      </>
+    ) : null;
+  };
+
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem xs={12} lg={6}>
@@ -147,35 +161,21 @@ const KinaseList = (): JSX.Element => {
             unmountOnExit
           >
             <div>
-              {selectedInfo !== undefined ? (
-                <GridContainer direction='column'>
-                  <GridItem>
-                    <CardGeneric color='primary' cardTitle={selectedKinase}>
-                      <p>{selectedInfo.description}</p>
-                      <p>
-                        <strong>Families: </strong>
-                        {selectedInfo.families}
-                      </p>
-                      <p>
-                        <strong>Alternative names: </strong>
-                        {selectedInfo.gene_synonyms}
-                      </p>
-                      <p>
-                        <strong>Detected in: </strong>
-                        {selectedInfo.expressed_in}
-                      </p>
-                    </CardGeneric>
-                  </GridItem>
-                  <GridItem>
-                    <NewFindingsCard
-                      leftIconTitle='New Perturbagens'
-                      leftIconText='6'
-                      rightIconText='24'
-                      rightIconTitle='New PDTs'
-                    />
-                  </GridItem>
-                </GridContainer>
-              ) : null}
+              <GridContainer direction='column'>
+                <GridItem>
+                  <CardGeneric color='primary' cardTitle={selectedKinase}>
+                    <KinaseDescription />
+                  </CardGeneric>
+                </GridItem>
+                <GridItem>
+                  <NewFindingsCard
+                    leftIconTitle='New Perturbagens'
+                    leftIconText='6'
+                    rightIconText='24'
+                    rightIconTitle='New PDTs'
+                  />
+                </GridItem>
+              </GridContainer>
             </div>
           </Slide>
         </CardGeneric>

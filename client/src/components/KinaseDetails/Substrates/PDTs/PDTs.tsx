@@ -9,7 +9,7 @@ import GridItem from 'components/Misc/CustomGrid/GridItem';
 import CircularBarPlot from './CircularBarPlot';
 import PDTTable from './PDTTable';
 
-const PDTs = (): JSX.Element => {
+const PDTs = () => {
   const cellLines = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'];
 
   return (

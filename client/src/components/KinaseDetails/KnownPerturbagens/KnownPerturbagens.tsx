@@ -5,13 +5,14 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Slide from '@material-ui/core/Slide';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import { addSidebarRoute } from 'actions/main';
+import { findPerturbagenInfo, formatDataForTable } from './helpers';
 
 interface KnownPerturbagen {
   perturbagen: string;
@@ -22,55 +23,38 @@ interface KnownPerturbagen {
   synonyms: string;
 }
 
-const KnownPerturbagens = (): JSX.Element => {
+const KnownPerturbagens = () => {
   const [data, setData] = useState<KnownPerturbagen[]>([]);
   const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   // Fetch the data
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/api/knownPerturbagens', { params: { kinase } })
-      .then((res) => {
-        if (mounted) setData(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/api/knownPerturbagens', { kinase }).then((res) => {
+      if (mounted) setData(res);
+    });
 
     return () => {
       mounted = false;
     };
   }, [kinase]);
 
-  // Table wants the data in this format :/
-  const tableData = data
-    .map(({ perturbagen, score, source, chemspider_id }) => {
-      return { perturbagen, score, source, chemspider_id };
-    })
-    .map((e) => ({ ...e, score: e.score.toFixed(2) }))
-    .map(Object.values);
-
-  // Get specific information about this perturbagen to display in the right panel
-  const perturbagenInfo = useMemo(() => {
-    return data.find((item) => item.perturbagen === selectedPerturbagen);
-  }, [data, selectedPerturbagen]);
-
   // Right panel animation
   useEffect(() => {
     setRightPanelOpen(false);
+    if (selectedPerturbagen) return;
 
-    if (selectedPerturbagen !== '') {
-      setTimeout(() => {
-        setRightPanelOpen(true);
-      }, 250);
-    }
+    setTimeout(() => {
+      setRightPanelOpen(true);
+    }, 250);
   }, [selectedPerturbagen]);
-
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   // Button on the right of the row
   // row prop will come from the table component's row
@@ -97,9 +81,7 @@ const KnownPerturbagens = (): JSX.Element => {
     );
   };
 
-  const clickableCells: {
-    [key: string]: (perturbagenName: string) => void;
-  } = {
+  const clickableCells = {
     '0': (perturbagenName: string) => {
       dispatch(addSidebarRoute('perturbagen', perturbagenName));
       history.push(`/${perturbagenName}/description`);
@@ -108,6 +90,37 @@ const KnownPerturbagens = (): JSX.Element => {
       window.open(`https://chemspider.com/${chemspiderId}`, '_blank');
     },
   };
+
+  // Get specific information about this perturbagen to display in the right panel
+  const perturbagenInfo = useMemo(() => {
+    return findPerturbagenInfo(data, selectedPerturbagen);
+  }, [data, selectedPerturbagen]);
+
+  const chemspiderUrl = perturbagenInfo
+    ? `https://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`
+    : '';
+
+  const PerturbagenDescription = () => {
+    return perturbagenInfo ? (
+      <>
+        <p>
+          <strong>Chemspider ID: </strong>
+          {perturbagenInfo.chemspider_id}
+        </p>
+        <p>
+          <strong>Families: </strong>
+          {perturbagenInfo.action}
+        </p>
+        <p>
+          <strong>Alternative names: </strong>
+          {perturbagenInfo.synonyms}
+        </p>
+      </>
+    ) : null;
+  };
+
+  // Table wants the data in this format :/
+  const tableData = formatDataForTable(data);
 
   return (
     <GridContainer
@@ -149,37 +162,18 @@ const KnownPerturbagens = (): JSX.Element => {
             unmountOnExit
           >
             <div>
-              {perturbagenInfo !== undefined ? (
-                <GridContainer direction='column'>
-                  <GridItem>
-                    <CardGeneric
-                      color='primary'
-                      cardTitle={selectedPerturbagen}
-                    >
-                      <div style={{ textAlign: 'center' }}>
-                        <img
-                          src={`https://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`}
-                          alt='Perturbagen'
-                        />
-                      </div>
-                    </CardGeneric>
-                  </GridItem>
-                  <GridItem>
-                    <p>
-                      <strong>Chemspider ID: </strong>
-                      {perturbagenInfo.chemspider_id}
-                    </p>
-                    <p>
-                      <strong>Families: </strong>
-                      {perturbagenInfo.action}
-                    </p>
-                    <p>
-                      <strong>Alternative names: </strong>
-                      {perturbagenInfo.synonyms}
-                    </p>
-                  </GridItem>
-                </GridContainer>
-              ) : null}
+              <GridContainer direction='column'>
+                <GridItem>
+                  <CardGeneric color='primary' cardTitle={selectedPerturbagen}>
+                    <div style={{ textAlign: 'center' }}>
+                      <img src={chemspiderUrl} alt='Perturbagen' />
+                    </div>
+                  </CardGeneric>
+                </GridItem>
+                <GridItem>
+                  <PerturbagenDescription />
+                </GridItem>
+              </GridContainer>
             </div>
           </Slide>
         </CardGeneric>

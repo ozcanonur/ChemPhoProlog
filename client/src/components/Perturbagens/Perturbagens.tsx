@@ -6,8 +6,8 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -16,7 +16,7 @@ import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import { useLocalStorage } from 'utils/customHooks';
 
-const PerturbagenList = (): JSX.Element => {
+const PerturbagenList = () => {
   const [data, setData] = useState<Perturbagen[]>([]);
   const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage(
     'selectedPerturbagen',
@@ -34,22 +34,14 @@ const PerturbagenList = (): JSX.Element => {
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/apiWeb/getPerturbagenList')
-      .then((res) => {
-        if (mounted) setData(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/apiWeb/getPerturbagenList').then((res) => {
+      if (mounted) setData(res);
+    });
 
     return () => {
       mounted = false;
     };
   }, []);
-
-  // Table data
-  const tableData = useMemo(() => {
-    return data.map(Object.values);
-  }, [data]);
 
   // Right panel animation
   useEffect(() => {
@@ -104,6 +96,14 @@ const PerturbagenList = (): JSX.Element => {
     },
   };
 
+  const tableData = useMemo(() => {
+    return data.map(Object.values);
+  }, [data]);
+
+  const chemspiderId = selectedInfo
+    ? `https://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`
+    : '';
+
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem sm={12} lg={6}>
@@ -140,31 +140,23 @@ const PerturbagenList = (): JSX.Element => {
             unmountOnExit
           >
             <div>
-              {selectedInfo !== undefined ? (
-                <GridContainer direction='column'>
-                  <GridItem>
-                    <CardGeneric
-                      color='primary'
-                      cardTitle={selectedPerturbagen}
-                    >
-                      <div style={{ textAlign: 'center' }}>
-                        <img
-                          src={`https://www.chemspider.com/ImagesHandler.ashx?id=${selectedInfo.chemspider_id}&w=250&h=250`}
-                          alt='Perturbagen'
-                        />
-                      </div>
-                    </CardGeneric>
-                  </GridItem>
-                  <GridItem>
-                    <NewFindingsCard
-                      leftIconTitle='New Targets'
-                      leftIconText='12'
-                      rightIconTitle='New PDTs'
-                      rightIconText='34'
-                    />
-                  </GridItem>
-                </GridContainer>
-              ) : null}
+              <GridContainer direction='column'>
+                <GridItem>
+                  <CardGeneric color='primary' cardTitle={selectedPerturbagen}>
+                    <div style={{ textAlign: 'center' }}>
+                      <img src={chemspiderId} alt='Perturbagen' />
+                    </div>
+                  </CardGeneric>
+                </GridItem>
+                <GridItem>
+                  <NewFindingsCard
+                    leftIconTitle='New Targets'
+                    leftIconText='12'
+                    rightIconTitle='New PDTs'
+                    rightIconText='34'
+                  />
+                </GridItem>
+              </GridContainer>
             </div>
           </Slide>
         </CardGeneric>

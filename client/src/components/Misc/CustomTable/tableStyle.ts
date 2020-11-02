@@ -65,6 +65,10 @@ const tableStyle = createStyles({
     color: '#0066CC',
     display: 'inline',
   },
+  button: {
+    background: 'rgba(229,173,6)',
+    color: 'white',
+  },
 });
 
 export default tableStyle;

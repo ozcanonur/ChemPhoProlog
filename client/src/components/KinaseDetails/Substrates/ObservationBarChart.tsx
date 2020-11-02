@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
-import pick from 'lodash/pick';
-import axios from 'axios';
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
+
+import { fetchFromApi } from 'api/api';
+import { formatObservation, getBarChartLabel } from './helpers';
 
 interface Props {
   row: string[];
@@ -20,48 +21,8 @@ interface PkData {
   score: string;
 }
 
-const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e) =>
-    pick(e, ['perturbagen', 'fold_change'])
-  );
-  const decimalsCutRes = relevantFieldsPicked.map((e) => {
-    return {
-      ...e,
-      fold_change: Math.round(e.fold_change * 1e2) / 1e2,
-    };
-  });
-  return decimalsCutRes;
-};
-
-const fetchKnownPerturbagens = async (kinase: string) => {
-  try {
-    const response = await axios.get('/api/knownPerturbagens', {
-      params: { kinase },
-    });
-    return response.data;
-  } catch (err) {
-    return console.error(err);
-  }
-};
-
-const fetchObservation = async (substrate: string, cellLine: string) => {
-  try {
-    const response = await axios.get('/api/observation', {
-      params: { substrate, cellLine, min_fold_change: -888, min_p_value: -888 },
-    });
-    return response.data;
-  } catch (err) {
-    return console.error(err);
-  }
-};
-
-const getLabel = (perturbagen: string, pkData: PkData[]) => {
-  const hasIndicator = pkData.some((row) => row.perturbagen === perturbagen);
-  return hasIndicator ? '*' : '';
-};
-
 const ObservationBarChart = (cellLine: string) => {
-  return ({ row }: Props): JSX.Element => {
+  return ({ row }: Props) => {
     const [obsData, setObsData] = useState<ObsData[]>([]);
     const [pkData, setPkData] = useState<PkData[]>([]);
 
@@ -72,8 +33,13 @@ const ObservationBarChart = (cellLine: string) => {
       let mounted = true;
 
       Promise.all([
-        fetchObservation(substrate, cellLine),
-        fetchKnownPerturbagens(kinase),
+        fetchFromApi('/api/observation', {
+          substrate,
+          cellLine,
+          min_fold_change: -888,
+          min_p_value: -888,
+        }),
+        fetchFromApi('/api/knownPerturbagens', { kinase }),
       ]).then(([resObs, resPk]) => {
         if (mounted && resObs && resPk) {
           setObsData(formatObservation(resObs));
@@ -115,7 +81,9 @@ const ObservationBarChart = (cellLine: string) => {
               legendPosition: 'middle',
               legendOffset: -50,
             }}
-            label={(d: BarDatum) => getLabel(d.indexValue.toString(), pkData)}
+            label={(d: BarDatum) =>
+              getBarChartLabel(d.indexValue.toString(), pkData)
+            }
             labelTextColor='black'
             animate
             motionStiffness={90}

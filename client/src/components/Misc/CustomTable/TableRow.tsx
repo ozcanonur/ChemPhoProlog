@@ -25,7 +25,7 @@ interface Props {
   selectedItem?: string;
 }
 
-const Row = (props: Props): JSX.Element => {
+const Row = (props: Props) => {
   const {
     row,
     RowContentRight,

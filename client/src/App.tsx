@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Home = (): JSX.Element => {
+const Home = () => {
   const classes = useStyles();
 
   const extraSidebarRoutes = useSelector(

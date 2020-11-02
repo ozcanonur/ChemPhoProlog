@@ -16,7 +16,7 @@ interface Props {
   content: Content;
 }
 
-const FlipCard = ({ content, ...rest }: Props): JSX.Element => {
+const FlipCard = ({ content, ...rest }: Props) => {
   const classes = useStyles();
 
   const { title, frontTexts } = content;

@@ -10,7 +10,7 @@ interface Props {
   logo: string;
 }
 
-const SidebarTitle = ({ title, logo }: Props): JSX.Element => {
+const SidebarTitle = ({ title, logo }: Props) => {
   const classes = useStyles();
 
   return (

@@ -19,7 +19,7 @@ interface Props {
   };
 }
 
-const StandardRoute = ({ route }: Props): JSX.Element => {
+const StandardRoute = ({ route }: Props) => {
   const classes = useStyles();
 
   // Checking if the current route on URL matches this route

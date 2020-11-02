@@ -4,8 +4,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
+import { fetchFromApi } from 'api/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
-import axios from 'axios';
+import { getChartData } from '../helpers';
 
 interface Props {
   cellLine: string;
@@ -18,45 +19,24 @@ interface PDT {
   uniprot_name: string;
 }
 
-const CircularBarPlot = ({ cellLine }: Props): JSX.Element => {
+const CircularBarPlot = ({ cellLine }: Props) => {
   const [PDTs, setPDTs] = useState<PDT[]>([]);
+
   const kinase = window.location.href.split('/')[3];
 
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
-      .then((res) => {
-        if (mounted) setPDTs(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/api/pdts', { kinase, cell_line: cellLine }).then((res) => {
+      if (mounted && res) setPDTs(res);
+    });
 
     return () => {
       mounted = false;
     };
   }, [kinase, cellLine]);
 
-  const sharedWithList: string[] = [];
-  PDTs.forEach((entry) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { shared_with } = entry;
-    if (shared_with !== null) sharedWithList.push(...shared_with.split(', '));
-  });
-
-  const sharedWithCount: { [key: string]: number } = {};
-  sharedWithList.forEach((shared) => {
-    sharedWithCount[shared] = (sharedWithCount[shared] || 0) + 1;
-  });
-
-  const chartData = Object.entries(sharedWithCount).map((e) => {
-    return {
-      Kinase: e[0],
-      Count: e[1],
-    };
-  });
-
-  const data = chartData.sort((x, y) => y.Count - x.Count);
+  const data = getChartData(PDTs);
 
   const chart = useRef<HTMLDivElement>(null);
 

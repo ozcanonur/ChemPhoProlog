@@ -6,10 +6,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { zip } from 'lodash';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import kinaseListPhosphositesStyles from './styles/kinaseListPhosphosites';
+import { formatPhosphosites } from './helpers';
 
 const useStyles = makeStyles(kinaseListPhosphositesStyles);
 
@@ -17,10 +17,10 @@ interface Props {
   row: string[];
 }
 
-const KinaseListPhosphosites = ({ row }: Props): JSX.Element => {
+const KinaseListPhosphosites = ({ row }: Props) => {
   const classes = useStyles();
 
-  const [phosphosites, setPhosphosites] = useState<string[]>([]);
+  const [phosphosites, setPhosphosites] = useState<any[][]>([]);
 
   const kinase = row[0];
 
@@ -28,34 +28,14 @@ const KinaseListPhosphosites = ({ row }: Props): JSX.Element => {
   useEffect(() => {
     let mounted = true;
 
-    axios.get('/api/phosphosites', { params: { kinase } }).then((res) => {
-      if (mounted) setPhosphosites(res.data.map(Object.values).flat());
+    fetchFromApi('/api/phosphosites', { kinase }).then((res) => {
+      if (mounted && res) setPhosphosites(formatPhosphosites(res));
     });
 
     return () => {
       mounted = false;
     };
   }, [kinase]);
-
-  const getPhosphositeBySite = (aminoacid: string) => {
-    return phosphosites
-      .filter((phosphosite) => {
-        return phosphosite.includes(`(${aminoacid}`);
-      })
-      .map((phosphosite) => {
-        return phosphosite.substring(
-          phosphosite.indexOf('(') + 1,
-          phosphosite.length - 1
-        );
-      });
-  };
-
-  // Split the phosphosites per aminoacid
-  const dividedPhosphosites = zip(
-    getPhosphositeBySite('S'),
-    getPhosphositeBySite('T'),
-    getPhosphositeBySite('Y')
-  );
 
   return (
     <Table size='small'>
@@ -74,15 +54,21 @@ const KinaseListPhosphosites = ({ row }: Props): JSX.Element => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {dividedPhosphosites.map((phosphositeRow, index1) => (
-          <TableRow key={index1}>
-            {phosphositeRow.map((phosphosite, index2) => (
-              <TableCell scope='row' key={index2} className={classes.tableCell}>
-                {phosphosite}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
+        {phosphosites
+          ? phosphosites.map((phosphositeRow, index1) => (
+              <TableRow key={index1}>
+                {phosphositeRow.map((phosphosite, index2) => (
+                  <TableCell
+                    scope='row'
+                    key={index2}
+                    className={classes.tableCell}
+                  >
+                    {phosphosite}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          : null}
       </TableBody>
     </Table>
   );

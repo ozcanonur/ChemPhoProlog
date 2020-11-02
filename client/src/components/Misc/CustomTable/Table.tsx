@@ -33,7 +33,7 @@ interface Props {
   selectedItem?: string;
 }
 
-const CustomTable = (props: Props): JSX.Element => {
+const CustomTable = (props: Props) => {
   const classes = useStyles();
 
   const {
@@ -152,12 +152,7 @@ const CustomTable = (props: Props): JSX.Element => {
             },
           }}
         />
-        <Button
-          aria-label='edit'
-          justIcon
-          round
-          style={{ background: 'rgba(229,173,6)', color: 'white' }}
-        >
+        <Button justIcon round className={classes.button}>
           <Search />
         </Button>
       </div>

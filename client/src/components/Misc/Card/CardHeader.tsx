@@ -16,7 +16,7 @@ interface Props {
   style?: CSSProperties;
 }
 
-const CardHeader = (props: Props): JSX.Element => {
+const CardHeader = (props: Props) => {
   const classes = useStyles();
   const { className, children, color, plain, stats, icon, ...rest } = props;
   const cardHeaderClasses = classNames({

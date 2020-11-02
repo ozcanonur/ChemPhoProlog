@@ -28,7 +28,7 @@ const NewFindingsCard = ({
   leftIconText,
   rightIconTitle,
   rightIconText,
-}: Props): JSX.Element => {
+}: Props) => {
   const classes = useStyles();
 
   const dataNewPerturbagens = [

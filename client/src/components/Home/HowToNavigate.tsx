@@ -36,7 +36,7 @@ const navigationTexts = [
   'Of analytical approaches. In this study we propose novel logic-based algorithms that',
 ];
 
-const HowToNavigate = (): JSX.Element => {
+const HowToNavigate = () => {
   const classes = useStyles();
   return (
     <Card>

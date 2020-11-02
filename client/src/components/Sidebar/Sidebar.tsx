@@ -18,7 +18,7 @@ import sidebarStyles from './styles/sidebarStyles';
 
 const useStyles = makeStyles(sidebarStyles);
 
-const Sidebar = (): JSX.Element => {
+const Sidebar = () => {
   const classes = useStyles();
 
   const extraSidebarRoutes = useSelector(

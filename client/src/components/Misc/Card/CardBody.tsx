@@ -11,7 +11,7 @@ interface Props {
   style?: CSSProperties;
 }
 
-const CardBody = (props: Props): JSX.Element => {
+const CardBody = (props: Props) => {
   const classes = useStyles();
   const { className, children, ...rest } = props;
 

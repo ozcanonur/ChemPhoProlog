@@ -2,14 +2,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import pick from 'lodash/pick';
-import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import * as d3 from 'd3';
 
+import { fetchFromApi } from 'api/api';
 import perturbagens from 'variables/perturbagens';
 import observationHeatMapStyles from './styles/observationHeatMap';
+import { createHeatmapObject, formatObservation } from './helpers';
 
 const useStyles = makeStyles(observationHeatMapStyles);
 
@@ -23,30 +23,6 @@ interface ObsData {
   cell_line: string;
   fold_change: number;
 }
-
-const fetchObservation = async (substrate: string) => {
-  try {
-    const response = await axios.get('/api/observation', {
-      params: { substrate, min_fold_change: -888 },
-    });
-    return response.data;
-  } catch (err) {
-    return console.error(err);
-  }
-};
-
-const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e: Observation) =>
-    pick(e, ['perturbagen', 'substrate', 'cell_line', 'fold_change'])
-  );
-  const decimalsCut = relevantFieldsPicked.map((e) => {
-    return {
-      ...e,
-      fold_change: Math.round(e.fold_change * 1e2) / 1e2,
-    };
-  });
-  return decimalsCut;
-};
 
 const ObservationHeatMap = (isKnownSubstrates: boolean) => {
   return ({ row }: Props): JSX.Element => {
@@ -65,7 +41,10 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
         ? row[0]
         : `${kinase}(${row[1]}${row[0]})`;
 
-      fetchObservation(substrate).then((res) => {
+      fetchFromApi('/api/observation', {
+        substrate,
+        min_fold_change: -888,
+      }).then((res) => {
         if (mounted && res) setObsData(formatObservation(res));
       });
 
@@ -74,28 +53,10 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
       };
     }, [kinase, row]);
 
-    /* Required format for heatmap
-  cellLine: 'MCF-7',
-  AZD1480: -15.2342,
-  Torin: 15.2324,
-  ..
-  */
-    const createHeatmapObject = (cellLine: string) => {
-      const filtered = obsData.filter((e) => e.cell_line === cellLine);
-
-      const result: { [key: string]: string | number } = { cellLine };
-      filtered.forEach((observation) => {
-        const { perturbagen, fold_change } = observation;
-        result[perturbagen] = fold_change;
-      });
-
-      return result;
-    };
-
     const heatmapData = [
-      createHeatmapObject('MCF-7'),
-      createHeatmapObject('HL-60'),
-      createHeatmapObject('NTERA-2 clone D1'),
+      createHeatmapObject(obsData, 'MCF-7'),
+      createHeatmapObject(obsData, 'HL-60'),
+      createHeatmapObject(obsData, 'NTERA-2 clone D1'),
     ];
 
     return (

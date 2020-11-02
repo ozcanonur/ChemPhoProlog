@@ -89,6 +89,14 @@ const headerLinksStyle = createStyles({
     display: 'inline-block',
     marginTop: '20px',
   },
+  button: {
+    background: 'rgba(229,173,6)',
+    color: 'white',
+  },
+  fixedSizeList: {
+    backgroundColor: 'white',
+    color: 'black',
+  },
 });
 
 export default headerLinksStyle;

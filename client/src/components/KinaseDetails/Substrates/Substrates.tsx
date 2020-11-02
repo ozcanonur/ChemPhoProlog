@@ -6,7 +6,7 @@ import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import PDTs from 'components/KinaseDetails/Substrates/PDTs/PDTs';
 import KnownSubstrates from 'components/KinaseDetails/Substrates/KnownSubstrates';
 
-const Substrates = (): JSX.Element => {
+const Substrates = () => {
   return (
     <div style={{ padding: '2em' }}>
       <CustomTabs

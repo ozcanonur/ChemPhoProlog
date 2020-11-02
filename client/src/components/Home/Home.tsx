@@ -9,7 +9,7 @@ import MidTextFindings from './MidTextFindings';
 import HowToNavigate from './HowToNavigate';
 import BezzLab from './BezzLab';
 
-const Welcome = (): JSX.Element => {
+const Welcome = () => {
   const [
     pathwayCard1,
     pathwayCard2,

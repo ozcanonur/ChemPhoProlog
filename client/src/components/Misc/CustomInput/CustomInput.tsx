@@ -23,7 +23,7 @@ interface Props {
   onFocus?: () => void;
 }
 
-const CustomInput = (props: Props): JSX.Element => {
+const CustomInput = (props: Props) => {
   const classes = useStyles();
   const {
     formControlProps,

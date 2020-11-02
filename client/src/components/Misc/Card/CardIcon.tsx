@@ -12,7 +12,7 @@ interface Props {
   color?: string;
 }
 
-const CardIcon = (props: Props): JSX.Element => {
+const CardIcon = (props: Props) => {
   const classes = useStyles();
   const { className, children, color, ...rest } = props;
   const cardIconClasses = classNames({

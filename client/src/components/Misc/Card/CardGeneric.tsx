@@ -16,9 +16,10 @@ interface Props {
   children?: JSX.Element | JSX.Element[] | string;
   style?: CSSProperties;
   headerStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
 }
 
-const CardGeneric = (props: Props): JSX.Element => {
+const CardGeneric = (props: Props) => {
   const classes = useStyles();
   const {
     color,
@@ -27,6 +28,7 @@ const CardGeneric = (props: Props): JSX.Element => {
     children,
     style,
     headerStyle,
+    bodyStyle,
   } = props;
 
   return (
@@ -35,7 +37,7 @@ const CardGeneric = (props: Props): JSX.Element => {
         <h4 className={classes.cardTitleWhite}>{cardTitle}</h4>
         <p className={classes.cardCategoryWhite}>{cardSubtitle}</p>
       </CardHeader>
-      <CardBody>{children}</CardBody>
+      <CardBody style={bodyStyle}>{children}</CardBody>
     </Card>
   );
 };

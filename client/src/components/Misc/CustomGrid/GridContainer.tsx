@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   },
 });
 
-const GridContainer = (props: any): JSX.Element => {
+const GridContainer = (props: any) => {
   const classes = useStyles();
   const { children, ...rest } = props;
   return (

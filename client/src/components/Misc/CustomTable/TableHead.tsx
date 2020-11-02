@@ -11,7 +11,7 @@ interface Props {
   handleSort: (x: number) => void;
 }
 
-const TableHead = ({ content, handleSort }: Props): JSX.Element => {
+const TableHead = ({ content, handleSort }: Props) => {
   const classes = useStyles();
 
   return (

@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
+import CytoscapeComponent from 'react-cytoscapejs';
+import COSEBilkent from 'cytoscape-cose-bilkent';
+import popper from 'cytoscape-popper';
+import cxtmenu from 'cytoscape-cxtmenu';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -15,10 +19,6 @@ import {
   getCytoLayout,
   getCytoElements,
 } from 'components/Pathways/utils/options';
-import CytoscapeComponent from 'react-cytoscapejs';
-import COSEBilkent from 'cytoscape-cose-bilkent';
-import popper from 'cytoscape-popper';
-import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 import {
   runLayout,

@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-const APICard = ({ content }: Props): JSX.Element => {
+const APICard = ({ content }: Props) => {
   const { cardTitle, header, text } = content;
 
   return (

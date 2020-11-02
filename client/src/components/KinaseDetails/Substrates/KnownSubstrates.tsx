@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
@@ -14,30 +14,26 @@ interface KnownSubstrate {
   sources: string;
 }
 
-const KnownSubstratesTable = (): JSX.Element => {
+const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
 
   const kinase = window.location.href.split('/')[3];
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
     let mounted = true;
 
-    axios
-      .get('/api/knownSubstrates', { params: { KPa: kinase } })
-      .then((res) => {
-        if (mounted) setData(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/api/knownSubstrates', { KPa: kinase }).then((res) => {
+      if (mounted) setData(res);
+    });
 
     return () => {
       mounted = false;
     };
   }, [kinase]);
 
-  const tableData = data.map(Object.values);
-
-  const dispatch = useDispatch();
-  const history = useHistory();
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
@@ -68,6 +64,8 @@ const KnownSubstratesTable = (): JSX.Element => {
       </Button>
     );
   };
+
+  const tableData = data.map(Object.values);
 
   return (
     <>

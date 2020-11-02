@@ -11,7 +11,7 @@ interface Props {
   stats?: boolean;
 }
 
-const CardFooter = (props: Props): JSX.Element => {
+const CardFooter = (props: Props) => {
   const classes = useStyles();
   const { className, children, stats, ...rest } = props;
 

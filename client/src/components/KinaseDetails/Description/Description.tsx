@@ -5,8 +5,8 @@ import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-import axios from 'axios';
 
+import { fetchFromApi } from 'api/api';
 import ObservationHeatMap from './ObservationHeatMap';
 
 interface PhosphositeOnKinase {
@@ -25,7 +25,7 @@ interface KinaseInfo {
   expressed_in: string;
 }
 
-const Description = (): JSX.Element => {
+const Description = () => {
   const kinase = window.location.href.split('/')[3];
 
   const [phosphosites, setPhosphosites] = useState<PhosphositeOnKinase[]>([]);
@@ -36,43 +36,22 @@ const Description = (): JSX.Element => {
     expressed_in: '',
   });
 
-  const fetchPhosphosites = async () => {
-    try {
-      const response = await axios.get<PhosphositeOnKinase[]>(
-        '/api/phosphosites',
-        {
-          params: { kinase, detailed: true },
-        }
-      );
-      return response.data;
-    } catch (err) {
-      return console.error(err);
-    }
-  };
-
-  const fetchKinaseInfo = async () => {
-    try {
-      const response = await axios.get<KinaseInfo>('/apiWeb/kinaseInfo', {
-        params: { kinase },
-      });
-      return response.data;
-    } catch (err) {
-      return console.error(err);
-    }
-  };
-
   // Fetch the data
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([fetchPhosphosites(), fetchKinaseInfo()]).then(
-      ([resPho, resKinase]) => {
-        if (mounted && resPho && resKinase) {
-          setPhosphosites(resPho);
-          setKinaseInfo(resKinase);
-        }
+    Promise.all([
+      fetchFromApi('/api/phosphosites', {
+        kinase,
+        detailed: true,
+      }),
+      fetchFromApi('/apiWeb/kinaseInfo', { kinase }),
+    ]).then(([resPho, resKinase]) => {
+      if (mounted && resPho && resKinase) {
+        setPhosphosites(resPho);
+        setKinaseInfo(resKinase);
       }
-    );
+    });
 
     return () => {
       mounted = false;
@@ -82,23 +61,31 @@ const Description = (): JSX.Element => {
   // Table component wants it in this format :/
   const tableData = phosphosites.map(Object.values);
 
+  const KinaseDescription = () => {
+    return (
+      <>
+        <p>{kinaseInfo.description}</p>
+        <p>
+          <strong>Families: </strong>
+          {kinaseInfo.families}
+        </p>
+        <p>
+          <strong>Alternative names: </strong>
+          {kinaseInfo.gene_synonyms}
+        </p>
+        <p>
+          <strong>Detected in: </strong>
+          {kinaseInfo.expressed_in}
+        </p>
+      </>
+    );
+  };
+
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
         <CardGeneric color='primary' cardTitle={kinase}>
-          <p>{kinaseInfo.description}</p>
-          <p>
-            <strong>Families: </strong>
-            {kinaseInfo.families}
-          </p>
-          <p>
-            <strong>Alternative names: </strong>
-            {kinaseInfo.gene_synonyms}
-          </p>
-          <p>
-            <strong>Detected in: </strong>
-            {kinaseInfo.expressed_in}
-          </p>
+          <KinaseDescription />
         </CardGeneric>
       </GridItem>
       <GridItem>

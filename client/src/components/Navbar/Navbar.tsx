@@ -8,6 +8,7 @@ import Button from 'components/Misc/CustomButton/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import navbarStyles from './styles/navbar';
+import { getCurrentNav } from './helpers';
 
 const useStyles = makeStyles(navbarStyles);
 
@@ -15,21 +16,7 @@ interface Props {
   routes: Route[];
 }
 
-const getCurrentNav = (routes: Route[]) => {
-  let name;
-  let term = '';
-
-  routes.map((route) => {
-    if (window.location.href.indexOf(route.path) !== -1) name = route.name;
-    if (window.location.href.split('/').length > 4)
-      [, , , term] = window.location.href.split('/');
-    return null;
-  });
-
-  return term !== '' ? `${name} for ${term}` : name;
-};
-
-const Navbar = ({ routes }: Props): JSX.Element => {
+const Navbar = ({ routes }: Props) => {
   const classes = useStyles();
 
   const currentNav = getCurrentNav(routes);

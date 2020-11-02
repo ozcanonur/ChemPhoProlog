@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import Button from 'components/Misc/CustomButton/Button';
 
+import { fetchFromApi } from 'api/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
@@ -13,19 +13,19 @@ interface Props {
   cellLine: string;
 }
 
-const PDTTable = ({ cellLine }: Props): JSX.Element => {
+const PDTTable = ({ cellLine }: Props) => {
   const [PDTs, setPDTs] = useState([]);
 
   const kinase = window.location.href.split('/')[3];
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   useEffect(() => {
     let mounted = true;
-    axios
-      .get('/api/pdts', { params: { kinase, cell_line: cellLine } })
-      .then((res) => {
-        if (mounted) setPDTs(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchFromApi('/api/pdts', { kinase, cell_line: cellLine }).then((res) => {
+      if (mounted) setPDTs(res);
+    });
 
     return () => {
       mounted = false;
@@ -34,8 +34,6 @@ const PDTTable = ({ cellLine }: Props): JSX.Element => {
 
   const tableData = PDTs.map(Object.values);
 
-  const dispatch = useDispatch();
-  const history = useHistory();
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {

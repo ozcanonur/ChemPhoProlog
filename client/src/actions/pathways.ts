@@ -1,9 +1,10 @@
-import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { pick } from 'lodash';
 import { CollectionReturnValue } from 'cytoscape';
+
 import { store } from 'index';
+import { fetchFromApi } from 'api/api';
 import { formatObservation, getExplanationForPath } from './util';
 
 import {
@@ -37,14 +38,8 @@ export const changeSelectedPath = (
 export const setPathExplanation = (
   selectedPath: string[]
 ): SetPathExplanationAction => {
-  const data: Pathway.PathwayData = store.getState().pathwayData || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
+  // @ts-ignore
+  const data: Pathway.PathwayData = store.getState().pathwayData;
 
   const reversedPath = [...selectedPath].reverse();
   const pathDetails = getExplanationForPath(
@@ -73,33 +68,18 @@ const fetchPathwayData = async (params: {
   substrate: string;
   onlyKinaseEnds: boolean;
 }) => {
-  try {
-    const response = await axios.get<Pathway.PathwayDataFromAPI>(
-      '/api/pathway',
-      { params }
-    );
-    return response.data;
-  } catch (err) {
-    return console.error(err);
-  }
+  const response = await fetchFromApi('/api/pathway', params);
+  return response;
 };
 
 const fetchObservationData = async (params: {
   perturbagen: string;
   cellLine: string;
 }) => {
-  try {
-    const response = await axios.get('/api/observation', {
-      params,
-    });
-    // Pick relevant fields only
-    const parsedResponse = response.data.map((row: Observation) =>
-      pick(row, ['substrate', 'fold_change', 'p_value'])
-    );
-    return parsedResponse;
-  } catch (err) {
-    return console.error(err);
-  }
+  const response = await fetchFromApi('/api/observation', params);
+  return response.map((row: Observation) =>
+    pick(row, ['substrate', 'fold_change', 'p_value'])
+  );
 };
 
 export const getPathwayData = (

@@ -3,7 +3,7 @@ import React from 'react';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Typography from '@material-ui/core/Typography';
 
-const TopText = (): JSX.Element => {
+const TopText = () => {
   return (
     <CardGeneric color='primary' cardTitle='What is ChemPhoProlog?'>
       <Typography variant='body1'>

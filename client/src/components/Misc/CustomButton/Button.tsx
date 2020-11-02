@@ -20,7 +20,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const RegularButton = (props: Props): JSX.Element => {
+const RegularButton = (props: Props) => {
   const classes = useStyles();
   const { color, round, children, size, justIcon, className, ...rest } = props;
   const btnClasses = classNames({
