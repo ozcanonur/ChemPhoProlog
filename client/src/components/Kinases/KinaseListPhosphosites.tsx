@@ -21,15 +21,20 @@ const KinaseListPhosphosites = ({ row }: Props) => {
   const classes = useStyles();
 
   const [phosphosites, setPhosphosites] = useState<any[][]>([]);
+  const [loading, setLoading] = useState(false);
 
   const kinase = row[0];
 
   // Fetch the phosphosites for this kinase
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     fetchFromApi('/api/phosphosites', { kinase }).then((res) => {
-      if (mounted && res) setPhosphosites(formatPhosphosites(res));
+      if (mounted && res) {
+        setPhosphosites(formatPhosphosites(res));
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -50,19 +55,23 @@ const KinaseListPhosphosites = ({ row }: Props) => {
           })}
         </TableRow>
       </TableHead>
-      <TableBody>
-        {phosphosites
-          ? phosphosites.map((phosphositeRow, index1) => (
-              <TableRow key={index1}>
-                {phosphositeRow.map((phosphosite, index2) => (
-                  <TableCell scope='row' key={index2} className={classes.tableCell}>
-                    {phosphosite}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          : null}
-      </TableBody>
+      {phosphosites.length === 0 && !loading ? (
+        <div>No phosphosites on this kinase.</div>
+      ) : loading ? (
+        <div>Loading...</div>
+      ) : (
+        <TableBody>
+          {phosphosites.map((phosphositeRow, index1) => (
+            <TableRow key={index1}>
+              {phosphositeRow.map((phosphosite, index2) => (
+                <TableCell scope='row' key={index2} className={classes.tableCell}>
+                  {phosphosite}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      )}
     </Table>
   );
 };

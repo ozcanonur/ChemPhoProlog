@@ -31,6 +31,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-nested-ternary': 'off',
     'import/prefer-default-export': 'off',
     'no-console': 'off',
     'linebreak-style': 'off',

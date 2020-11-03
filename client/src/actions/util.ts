@@ -15,11 +15,7 @@ export const getExplanationForPath = (
   if (path.length > 0 && path[0].includes('(')) startIndex = 1;
 
   // Add the stop reason
-  outputList.push([
-    `Stopped at ${path[0]}, (${stoppingReasons[path[0]]})`,
-    '',
-    '',
-  ]);
+  outputList.push([`Stopped at ${path[0]}, (${stoppingReasons[path[0]]})`, '', '']);
 
   for (let i = startIndex; i < path.length; i += 2) {
     const topKPa = path[i];
@@ -27,24 +23,14 @@ export const getExplanationForPath = (
     const bottomKPa = path[i + 2];
 
     const topKPaActivity = prevBottomKPaActivity;
-    const topKPaFunction = Object.keys(phosphatases).includes(topKPa)
-      ? 'dephosphorylates'
-      : 'phosphorylates';
+    const topKPaFunction = Object.keys(phosphatases).includes(topKPa) ? 'dephosphorylates' : 'phosphorylates';
 
     const foldChange = parseFloat(observation[midPhosphosite].fold_change);
     const reg = regulatory[midPhosphosite];
 
-    const bottomKPaActivated =
-      (foldChange > 0 && reg === 'p_inc') ||
-      (foldChange < 0 && reg === 'p_dec');
-    const bottomKPaInhibited =
-      (foldChange > 0 && reg === 'p_dec') ||
-      (foldChange < 0 && reg === 'p_inc');
-    const bottomKPaActivity = bottomKPaActivated
-      ? 'activated'
-      : bottomKPaInhibited
-      ? 'inhibited'
-      : 'conflicting';
+    const bottomKPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
+    const bottomKPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
+    const bottomKPaActivity = bottomKPaActivated ? 'activated' : bottomKPaInhibited ? 'inhibited' : 'conflicting';
 
     const topKPaOutput = `${topKPa} is ${topKPaActivity}, (${topKPaFunction})`;
     const midPhosphositeOutput = `${midPhosphosite}, fc: ${foldChange}, reg: ${reg}`;
@@ -52,9 +38,7 @@ export const getExplanationForPath = (
 
     const isEnd = i === path.length - 2;
 
-    const output = isEnd
-      ? [topKPaOutput, midPhosphositeOutput, '']
-      : [topKPaOutput, midPhosphositeOutput, bottomKPaOutput];
+    const output = isEnd ? [topKPaOutput, midPhosphositeOutput, ''] : [topKPaOutput, midPhosphositeOutput, bottomKPaOutput];
 
     outputList.push(output);
 
@@ -68,9 +52,7 @@ export const formatObservation = (
   phosphosites: Pathway.Phosphosites,
   observationData: Observation[]
 ): Pathway.PathwayObservation => {
-  const observationInCurrentPaths = observationData.filter((e: Observation) =>
-    phosphosites.includes(e.substrate)
-  );
+  const observationInCurrentPaths = observationData.filter((e: Observation) => phosphosites.includes(e.substrate));
 
   const formattedObservation: {
     [key: string]: { fold_change: string; p_value: string };

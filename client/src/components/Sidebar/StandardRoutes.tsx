@@ -25,19 +25,13 @@ const StandardRoute = ({ route }: Props) => {
   // Checking if the current route on URL matches this route
   // Assign orange BG if it is
   const listItemClasses =
-    window.location.href.indexOf(route.path) > -1
-      ? `${classes.itemLink} ${classes.orange}`
-      : `${classes.itemLink}`;
+    window.location.href.indexOf(route.path) > -1 ? `${classes.itemLink} ${classes.orange}` : `${classes.itemLink}`;
 
   return (
     <NavLink to={route.path} className={classes.item}>
       <ListItem button className={listItemClasses}>
         <route.icon className={classes.itemIcon} />
-        <ListItemText
-          primary={route.name}
-          className={classes.itemText}
-          disableTypography
-        />
+        <ListItemText primary={route.name} className={classes.itemText} disableTypography />
       </ListItem>
     </NavLink>
   );

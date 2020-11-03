@@ -21,28 +21,18 @@ const useStyles = makeStyles(sidebarStyles);
 const Sidebar = () => {
   const classes = useStyles();
 
-  const extraSidebarRoutes = useSelector(
-    (state: RootState) => state.extraSidebarRoutes
-  );
+  const extraSidebarRoutes = useSelector((state: RootState) => state.extraSidebarRoutes);
 
   const scrollDownref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (scrollDownref.current)
-      scrollDownref.current.scrollIntoView({ behavior: 'smooth' });
+    if (scrollDownref.current) scrollDownref.current.scrollIntoView({ behavior: 'smooth' });
   }, [extraSidebarRoutes]);
 
-  const [allExtraKinaseRoutes, allExtraPerturbagenRoutes] = partition(
-    extraSidebarRoutes,
-    (e) => e.type === 'kinase'
-  );
+  const [allExtraKinaseRoutes, allExtraPerturbagenRoutes] = partition(extraSidebarRoutes, (e) => e.type === 'kinase');
 
-  const generatedKinaseSubRoutes = allExtraKinaseRoutes.map((route) =>
-    generateSubRoutes(route.type, route.name)
-  );
+  const generatedKinaseSubRoutes = allExtraKinaseRoutes.map((route) => generateSubRoutes(route.type, route.name));
 
-  const generatedPerturbagenSubRoutes = allExtraPerturbagenRoutes.map((route) =>
-    generateSubRoutes(route.type, route.name)
-  );
+  const generatedPerturbagenSubRoutes = allExtraPerturbagenRoutes.map((route) => generateSubRoutes(route.type, route.name));
 
   return (
     <Drawer
@@ -58,12 +48,7 @@ const Sidebar = () => {
           {standardRoutes.map((route) => (
             <StandardRoute key={route.name} route={route} />
           ))}
-          <Slide
-            in={allExtraKinaseRoutes.length !== 0}
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-          >
+          <Slide in={allExtraKinaseRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
             <div className={classes.extraRoutesContainer}>
               <SidebarTitle title='Kinases' logo={reactLogo} />
               {generatedKinaseSubRoutes.map((routes) => (
@@ -71,12 +56,7 @@ const Sidebar = () => {
               ))}
             </div>
           </Slide>
-          <Slide
-            in={allExtraPerturbagenRoutes.length !== 0}
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-          >
+          <Slide in={allExtraPerturbagenRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
             <div className={classes.extraRoutesContainer}>
               <SidebarTitle title='Perturbagens' logo={reactLogo} />
               {generatedPerturbagenSubRoutes.map((routes) => (

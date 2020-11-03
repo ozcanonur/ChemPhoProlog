@@ -15,6 +15,7 @@ interface KnownTarget {
 
 const KnownTargets = () => {
   const [data, setData] = useState<KnownTarget[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const perturbagen = window.location.href.split('/')[3];
 
@@ -24,9 +25,13 @@ const KnownTargets = () => {
   // Fetch the data
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     fetchFromApi('/api/knownTargets', { perturbagen }).then((res) => {
-      if (mounted) setData(res);
+      if (mounted) {
+        setData(res);
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -44,23 +49,19 @@ const KnownTargets = () => {
   };
 
   // Table component wants it in this format
-  const tableData = data
-    .map((e) => ({ ...e, score: e.score.toFixed(2) }))
-    .map(Object.values);
+  const tableData = data.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values);
 
   return (
     <div style={{ padding: '2em' }}>
-      <CardGeneric
-        color='primary'
-        cardTitle='Perturbagens'
-        cardSubtitle='Select a perturbagen'
-      >
-        {tableData === [] ? (
+      <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+        {tableData.length === 0 && !loading ? (
+          <div>No Known Targets</div>
+        ) : loading ? (
           <div>Loading...</div>
         ) : (
           <Table
             id={`${perturbagen}_KnownTargets`}
-            tableHead={['Kinase', 'Source', 'Score']}
+            tableHead={['Kinase', 'Source', 'Score', '']}
             tableData={tableData}
             clickableCells={clickableCells}
             searchIndex={0}

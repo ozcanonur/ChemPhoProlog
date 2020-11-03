@@ -18,14 +18,9 @@ import { useLocalStorage } from 'utils/customHooks';
 
 const PerturbagenList = () => {
   const [data, setData] = useState<Perturbagen[]>([]);
-  const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage(
-    'selectedPerturbagen',
-    ''
-  );
-  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage(
-    'perturbagenRightPanelOpen',
-    false
-  );
+  const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage('selectedPerturbagen', '');
+  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('perturbagenRightPanelOpen', false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -33,9 +28,13 @@ const PerturbagenList = () => {
   // Fetch data on render
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     fetchFromApi('/apiWeb/getPerturbagenList').then((res) => {
-      if (mounted) setData(res);
+      if (mounted) {
+        setData(res);
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -50,7 +49,7 @@ const PerturbagenList = () => {
     if (selectedPerturbagen !== '') {
       setTimeout(() => {
         setRightPanelOpen(true);
-      }, 250);
+      }, 300);
     }
   }, [selectedPerturbagen]);
 
@@ -107,17 +106,15 @@ const PerturbagenList = () => {
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem sm={12} lg={6}>
-        <CardGeneric
-          color='primary'
-          cardTitle='Perturbagens'
-          cardSubtitle='Select a perturbagen'
-        >
-          {tableData.length === 0 ? (
+        <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
+          {tableData.length === 0 && !loading ? (
+            <div>Something went wrong.</div>
+          ) : loading ? (
             <div>Loading...</div>
           ) : (
             <Table
               id='Perturbagens'
-              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms']}
+              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
               tableData={tableData}
               RowContentRight={RowContentRight}
               clickableCells={clickableCells}
@@ -132,13 +129,9 @@ const PerturbagenList = () => {
           color='primary'
           cardTitle='Perturbagen Specification'
           cardSubtitle='Details'
+          bodyStyle={{ minHeight: selectedPerturbagen ? '45rem' : 0 }}
         >
-          <Slide
-            in={rightPanelOpen}
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-          >
+          <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
               <GridContainer direction='column'>
                 <GridItem>
@@ -149,12 +142,7 @@ const PerturbagenList = () => {
                   </CardGeneric>
                 </GridItem>
                 <GridItem>
-                  <NewFindingsCard
-                    leftIconTitle='New Targets'
-                    leftIconText='12'
-                    rightIconTitle='New PDTs'
-                    rightIconText='34'
-                  />
+                  <NewFindingsCard leftIconTitle='New Targets' leftIconText='12' rightIconTitle='New PDTs' rightIconText='34' />
                 </GridItem>
               </GridContainer>
             </div>

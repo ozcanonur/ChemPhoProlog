@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -25,6 +26,7 @@ interface SubstratesWithPaths {
 const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
+  const [loading, setLoading] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
 
@@ -33,6 +35,7 @@ const KnownSubstratesTable = () => {
 
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     Promise.all([
       fetchFromApi('/api/knownSubstrates', { KPa: kinase }),
@@ -41,6 +44,7 @@ const KnownSubstratesTable = () => {
       if (mounted && resKnownSubstrates && resSubstratesWithPaths) {
         setData(resKnownSubstrates);
         setSubstratesWithPaths(resSubstratesWithPaths);
+        setLoading(false);
       }
     });
 
@@ -123,8 +127,10 @@ const KnownSubstratesTable = () => {
 
   return (
     <>
-      {tableData.length === 0 ? (
+      {tableData.length === 0 && !loading ? (
         <div>No entries found.</div>
+      ) : loading ? (
+        <div>Loading...</div>
       ) : (
         <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
           <Table

@@ -23,6 +23,7 @@ const KinaseList = () => {
   const [data, setData] = useState<Kinase[]>([]);
   const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -30,9 +31,13 @@ const KinaseList = () => {
   // Fetch data on render
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     fetchFromApi('/apiWeb/getKinaseList').then((res) => {
-      if (mounted) setData(res);
+      if (mounted) {
+        setData(res);
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -52,7 +57,7 @@ const KinaseList = () => {
     if (selectedKinase !== '') {
       setTimeout(() => {
         setRightPanelOpen(true);
-      }, 250);
+      }, 300);
     }
   }, [selectedKinase]);
 
@@ -122,12 +127,14 @@ const KinaseList = () => {
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem xs={12} lg={6}>
         <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase'>
-          {tableData.length === 0 ? (
+          {tableData.length === 0 && !loading ? (
+            <div>Something went wrong.</div>
+          ) : loading ? (
             <div>Loading...</div>
           ) : (
             <Table
               id='Kinases'
-              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID']}
+              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
               tableData={tableData}
               RowExpandableContentLeft={KinaseListPhosphosites}
               RowContentRight={RowContentRight}
@@ -139,7 +146,12 @@ const KinaseList = () => {
         </CardGeneric>
       </GridItem>
       <GridItem xs={12} lg={6}>
-        <CardGeneric color='primary' cardTitle='Kinase Specification' cardSubtitle='Details'>
+        <CardGeneric
+          color='primary'
+          cardTitle='Kinase Specification'
+          cardSubtitle='Details'
+          bodyStyle={{ minHeight: selectedKinase ? '40rem' : 0 }}
+        >
           <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
               <GridContainer direction='column'>
@@ -149,7 +161,12 @@ const KinaseList = () => {
                   </CardGeneric>
                 </GridItem>
                 <GridItem>
-                  <NewFindingsCard leftIconTitle='New Perturbagens' leftIconText='6' rightIconText='24' rightIconTitle='New PDTs' />
+                  <NewFindingsCard
+                    leftIconTitle='New Perturbagens'
+                    leftIconText='6'
+                    rightIconText='24'
+                    rightIconTitle='New PDTs'
+                  />
                 </GridItem>
               </GridContainer>
             </div>

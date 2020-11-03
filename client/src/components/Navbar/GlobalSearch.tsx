@@ -62,9 +62,7 @@ const GlobalSearch = () => {
   const classes = useStyles();
 
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [filteredSearchResults, setFilteredSearchResults] = useState<
-    SearchResult[]
-  >([]);
+  const [filteredSearchResults, setFilteredSearchResults] = useState<SearchResult[]>([]);
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Fetch the data on first focus
@@ -72,10 +70,7 @@ const GlobalSearch = () => {
     setSearchOpen(true);
     if (searchResults.length > 0) return;
 
-    const apiResults = await Promise.all([
-      fetchFromApi('/apiWeb/getAllKinases'),
-      fetchFromApi('/apiWeb/getAllSubstrates'),
-    ]);
+    const apiResults = await Promise.all([fetchFromApi('/apiWeb/getAllKinases'), fetchFromApi('/apiWeb/getAllSubstrates')]);
     const perturbagenResults = perturbagens.map((perturbagen) => {
       return { perturbagen };
     });
@@ -107,11 +102,9 @@ const GlobalSearch = () => {
           className: `${classes.margin} ${classes.search}`,
         }}
         inputProps={{
-          placeholder:
-            searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
+          placeholder: searchOpen && searchResults.length === 0 ? 'Loading...' : 'Search',
           inputProps: {
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-              handleChange(e.target.value),
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value),
             onFocus: handleFocus,
             onBlur: handleBlur,
           },

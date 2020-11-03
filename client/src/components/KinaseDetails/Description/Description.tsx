@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -48,6 +49,7 @@ const Description = () => {
     expressed_in: '',
   });
   const [phosphositesWithPaths, setPhosphositesWithPaths] = useState<PhosphositesWithPaths>({});
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -55,6 +57,7 @@ const Description = () => {
   // Fetch the data
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     Promise.all([
       fetchFromApi('/api/phosphosites', {
@@ -68,6 +71,7 @@ const Description = () => {
         setPhosphosites(resPho);
         setKinaseInfo(resKinase);
         setPhosphositesWithPaths(resPhosphositesWithPaths);
+        setLoading(false);
       }
     });
 
@@ -178,8 +182,10 @@ const Description = () => {
       </GridItem>
       <GridItem>
         <CardGeneric color='primary' cardTitle={`Phosphosites on ${kinase}`} cardSubtitle='Select a phosphosite'>
-          {tableData.length === 0 ? (
+          {tableData.length === 0 && !loading ? (
             <div>No entries found.</div>
+          ) : loading ? (
+            <div>Loading...</div>
           ) : (
             <Table
               id={`${kinase}_PhosphositesOfInterest`}

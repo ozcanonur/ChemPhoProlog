@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -24,6 +25,7 @@ interface SubstratesWithPaths {
 const PDTTable = ({ cellLine }: Props) => {
   const [PDTs, setPDTs] = useState([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
+  const [loading, setLoading] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
 
@@ -32,6 +34,7 @@ const PDTTable = ({ cellLine }: Props) => {
 
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     Promise.all([
       fetchFromApi('/api/pdts', { kinase, cell_line: cellLine }),
@@ -40,6 +43,7 @@ const PDTTable = ({ cellLine }: Props) => {
       if (mounted && resPDTs && resSubstratesWithPaths) {
         setPDTs(resPDTs);
         setSubstratesWithPaths(resSubstratesWithPaths);
+        setLoading(false);
       }
     });
 
@@ -110,8 +114,10 @@ const PDTTable = ({ cellLine }: Props) => {
 
   return (
     <CardGeneric color='primary' cardTitle={`Putative Downstream Targets of ${kinase}`} cardSubtitle='Select a substrate'>
-      {tableData.length === 0 ? (
+      {tableData.length === 0 && !loading ? (
         <div>No entries found.</div>
+      ) : loading ? (
+        <div>Loading...</div>
       ) : (
         <Table
           id={`${cellLine}_${kinase}_PDTTable`}

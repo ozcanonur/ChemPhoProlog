@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -27,6 +28,7 @@ const KnownPerturbagens = () => {
   const [data, setData] = useState<KnownPerturbagen[]>([]);
   const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
 
@@ -36,9 +38,13 @@ const KnownPerturbagens = () => {
   // Fetch the data
   useEffect(() => {
     let mounted = true;
+    setLoading(true);
 
     fetchFromApi('/api/knownPerturbagens', { kinase }).then((res) => {
-      if (mounted) setData(res);
+      if (mounted) {
+        setData(res);
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -53,7 +59,7 @@ const KnownPerturbagens = () => {
     if (selectedPerturbagen !== '') {
       setTimeout(() => {
         setRightPanelOpen(true);
-      }, 250);
+      }, 300);
     }
   }, [selectedPerturbagen]);
 
@@ -127,12 +133,14 @@ const KnownPerturbagens = () => {
     <GridContainer direction='row' justify='space-between' style={{ padding: '2em' }}>
       <GridItem md>
         <CardGeneric color='primary' cardTitle='Known Perturbagens' cardSubtitle='Select a perturbagen'>
-          {tableData.length === 0 ? (
+          {tableData.length === 0 && !loading ? (
             <div>No entries found</div>
+          ) : loading ? (
+            <div>Loading...</div>
           ) : (
             <Table
               id={`${kinase}_KnownPerturbagens`}
-              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID']}
+              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID', '']}
               tableData={tableData}
               searchIndex={0}
               clickableCells={clickableCells}
@@ -143,7 +151,12 @@ const KnownPerturbagens = () => {
         </CardGeneric>
       </GridItem>
       <GridItem md>
-        <CardGeneric color='primary' cardTitle='Perturbagen Info' cardSubtitle='Details'>
+        <CardGeneric
+          color='primary'
+          cardTitle='Perturbagen Info'
+          cardSubtitle='Details'
+          bodyStyle={{ minHeight: selectedPerturbagen ? '30rem' : 0 }}
+        >
           <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
               <GridContainer direction='column'>

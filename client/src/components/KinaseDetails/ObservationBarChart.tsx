@@ -25,12 +25,14 @@ const ObservationBarChart = (cellLine: string) => {
   return ({ row }: Props) => {
     const [obsData, setObsData] = useState<ObsData[]>([]);
     const [pkData, setPkData] = useState<PkData[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const kinase = window.location.href.split('/')[3];
     const substrate = row[0];
 
     useEffect(() => {
       let mounted = true;
+      setLoading(true);
 
       Promise.all([
         fetchFromApi('/api/observation', {
@@ -44,6 +46,7 @@ const ObservationBarChart = (cellLine: string) => {
         if (mounted && resObs && resPk) {
           setObsData(formatObservation(resObs));
           setPkData(resPk);
+          setLoading(false);
         }
       });
 
@@ -54,8 +57,10 @@ const ObservationBarChart = (cellLine: string) => {
 
     return (
       <div style={{ height: '400px' }}>
-        {obsData.length === 0 ? (
+        {obsData.length === 0 && !loading ? (
           'No observation data'
+        ) : loading ? (
+          'Loading...'
         ) : (
           <ResponsiveBar
             data={obsData}

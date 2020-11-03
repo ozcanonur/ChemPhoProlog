@@ -48,7 +48,7 @@ const PathsTable = () => {
     <CardGeneric color='primary' cardTitle='Paths found' cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}>
       <Table
         id='PathsTable'
-        tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length']}
+        tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', '']}
         tableData={tableData}
         RowContentRight={RowContentRight}
         searchIndex={1}

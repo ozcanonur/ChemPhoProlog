@@ -24,11 +24,7 @@ const Navbar = ({ routes }: Props) => {
   return (
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.container}>
-        <GridContainer
-          direction='row'
-          justify='space-between'
-          style={{ width: '100%' }}
-        >
+        <GridContainer direction='row' justify='space-between' style={{ width: '100%' }}>
           <GridItem>
             <div className={classes.flex}>
               <Button color='transparent' className={classes.title}>

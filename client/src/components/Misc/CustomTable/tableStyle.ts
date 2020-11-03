@@ -29,7 +29,7 @@ const tableStyle = createStyles({
     fontWeight: 300,
     lineHeight: '1.5em',
     '&, &$tableCell': {
-      fontSize: '1em',
+      fontSize: '1.05em',
     },
     cursor: 'pointer',
   },

@@ -32,12 +32,9 @@ const useStyles = makeStyles({
 const Home = () => {
   const classes = useStyles();
 
-  const extraSidebarRoutes = useSelector(
-    (state: RootState) => state.extraSidebarRoutes
-  );
+  const extraSidebarRoutes = useSelector((state: RootState) => state.extraSidebarRoutes);
 
-  const getExtraRoutes = () =>
-    extraSidebarRoutes.map(({ type, name }) => additionalRoutes(type, name));
+  const getExtraRoutes = () => extraSidebarRoutes.map(({ type, name }) => additionalRoutes(type, name));
   const allRoutes = [...routes, ...getExtraRoutes().flat()];
 
   return (
@@ -48,11 +45,7 @@ const Home = () => {
         <div className={classes.map}>
           <Switch>
             {allRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
+              <Route key={route.path} path={route.path} component={route.component} />
             ))}
             <Redirect from='/' to='/home' />
           </Switch>

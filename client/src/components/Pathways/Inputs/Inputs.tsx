@@ -24,7 +24,7 @@ interface Props {
 
 const useStyles = makeStyles(inputsStyles);
 
-const Inputs = ({ cy }: Props): JSX.Element => {
+const Inputs = ({ cy }: Props) => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);

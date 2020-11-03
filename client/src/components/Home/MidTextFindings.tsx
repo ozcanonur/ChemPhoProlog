@@ -72,7 +72,7 @@ const NewFindings = ({ direction, cardTitle, cardCategory }: Props) => {
   );
 };
 
-const MidTextFindings = (): JSX.Element => {
+const MidTextFindings = () => {
   return (
     <GridContainer direction='row'>
       <GridItem md>

@@ -1,16 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 import { uniqWith } from 'lodash';
-import {
-  ACTION,
-  AddSidebarRouteAction,
-  RemoveSidebarRouteAction,
-} from 'actions/types';
+import { ACTION, AddSidebarRouteAction, RemoveSidebarRouteAction } from 'actions/types';
 
 const addUniqueRoute = (state: SidebarRoute[], type: string, name: string) =>
-  uniqWith(
-    [...state, { type, name }],
-    (x, y) => x.type === y.type && x.name === y.name
-  );
+  uniqWith([...state, { type, name }], (x, y) => x.type === y.type && x.name === y.name);
 
 export const extraSidebarRoutes = (
   state: SidebarRoute[] = [],

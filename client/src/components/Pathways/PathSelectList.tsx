@@ -15,7 +15,7 @@ interface Props {
   cy: Core;
 }
 
-const PathSelectList = ({ cy }: Props): JSX.Element => {
+const PathSelectList = ({ cy }: Props) => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
 

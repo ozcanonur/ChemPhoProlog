@@ -48,16 +48,8 @@ const ExtraRouteTitle = ({ route, expanded, toggleExpand }: TitleProps) => {
 
   return (
     <ListItem className={classes.titleListItem}>
-      <RemoveCircleOutlineIcon
-        className={classes.removeIcon}
-        onClick={handleRouteRemove}
-      />
-      <ListItemText
-        primary={currentTitle}
-        className={classes.titleItemText}
-        disableTypography
-        onClick={redirectToDescription}
-      />
+      <RemoveCircleOutlineIcon className={classes.removeIcon} onClick={handleRouteRemove} />
+      <ListItemText primary={currentTitle} className={classes.titleItemText} disableTypography onClick={redirectToDescription} />
       {expanded ? (
         <ExpandLessIcon className={classes.expandIcon} onClick={toggleExpand} />
       ) : (
@@ -83,28 +75,16 @@ const ExtraRoutes = ({ routes }: Props) => {
     <>
       {routes.map((route, index) => {
         const listItemClasses =
-          window.location.href.indexOf(route.path) > -1
-            ? `${classes.itemLink} ${classes.orange}`
-            : `${classes.itemLink}`;
+          window.location.href.indexOf(route.path) > -1 ? `${classes.itemLink} ${classes.orange}` : `${classes.itemLink}`;
 
         return (
           <div key={route.path}>
-            {index === 0 ? (
-              <ExtraRouteTitle
-                route={route}
-                expanded={expanded}
-                toggleExpand={toggleExpand}
-              />
-            ) : null}
+            {index === 0 ? <ExtraRouteTitle route={route} expanded={expanded} toggleExpand={toggleExpand} /> : null}
             <Collapse in={expanded} timeout='auto' mountOnEnter unmountOnExit>
               <NavLink to={route.path} className={classes.item}>
                 <ListItem button className={listItemClasses}>
                   <route.icon className={classes.itemIcon} />
-                  <ListItemText
-                    primary={route.name}
-                    className={classes.itemText}
-                    disableTypography
-                  />
+                  <ListItemText primary={route.name} className={classes.itemText} disableTypography />
                 </ListItem>
               </NavLink>
             </Collapse>

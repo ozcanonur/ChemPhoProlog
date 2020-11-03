@@ -62,6 +62,7 @@ console.error = function filterWarnings(msg: string) {
   if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup.apply(console, arguments);
 };
 
+// Disabling out of range values for pathway inputs and nivo using old lifecycle, both harmless
 const backup2 = console.warn;
 console.warn = function filterWarnings(msg: string) {
   const suppressedWarnings = [

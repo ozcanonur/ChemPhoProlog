@@ -8,8 +8,7 @@ const apiTexts = [
   {
     cardTitle: 'Observation',
     header: 'GET /api/observation',
-    text:
-      'Experimental / observational data that used to observe phosphorylation among many phosphosites.',
+    text: 'Experimental / observational data that used to observe phosphorylation among many phosphosites.',
   },
   {
     cardTitle: 'Phosphosites',
@@ -24,20 +23,17 @@ const apiTexts = [
   {
     cardTitle: 'PDTs',
     header: 'GET /api/PDTs',
-    text:
-      'Findings for putative downstream targets of a given kinase or phosphatase',
+    text: 'Findings for putative downstream targets of a given kinase or phosphatase',
   },
   {
     cardTitle: 'Known Perturbagens',
     header: 'GET /api/knownPerturbagens',
-    text:
-      'Previously reported perturbagens that were observed to inhibit/activate a given kinase or phosphatase',
+    text: 'Previously reported perturbagens that were observed to inhibit/activate a given kinase or phosphatase',
   },
   {
     cardTitle: 'Known Perturbagen Targets',
     header: 'GET /api/knownTargets',
-    text:
-      'Previously reported kinase / phosphatase targets of a given perturbagen',
+    text: 'Previously reported kinase / phosphatase targets of a given perturbagen',
   },
 ];
 

@@ -11,7 +11,7 @@ import React from 'react';
 // import styles from 'assets/jss/dashboardStyle/views/dashboardStyle.js';
 // const useStyles = makeStyles(styles);
 
-const Description = (): JSX.Element => {
+const Description = () => {
   // const classes = useStyles();
 
   // const perturbagen = window.location.href.split('/')[4];

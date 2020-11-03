@@ -23,12 +23,7 @@ interface Props {
   rightIconText: string;
 }
 
-const NewFindingsCard = ({
-  leftIconTitle,
-  leftIconText,
-  rightIconTitle,
-  rightIconText,
-}: Props) => {
+const NewFindingsCard = ({ leftIconTitle, leftIconText, rightIconTitle, rightIconText }: Props) => {
   const classes = useStyles();
 
   const dataNewPerturbagens = [

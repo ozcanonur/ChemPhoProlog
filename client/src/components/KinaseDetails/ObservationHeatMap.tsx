@@ -25,16 +25,18 @@ interface ObsData {
 }
 
 const ObservationHeatMap = (isKnownSubstrates: boolean) => {
-  return ({ row }: Props): JSX.Element => {
+  return ({ row }: Props) => {
     const classes = useStyles();
 
     const [obsData, setObsData] = useState<ObsData[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const kinase = window.location.href.split('/')[3];
 
     // Fetch the data
     useEffect(() => {
       let mounted = true;
+      setLoading(true);
 
       // row[1] = residue, row[0] = location
       const substrate = isKnownSubstrates ? row[0] : `${kinase}(${row[1]}${row[0]})`;
@@ -43,7 +45,10 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
         substrate,
         min_fold_change: -888,
       }).then((res) => {
-        if (mounted && res) setObsData(formatObservation(res));
+        if (mounted && res) {
+          setObsData(formatObservation(res));
+          setLoading(false);
+        }
       });
 
       return () => {
@@ -59,10 +64,12 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
 
     return (
       <div>
-        {obsData.length === 0 ? (
+        {obsData.length === 0 && !loading ? (
           <div>No observation data for this site</div>
+        ) : loading ? (
+          <div>Loading...</div>
         ) : (
-          <>
+          <div>
             <div className={classes.container}>
               <ResponsiveHeatMap
                 data={heatmapData}
@@ -102,7 +109,7 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
               <div className={classes.legendGradient} />
               <div className={classes.legendRightText}>(+) Fold change</div>
             </div>
-          </>
+          </div>
         )}
       </div>
     );

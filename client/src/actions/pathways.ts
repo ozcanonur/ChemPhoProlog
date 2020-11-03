@@ -26,28 +26,19 @@ export const addInspectPath = (path: string[]): AddInspectPathAction => {
   };
 };
 
-export const changeSelectedPath = (
-  path: string[]
-): ChangeSelectedPathAction => {
+export const changeSelectedPath = (path: string[]): ChangeSelectedPathAction => {
   return {
     type: ACTION.CHANGE_SELECTED_PATH,
     payload: path,
   };
 };
 
-export const setPathExplanation = (
-  selectedPath: string[]
-): SetPathExplanationAction => {
+export const setPathExplanation = (selectedPath: string[]): SetPathExplanationAction => {
   // @ts-ignore
   const data: Pathway.PathwayData = store.getState().pathwayData;
 
   const reversedPath = [...selectedPath].reverse();
-  const pathDetails = getExplanationForPath(
-    reversedPath,
-    data.observation,
-    data.regulatory,
-    data.stoppingReasons
-  );
+  const pathDetails = getExplanationForPath(reversedPath, data.observation, data.regulatory, data.stoppingReasons);
 
   return {
     type: ACTION.SET_PATH_EXPLANATION,
@@ -72,14 +63,9 @@ const fetchPathwayData = async (params: {
   return response;
 };
 
-const fetchObservationData = async (params: {
-  perturbagen: string;
-  cellLine: string;
-}) => {
+const fetchObservationData = async (params: { perturbagen: string; cellLine: string }) => {
   const response = await fetchFromApi('/api/observation', params);
-  return response.map((row: Observation) =>
-    pick(row, ['substrate', 'fold_change', 'p_value'])
-  );
+  return response.map((row: Observation) => pick(row, ['substrate', 'fold_change', 'p_value']));
 };
 
 export const getPathwayData = (
@@ -87,9 +73,7 @@ export const getPathwayData = (
   perturbagen: string,
   substrate: string,
   onlyKinaseEnds: boolean
-): ThunkAction<void, RootState, unknown, GetPathwayDataAction> => async (
-  dispatch: Dispatch
-) => {
+): ThunkAction<void, RootState, unknown, GetPathwayDataAction> => async (dispatch: Dispatch) => {
   const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
   const observationParams = { perturbagen, cellLine };
 
@@ -100,10 +84,7 @@ export const getPathwayData = (
 
   if (!pathwayData || !observationData) return;
 
-  const formattedObservation = formatObservation(
-    pathwayData.phosphosites,
-    observationData
-  );
+  const formattedObservation = formatObservation(pathwayData.phosphosites, observationData);
 
   dispatch({
     type: ACTION.GET_PATHWAY_DATA,
