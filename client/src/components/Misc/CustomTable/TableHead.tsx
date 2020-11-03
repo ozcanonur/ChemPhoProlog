@@ -17,12 +17,7 @@ const TableHead = ({ content, handleSort }: Props) => {
   return (
     <TableRow className={classes.tableHeadRow}>
       {content.map((e, key) => (
-        <TableCell
-          className={`${classes.tableCell} ${classes.tableHeadCell}`}
-          style={{ cursor: 'pointer' }}
-          key={e}
-          onClick={() => handleSort(key)}
-        >
+        <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`} key={e} onClick={() => handleSort(key)}>
           {e}
         </TableCell>
       ))}

@@ -81,9 +81,7 @@ const ObservationBarChart = (cellLine: string) => {
               legendPosition: 'middle',
               legendOffset: -50,
             }}
-            label={(d: BarDatum) =>
-              getBarChartLabel(d.indexValue.toString(), pkData)
-            }
+            label={(d: BarDatum) => getBarChartLabel(d.indexValue.toString(), pkData)}
             labelTextColor='black'
             animate
             motionStiffness={90}

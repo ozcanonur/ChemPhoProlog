@@ -37,9 +37,7 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
       let mounted = true;
 
       // row[1] = residue, row[0] = location
-      const substrate = isKnownSubstrates
-        ? row[0]
-        : `${kinase}(${row[1]}${row[0]})`;
+      const substrate = isKnownSubstrates ? row[0] : `${kinase}(${row[1]}${row[0]})`;
 
       fetchFromApi('/api/observation', {
         substrate,

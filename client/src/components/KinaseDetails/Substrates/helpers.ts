@@ -16,9 +16,7 @@ interface PDT {
 }
 
 export const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e) =>
-    pick(e, ['perturbagen', 'fold_change'])
-  );
+  const relevantFieldsPicked = data.map((e) => pick(e, ['perturbagen', 'fold_change']));
   const decimalsCutRes = relevantFieldsPicked.map((e) => {
     return {
       ...e,

@@ -62,6 +62,17 @@ console.error = function filterWarnings(msg: string) {
   if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup.apply(console, arguments);
 };
 
+const backup2 = console.warn;
+console.warn = function filterWarnings(msg: string) {
+  const suppressedWarnings = [
+    'Material-UI: You have provided an out-of-range value',
+    'Warning: componentWillReceiveProps has been renamed',
+  ];
+
+  // @ts-ignore
+  if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup2.apply(console, arguments);
+};
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>

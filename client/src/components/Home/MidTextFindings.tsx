@@ -43,10 +43,7 @@ const NewFindings = ({ direction, cardTitle, cardCategory }: Props) => {
   const classes = useStyles();
 
   return (
-    <GridContainer
-      direction='column'
-      style={{ flexWrap: 'inherit', flexDirection: direction }}
-    >
+    <GridContainer direction='column' style={{ flexWrap: 'inherit', flexDirection: direction }}>
       <GridItem>
         <Card>
           <CardHeader color='warning' stats icon>
@@ -62,14 +59,11 @@ const NewFindings = ({ direction, cardTitle, cardCategory }: Props) => {
         <Card>
           <CardBody>
             <Typography variant='body1'>
-              The diverse and highly complex nature of modern phosphoproteomics
-              research produces a high volume of data. Chemical
-              phosphoproteomics especially, is amenable to a variety of
-              analytical approaches. In this study we propose novel logic-based
-              algorithms that overcome the limitations of existing tools used
-              for analysis of these types of datasets. Initially we developed a
-              first order deductive, logic-based model and populated it with a
-              scoring system, with which we were able to expand from it
+              The diverse and highly complex nature of modern phosphoproteomics research produces a high volume of data. Chemical
+              phosphoproteomics especially, is amenable to a variety of analytical approaches. In this study we propose novel
+              logic-based algorithms that overcome the limitations of existing tools used for analysis of these types of datasets.
+              Initially we developed a first order deductive, logic-based model and populated it with a scoring system, with which
+              we were able to expand from it
             </Typography>
           </CardBody>
         </Card>
@@ -82,18 +76,10 @@ const MidTextFindings = (): JSX.Element => {
   return (
     <GridContainer direction='row'>
       <GridItem md>
-        <NewFindings
-          direction='column'
-          cardTitle='540 Perturbagen - Kinase'
-          cardCategory='New Interactions'
-        />
+        <NewFindings direction='column' cardTitle='540 Perturbagen - Kinase' cardCategory='New Interactions' />
       </GridItem>
       <GridItem md>
-        <NewFindings
-          direction='column-reverse'
-          cardTitle='20458 PDTs'
-          cardCategory='New Downstream Targets'
-        />
+        <NewFindings direction='column-reverse' cardTitle='20458 PDTs' cardCategory='New Downstream Targets' />
       </GridItem>
     </GridContainer>
   );

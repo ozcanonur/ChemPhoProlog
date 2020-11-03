@@ -55,17 +55,12 @@ const CustomTable = (props: Props) => {
     setFilteredList(tableData);
   }, [tableData]);
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
   // On page change
-  const handlePageChange = (
-    _event: React.MouseEvent<HTMLButtonElement> | null,
-    page: number
-  ) => {
+  const handlePageChange = (_event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     setCurrentPage(page);
   };
 
@@ -88,9 +83,7 @@ const CustomTable = (props: Props) => {
   };
 
   // Sort state
-  const [sortedAsc, setSortedAsc] = useState<{ [key: string]: boolean }>(
-    createSortState()
-  );
+  const [sortedAsc, setSortedAsc] = useState<{ [key: string]: boolean }>(createSortState());
 
   const handleSort = (key: number) => {
     // eslint-disable-next-line no-param-reassign
@@ -121,21 +114,12 @@ const CustomTable = (props: Props) => {
   // Filtering
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (value: string) => {
-    const filtered = tableData.filter(
-      (row) =>
-        row[searchIndex]
-          .toString()
-          .toLowerCase()
-          .indexOf(value.toLowerCase()) === 0
-    );
+    const filtered = tableData.filter((row) => row[searchIndex].toString().toLowerCase().indexOf(value.toLowerCase()) === 0);
     setCurrentPage(0);
     setFilteredList(filtered);
   };
 
-  const slicedTableData = filteredList.slice(
-    currentPage * rowsPerPage,
-    currentPage * rowsPerPage + rowsPerPage
-  );
+  const slicedTableData = filteredList.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage);
 
   /*-------------------------*/
 
@@ -147,8 +131,7 @@ const CustomTable = (props: Props) => {
           inputProps={{
             placeholder: 'Search',
             inputProps: {
-              onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-                filterByTermAndSetTableData(event.target.value),
+              onChange: (event: React.ChangeEvent<HTMLInputElement>) => filterByTermAndSetTableData(event.target.value),
             },
           }}
         />

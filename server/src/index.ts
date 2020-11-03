@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import publicRouter from './routes/public';
 import webRouter from './routes/web';
@@ -12,6 +14,16 @@ const clientBuildPath = path.join(__dirname, '../../client/build');
 app.use(express.static(clientBuildPath));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 app.use('/api', publicRouter);
 app.use('/apiWeb', webRouter);

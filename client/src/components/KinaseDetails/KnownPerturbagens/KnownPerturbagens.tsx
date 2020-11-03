@@ -124,17 +124,9 @@ const KnownPerturbagens = () => {
   const tableData = formatDataForTable(data);
 
   return (
-    <GridContainer
-      direction='row'
-      justify='space-between'
-      style={{ padding: '2em' }}
-    >
+    <GridContainer direction='row' justify='space-between' style={{ padding: '2em' }}>
       <GridItem md>
-        <CardGeneric
-          color='primary'
-          cardTitle='Known Perturbagens'
-          cardSubtitle='Select a perturbagen'
-        >
+        <CardGeneric color='primary' cardTitle='Known Perturbagens' cardSubtitle='Select a perturbagen'>
           {tableData.length === 0 ? (
             <div>No entries found</div>
           ) : (
@@ -151,17 +143,8 @@ const KnownPerturbagens = () => {
         </CardGeneric>
       </GridItem>
       <GridItem md>
-        <CardGeneric
-          color='primary'
-          cardTitle='Perturbagen Info'
-          cardSubtitle='Details'
-        >
-          <Slide
-            in={rightPanelOpen}
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-          >
+        <CardGeneric color='primary' cardTitle='Perturbagen Info' cardSubtitle='Details'>
+          <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
               <GridContainer direction='column'>
                 <GridItem>

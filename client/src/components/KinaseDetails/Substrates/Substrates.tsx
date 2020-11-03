@@ -3,7 +3,7 @@ import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import Code from '@material-ui/icons/Code';
 
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
-import PDTs from 'components/KinaseDetails/Substrates/PDTs/PDTs';
+import PDTs from 'components/KinaseDetails/Substrates/PDTs';
 import KnownSubstrates from 'components/KinaseDetails/Substrates/KnownSubstrates';
 
 const Substrates = () => {

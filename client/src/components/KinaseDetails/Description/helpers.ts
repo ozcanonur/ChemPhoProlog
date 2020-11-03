@@ -27,9 +27,7 @@ export const createHeatmapObject = (obsData: ObsData[], cellLine: string) => {
 };
 
 export const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e) =>
-    pick(e, ['perturbagen', 'substrate', 'cell_line', 'fold_change'])
-  );
+  const relevantFieldsPicked = data.map((e) => pick(e, ['perturbagen', 'substrate', 'cell_line', 'fold_change']));
   const decimalsCut = relevantFieldsPicked.map((e) => {
     return {
       ...e,

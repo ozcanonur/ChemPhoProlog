@@ -6,15 +6,7 @@ import typography from '../../variables/apiTexts';
 import APICard from './APICard';
 
 const API = () => {
-  const [
-    pathway,
-    observation,
-    phosphosites,
-    knownSubstrates,
-    PDTs,
-    knownPerturbagens,
-    knownTargets,
-  ] = typography;
+  const [pathway, observation, phosphosites, knownSubstrates, PDTs, knownPerturbagens, knownTargets] = typography;
 
   return (
     <div style={{ padding: '2rem' }}>

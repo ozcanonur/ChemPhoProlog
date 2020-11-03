@@ -1,11 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
+import Button from 'components/Misc/CustomButton/Button';
 
+import { setSelectedInputs } from 'actions/pathways';
 import { fetchFromApi } from 'utils/api';
 import ObservationHeatMap from '../ObservationHeatMap';
 
@@ -25,6 +31,12 @@ interface KinaseInfo {
   expressed_in: string;
 }
 
+interface PhosphositesWithPaths {
+  [substrate: string]: {
+    [cellLine: string]: string;
+  };
+}
+
 const Description = () => {
   const kinase = window.location.href.split('/')[3];
 
@@ -35,6 +47,10 @@ const Description = () => {
     gene_synonyms: '',
     expressed_in: '',
   });
+  const [phosphositesWithPaths, setPhosphositesWithPaths] = useState<PhosphositesWithPaths>({});
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // Fetch the data
   useEffect(() => {
@@ -46,10 +62,12 @@ const Description = () => {
         detailed: true,
       }),
       fetchFromApi('/apiWeb/kinaseInfo', { kinase }),
-    ]).then(([resPho, resKinase]) => {
-      if (mounted && resPho && resKinase) {
+      fetchFromApi('/apiWeb/phosphositesWithPaths', { kinase }),
+    ]).then(([resPho, resKinase, resPhosphositesWithPaths]) => {
+      if (mounted && resPho && resKinase && resPhosphositesWithPaths) {
         setPhosphosites(resPho);
         setKinaseInfo(resKinase);
+        setPhosphositesWithPaths(resPhosphositesWithPaths);
       }
     });
 
@@ -57,6 +75,76 @@ const Description = () => {
       mounted = false;
     };
   }, [kinase]);
+
+  const DropdownMenu = ({ substrate, cellLine }: { substrate: string; cellLine: string }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const substrateProps = phosphositesWithPaths[substrate];
+
+    const goToPathways = (perturbagen: string) => {
+      dispatch(
+        setSelectedInputs({
+          substrate,
+          cellLine,
+          perturbagen,
+          onlyKinaseEnds: false,
+        })
+      );
+      history.push('/pathways');
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
+      setAnchorEl(null);
+      goToPathways(perturbagen);
+    };
+
+    const handleClick = (event: any) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    return (
+      <>
+        <Button
+          onClick={handleClick}
+          size='sm'
+          style={{
+            backgroundColor: 'rgba(45, 65, 89, 0.7)',
+            boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+          }}
+        >
+          <div>{cellLine}</div>
+        </Button>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} style={{ maxHeight: '30rem' }}>
+          {substrateProps[cellLine].split(',').map((perturbagen) => (
+            <MenuItem key={perturbagen} onClick={(e) => handleSelect(e, perturbagen)}>
+              {perturbagen}
+            </MenuItem>
+          ))}
+        </Menu>
+      </>
+    );
+  };
+
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const substrate = `${kinase}(${row[1]}${row[0]})`;
+    const substrateProps = phosphositesWithPaths[substrate];
+
+    if (!substrateProps) return <div>No pathway available</div>;
+
+    return (
+      <>
+        {Object.keys(substrateProps).map((cellLine: string) => (
+          <DropdownMenu key={cellLine} substrate={substrate} cellLine={cellLine} />
+        ))}
+      </>
+    );
+  };
 
   // Table component wants it in this format :/
   const tableData = phosphosites.map(Object.values);
@@ -89,11 +177,7 @@ const Description = () => {
         </CardGeneric>
       </GridItem>
       <GridItem>
-        <CardGeneric
-          color='primary'
-          cardTitle={`Phosphosites on ${kinase}`}
-          cardSubtitle='Select a phosphosite'
-        >
+        <CardGeneric color='primary' cardTitle={`Phosphosites on ${kinase}`} cardSubtitle='Select a phosphosite'>
           {tableData.length === 0 ? (
             <div>No entries found.</div>
           ) : (
@@ -107,9 +191,11 @@ const Description = () => {
                 'Pst_effect',
                 'Reported Substrate of',
                 'Reported PDT of',
+                'Go to Pathway',
               ]}
               tableData={tableData}
               RowExpandableContentLeft={ObservationHeatMap(false)}
+              RowContentRight={RowContentRight}
               searchIndex={0}
             />
           )}

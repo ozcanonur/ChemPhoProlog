@@ -26,13 +26,7 @@ interface Props {
 }
 
 const Row = (props: Props) => {
-  const {
-    row,
-    RowContentRight,
-    RowExpandableContentLeft,
-    clickableCells,
-    selectedItem,
-  } = props;
+  const { row, RowContentRight, RowExpandableContentLeft, clickableCells, selectedItem } = props;
 
   const isExpandable = Boolean(RowExpandableContentLeft);
   const classes = useStyles(isExpandable);
@@ -48,29 +42,21 @@ const Row = (props: Props) => {
       <TableRow
         className={classes.tableBodyRow}
         style={{
-          backgroundColor:
-            row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
+          backgroundColor: row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
         }}
       >
         {row.map((prop, key) => (
           <React.Fragment key={key}>
             {RowExpandableContentLeft && key === 0 ? (
               <TableCell className={classes.tableCell}>
-                <IconButton
-                  aria-label='expand row'
-                  size='small'
-                  onClick={handleExpandButton}
-                >
+                <IconButton aria-label='expand row' size='small' onClick={handleExpandButton}>
                   {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                 </IconButton>
               </TableCell>
             ) : null}
             <TableCell className={classes.tableCell} key={key}>
               {clickableCells && clickableCells[key] ? (
-                <div
-                  onClick={() => clickableCells[key](prop)}
-                  className={classes.tableCellClickableContent}
-                >
+                <div onClick={() => clickableCells[key](prop)} className={classes.tableCellClickableContent}>
                   {prop}
                 </div>
               ) : (

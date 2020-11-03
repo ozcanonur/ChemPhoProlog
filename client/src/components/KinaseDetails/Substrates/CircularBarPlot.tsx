@@ -6,7 +6,7 @@ import * as d3 from 'd3';
 
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
-import { getChartData } from '../helpers';
+import { getChartData } from './helpers';
 
 interface Props {
   cellLine: string;
@@ -61,9 +61,7 @@ const CircularBarPlot = ({ cellLine }: Props) => {
     };
 
     scale.range = function (_) {
-      return arguments.length
-        ? (linear.range(_.map(square)), scale)
-        : linear.range().map(Math.sqrt);
+      return arguments.length ? (linear.range(_.map(square)), scale) : linear.range().map(Math.sqrt);
     };
 
     scale.ticks = linear.ticks;
@@ -86,10 +84,7 @@ const CircularBarPlot = ({ cellLine }: Props) => {
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
-    .attr(
-      'transform',
-      `translate(${width / 2 + margin.left},${height / 2 + margin.top})`
-    );
+    .attr('transform', `translate(${width / 2 + margin.left},${height / 2 + margin.top})`);
 
   // Scales
   const x = d3
@@ -143,26 +138,17 @@ const CircularBarPlot = ({ cellLine }: Props) => {
     .enter()
     .append('g')
     .attr('text-anchor', (d) => {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
-        Math.PI
-        ? 'end'
-        : 'start';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'end' : 'start';
     })
     .attr('transform', (d) => {
-      return (
-        `rotate(${((x(d.Kinase) + x.bandwidth() / 2) * 180) / Math.PI - 90})` +
-        `translate(${y(d.Count) + 10},0)`
-      );
+      return `rotate(${((x(d.Kinase) + x.bandwidth() / 2) * 180) / Math.PI - 90})translate(${y(d.Count) + 10},0)`;
     })
     .append('text')
     .text((d) => {
       return d.Kinase;
     })
     .attr('transform', (d) => {
-      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <
-        Math.PI
-        ? 'rotate(180)'
-        : 'rotate(0)';
+      return (x(d.Kinase) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)';
     })
     .style('font-size', '11px')
     .attr('alignment-baseline', 'middle');

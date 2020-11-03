@@ -1,9 +1,4 @@
-import {
-  ElementDefinition,
-  LayoutOptions,
-  NodeSingular,
-  Stylesheet,
-} from 'cytoscape';
+import { ElementDefinition, LayoutOptions, NodeSingular, Stylesheet } from 'cytoscape';
 
 export const getCytoStylesheet = (
   observation: Pathway.PathwayObservation,
@@ -71,8 +66,7 @@ export const getCytoStylesheet = (
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e: NodeSingular) =>
-        parseFloat(observation[e.data().id].fold_change) > 0 ? 'red' : 'green',
+      backgroundColor: (e: NodeSingular) => (parseFloat(observation[e.data().id].fold_change) > 0 ? 'red' : 'green'),
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e: NodeSingular) => {
@@ -165,10 +159,7 @@ export const getCytoLayout = (): LayoutOptions => {
   };
 };
 
-export const getCytoElements = (
-  data: Pathway.PathwayData,
-  substrate: string
-): ElementDefinition[] => {
+export const getCytoElements = (data: Pathway.PathwayData, substrate: string): ElementDefinition[] => {
   // KPas
   const nodes = Object.keys(data.relations).map((e) => {
     return { data: { id: e }, classes: 'KPa', selectable: false };
@@ -190,7 +181,7 @@ export const getCytoElements = (
   const edges = Object.keys(data.relations)
     .map((key) => {
       return data.relations[key].map((e) => {
-        const isLoopEdge = e.indexOf(key) !== -1;
+        const isLoopEdge = e.indexOf(`${key}(`) !== -1;
         const id = isLoopEdge ? `${key}to${key}` : `${key}to${e}`;
         const target = isLoopEdge ? key : e;
 

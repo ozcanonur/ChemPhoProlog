@@ -10,14 +10,7 @@ import HowToNavigate from './HowToNavigate';
 import BezzLab from './BezzLab';
 
 const Welcome = () => {
-  const [
-    pathwayCard1,
-    pathwayCard2,
-    browseCard1,
-    browseCard2,
-    detailsCard1,
-    detailsCard2,
-  ] = flipCardContents;
+  const [pathwayCard1, pathwayCard2, browseCard1, browseCard2, detailsCard1, detailsCard2] = flipCardContents;
 
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>

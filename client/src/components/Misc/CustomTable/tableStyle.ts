@@ -31,6 +31,7 @@ const tableStyle = createStyles({
     '&, &$tableCell': {
       fontSize: '1em',
     },
+    cursor: 'pointer',
   },
   tableCell: {
     fontWeight: 300,
