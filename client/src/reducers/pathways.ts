@@ -81,10 +81,7 @@ export const inputs = (
   }
 };
 
-export const inspectList = (
-  state = [],
-  action: AddInspectPathAction | RemoveAllInspectPathsAction
-): string[][] => {
+export const inspectList = (state = [], action: AddInspectPathAction | RemoveAllInspectPathsAction): string[][] => {
   switch (action.type) {
     case ACTION.ADD_INSPECT_PATH:
       return uniqWith([...state, action.payload], (x, y) => {
@@ -99,10 +96,7 @@ export const inspectList = (
   }
 };
 
-export const pathExplanation = (
-  state = [],
-  action: SetPathExplanationAction
-): string[][] => {
+export const pathExplanation = (state = [], action: SetPathExplanationAction): string[][] => {
   switch (action.type) {
     case ACTION.SET_PATH_EXPLANATION:
       return action.payload;
@@ -111,10 +105,7 @@ export const pathExplanation = (
   }
 };
 
-export const selectedPath = (
-  state = [],
-  action: ChangeSelectedPathAction
-): string[] => {
+export const selectedPath = (state = [], action: ChangeSelectedPathAction): string[] => {
   switch (action.type) {
     case ACTION.CHANGE_SELECTED_PATH:
       return action.payload;

@@ -16,7 +16,7 @@ interface Props {
   justIcon?: boolean;
   className?: string;
   style?: CSSProperties;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   disabled?: boolean;
 }
 

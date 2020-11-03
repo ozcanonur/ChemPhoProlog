@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory } from 'history';
@@ -48,6 +49,18 @@ const theme = createMuiTheme({
     },
   },
 });
+
+// Just to disable annoying nivo/heatmap warning that is harmless
+// But 420 lines long
+const backup = console.error;
+console.error = function filterWarnings(msg: string) {
+  const suppressedWarnings = [
+    'Failed prop type: The prop `value` is marked as required in `HeatMapCellRect`, but its value is `undefined`',
+  ];
+
+  // @ts-ignore
+  if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup.apply(console, arguments);
+};
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

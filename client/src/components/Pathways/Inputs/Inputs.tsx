@@ -13,10 +13,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Cytoscape, { Core } from 'cytoscape';
 import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
-import VirtualizedDropDown from 'components/Pathways/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
 import inputsStyles from './style';
+import SelectMenu from './SelectMenu';
 
 interface Props {
   cy: Core;
@@ -33,18 +33,7 @@ const Inputs = ({ cy }: Props): JSX.Element => {
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
 
-  console.log(inputs);
   const dispatch = useDispatch();
-  // Testing purposes, giving std values to inputs
-  // useEffect(() => {
-  //   const initInputs = {
-  //     cellLine: 'MCF-7',
-  //     perturbagen: 'Torin',
-  //     substrate: 'AKT1(S473)',
-  //     onlyKinaseEnds: false,
-  //   };
-  //   dispatch(setSelectedInputs(initInputs));
-  // }, [dispatch]);
 
   useEffect(() => {
     setLoading(false);
@@ -80,9 +69,9 @@ const Inputs = ({ cy }: Props): JSX.Element => {
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
       <GridContainer direction='row' alignItems='center' justify='center'>
-        {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType, key) => (
-          <GridItem key={key}>
-            <VirtualizedDropDown type={inputType} />
+        {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType) => (
+          <GridItem key={inputType}>
+            <SelectMenu type={inputType} />
           </GridItem>
         ))}
         <GridItem>

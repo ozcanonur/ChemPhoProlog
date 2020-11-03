@@ -8,6 +8,8 @@ import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
 import ObservationHeatMap from 'components/KinaseDetails/ObservationHeatMap';
 import { setSelectedInputs } from 'actions/pathways';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 interface KnownSubstrate {
   PsT: string;
@@ -15,14 +17,15 @@ interface KnownSubstrate {
 }
 
 interface SubstratesWithPaths {
-  [substrate: string]: string;
+  [substrate: string]: {
+    [cellLine: string]: string;
+  };
 }
 
 const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
 
-  console.log(substratesWithPaths);
   const kinase = window.location.href.split('/')[3];
 
   const dispatch = useDispatch();
@@ -49,39 +52,61 @@ const KnownSubstratesTable = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
-    const substrate = row[0];
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const goToPathways = (cellLine: string) => {
+    const substrate = row[0];
+    const substrateProps = substratesWithPaths[substrate];
+
+    if (!substrateProps) return <>{null}</>;
+
+    const goToPathways = (cellLine: string, perturbagen: string) => {
       dispatch(
         setSelectedInputs({
           substrate,
           cellLine,
-          perturbagen: '',
+          perturbagen,
           onlyKinaseEnds: false,
         })
       );
       history.push('/pathways');
     };
 
-    const cellLinesWithValidPaths = substratesWithPaths[substrate];
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleClick = (event: any) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleSelect = (_e: React.MouseEvent<HTMLElement>, cellLine: string, perturbagen: string) => {
+      setAnchorEl(null);
+      goToPathways(cellLine, perturbagen);
+    };
 
     return (
       <>
-        {cellLinesWithValidPaths
-          ? cellLinesWithValidPaths.split(',').map((cellLine: string) => (
-              <Button
-                key={cellLine}
-                onClick={() => goToPathways(cellLine)}
-                size='sm'
-                style={{
-                  backgroundColor: 'rgba(45, 65, 89, 0.7)',
-                  boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
-                }}
-              >
-                <div>{cellLine}</div>
-              </Button>
-            ))
-          : null}
+        {Object.keys(substrateProps).map((cellLine: string) => (
+          <React.Fragment key={cellLine}>
+            <Button
+              onClick={handleClick}
+              size='sm'
+              style={{
+                backgroundColor: 'rgba(45, 65, 89, 0.7)',
+                boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+              }}
+            >
+              <div>{cellLine}</div>
+            </Button>
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} style={{ maxHeight: '30rem' }}>
+              {substrateProps[cellLine].split(',').map((perturbagen) => (
+                <MenuItem key={perturbagen} onClick={(e) => handleSelect(e, cellLine, perturbagen)}>
+                  {perturbagen}
+                </MenuItem>
+              ))}
+            </Menu>
+          </React.Fragment>
+        ))}
       </>
     );
   };

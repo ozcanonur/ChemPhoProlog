@@ -24,7 +24,7 @@ const buttonStyles = createStyles({
     verticalAlign: 'middle',
     touchAction: 'manipulation',
     cursor: 'pointer',
-    '&:hover,&:focus': {
+    '&:hover': {
       color: 'white',
       backgroundColor: 'black !important',
     },

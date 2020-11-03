@@ -1,15 +1,7 @@
 import { combineReducers } from 'redux';
 import { extraSidebarRoutes } from './main';
 
-import {
-  cxtMenu,
-  elementsToAnimate,
-  inputs,
-  inspectList,
-  pathExplanation,
-  pathwayData,
-  selectedPath,
-} from './pathways';
+import { cxtMenu, elementsToAnimate, inputs, inspectList, pathExplanation, pathwayData, selectedPath } from './pathways';
 
 export default combineReducers({
   // main
