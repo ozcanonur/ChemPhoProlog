@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
-import ObservationHeatMap from 'components/KinaseDetails/Description/ObservationHeatMap';
+import ObservationHeatMap from 'components/KinaseDetails/ObservationHeatMap';
 import { setSelectedInputs } from 'actions/pathways';
 
 interface KnownSubstrate {
@@ -14,9 +14,15 @@ interface KnownSubstrate {
   sources: string;
 }
 
+interface SubstratesWithPaths {
+  [substrate: string]: string;
+}
+
 const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
+  const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
 
+  console.log(substratesWithPaths);
   const kinase = window.location.href.split('/')[3];
 
   const dispatch = useDispatch();
@@ -25,8 +31,14 @@ const KnownSubstratesTable = () => {
   useEffect(() => {
     let mounted = true;
 
-    fetchFromApi('/api/knownSubstrates', { KPa: kinase }).then((res) => {
-      if (mounted) setData(res);
+    Promise.all([
+      fetchFromApi('/api/knownSubstrates', { KPa: kinase }),
+      fetchFromApi('/apiWeb/substratesWithPaths', { kinase }),
+    ]).then(([resKnownSubstrates, resSubstratesWithPaths]) => {
+      if (mounted && resKnownSubstrates && resSubstratesWithPaths) {
+        setData(resKnownSubstrates);
+        setSubstratesWithPaths(resSubstratesWithPaths);
+      }
     });
 
     return () => {
@@ -39,11 +51,11 @@ const KnownSubstratesTable = () => {
   const RowContentRight = ({ row }: { row: string[] }) => {
     const substrate = row[0];
 
-    const goToPathways = () => {
+    const goToPathways = (cellLine: string) => {
       dispatch(
         setSelectedInputs({
           substrate,
-          cellLine: '',
+          cellLine,
           perturbagen: '',
           onlyKinaseEnds: false,
         })
@@ -51,17 +63,26 @@ const KnownSubstratesTable = () => {
       history.push('/pathways');
     };
 
+    const cellLinesWithValidPaths = substratesWithPaths[substrate];
+
     return (
-      <Button
-        onClick={goToPathways}
-        size='sm'
-        style={{
-          backgroundColor: 'rgba(45, 65, 89, 0.7)',
-          boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
-        }}
-      >
-        <div>Go to pathways</div>
-      </Button>
+      <>
+        {cellLinesWithValidPaths
+          ? cellLinesWithValidPaths.split(',').map((cellLine: string) => (
+              <Button
+                key={cellLine}
+                onClick={() => goToPathways(cellLine)}
+                size='sm'
+                style={{
+                  backgroundColor: 'rgba(45, 65, 89, 0.7)',
+                  boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+                }}
+              >
+                <div>{cellLine}</div>
+              </Button>
+            ))
+          : null}
+      </>
     );
   };
 
@@ -72,14 +93,10 @@ const KnownSubstratesTable = () => {
       {tableData.length === 0 ? (
         <div>No entries found.</div>
       ) : (
-        <CardGeneric
-          color='primary'
-          cardTitle='Known Substrates'
-          cardSubtitle='Select a substrate'
-        >
+        <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
           <Table
             id={`${kinase}_KnownSubstrates`}
-            tableHead={['Obs.Data', 'Substrate', 'Sources']}
+            tableHead={['Obs.Data', 'Substrate', 'Sources', 'Go to Pathway']}
             tableData={tableData}
             searchIndex={0}
             RowContentRight={RowContentRight}

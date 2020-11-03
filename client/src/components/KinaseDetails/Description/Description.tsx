@@ -6,8 +6,8 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 
-import { fetchFromApi } from 'api/api';
-import ObservationHeatMap from './ObservationHeatMap';
+import { fetchFromApi } from 'utils/api';
+import ObservationHeatMap from '../ObservationHeatMap';
 
 interface PhosphositeOnKinase {
   detected_in: string;

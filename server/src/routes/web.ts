@@ -62,4 +62,17 @@ router.get('/validObservation', (req, res) => {
   });
 });
 
+router.get('/substratesWithPaths', (req, res) => {
+  const { kinase } = req.query;
+
+  const query =
+    'select distinct known_target.PsT, group_concat(distinct pathCounts.cell_line) as cellLines from known_target join pathCounts on known_target.PsT = pathCounts.substrate and known_target.KPa = ? group by known_target.PsT';
+  db.all(query, [kinase], (err, rows) => {
+    if (err) throw err;
+
+    const parsedRows = rows.reduce((r, { PsT, cellLines }) => ((r[PsT] = cellLines), r), {});
+    res.send(parsedRows);
+  });
+});
+
 export default router;

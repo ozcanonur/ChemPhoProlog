@@ -6,7 +6,7 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Slide from '@material-ui/core/Slide';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -49,11 +49,12 @@ const KnownPerturbagens = () => {
   // Right panel animation
   useEffect(() => {
     setRightPanelOpen(false);
-    if (selectedPerturbagen) return;
 
-    setTimeout(() => {
-      setRightPanelOpen(true);
-    }, 250);
+    if (selectedPerturbagen !== '') {
+      setTimeout(() => {
+        setRightPanelOpen(true);
+      }, 250);
+    }
   }, [selectedPerturbagen]);
 
   // Button on the right of the row

@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
 
-import { fetchFromApi } from 'api/api';
-import { formatObservation, getBarChartLabel } from './helpers';
+import { fetchFromApi } from 'utils/api';
+import { formatObservation, getBarChartLabel } from './Substrates/helpers';
 
 interface Props {
   row: string[];

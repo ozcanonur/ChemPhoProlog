@@ -10,7 +10,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import perturbagens from 'variables/perturbagens';
 import { setSelectedInputs } from 'actions/pathways';
 
@@ -54,8 +54,7 @@ const Virtualize = ({ type }: Props) => {
         if (mounted && res) setData(res);
       });
     } else if (type === 'Perturbagen') setData(perturbagens);
-    else if (type === 'Cell Line')
-      setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
+    else if (type === 'Cell Line') setData(['MCF-7', 'HL-60', 'NTERA-2 clone D1']);
 
     return () => {
       mounted = false;
@@ -66,8 +65,7 @@ const Virtualize = ({ type }: Props) => {
   const onInputChange = (value: string) => {
     let newInputs;
     if (type === 'Substrate') newInputs = { ...inputs, substrate: value };
-    else if (type === 'Perturbagen')
-      newInputs = { ...inputs, perturbagen: value };
+    else if (type === 'Perturbagen') newInputs = { ...inputs, perturbagen: value };
     else if (type === 'Cell Line') newInputs = { ...inputs, cellLine: value };
 
     if (!newInputs) return;
@@ -89,9 +87,7 @@ const Virtualize = ({ type }: Props) => {
       ListboxComponent={ListboxComponent}
       renderGroup={renderGroup}
       options={data}
-      renderInput={(params) => (
-        <TextField {...params} variant='outlined' label={getLabel()} />
-      )}
+      renderInput={(params) => <TextField {...params} variant='outlined' label={getLabel()} />}
       renderOption={(option) => <Typography noWrap>{option}</Typography>}
       onInputChange={(_e, value) => onInputChange(value.split(',')[0])}
     />

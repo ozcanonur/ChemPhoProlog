@@ -7,13 +7,9 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 
 const PathDetails = (): JSX.Element => {
-  const { perturbagen } = useSelector(
-    (state: RootState) => state.pathwayInputs
-  );
+  const { perturbagen } = useSelector((state: RootState) => state.pathwayInputs);
   const selectedPath = useSelector((state: RootState) => state.selectedPath);
-  const pathExplanation = useSelector(
-    (state: RootState) => state.pathExplanation
-  );
+  const pathExplanation = useSelector((state: RootState) => state.pathExplanation);
 
   const dispatch = useDispatch();
   useEffect(() => {

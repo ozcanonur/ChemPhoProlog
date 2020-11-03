@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Button from 'components/Misc/CustomButton/Button';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
-import ObservationBarChart from '../ObservationBarChart';
+import ObservationBarChart from '../../ObservationBarChart';
 
 interface Props {
   cellLine: string;

@@ -7,7 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import kinaseListPhosphositesStyles from './styles/kinaseListPhosphosites';
 import { formatPhosphosites } from './helpers';
 
@@ -43,10 +43,7 @@ const KinaseListPhosphosites = ({ row }: Props) => {
         <TableRow className={classes.tableHeadRow}>
           {['Serine', 'Threonine', 'Tyrosine'].map((header) => {
             return (
-              <TableCell
-                key={header}
-                className={`${classes.tableCell} ${classes.tableHeadCell}`}
-              >
+              <TableCell key={header} className={`${classes.tableCell} ${classes.tableHeadCell}`}>
                 {header}
               </TableCell>
             );
@@ -58,11 +55,7 @@ const KinaseListPhosphosites = ({ row }: Props) => {
           ? phosphosites.map((phosphositeRow, index1) => (
               <TableRow key={index1}>
                 {phosphositeRow.map((phosphosite, index2) => (
-                  <TableCell
-                    scope='row'
-                    key={index2}
-                    className={classes.tableCell}
-                  >
+                  <TableCell scope='row' key={index2} className={classes.tableCell}>
                     {phosphosite}
                   </TableCell>
                 ))}

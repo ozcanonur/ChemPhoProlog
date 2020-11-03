@@ -21,15 +21,7 @@ interface Props {
 
 const CardGeneric = (props: Props) => {
   const classes = useStyles();
-  const {
-    color,
-    cardTitle,
-    cardSubtitle,
-    children,
-    style,
-    headerStyle,
-    bodyStyle,
-  } = props;
+  const { color, cardTitle, cardSubtitle, children, style, headerStyle, bodyStyle } = props;
 
   return (
     <Card style={style}>

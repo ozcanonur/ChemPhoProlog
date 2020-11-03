@@ -11,7 +11,7 @@ interface Props {
 
 const useStyles = makeStyles(buttonsStyles);
 
-const Border = ({ color, text }: Props): JSX.Element => {
+const Border = ({ color, text }: Props) => {
   const classes = useStyles();
 
   return (

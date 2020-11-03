@@ -7,14 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
-import {
-  resetPathwayVisuals,
-  clearAllTimeouts,
-} from 'components/Pathways/utils/misc';
-import {
-  getElementsToAnimate,
-  animatePath,
-} from 'components/Pathways/utils/animation';
+import { resetPathwayVisuals, clearAllTimeouts } from 'components/Pathways/utils/misc';
+import { getElementsToAnimate, animatePath } from 'components/Pathways/utils/animation';
 import { Core } from 'cytoscape';
 
 interface Props {
@@ -23,9 +17,7 @@ interface Props {
 
 const PathSelectList = ({ cy }: Props): JSX.Element => {
   const data = useSelector((state: RootState) => state.pathwayData);
-  const pathsInspectList = useSelector(
-    (state: RootState) => state.pathsInspectList
-  );
+  const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
 
   const dispatch = useDispatch();
   const pathOnClick = (id: string) => {

@@ -6,10 +6,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import * as d3 from 'd3';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import perturbagens from 'variables/perturbagens';
-import observationHeatMapStyles from './styles/observationHeatMap';
-import { createHeatmapObject, formatObservation } from './helpers';
+import observationHeatMapStyles from './Description/styles/observationHeatMap';
+import { createHeatmapObject, formatObservation } from './Description/helpers';
 
 const useStyles = makeStyles(observationHeatMapStyles);
 

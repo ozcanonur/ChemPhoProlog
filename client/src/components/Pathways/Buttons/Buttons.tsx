@@ -11,10 +11,7 @@ import Legend from 'components/Pathways/Buttons/Legend/Legend';
 
 import { toggleTooltips } from 'components/Pathways/utils/tooltip';
 import { animatePath } from 'components/Pathways/utils/animation';
-import {
-  resetPathwayVisuals,
-  clearAllTimeouts,
-} from 'components/Pathways/utils/misc';
+import { resetPathwayVisuals, clearAllTimeouts } from 'components/Pathways/utils/misc';
 
 import { changeSelectedPath } from 'actions/pathways';
 import { Core } from 'cytoscape';
@@ -26,14 +23,12 @@ interface Props {
   cy: Core;
 }
 
-const ExtraButtons = ({ cy }: Props): JSX.Element => {
+const ExtraButtons = ({ cy }: Props) => {
   const classes = useStyles();
 
   const data = useSelector((state: RootState) => state.pathwayData);
 
-  const elementsToAnimate = useSelector(
-    (state: RootState) => state.elementsToAnimate
-  );
+  const elementsToAnimate = useSelector((state: RootState) => state.elementsToAnimate);
 
   const [legendOpen, setLegendOpen] = useState(false);
   const [faded, setFaded] = useState(false);
@@ -72,14 +67,7 @@ const ExtraButtons = ({ cy }: Props): JSX.Element => {
         clearAllTimeouts();
         resetPathwayVisuals(cy);
         if (phosphositesOpen) dispatch(changeSelectedPath([]));
-        else
-          animatePath(
-            { elementsToShow: cy.elements(), elementsToFade: cy.collection() },
-            data,
-            0,
-            false,
-            false
-          );
+        else animatePath({ elementsToShow: cy.elements(), elementsToFade: cy.collection() }, data, 0, false, false);
         setPhosphositesOpen(!phosphositesOpen);
       },
       state: phosphositesOpen,

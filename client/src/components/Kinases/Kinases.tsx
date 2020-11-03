@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -21,14 +21,8 @@ import { formatTableData, findKinaseInfo } from './helpers';
 // Kinase List on the Home page
 const KinaseList = () => {
   const [data, setData] = useState<Kinase[]>([]);
-  const [selectedKinase, setSelectedKinase] = useLocalStorage(
-    'selectedKinase',
-    ''
-  );
-  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage(
-    'kinaseRightPanelOpen',
-    false
-  );
+  const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
+  const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -127,11 +121,7 @@ const KinaseList = () => {
   return (
     <GridContainer direction='row' style={{ padding: '2em' }}>
       <GridItem xs={12} lg={6}>
-        <CardGeneric
-          color='primary'
-          cardTitle='Kinases'
-          cardSubtitle='Select a kinase'
-        >
+        <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase'>
           {tableData.length === 0 ? (
             <div>Loading...</div>
           ) : (
@@ -149,17 +139,8 @@ const KinaseList = () => {
         </CardGeneric>
       </GridItem>
       <GridItem xs={12} lg={6}>
-        <CardGeneric
-          color='primary'
-          cardTitle='Kinase Specification'
-          cardSubtitle='Details'
-        >
-          <Slide
-            in={rightPanelOpen}
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-          >
+        <CardGeneric color='primary' cardTitle='Kinase Specification' cardSubtitle='Details'>
+          <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
               <GridContainer direction='column'>
                 <GridItem>
@@ -168,12 +149,7 @@ const KinaseList = () => {
                   </CardGeneric>
                 </GridItem>
                 <GridItem>
-                  <NewFindingsCard
-                    leftIconTitle='New Perturbagens'
-                    leftIconText='6'
-                    rightIconText='24'
-                    rightIconTitle='New PDTs'
-                  />
+                  <NewFindingsCard leftIconTitle='New Perturbagens' leftIconText='6' rightIconText='24' rightIconTitle='New PDTs' />
                 </GridItem>
               </GridContainer>
             </div>

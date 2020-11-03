@@ -20,6 +20,7 @@ const buttonsStyles = createStyles({
   },
   text: {
     marginLeft: '5px',
+    fontSize: '0.9rem',
   },
   area: {
     width: '20px',
@@ -38,7 +39,7 @@ const buttonsStyles = createStyles({
   line: {
     backgroundColor: 'white',
     color: 'white',
-    width: '18',
+    width: '18px',
   },
   node: {
     height: '20px',

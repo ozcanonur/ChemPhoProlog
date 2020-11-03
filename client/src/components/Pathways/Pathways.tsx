@@ -14,18 +14,9 @@ import ExtraButtons from 'components/Pathways/Buttons/Buttons';
 import PathSelectList from 'components/Pathways/PathSelectList';
 import PathwayInformation from 'components/Pathways/Information/Information';
 import Cytoscape from 'cytoscape';
-import {
-  getCytoStylesheet,
-  getCytoLayout,
-  getCytoElements,
-} from 'components/Pathways/utils/options';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'components/Pathways/utils/options';
 import { hideAll as hideTooltips } from 'tippy.js';
-import {
-  runLayout,
-  clearAllTimeouts,
-  resetPathwayVisuals,
-  addResizeEventListener,
-} from 'components/Pathways/utils/misc';
+import { runLayout, clearAllTimeouts, resetPathwayVisuals, addResizeEventListener } from 'components/Pathways/utils/misc';
 import cxtmenuOptions from 'components/Pathways/utils/cxtmenuOptions';
 import { setElementsToAnimate, setCxtMenu } from 'actions/pathways';
 
@@ -33,7 +24,7 @@ Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-const PathwayIndex = (): JSX.Element => {
+const PathwayIndex = () => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const [cy, setCy] = useState(Cytoscape());
 
@@ -43,11 +34,7 @@ const PathwayIndex = (): JSX.Element => {
   const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
 
   const elements = getCytoElements(data, substrate);
-  const stylesheet = getCytoStylesheet(
-    data.observation,
-    data.regulatory,
-    substrate
-  );
+  const stylesheet = getCytoStylesheet(data.observation, data.regulatory, substrate);
   const layout = getCytoLayout();
 
   // Cleanup listener, timeouts, tooltips

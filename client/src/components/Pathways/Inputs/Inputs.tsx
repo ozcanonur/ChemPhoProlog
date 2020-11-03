@@ -15,12 +15,7 @@ import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import VirtualizedDropDown from 'components/Pathways/Inputs/VirtualizedDropDown';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setSelectedInputs,
-  getPathwayData,
-  removeAllInspectPaths,
-  setElementsToAnimate,
-} from 'actions/pathways';
+import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
 import inputsStyles from './style';
 
 interface Props {
@@ -38,6 +33,7 @@ const Inputs = ({ cy }: Props): JSX.Element => {
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
 
+  console.log(inputs);
   const dispatch = useDispatch();
   // Testing purposes, giving std values to inputs
   // useEffect(() => {
@@ -82,11 +78,7 @@ const Inputs = ({ cy }: Props): JSX.Element => {
   };
 
   return (
-    <CardGeneric
-      color='primary'
-      cardTitle='Select inputs'
-      cardSubtitle='Cell Line / Perturbagen / Substrate'
-    >
+    <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
       <GridContainer direction='row' alignItems='center' justify='center'>
         {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType, key) => (
           <GridItem key={key}>
@@ -99,11 +91,7 @@ const Inputs = ({ cy }: Props): JSX.Element => {
               {loading ? (
                 <div>
                   <p>Loading...</p>
-                  <img
-                    src={loading_thin}
-                    alt='Loading thin'
-                    className={classes.img}
-                  />
+                  <img src={loading_thin} alt='Loading thin' className={classes.img} />
                 </div>
               ) : (
                 <p>Get pathway</p>
@@ -114,14 +102,7 @@ const Inputs = ({ cy }: Props): JSX.Element => {
         </GridItem>
         <GridItem className={classes.switchContainer}>
           <FormControlLabel
-            control={
-              <Switch
-                checked={switchChecked}
-                onChange={handleSwitch}
-                name='onlyKinaseEnds'
-                color='primary'
-              />
-            }
+            control={<Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />}
             label='Only paths ending with a KPa'
           />
         </GridItem>

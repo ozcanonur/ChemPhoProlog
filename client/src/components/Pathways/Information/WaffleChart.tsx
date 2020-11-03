@@ -4,19 +4,10 @@ import { useSelector } from 'react-redux';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import { ResponsiveWaffle } from '@nivo/waffle';
 
-const Waffle = (): JSX.Element => {
-  const { cellLine, perturbagen, substrate } = useSelector(
-    (state: RootState) => state.pathwayInputs
-  );
+const Waffle = () => {
+  const { cellLine, perturbagen, substrate } = useSelector((state: RootState) => state.pathwayInputs);
 
-  const data = useSelector((state: RootState) => state.pathwayData) || {
-    paths: [],
-    relations: {},
-    phosphosites: [],
-    regulatory: {},
-    stoppingReasons: {},
-    observation: {},
-  };
+  const data = useSelector((state: RootState) => state.pathwayData);
 
   const { paths, stoppingReasons } = data;
 
@@ -56,14 +47,7 @@ const Waffle = (): JSX.Element => {
           columns={50}
           fillDirection='left'
           margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
-          colors={[
-            '#2D4159',
-            '#00acc1',
-            '#B55560',
-            '#e5ad06',
-            '#4F0EAB',
-            '#001233',
-          ]}
+          colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
           borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
           animate={false}
           // @ts-ignore

@@ -4,7 +4,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import { getChartData } from '../helpers';
 

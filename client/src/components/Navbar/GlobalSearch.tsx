@@ -11,7 +11,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import PanoramaHorizontal from '@material-ui/icons/PanoramaHorizontal';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import CustomInput from 'components/Misc/CustomInput/CustomInput';
 import Button from 'components/Misc/CustomButton/Button';
 import perturbagens from 'variables/perturbagens';

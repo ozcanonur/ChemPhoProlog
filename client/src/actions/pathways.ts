@@ -4,7 +4,7 @@ import { pick } from 'lodash';
 import { CollectionReturnValue } from 'cytoscape';
 
 import { store } from 'index';
-import { fetchFromApi } from 'api/api';
+import { fetchFromApi } from 'utils/api';
 import { formatObservation, getExplanationForPath } from './util';
 
 import {
