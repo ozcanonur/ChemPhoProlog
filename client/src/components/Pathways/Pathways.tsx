@@ -113,7 +113,6 @@ const PathwayIndex = () => {
             </GridItem>
           </GridContainer>
         </GridItem>
-        {/* <GridItem style={{ maxWidth: 'calc(100vw - 300px)' }}></GridItem> */}
         <GridItem>
           <PathwayInformation />
         </GridItem>

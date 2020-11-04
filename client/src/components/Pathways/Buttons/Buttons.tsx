@@ -31,15 +31,7 @@ const ExtraButtons = ({ cy }: Props) => {
   const elementsToAnimate = useSelector((state: RootState) => state.elementsToAnimate);
 
   const [legendOpen, setLegendOpen] = useState(false);
-  const [faded, setFaded] = useState(false);
-  const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
-
-  useEffect(() => {
-    setFaded(false);
-    setTooltipsOpen(false);
-    setPhosphositesOpen(false);
-  }, [data, elementsToAnimate]);
 
   const dispatch = useDispatch();
   const buttonList = [
@@ -52,18 +44,16 @@ const ExtraButtons = ({ cy }: Props) => {
       text: 'Fade',
       onClick: () => {
         elementsToAnimate.elementsToFade.toggleClass('fade');
-        setFaded(!faded);
       },
-      state: faded,
+      state: null,
       disabled: !elementsToAnimate.elementsToShow.length,
     },
     {
       text: 'Tooltips',
       onClick: () => {
         toggleTooltips(data, elementsToAnimate);
-        setTooltipsOpen(!tooltipsOpen);
       },
-      state: tooltipsOpen,
+      state: null,
       disabled: !elementsToAnimate.elementsToShow.length,
     },
     {
@@ -108,7 +98,7 @@ const ExtraButtons = ({ cy }: Props) => {
               disabled={disabled}
               className={classes.button}
               style={{
-                borderLeft: state && text === 'Legend' ? '5px solid #e5ad06' : 'inherit',
+                borderLeft: text === 'Legend' && state ? '5px solid #e5ad06' : 'inherit',
               }}
             >
               {text}

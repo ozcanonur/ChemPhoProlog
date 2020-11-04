@@ -15,6 +15,7 @@ import Table from 'components/Misc/CustomTable/Table';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import { useLocalStorage } from 'utils/customHooks';
+import KnownTargets from './KnownTargets';
 
 const PerturbagenList = () => {
   const [data, setData] = useState<Perturbagen[]>([]);
@@ -139,10 +140,8 @@ const PerturbagenList = () => {
                     <div style={{ textAlign: 'center' }}>
                       <img src={chemspiderId} alt='Perturbagen' />
                     </div>
+                    <KnownTargets perturbagen={selectedPerturbagen} />
                   </CardGeneric>
-                </GridItem>
-                <GridItem>
-                  <NewFindingsCard leftIconTitle='New Targets' leftIconText='12' rightIconTitle='New PDTs' rightIconText='34' />
                 </GridItem>
               </GridContainer>
             </div>
