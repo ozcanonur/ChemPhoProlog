@@ -18,7 +18,7 @@ export enum ACTION {
 
 export type AddSidebarRouteAction = {
   type: ACTION.ADD_SIDEBAR_ROUTE;
-  payload: { type: string; name: string };
+  payload: { name: string };
 };
 
 export type RemoveSidebarRouteAction = {

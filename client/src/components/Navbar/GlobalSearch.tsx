@@ -38,7 +38,7 @@ const ItemRenderer = ({ data, index, style }: any) => {
 
   const dispatch = useDispatch();
   const handleSelect = () => {
-    dispatch(addSidebarRoute(itemType, itemName));
+    dispatch(addSidebarRoute(itemName));
     setSearchOpen(false);
   };
 

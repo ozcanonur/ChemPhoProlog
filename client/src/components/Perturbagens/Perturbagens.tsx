@@ -1,8 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,8 +9,6 @@ import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
-import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
-import { addSidebarRoute } from 'actions/main';
 import { useLocalStorage } from 'utils/customHooks';
 import KnownTargets from './KnownTargets';
 
@@ -22,9 +17,6 @@ const PerturbagenList = () => {
   const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage('selectedPerturbagen', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('perturbagenRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   // Fetch data on render
   useEffect(() => {
@@ -64,33 +56,20 @@ const PerturbagenList = () => {
   const RowContentRight = ({ row }: { row: string[] }) => {
     const perturbagenName = row[0];
 
-    const addToSidebar = () => {
-      dispatch(addSidebarRoute('perturbagen', perturbagenName));
-    };
-
     const selectRow = () => {
       setSelectedPerturbagen(perturbagenName);
     };
 
     return (
-      <>
-        <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
-          <AddCircleOutline />
-        </IconButton>
-        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
-          <KeyboardArrowRight />
-        </IconButton>
-      </>
+      <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+        <KeyboardArrowRight />
+      </IconButton>
     );
   };
 
   const clickableCells: {
     [key: string]: (perturbagenName: string) => void;
   } = {
-    '0': (perturbagenName: string) => {
-      dispatch(addSidebarRoute('perturbagen', perturbagenName));
-      history.push(`/${perturbagenName}/description`);
-    },
     '1': (chemspiderId: string) => {
       window.open(`https://chemspider.com/${chemspiderId}`, '_blank');
     },

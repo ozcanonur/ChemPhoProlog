@@ -28,11 +28,7 @@ const Sidebar = () => {
     if (scrollDownref.current) scrollDownref.current.scrollIntoView({ behavior: 'smooth' });
   }, [extraSidebarRoutes]);
 
-  const [allExtraKinaseRoutes, allExtraPerturbagenRoutes] = partition(extraSidebarRoutes, (e) => e.type === 'kinase');
-
-  const generatedKinaseSubRoutes = allExtraKinaseRoutes.map((route) => generateSubRoutes(route.type, route.name));
-
-  const generatedPerturbagenSubRoutes = allExtraPerturbagenRoutes.map((route) => generateSubRoutes(route.type, route.name));
+  const generatedKinaseSubRoutes = extraSidebarRoutes.map((route) => generateSubRoutes(route.name));
 
   return (
     <Drawer
@@ -48,18 +44,10 @@ const Sidebar = () => {
           {standardRoutes.map((route) => (
             <StandardRoute key={route.name} route={route} />
           ))}
-          <Slide in={allExtraKinaseRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
+          <Slide in={extraSidebarRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
             <div className={classes.extraRoutesContainer}>
               <SidebarTitle title='Kinases' logo={reactLogo} />
               {generatedKinaseSubRoutes.map((routes) => (
-                <ExtraRoutes key={routes[0].path} routes={routes} />
-              ))}
-            </div>
-          </Slide>
-          <Slide in={allExtraPerturbagenRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
-            <div className={classes.extraRoutesContainer}>
-              <SidebarTitle title='Perturbagens' logo={reactLogo} />
-              {generatedPerturbagenSubRoutes.map((routes) => (
                 <ExtraRoutes key={routes[0].path} routes={routes} />
               ))}
             </div>

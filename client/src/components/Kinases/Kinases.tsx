@@ -72,7 +72,7 @@ const KinaseList = () => {
     const kinaseName = row[0];
 
     const addToSidebar = () => {
-      dispatch(addSidebarRoute('kinase', kinaseName));
+      dispatch(addSidebarRoute(kinaseName));
     };
 
     const selectRow = () => {
@@ -95,7 +95,7 @@ const KinaseList = () => {
     [key: string]: (field: string) => void;
   } = {
     '0': (kinaseName) => {
-      dispatch(addSidebarRoute('kinase', kinaseName));
+      dispatch(addSidebarRoute(kinaseName));
       history.push(`/${kinaseName}/description`);
     },
     '2': (uniprotId) => {

@@ -1,9 +1,9 @@
 import { ACTION, AddSidebarRouteAction, RemoveSidebarRouteAction } from './types';
 
-export const addSidebarRoute = (type: string, name: string): AddSidebarRouteAction => {
+export const addSidebarRoute = (name: string): AddSidebarRouteAction => {
   return {
     type: ACTION.ADD_SIDEBAR_ROUTE,
-    payload: { type, name },
+    payload: { name },
   };
 };
 

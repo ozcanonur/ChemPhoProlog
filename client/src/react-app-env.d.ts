@@ -11,7 +11,6 @@ declare module 'cytoscape-cxtmenu';
 type CxtMenu = any;
 
 interface SidebarRoute {
-  type: string;
   name: string;
 }
 

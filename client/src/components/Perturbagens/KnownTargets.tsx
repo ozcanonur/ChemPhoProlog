@@ -21,8 +21,6 @@ const KnownTargets = ({ perturbagen }: Props) => {
   const [data, setData] = useState<KnownTarget[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // const perturbagen = window.location.href.split('/')[3];
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -47,7 +45,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
     [key: string]: (kinaseName: string) => void;
   } = {
     '0': (kinaseName: string) => {
-      dispatch(addSidebarRoute('kinase', kinaseName));
+      dispatch(addSidebarRoute(kinaseName));
       history.push(`/${kinaseName}/description`);
     },
   };
@@ -58,7 +56,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
   return (
     <>
       <CardHeader color='primary' style={{ margin: 0, marginBottom: '1.5rem', fontSize: '18.2px' }}>
-        Known Targets
+        <div style={{ marginBottom: '3px' }}>Known Targets</div>
       </CardHeader>
       {tableData.length === 0 && !loading ? (
         <div style={{ marginTop: '1rem', marginLeft: '5px' }}>No Known Targets</div>

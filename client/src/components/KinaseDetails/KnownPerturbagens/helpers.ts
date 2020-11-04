@@ -16,9 +16,6 @@ export const formatDataForTable = (data: KnownPerturbagen[]) => {
     .map(Object.values);
 };
 
-export const findPerturbagenInfo = (
-  data: KnownPerturbagen[],
-  selectedPerturbagen: string
-) => {
+export const findPerturbagenInfo = (data: KnownPerturbagen[], selectedPerturbagen: string) => {
   return data.find((item) => item.perturbagen === selectedPerturbagen);
 };

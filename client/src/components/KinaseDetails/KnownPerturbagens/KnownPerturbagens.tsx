@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Slide from '@material-ui/core/Slide';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
@@ -11,7 +8,6 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
-import { addSidebarRoute } from 'actions/main';
 import { findPerturbagenInfo, formatDataForTable } from './helpers';
 
 interface KnownPerturbagen {
@@ -30,9 +26,6 @@ const KnownPerturbagens = () => {
   const [loading, setLoading] = useState(false);
 
   const kinase = window.location.href.split('/')[3];
-
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   // Fetch the data
   useEffect(() => {
@@ -67,31 +60,18 @@ const KnownPerturbagens = () => {
   const RowContentRight = ({ row }: { row: string[] }) => {
     const perturbagenName = row[0];
 
-    const addToSidebar = () => {
-      dispatch(addSidebarRoute('perturbagen', perturbagenName));
-    };
-
     const selectRow = () => {
       setSelectedPerturbagen(perturbagenName);
     };
 
     return (
-      <>
-        <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
-          <AddCircleOutline />
-        </IconButton>
-        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
-          <KeyboardArrowRight />
-        </IconButton>
-      </>
+      <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+        <KeyboardArrowRight />
+      </IconButton>
     );
   };
 
   const clickableCells = {
-    '0': (perturbagenName: string) => {
-      dispatch(addSidebarRoute('perturbagen', perturbagenName));
-      history.push(`/${perturbagenName}/description`);
-    },
     '3': (chemspiderId: string) => {
       window.open(`https://chemspider.com/${chemspiderId}`, '_blank');
     },
