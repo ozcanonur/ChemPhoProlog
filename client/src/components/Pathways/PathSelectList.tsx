@@ -42,8 +42,8 @@ const PathSelectList = ({ cy }: Props) => {
     >
       <List>
         {pathsInspectList.map((path, key) => {
-          const [id, node, stopReason, length] = path;
-          const text = `${node} / ${stopReason} / ${length}`;
+          const [id, node, stopReason] = path;
+          const text = `${node}, ${stopReason}`;
           return (
             <ListItem button key={key} onClick={() => pathOnClick(id)}>
               <ListItemText primary={text} />

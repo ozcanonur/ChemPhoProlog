@@ -1,6 +1,5 @@
 import phosphatases from 'variables/phosphatases';
 
-/* eslint-disable no-nested-ternary */
 export const getExplanationForPath = (
   path: string[],
   observation: Pathway.PathwayObservation,

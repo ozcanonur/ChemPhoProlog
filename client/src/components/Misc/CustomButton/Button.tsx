@@ -22,9 +22,10 @@ interface Props {
 
 const RegularButton = (props: Props) => {
   const classes = useStyles();
-  const { color, round, children, size, justIcon, className, ...rest } = props;
+  const { color, round, children, size, justIcon, className, disabled, ...rest } = props;
   const btnClasses = classNames({
     [classes.button]: true,
+    [classes.disabled]: disabled,
     // @ts-ignore
     [classes[size]]: size,
     // @ts-ignore

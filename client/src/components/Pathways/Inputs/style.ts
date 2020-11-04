@@ -8,10 +8,6 @@ const inputsStyles = createStyles({
     height: '50px',
     position: 'relative',
   },
-  img: {
-    marginTop: '-17px',
-    marginBottom: '5px',
-  },
   error: {
     position: 'absolute',
     bottom: '-20px',

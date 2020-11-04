@@ -47,6 +47,24 @@ const theme = createMuiTheme({
         padding: 0,
       },
     },
+    MuiMenuItem: {
+      root: {
+        '&:hover': {
+          backgroundColor: 'rgba(0,0,0,0.1)',
+        },
+      },
+    },
+    MuiSvgIcon: {
+      root: {
+        transition: 'all .2s ease-in-out',
+        '&:hover': {
+          backgroundColor: 'rgba(0,0,0,0.02)',
+          borderRadius: '50%',
+          transform: 'scale(1.15)',
+          fill: '#E5AD06',
+        },
+      },
+    },
   },
 });
 

@@ -37,6 +37,7 @@ const PathsTable = () => {
     const addPathToInspection = () => {
       dispatch(addInspectPath(row));
     };
+
     return (
       <Button onClick={addPathToInspection} size='sm' style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}>
         <div>Add to inspection</div>

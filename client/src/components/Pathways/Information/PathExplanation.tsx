@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPathExplanation } from 'actions/pathways';
@@ -21,7 +20,7 @@ const PathDetails = () => {
       color='primary'
       cardTitle='Explanation'
       cardSubtitle={perturbagen}
-      style={{ opacity: selectedPath.length === 0 ? 0.5 : 1 }}
+      style={{ opacity: selectedPath.length === 0 ? 0.5 : 1, minHeight: '16rem' }}
     >
       <Table
         id='PathDetails'

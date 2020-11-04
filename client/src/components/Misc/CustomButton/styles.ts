@@ -17,7 +17,7 @@ const buttonStyles = createStyles({
     textTransform: 'uppercase',
     letterSpacing: '0',
     willChange: 'box-shadow, transform',
-    transition: 'box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'all 0.15s ease-in-out',
     lineHeight: '1.42857143',
     textAlign: 'center',
     whiteSpace: 'nowrap',
@@ -26,7 +26,8 @@ const buttonStyles = createStyles({
     cursor: 'pointer',
     '&:hover': {
       color: 'white',
-      backgroundColor: 'black !important',
+      backgroundColor: 'rgba(0,0,0,0.65) !important',
+      boxShadow: '0 1rem 1rem 0 rgba(0,0,0,0.2)',
     },
     '& .fab,& .fas,& .far,& .fal, &.material-icons': {
       position: 'relative',

@@ -3,6 +3,7 @@
 declare module '*.png';
 declare module '*.jpg';
 declare module '*.gif';
+declare module '*.svg';
 declare module 'cytoscape-cose-bilkent';
 declare module 'cytoscape-popper';
 declare module 'cytoscape-cxtmenu';

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';

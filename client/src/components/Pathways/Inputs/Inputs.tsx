@@ -10,8 +10,8 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import Button from 'components/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import { ReactComponent as Loading } from 'assets/img/loading.svg';
 import Cytoscape, { Core } from 'cytoscape';
-import loading_thin from 'assets/img/loading_thin.gif';
 import Switch from '@material-ui/core/Switch';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
@@ -68,7 +68,7 @@ const Inputs = ({ cy }: Props) => {
 
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer direction='row' alignItems='center' justify='center'>
+      <GridContainer direction='row' alignItems='center'>
         {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType) => (
           <GridItem key={inputType}>
             <SelectMenu type={inputType} />
@@ -79,8 +79,7 @@ const Inputs = ({ cy }: Props) => {
             <>
               {loading ? (
                 <div>
-                  <p>Loading...</p>
-                  <img src={loading_thin} alt='Loading thin' className={classes.img} />
+                  <Loading style={{ height: '5rem', width: '10rem' }} />
                 </div>
               ) : (
                 <p>Get pathway</p>
@@ -89,7 +88,7 @@ const Inputs = ({ cy }: Props) => {
             </>
           </Button>
         </GridItem>
-        <GridItem className={classes.switchContainer}>
+        <GridItem className={classes.switchContainer} style={{ display: 'none' }}>
           <FormControlLabel
             control={<Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />}
             label='Only paths ending with a KPa'

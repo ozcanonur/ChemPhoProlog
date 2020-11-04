@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import classNames from 'classnames';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -25,18 +24,7 @@ interface Props {
 
 const CustomInput = (props: Props) => {
   const classes = useStyles();
-  const {
-    formControlProps,
-    labelText,
-    id,
-    labelProps,
-    inputProps,
-    error,
-    success,
-    onChange,
-    onBlur,
-    onFocus,
-  } = props;
+  const { formControlProps, labelText, id, labelProps, inputProps, error, success, onChange, onBlur, onFocus } = props;
 
   const underlineClasses = classNames({
     [classes.underlineError]: error,

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -34,6 +34,12 @@ const ExtraButtons = ({ cy }: Props) => {
   const [faded, setFaded] = useState(false);
   const [tooltipsOpen, setTooltipsOpen] = useState(false);
   const [phosphositesOpen, setPhosphositesOpen] = useState(false);
+
+  useEffect(() => {
+    setFaded(false);
+    setTooltipsOpen(false);
+    setPhosphositesOpen(false);
+  }, [data]);
 
   const dispatch = useDispatch();
   const buttonList = [

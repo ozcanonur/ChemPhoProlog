@@ -82,42 +82,39 @@ const PathwayIndex = () => {
           <PathwayInputs cy={cy} />
         </GridItem>
         <GridItem>
-          <GridContainer direction='column'>
-            <GridItem>
-              <GridContainer direction='row'>
-                <GridItem xs={10}>
-                  <CardGeneric
-                    color='primary'
-                    cardTitle='Pathway'
-                    cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
-                    style={{ height: '55rem', position: 'relative' }}
-                  >
-                    <CytoscapeComponent
-                      cy={(_cy) => {
-                        // Need this to get a reference to cy object in the component
-                        // Also need to run layout here, doing on useEffect doesn't work
-                        setCy(_cy);
-                        runLayout(cy, layout);
-                      }}
-                      elements={elements}
-                      stylesheet={stylesheet}
-                      style={{ height: '100%' }}
-                      minZoom={0.3}
-                      maxZoom={1.2}
-                      boxSelectionEnabled
-                    />
-                    <ExtraButtons cy={cy} />
-                  </CardGeneric>
-                </GridItem>
-                <GridItem xs={2}>
-                  <PathSelectList cy={cy} />
-                </GridItem>
-              </GridContainer>
+          <GridContainer direction='row'>
+            <GridItem xs={10}>
+              <CardGeneric
+                color='primary'
+                cardTitle='Pathway'
+                cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
+                style={{ height: '55rem', position: 'relative' }}
+              >
+                <CytoscapeComponent
+                  cy={(_cy) => {
+                    // Need this to get a reference to cy object in the component
+                    // Also need to run layout here, doing on useEffect doesn't work
+                    setCy(_cy);
+                    runLayout(cy, layout);
+                  }}
+                  elements={elements}
+                  stylesheet={stylesheet}
+                  style={{ height: '100%' }}
+                  minZoom={0.3}
+                  maxZoom={1.2}
+                  boxSelectionEnabled
+                />
+                <ExtraButtons cy={cy} />
+              </CardGeneric>
             </GridItem>
-            <GridItem>
-              <PathwayInformation />
+            <GridItem xs={2}>
+              <PathSelectList cy={cy} />
             </GridItem>
           </GridContainer>
+        </GridItem>
+        {/* <GridItem style={{ maxWidth: 'calc(100vw - 300px)' }}></GridItem> */}
+        <GridItem>
+          <PathwayInformation />
         </GridItem>
       </GridContainer>
     </div>
