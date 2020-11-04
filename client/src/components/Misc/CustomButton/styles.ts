@@ -25,8 +25,7 @@ const buttonStyles = createStyles({
     touchAction: 'manipulation',
     cursor: 'pointer',
     '&:hover': {
-      color: 'white',
-      backgroundColor: 'rgba(0,0,0,0.65) !important',
+      backgroundColor: 'rgba(52, 71, 94, 1)',
       boxShadow: '0 1rem 1rem 0 rgba(0,0,0,0.2)',
     },
     '& .fab,& .fas,& .far,& .fal, &.material-icons': {

@@ -97,6 +97,7 @@ const PathwayIndex = () => {
                     setCy(_cy);
                     runLayout(cy, layout);
                   }}
+                  wheelSensitivity={0.1}
                   elements={elements}
                   stylesheet={stylesheet}
                   style={{ height: '100%' }}

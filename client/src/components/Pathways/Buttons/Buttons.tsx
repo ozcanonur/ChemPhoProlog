@@ -39,7 +39,7 @@ const ExtraButtons = ({ cy }: Props) => {
     setFaded(false);
     setTooltipsOpen(false);
     setPhosphositesOpen(false);
-  }, [data]);
+  }, [data, elementsToAnimate]);
 
   const dispatch = useDispatch();
   const buttonList = [
@@ -108,7 +108,7 @@ const ExtraButtons = ({ cy }: Props) => {
               disabled={disabled}
               className={classes.button}
               style={{
-                borderLeft: state ? '5px solid #e5ad06' : 'inherit',
+                borderLeft: state && text === 'Legend' ? '5px solid #e5ad06' : 'inherit',
               }}
             >
               {text}

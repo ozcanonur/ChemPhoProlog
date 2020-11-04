@@ -23,7 +23,7 @@ const PathDetails = () => {
       style={{ opacity: selectedPath.length === 0 ? 0.5 : 1, minHeight: '16rem' }}
     >
       <Table
-        id='PathDetails'
+        id='pathDetails'
         tableHead={['Start', 'Phosphosite', 'End']}
         tableData={pathExplanation.length > 1 ? pathExplanation : []}
         searchIndex={0}

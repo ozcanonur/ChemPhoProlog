@@ -48,7 +48,7 @@ const PathsTable = () => {
   return (
     <CardGeneric color='primary' cardTitle='Paths found' cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}>
       <Table
-        id='PathsTable'
+        id={`${cellLine}${perturbagen}${substrate}_PathsTable`}
         tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', '']}
         tableData={tableData}
         RowContentRight={RowContentRight}

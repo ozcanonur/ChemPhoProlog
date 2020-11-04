@@ -85,7 +85,8 @@ const backup2 = console.warn;
 console.warn = function filterWarnings(msg: string) {
   const suppressedWarnings = [
     'Material-UI: You have provided an out-of-range value',
-    'Warning: componentWillReceiveProps has been renamed',
+    'componentWillReceiveProps has been renamed',
+    'React.createFactory() is deprecated and will be removed',
   ];
 
   // @ts-ignore

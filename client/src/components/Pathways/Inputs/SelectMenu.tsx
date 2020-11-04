@@ -5,6 +5,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
+import LayersIcon from '@material-ui/icons/Layers';
+import Healing from '@material-ui/icons/Healing';
 
 import perturbagens from 'variables/perturbagens';
 import { fetchFromApi } from 'utils/api';
@@ -21,6 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     list: {
       maxHeight: '30rem',
+    },
+    inputLabel: {
+      display: 'flex',
+      alignItems: 'center',
+
+      '& > svg': {
+        width: '0.85em',
+        height: '0.85em',
+      },
+    },
+    labelText: {
+      marginLeft: '0.5rem',
     },
   })
 );
@@ -39,7 +54,7 @@ const convertTypeToVariableName = (type: string) => {
 const SelectMenu = ({ type }: Props) => {
   const classes = useStyles();
 
-  const [data, setData] = useState<string[]>([]);
+  const [data, setData] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
 
@@ -48,11 +63,12 @@ const SelectMenu = ({ type }: Props) => {
   useEffect(() => {
     let mounted = true;
 
-    if (type === 'Substrate' && inputs.cellLine && inputs.perturbagen) {
+    if (type === 'Substrate' && inputs.cellLine) {
       fetchFromApi('/apiWeb/validObservation', {
         cellLine: inputs.cellLine,
         perturbagen: inputs.perturbagen,
       }).then((res) => {
+        console.log(res);
         if (mounted && res) setData(res);
       });
     } else if (type === 'Perturbagen') {
@@ -80,10 +96,21 @@ const SelectMenu = ({ type }: Props) => {
     setOpen(true);
   };
 
+  const menuData = type === 'Substrate' ? Object.keys(data) : data;
+
   return (
-    <div>
+    <>
       <FormControl className={classes.formControl}>
-        <InputLabel>{type}</InputLabel>
+        <InputLabel className={classes.inputLabel}>
+          {type === 'Cell Line' ? (
+            <LayersIcon />
+          ) : type === 'Perturbagen' ? (
+            <Healing />
+          ) : type === 'Substrate' ? (
+            <TrendingDownIcon />
+          ) : null}
+          <div className={classes.labelText}>{`${type} (${menuData.length.toString()})`}</div>
+        </InputLabel>
         <Select
           MenuProps={{ className: classes.list }}
           open={open}
@@ -95,14 +122,20 @@ const SelectMenu = ({ type }: Props) => {
           <MenuItem value=''>
             <em>None</em>
           </MenuItem>
-          {data.map((e) => (
-            <MenuItem key={e} value={e}>
-              {e}
-            </MenuItem>
-          ))}
+          {type === 'Substrate'
+            ? menuData.map((e: string) => (
+                <MenuItem key={e} value={e}>
+                  {`${e}, fc: ${data[e].foldChange}, c: ${data[e].pathCount}`}
+                </MenuItem>
+              ))
+            : menuData.map((e: string) => (
+                <MenuItem key={e} value={e}>
+                  {e}
+                </MenuItem>
+              ))}
         </Select>
       </FormControl>
-    </div>
+    </>
   );
 };
 

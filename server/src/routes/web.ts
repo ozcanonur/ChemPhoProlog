@@ -53,12 +53,15 @@ router.get('/getAllSubstrates', (req, res) => {
 router.get('/validObservation', (req, res) => {
   const { cellLine, perturbagen } = req.query;
 
-  const query = 'select substrate from pathCounts where cell_line = ? and perturbagen = ? order by substrate';
+  const query = 'select substrate, fold_change, pathCount from pathCounts where cellLine = ? and perturbagen = ? order by substrate';
   db.all(query, [cellLine, perturbagen], (err, rows) => {
     if (err) throw err;
 
-    // const parsedRows = rows.map(({ substrate, }) => `${substrate}, fc: ${parseFloat(fold_change).toFixed(2)}`);
-    res.send(rows.map(({ substrate }) => `${substrate}`));
+    const parsedRows: { [key: string]: any } = {};
+    rows.forEach(({ substrate, fold_change, pathCount }) => {
+      parsedRows[substrate] = { foldChange: parseFloat(fold_change).toFixed(2), pathCount };
+    });
+    res.send(parsedRows);
   });
 });
 
