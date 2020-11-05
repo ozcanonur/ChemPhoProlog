@@ -17,7 +17,8 @@ const sidebarStyle = createStyles({
   routesContainer: {
     position: 'relative',
     height: 'calc(100vh - 75px)',
-    overflow: 'auto',
+    overflowY: 'auto',
+    overflowX: 'hidden',
     width: '260px',
     zIndex: 4,
   },
@@ -53,7 +54,7 @@ const sidebarStyle = createStyles({
       content: '""',
       display: 'block',
       background: '#000',
-      opacity: '.8',
+      opacity: '.85',
     },
   },
   // Standard + Extra routes

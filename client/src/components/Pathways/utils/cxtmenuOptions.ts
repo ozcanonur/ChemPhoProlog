@@ -1,13 +1,12 @@
+import { Dispatch } from 'react';
+import Cytoscape, { NodeSingular } from 'cytoscape';
+
+import { store } from 'index';
 import kinases from 'variables/kinases';
 import phosphatases from 'variables/phosphatases';
-import { popErrorTooltip } from 'components/Pathways/utils/tooltip';
-import { store } from 'index';
-
 import { addSidebarRoute } from 'actions/main';
 import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
-
-import Cytoscape, { NodeSingular } from 'cytoscape';
-import { Dispatch } from 'react';
+import { popErrorTooltip } from './tooltip';
 
 const submitPathwayFromSelectedEle = (ele: NodeSingular, dispatch: Dispatch<any>) => {
   // @ts-ignore
@@ -49,7 +48,9 @@ const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
         select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
+          const isPhosphatase = phosphatases[id];
           if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          if (isPhosphatase) popErrorTooltip(ele, 'Not available for phosphatases', 2000);
           else dispatch(addSidebarRoute(id));
         },
         enabled: true,
@@ -85,12 +86,12 @@ const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
     ],
     fillColor: 'rgba(0, 0, 0, 0.4)',
     activeFillColor: 'rgba(229,173,6, 0.4)', // the colour used to indicate the selected command
-    activePadding: 20, // additional size in pixels for the active command
-    indicatorSize: 24, // the size in pixels of the pointer to the active command
+    activePadding: 14, // additional size in pixels for the active command
+    indicatorSize: 20, // the size in pixels of the pointer to the active command
     separatorWidth: 3, // the empty spacing in pixels between successive commands
     spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
-    minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
-    maxSpotlightRadius: 24, // the maximum radius in pixels of the spotlight
+    minSpotlightRadius: 20, // the minimum radius in pixels of the spotlight
+    maxSpotlightRadius: 20, // the maximum radius in pixels of the spotlight
     openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
     itemColor: 'white',
     itemTextShadowColor: 'transparent', // the text shadow colour of the command's content

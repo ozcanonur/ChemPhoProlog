@@ -11,7 +11,7 @@ router.get('/phosphosites', (req, res) => {
   const { kinase, detailed } = req.query;
 
   let query;
-  let fields = [];
+  const fields = [];
   if (kinase && detailed === 'true') {
     query =
       `select distinct x.location, x.residue, x.detected_in, coalesce(y.PsT_effect, 'unknown') as pst_effect, ` +
@@ -38,7 +38,7 @@ router.get('/observation', (req, res) => {
   const { cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
 
   let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
-  let fields = [];
+  const fields = [];
 
   if (_.isEmpty(req.query)) {
     const requiredAtLeastOneOf = 'cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value';
@@ -86,8 +86,9 @@ router.get('/observation', (req, res) => {
 router.get('/knownPerturbagens', (req, res) => {
   const { kinase } = req.query;
 
-  let query = 'select perturbagen, source, score, chemspider_id, action, synonyms from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
-  let fields = [];
+  let query =
+    'select perturbagen, source, score, chemspider_id, action, synonyms from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
+  const fields = [];
 
   if (kinase) {
     query += 'where PK_relationship.kinase = ? order by perturbagen';
@@ -105,7 +106,7 @@ router.get('/knownSubstrates', (req, res) => {
   const { KPa } = req.query;
 
   let query = 'select PsT, sources from known_target ';
-  let fields = [];
+  const fields = [];
 
   if (KPa) {
     query += 'where KPa = ? order by PsT';
@@ -163,8 +164,7 @@ router.get('/pathway', (req, res) => {
   const query = `select path, explanation, inhibited from Paths where cellLine = ? and perturbagen = ? and substrate = ?`;
   db.all(query, [cellLine, perturbagen, substrate], (err, rows) => {
     if (err) throw err;
-    const parsed = parsePaths(rows);
-    res.send(parsed);
+    res.send(parsePaths(rows));
   });
 });
 

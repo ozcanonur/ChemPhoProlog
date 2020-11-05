@@ -56,7 +56,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
   return (
     <>
       <CardHeader color='primary' style={{ margin: 0, marginBottom: '1.5rem', fontSize: '18.2px' }}>
-        <div style={{ marginBottom: '3px' }}>Known Targets</div>
+        <div style={{ marginBottom: '3px' }}>{`Known targets of ${perturbagen}`}</div>
       </CardHeader>
       {tableData.length === 0 && !loading ? (
         <div style={{ marginTop: '1rem', marginLeft: '5px' }}>No Known Targets</div>

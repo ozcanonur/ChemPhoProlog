@@ -8,8 +8,8 @@ import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
-import ObservationHeatMap from 'components/KinaseDetails/ObservationHeatMap';
 import { setSelectedInputs } from 'actions/pathways';
+import ObservationHeatMap from '../ObservationHeatMap';
 
 interface KnownSubstrate {
   PsT: string;

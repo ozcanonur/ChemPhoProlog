@@ -10,9 +10,9 @@ import reactLogo from 'assets/img/reactlogo.png';
 import generateSubRoutes from 'variables/generateSubRoutes';
 import standardRoutes from 'variables/standardRoutes';
 
-import SidebarTitle from 'components/Sidebar/SidebarTitle';
-import StandardRoute from 'components/Sidebar/StandardRoutes';
-import ExtraRoutes from 'components/Sidebar/ExtraRoutes';
+import SidebarTitle from './SidebarTitle';
+import StandardRoute from './StandardRoutes';
+import ExtraRoutes from './ExtraRoutes';
 import sidebarStyles from './styles/sidebarStyles';
 
 const useStyles = makeStyles(sidebarStyles);

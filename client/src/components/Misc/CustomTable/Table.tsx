@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -89,20 +90,19 @@ const CustomTable = (props: Props) => {
     // eslint-disable-next-line no-param-reassign
     if (RowExpandableContentLeft) key -= 1;
 
+    // Check which order we need to sort
+    const sortingOrder = sortedAsc[key] ? 1 : -1;
     let sortedList = [];
-    if (!sortedAsc[key]) {
-      sortedList = filteredList.sort((x, y) => {
-        if (x[key] < y[key]) return -1;
-        if (x[key] > y[key]) return 1;
-        return 0;
-      });
-    } else {
-      sortedList = filteredList.sort((x, y) => {
-        if (x[key] > y[key]) return -1;
-        if (x[key] < y[key]) return 1;
-        return 0;
-      });
-    }
+    sortedList = filteredList.sort((x, y) => {
+      // Check if the column values are number or string
+      // @ts-ignore
+      const first = isNaN(x[key]) ? x[key] : parseFloat(x[key]);
+      // @ts-ignore
+      const second = isNaN(y[key]) ? y[key] : parseFloat(y[key]);
+      if (first < second) return sortingOrder;
+      if (first > second) return -1 * sortingOrder;
+      return 0;
+    });
 
     setFilteredList([...sortedList]);
     setSortedAsc({ ...sortedAsc, [key]: !sortedAsc[key] });
@@ -111,7 +111,6 @@ const CustomTable = (props: Props) => {
   /*-------------------------*/
 
   /*-------------------------*/
-  // Filtering
   // Filter the values by the search term and set the state
   const filterByTermAndSetTableData = (value: string) => {
     const filtered = tableData.filter((row) => row[searchIndex].toString().toLowerCase().indexOf(value.toLowerCase()) === 0);

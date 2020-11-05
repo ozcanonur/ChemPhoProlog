@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
+import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
+import { hideAll as hideTooltips } from 'tippy.js';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import PathwayInputs from 'components/Pathways/Inputs/Inputs';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
-import ExtraButtons from 'components/Pathways/Buttons/Buttons';
-import PathSelectList from 'components/Pathways/PathSelectList';
-import PathwayInformation from 'components/Pathways/Information/Information';
-import Cytoscape from 'cytoscape';
-import { getCytoStylesheet, getCytoLayout, getCytoElements } from 'components/Pathways/utils/options';
-import { hideAll as hideTooltips } from 'tippy.js';
-import { runLayout, clearAllTimeouts, resetPathwayVisuals, addResizeEventListener } from 'components/Pathways/utils/misc';
-import cxtmenuOptions from 'components/Pathways/utils/cxtmenuOptions';
 import { setElementsToAnimate, setCxtMenu } from 'actions/pathways';
+import ExtraButtons from './Buttons/Buttons';
+import PathSelectList from './PathSelectList';
+import PathwayInformation from './Information/Information';
+import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/options';
+import { runLayout, clearAllTimeouts, resetPathwayVisuals, addResizeEventListener } from './utils/misc';
+import cxtmenuOptions from './utils/cxtmenuOptions';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);

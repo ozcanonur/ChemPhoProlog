@@ -3,7 +3,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
+import CardHeader from 'components/Misc/Card/CardHeader';
+import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
@@ -109,20 +113,34 @@ const PerturbagenList = () => {
           color='primary'
           cardTitle='Perturbagen Specification'
           cardSubtitle='Details'
-          bodyStyle={{ minHeight: selectedPerturbagen ? '45rem' : 0 }}
+          bodyStyle={{ minHeight: selectedPerturbagen ? '30rem' : 0 }}
         >
           <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>
-              <GridContainer direction='column'>
-                <GridItem>
-                  <CardGeneric color='primary' cardTitle={selectedPerturbagen}>
-                    <div style={{ textAlign: 'center' }}>
-                      <img src={chemspiderId} alt='Perturbagen' />
-                    </div>
-                    <KnownTargets perturbagen={selectedPerturbagen} />
-                  </CardGeneric>
-                </GridItem>
-              </GridContainer>
+              <CustomTabs
+                headerColor='success'
+                tabs={[
+                  {
+                    tabName: 'Visual',
+                    tabIcon: PhotoCameraIcon,
+                    tabContent: (
+                      <>
+                        <CardHeader color='primary' style={{ margin: 0, marginBottom: '1.5rem', fontSize: '18.2px' }}>
+                          <div style={{ marginBottom: '3px' }}>{selectedPerturbagen}</div>
+                        </CardHeader>
+                        <div style={{ textAlign: 'center' }}>
+                          <img src={chemspiderId} alt='Perturbagen' />
+                        </div>
+                      </>
+                    ),
+                  },
+                  {
+                    tabName: 'Known Targets',
+                    tabIcon: SubdirectoryArrowRightIcon,
+                    tabContent: <KnownTargets perturbagen={selectedPerturbagen} />,
+                  },
+                ]}
+              />
             </div>
           </Slide>
         </CardGeneric>

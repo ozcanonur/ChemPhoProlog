@@ -4,12 +4,12 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Core } from 'cytoscape';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
-import { resetPathwayVisuals, clearAllTimeouts } from 'components/Pathways/utils/misc';
-import { getElementsToAnimate, animatePath } from 'components/Pathways/utils/animation';
-import { Core } from 'cytoscape';
+import { resetPathwayVisuals, clearAllTimeouts } from './utils/misc';
+import { getElementsToAnimate, animatePath } from './utils/animation';
 
 interface Props {
   cy: Core;

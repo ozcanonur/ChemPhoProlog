@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-
-import { removeSidebarRoute } from 'actions/main';
-import { useDispatch } from 'react-redux';
-
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import styles from 'components/Sidebar/styles/sidebarStyles';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { SvgIconTypeMap } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import { removeSidebarRoute } from 'actions/main';
+import styles from './styles/sidebarStyles';
 
 const useStyles = makeStyles(styles);
 

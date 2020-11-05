@@ -8,8 +8,8 @@ import * as d3 from 'd3';
 
 import { fetchFromApi } from 'utils/api';
 import perturbagens from 'variables/perturbagens';
-import observationHeatMapStyles from './Description/styles/observationHeatMap';
-import { createHeatmapObject, formatObservation } from './Description/helpers';
+import observationHeatMapStyles from './observationHeatMapStyles';
+import { createHeatmapObject, formatObservation } from './helpers';
 
 const useStyles = makeStyles(observationHeatMapStyles);
 

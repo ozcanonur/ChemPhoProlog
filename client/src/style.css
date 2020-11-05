@@ -8,11 +8,11 @@ html {
   --thumbBG: rgb(99, 102, 105);
 }
 
-@media (max-width: 1440px) {
+/* @media (max-width: 1440px) {
   html {
     font-size: 14px;
   }
-}
+} */
 
 * {
   letter-spacing: normal !important;

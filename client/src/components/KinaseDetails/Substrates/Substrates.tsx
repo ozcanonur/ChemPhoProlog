@@ -4,7 +4,7 @@ import Code from '@material-ui/icons/Code';
 
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import PDTs from 'components/KinaseDetails/Substrates/PDTs';
-import KnownSubstrates from 'components/KinaseDetails/Substrates/KnownSubstrates';
+import KnownSubstrates from './KnownSubstrates';
 
 const Substrates = () => {
   return (

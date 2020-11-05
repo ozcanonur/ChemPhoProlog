@@ -3,11 +3,11 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import { nodes, borders, areas, lines } from 'components/Pathways/Buttons/Legend/variables';
-import Node from 'components/Pathways/Buttons/Legend/Node';
-import Border from 'components/Pathways/Buttons/Legend/Border';
-import Area from 'components/Pathways/Buttons/Legend/Area';
-import Line from 'components/Pathways/Buttons/Legend/Line';
+import { nodes, borders, areas, lines } from './variables';
+import Node from './Node';
+import Border from './Border';
+import Area from './Area';
+import Line from './Line';
 
 const Legend = () => {
   const legends = [

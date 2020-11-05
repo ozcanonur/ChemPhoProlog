@@ -1,12 +1,12 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GlobalSearch from 'components/Navbar/GlobalSearch';
 import Button from 'components/Misc/CustomButton/Button';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
 import navbarStyles from './styles/navbar';
 import { getCurrentNav } from './helpers';
 
