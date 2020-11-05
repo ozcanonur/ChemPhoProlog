@@ -68,7 +68,6 @@ const SelectMenu = ({ type }: Props) => {
         cellLine: inputs.cellLine,
         perturbagen: inputs.perturbagen,
       }).then((res) => {
-        console.log(res);
         if (mounted && res) setData(res);
       });
     } else if (type === 'Perturbagen') {

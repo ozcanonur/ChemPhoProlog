@@ -69,16 +69,16 @@ router.get('/substratesWithPaths', (req, res) => {
   const { kinase } = req.query;
 
   const query =
-    'select x.substrate, x.cell_line, x.perturbagens from (select substrate, cell_line, group_concat(perturbagen) as perturbagens from pathCounts group by cell_line, substrate) as x join known_target as y on x.substrate = y.PsT and y.KpA = ?';
+    'select x.substrate, x.cellLine, x.perturbagens from (select substrate, cellLine, group_concat(perturbagen) as perturbagens from pathCounts group by cellLine, substrate) as x join known_target as y on x.substrate = y.PsT and y.KpA = ?';
 
   db.all(query, [kinase], (err, rows) => {
     if (err) throw err;
 
     const parsedRows: { [key: string]: any } = {};
-    rows.forEach((row: { substrate: string; cell_line: string; perturbagens: string }) => {
-      const { substrate, cell_line, perturbagens } = row;
-      if (!parsedRows[substrate]) parsedRows[substrate] = { [cell_line]: perturbagens };
-      else parsedRows[substrate][cell_line] = perturbagens;
+    rows.forEach((row: { substrate: string; cellLine: string; perturbagens: string }) => {
+      const { substrate, cellLine, perturbagens } = row;
+      if (!parsedRows[substrate]) parsedRows[substrate] = { [cellLine]: perturbagens };
+      else parsedRows[substrate][cellLine] = perturbagens;
     });
 
     res.send(parsedRows);
@@ -89,16 +89,16 @@ router.get('/phosphositesWithPaths', (req, res) => {
   const { kinase } = req.query;
 
   const query =
-    'select substrate, cell_line, group_concat(perturbagen) as perturbagens from pathCounts where substrate like ? group by cell_line, substrate';
+    'select substrate, cellLine, group_concat(perturbagen) as perturbagens from pathCounts where substrate like ? group by cellLine, substrate';
 
   db.all(query, [`%${kinase}(%`], (err, rows) => {
     if (err) throw err;
 
     const parsedRows: { [key: string]: any } = {};
-    rows.forEach((row: { substrate: string; cell_line: string; perturbagens: string }) => {
-      const { substrate, cell_line, perturbagens } = row;
-      if (!parsedRows[substrate]) parsedRows[substrate] = { [cell_line]: perturbagens };
-      else parsedRows[substrate][cell_line] = perturbagens;
+    rows.forEach((row: { substrate: string; cellLine: string; perturbagens: string }) => {
+      const { substrate, cellLine, perturbagens } = row;
+      if (!parsedRows[substrate]) parsedRows[substrate] = { [cellLine]: perturbagens };
+      else parsedRows[substrate][cellLine] = perturbagens;
     });
 
     res.send(parsedRows);

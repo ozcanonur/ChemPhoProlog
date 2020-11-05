@@ -18,12 +18,12 @@ export enum ACTION {
 
 export type AddSidebarRouteAction = {
   type: ACTION.ADD_SIDEBAR_ROUTE;
-  payload: { name: string };
+  payload: string;
 };
 
 export type RemoveSidebarRouteAction = {
   type: ACTION.REMOVE_SIDEBAR_ROUTE;
-  payload: { name: string };
+  payload: string;
 };
 
 export type AddInspectPathAction = {

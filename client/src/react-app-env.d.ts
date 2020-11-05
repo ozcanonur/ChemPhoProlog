@@ -10,10 +10,6 @@ declare module 'cytoscape-cxtmenu';
 
 type CxtMenu = any;
 
-interface SidebarRoute {
-  name: string;
-}
-
 interface Route {
   path: string;
   name: string;
@@ -79,7 +75,7 @@ namespace Pathway {
 }
 
 interface RootState {
-  extraSidebarRoutes: SidebarRoute[];
+  extraSidebarRoutes: string[];
   // pathways
   pathsInspectList: string[][];
   selectedPath: string[];

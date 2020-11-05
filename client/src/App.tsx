@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -33,8 +34,8 @@ const Home = () => {
   const classes = useStyles();
 
   const extraSidebarRoutes = useSelector((state: RootState) => state.extraSidebarRoutes);
+  const getExtraRoutes = () => extraSidebarRoutes.map((e) => additionalRoutes(e));
 
-  const getExtraRoutes = () => extraSidebarRoutes.map(({ type, name }) => additionalRoutes(type, name));
   const allRoutes = [...routes, ...getExtraRoutes().flat()];
 
   return (

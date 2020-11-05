@@ -6,22 +6,22 @@ import PanoramaHorizontalIcon from '@material-ui/icons/PanoramaHorizontal';
 import PerturbagenIcon from '@material-ui/icons/Healing';
 import InfoIcon from '@material-ui/icons/Info';
 
-const generateSubRoutes = (selection: string): Route[] => {
+const generateSubRoutes = (name: string): Route[] => {
   return [
     {
-      path: `/${selection}/description`,
+      path: `/${name}/description`,
       name: 'Description',
       icon: InfoIcon,
       component: KinaseDetailsDescription,
     },
     {
-      path: `/${selection}/substrates`,
+      path: `/${name}/substrates`,
       name: 'Substrates',
       icon: PanoramaHorizontalIcon,
       component: KinaseDetailsSubstrates,
     },
     {
-      path: `/${selection}/knownPerturbagens`,
+      path: `/${name}/knownPerturbagens`,
       name: 'Known Perturbagens',
       icon: PerturbagenIcon,
       component: KinaseDetailsKnownPerturbagens,

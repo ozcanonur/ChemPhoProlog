@@ -15,7 +15,7 @@ import Table from 'components/Misc/CustomTable/Table';
 import { useLocalStorage } from 'utils/customHooks';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
-import KinaseListPhosphosites from './KinaseListPhosphosites';
+import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
 
 // Kinase List on the Home page
@@ -136,7 +136,7 @@ const KinaseList = () => {
               id='Kinases'
               tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
               tableData={tableData}
-              RowExpandableContentLeft={KinaseListPhosphosites}
+              RowExpandableContentLeft={Phosphosites}
               RowContentRight={RowContentRight}
               clickableCells={clickableCells}
               searchIndex={0}

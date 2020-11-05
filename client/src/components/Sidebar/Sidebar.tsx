@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import partition from 'lodash/partition';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -28,7 +27,7 @@ const Sidebar = () => {
     if (scrollDownref.current) scrollDownref.current.scrollIntoView({ behavior: 'smooth' });
   }, [extraSidebarRoutes]);
 
-  const generatedKinaseSubRoutes = extraSidebarRoutes.map((route) => generateSubRoutes(route.name));
+  const generatedKinaseSubRoutes = extraSidebarRoutes.map((route) => generateSubRoutes(route));
 
   return (
     <Drawer

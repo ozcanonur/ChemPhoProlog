@@ -24,6 +24,25 @@ const kinaseListPhosphositesStyles = createStyles({
     outline: 'none',
     verticalAlign: 'middle',
   },
+  menu: {
+    maxHeight: '30rem',
+  },
+  svg: {
+    width: '1.4rem !important',
+    height: '1.4rem !important',
+    margin: '0 !important',
+  },
+  button: {
+    backgroundColor: 'rgba(45, 65, 89, 0.8)',
+    boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+    padding: 0,
+    margin: 0,
+    marginLeft: '0.5rem',
+  },
+  phosphositeCell: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 export default kinaseListPhosphositesStyles;
