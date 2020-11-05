@@ -2,18 +2,9 @@
 /* eslint-disable consistent-return */
 import { addTooltip } from 'components/Pathways/utils/tooltip';
 import phosphatases from 'variables/phosphatases';
-import {
-  Core,
-  Collection,
-  SingularElementArgument,
-  SingularElementReturnValue,
-  CollectionReturnValue,
-} from 'cytoscape';
+import { Core, Collection, SingularElementArgument, SingularElementReturnValue, CollectionReturnValue } from 'cytoscape';
 
-export const getElementsToAnimate = (
-  cy: Core | null,
-  selectedPath: string[]
-) => {
+export const getElementsToAnimate = (cy: Core | null, selectedPath: string[]) => {
   if (!cy) return;
 
   const elementsToShow: SingularElementReturnValue[] = [];
@@ -37,11 +28,7 @@ export const getElementsToAnimate = (
   if (elementsToShow.length !== 0)
     elementsToFade = cy
       .elements()
-      .filter(
-        (e) =>
-          !elementsToShowIds.includes(e.data().id) &&
-          e.data().id !== elementsToShow[0].data().parent
-      );
+      .filter((e) => !elementsToShowIds.includes(e.data().id) && e.data().id !== elementsToShow[0].data().parent);
 
   return { elementsToShow: cy.collection(elementsToShow), elementsToFade };
 };
@@ -56,10 +43,8 @@ const getParentActivityClass = (
   const foldChange = parseFloat(observation[id].fold_change);
   const reg = regulatory[id];
 
-  const KPaActivated =
-    (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
-  const KPaInhibited =
-    (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
+  const KPaActivated = (foldChange > 0 && reg === 'p_inc') || (foldChange < 0 && reg === 'p_dec');
+  const KPaInhibited = (foldChange > 0 && reg === 'p_dec') || (foldChange < 0 && reg === 'p_inc');
 
   if (KPaActivated) return 'highlightedKPaActivated';
   if (KPaInhibited) return 'highlightedKPaInhibited';
@@ -68,9 +53,7 @@ const getParentActivityClass = (
 };
 
 const addEdgeStyle = (element: SingularElementArgument) => {
-  const sourceIsPhosphatase = Object.keys(phosphatases).includes(
-    element.data().source
-  );
+  const sourceIsPhosphatase = Object.keys(phosphatases).includes(element.data().source);
 
   if (sourceIsPhosphatase) element.addClass('highlightedPhosphataseEdge');
   else element.addClass('highlightedKinaseEdge');
@@ -85,19 +68,13 @@ const addPhosphositeParentStyle = (
   observation: Pathway.PathwayObservation,
   regulatory: Pathway.Regulatory
 ) => {
-  const parentActivityClass = getParentActivityClass(
-    element,
-    observation,
-    regulatory
-  );
+  const parentActivityClass = getParentActivityClass(element, observation, regulatory);
   // @ts-ignore
   element.parent().addClass(parentActivityClass);
 };
 
 export const animatePath = (
-  elementsToAnimate:
-    | { elementsToShow: Collection; elementsToFade: Collection }
-    | undefined,
+  elementsToAnimate: { elementsToShow: Collection; elementsToFade: Collection } | undefined,
   data: Pathway.PathwayData,
   duration: number,
   showTooltips: boolean,
@@ -117,14 +94,12 @@ export const animatePath = (
       const element = elementsToShow[i];
 
       const isEdge = element.data().target !== undefined;
-      const isPhosphosite =
-        element.data().id.includes('(') && !element.data().target;
+      const isPhosphosite = element.data().id.includes('(') && !element.data().target;
 
       if (isEdge) addEdgeStyle(element);
       else if (isPhosphosite) {
         addPhosphositeStyle(element);
-        if (showParentActivity)
-          addPhosphositeParentStyle(element, observation, regulatory);
+        if (showParentActivity) addPhosphositeParentStyle(element, observation, regulatory);
       }
 
       if (showTooltips && element.isNode()) {

@@ -27,10 +27,7 @@ export const resetPathwayVisuals = (cy: Core | null): void => {
   });
 };
 
-export const addResizeEventListener = (
-  cy: Core | null,
-  layout: LayoutOptions
-): void => {
+export const addResizeEventListener = (cy: Core | null, layout: LayoutOptions): void => {
   if (!cy) return;
   let width = cy.width();
   let height = cy.height();

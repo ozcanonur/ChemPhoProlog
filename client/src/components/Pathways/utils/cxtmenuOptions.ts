@@ -4,20 +4,12 @@ import { popErrorTooltip } from 'components/Pathways/utils/tooltip';
 import { store } from 'index';
 
 import { addSidebarRoute } from 'actions/main';
-import {
-  setSelectedInputs,
-  getPathwayData,
-  removeAllInspectPaths,
-  setElementsToAnimate,
-} from 'actions/pathways';
+import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
 
 import Cytoscape, { NodeSingular } from 'cytoscape';
 import { Dispatch } from 'react';
 
-const submitPathwayFromSelectedEle = (
-  ele: NodeSingular,
-  dispatch: Dispatch<any>
-) => {
+const submitPathwayFromSelectedEle = (ele: NodeSingular, dispatch: Dispatch<any>) => {
   // @ts-ignore
   const inputs = store.getState().pathwayInputs;
   const newInputs = { ...inputs, substrate: ele.data().id };
@@ -57,9 +49,8 @@ const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
         select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
-          if (isPhosphosite)
-            popErrorTooltip(ele, 'Not available for phosphosites', 2000);
-          else dispatch(addSidebarRoute('kinase', id));
+          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          else dispatch(addSidebarRoute(id));
         },
         enabled: true,
       },
@@ -72,8 +63,7 @@ const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
         select: (ele: NodeSingular) => {
           const { id } = ele.data();
           const isPhosphosite = id.includes('(');
-          if (isPhosphosite)
-            popErrorTooltip(ele, 'Not available for phosphosites', 2000);
+          if (isPhosphosite) popErrorTooltip(ele, 'Not available for phosphosites', 2000);
           else openUniprot(ele);
         },
         enabled: true,

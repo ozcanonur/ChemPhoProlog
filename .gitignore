@@ -10,3 +10,4 @@ facts/
 fulldata.csv
 toydata.csv
 chemphopro_old.db
+deployment/
