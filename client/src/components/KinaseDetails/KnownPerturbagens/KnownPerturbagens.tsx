@@ -86,25 +86,6 @@ const KnownPerturbagens = () => {
     ? `https://www.chemspider.com/ImagesHandler.ashx?id=${perturbagenInfo.chemspider_id}&w=250&h=250`
     : '';
 
-  const PerturbagenDescription = () => {
-    return perturbagenInfo ? (
-      <>
-        <p>
-          <strong>Chemspider ID: </strong>
-          {perturbagenInfo.chemspider_id}
-        </p>
-        <p>
-          <strong>Families: </strong>
-          {perturbagenInfo.action}
-        </p>
-        <p>
-          <strong>Alternative names: </strong>
-          {perturbagenInfo.synonyms}
-        </p>
-      </>
-    ) : null;
-  };
-
   // Table wants the data in this format :/
   const tableData = formatDataForTable(data);
 
@@ -147,7 +128,22 @@ const KnownPerturbagens = () => {
                   </CardGeneric>
                 </GridItem>
                 <GridItem>
-                  <PerturbagenDescription />
+                  {perturbagenInfo ? (
+                    <>
+                      <p>
+                        <strong>Chemspider ID: </strong>
+                        {perturbagenInfo.chemspider_id}
+                      </p>
+                      <p>
+                        <strong>Families: </strong>
+                        {perturbagenInfo.action}
+                      </p>
+                      <p>
+                        <strong>Alternative names: </strong>
+                        {perturbagenInfo.synonyms}
+                      </p>
+                    </>
+                  ) : null}
                 </GridItem>
               </GridContainer>
             </div>

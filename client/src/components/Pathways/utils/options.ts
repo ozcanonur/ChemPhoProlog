@@ -140,7 +140,7 @@ export const getCytoLayout = (): LayoutOptions => {
     // The option set is {'during', 'end', false}. During is quite funny
     animate: false,
     // Duration for animate:end
-    animationDuration: 500,
+    animationDuration: 200,
     // These paddings are space between nodes (phosphosites actually)
     tilingPaddingVertical: 20,
     tilingPaddingHorizontal: 10,

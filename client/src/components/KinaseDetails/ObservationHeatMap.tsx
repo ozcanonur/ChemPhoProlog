@@ -56,11 +56,7 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
       };
     }, [kinase, row]);
 
-    const heatmapData = [
-      createHeatmapObject(obsData, 'MCF-7'),
-      createHeatmapObject(obsData, 'HL-60'),
-      createHeatmapObject(obsData, 'NTERA-2 clone D1'),
-    ];
+    const heatmapData = ['MCF-7', 'HL-60', 'NTERA-2 clone D1'].map((cellLine) => createHeatmapObject(obsData, cellLine));
 
     return (
       <div>
@@ -101,7 +97,7 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
                 colors={d3.scaleSequential(d3.interpolatePiYG)}
                 padding={3}
                 // @ts-ignore
-                nanColor='rgb(235, 237, 240)'
+                nanColor='rgb(206, 203, 203)'
               />
             </div>
             <div className={classes.legendContainer}>

@@ -1,20 +1,8 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const tableStyle = createStyles({
-  warningTableHeader: {
-    color: '#FFC107',
-  },
   primaryTableHeader: {
     color: '#001233',
-  },
-  successTableHeader: {
-    color: '#2D4159',
-  },
-  infoTableHeader: {
-    color: '#00acc1',
-  },
-  grayTableHeader: {
-    color: '#999',
   },
   table: {
     marginBottom: '0',
@@ -28,10 +16,10 @@ const tableStyle = createStyles({
     color: 'inherit',
     fontWeight: 300,
     lineHeight: '1.5em',
+    cursor: 'pointer',
     '&, &$tableCell': {
       fontSize: '1.05em',
     },
-    cursor: 'pointer',
   },
   tableCell: {
     fontWeight: 300,

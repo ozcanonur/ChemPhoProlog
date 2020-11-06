@@ -152,31 +152,23 @@ const Description = () => {
   // Table component wants it in this format :/
   const tableData = phosphosites.map(Object.values);
 
-  const KinaseDescription = () => {
-    return (
-      <>
-        <p>{kinaseInfo.description}</p>
-        <p>
-          <strong>Families: </strong>
-          {kinaseInfo.families}
-        </p>
-        <p>
-          <strong>Alternative names: </strong>
-          {kinaseInfo.gene_synonyms}
-        </p>
-        <p>
-          <strong>Detected in: </strong>
-          {kinaseInfo.expressed_in}
-        </p>
-      </>
-    );
-  };
-
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
         <CardGeneric color='primary' cardTitle={kinase}>
-          <KinaseDescription />
+          <p>{kinaseInfo.description}</p>
+          <p>
+            <strong>Families: </strong>
+            {kinaseInfo.families}
+          </p>
+          <p>
+            <strong>Alternative names: </strong>
+            {kinaseInfo.gene_synonyms}
+          </p>
+          <p>
+            <strong>Detected in: </strong>
+            {kinaseInfo.expressed_in}
+          </p>
         </CardGeneric>
       </GridItem>
       <GridItem>

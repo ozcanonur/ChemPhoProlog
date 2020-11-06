@@ -86,12 +86,12 @@ const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
     ],
     fillColor: 'rgba(0, 0, 0, 0.4)',
     activeFillColor: 'rgba(229,173,6, 0.4)', // the colour used to indicate the selected command
-    activePadding: 14, // additional size in pixels for the active command
-    indicatorSize: 20, // the size in pixels of the pointer to the active command
+    activePadding: 20, // additional size in pixels for the active command
+    indicatorSize: 24, // the size in pixels of the pointer to the active command
     separatorWidth: 3, // the empty spacing in pixels between successive commands
     spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
-    minSpotlightRadius: 20, // the minimum radius in pixels of the spotlight
-    maxSpotlightRadius: 20, // the maximum radius in pixels of the spotlight
+    minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
+    maxSpotlightRadius: 24, // the maximum radius in pixels of the spotlight
     openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
     itemColor: 'white',
     itemTextShadowColor: 'transparent', // the text shadow colour of the command's content

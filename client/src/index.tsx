@@ -68,31 +68,6 @@ const theme = createMuiTheme({
   },
 });
 
-// // Just to disable annoying nivo/heatmap warning that is harmless
-// // But 420 lines long
-// const backup = console.error;
-// console.error = function filterWarnings(msg: string) {
-//   const suppressedWarnings = [
-//     'Failed prop type: The prop `value` is marked as required in `HeatMapCellRect`, but its value is `undefined`',
-//   ];
-
-//   // @ts-ignore
-//   if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup.apply(console, arguments);
-// };
-
-// // Disabling out of range values for pathway inputs and nivo using old lifecycle, both harmless
-// const backup2 = console.warn;
-// console.warn = function filterWarnings(msg: string) {
-//   const suppressedWarnings = [
-//     'Material-UI: You have provided an out-of-range value',
-//     'componentWillReceiveProps has been renamed',
-//     'React.createFactory() is deprecated and will be removed',
-//   ];
-
-//   // @ts-ignore
-//   if (!suppressedWarnings.some((entry) => msg.includes(entry))) backup2.apply(console, arguments);
-// };
-
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>

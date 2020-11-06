@@ -4,8 +4,8 @@ html * {
 }
 
 html {
-  --scrollbarBG: rgb(32, 34, 37);
-  --thumbBG: rgb(99, 102, 105);
+  --scrollbarBG: #eee;
+  --thumbBG: #999;
 }
 
 /* @media (max-width: 1440px) {
