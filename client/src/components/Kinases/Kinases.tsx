@@ -34,7 +34,7 @@ const KinaseList = () => {
     setLoading(true);
 
     fetchFromApi('/apiWeb/getKinaseList').then((res) => {
-      if (mounted) {
+      if (mounted && res) {
         setData(res);
         setLoading(false);
       }

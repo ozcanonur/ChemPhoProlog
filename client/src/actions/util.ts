@@ -59,8 +59,8 @@ export const formatObservation = (
   // eslint-disable-next-line camelcase
   observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
     formattedObservation[substrate] = {
-      fold_change: fold_change.toFixed(2),
-      p_value: p_value.toFixed(2),
+      fold_change: parseFloat(fold_change).toFixed(2),
+      p_value: parseFloat(p_value).toFixed(2),
     };
   });
 

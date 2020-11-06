@@ -1,6 +1,6 @@
 interface KnownPerturbagen {
   perturbagen: string;
-  score: number;
+  score: string;
   source: string;
   chemspider_id: string;
   action: string;
@@ -8,12 +8,7 @@ interface KnownPerturbagen {
 }
 
 export const formatDataForTable = (data: KnownPerturbagen[]) => {
-  return data
-    .map(({ perturbagen, score, source, chemspider_id }) => {
-      return { perturbagen, score, source, chemspider_id };
-    })
-    .map((e) => ({ ...e, score: e.score.toFixed(2) }))
-    .map(Object.values);
+  return data.map((e) => ({ ...e, score: parseFloat(e.score).toFixed(2) })).map(Object.values);
 };
 
 export const findPerturbagenInfo = (data: KnownPerturbagen[], selectedPerturbagen: string) => {

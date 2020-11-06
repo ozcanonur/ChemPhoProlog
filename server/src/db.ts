@@ -1,9 +1,11 @@
-import sqlite3 from 'sqlite3';
+import { Pool } from 'pg';
 
-// Connect to the DB
-const db = new sqlite3.Database('../chemphopro.db', sqlite3.OPEN_READONLY, (err) => {
-  if (err) return console.error(err.message);
-  console.log('Connected to ChemphoproDB');
+const db = new Pool({
+  user: process.env.PG_USERNAME,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  port: parseInt(process.env.PG_PORT),
+  database: process.env.PG_DATABASE,
 });
 
 export default db;

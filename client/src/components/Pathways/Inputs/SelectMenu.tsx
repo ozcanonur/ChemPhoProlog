@@ -124,7 +124,7 @@ const SelectMenu = ({ type }: Props) => {
           {type === 'Substrate'
             ? menuData.map((e: string) => (
                 <MenuItem key={e} value={e}>
-                  {`${e}, fc: ${data[e].foldChange}, c: ${data[e].pathCount}`}
+                  {`${e}, fc: ${data[e].foldChange}, c: ${data[e].pathcount}`}
                 </MenuItem>
               ))
             : menuData.map((e: string) => (

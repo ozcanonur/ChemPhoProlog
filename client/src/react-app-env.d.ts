@@ -40,8 +40,8 @@ interface Perturbagen {
 interface Observation {
   cell_line: string;
   cv?: number;
-  fold_change: number;
-  p_value: number;
+  fold_change: string;
+  p_value: string;
   perturbagen: string;
   substrate: string;
 }

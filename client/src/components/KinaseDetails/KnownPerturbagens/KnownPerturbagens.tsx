@@ -12,7 +12,7 @@ import { findPerturbagenInfo, formatDataForTable } from './helpers';
 
 interface KnownPerturbagen {
   perturbagen: string;
-  score: number;
+  score: string;
   source: string;
   chemspider_id: string;
   action: string;

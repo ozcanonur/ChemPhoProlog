@@ -9,7 +9,7 @@ import { addSidebarRoute } from 'actions/main';
 
 interface KnownTarget {
   kinase: string;
-  score: number;
+  score: string;
   source: string;
 }
 
@@ -51,7 +51,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
   };
 
   // Table component wants it in this format
-  const tableData = data.map((e) => ({ ...e, score: e.score.toFixed(2) })).map(Object.values);
+  const tableData = data.map((e) => ({ ...e, score: parseFloat(e.score).toFixed(2) })).map(Object.values);
 
   return (
     <>

@@ -31,7 +31,7 @@ export const formatObservation = (data: Observation[]) => {
   const decimalsCut = relevantFieldsPicked.map((e) => {
     return {
       ...e,
-      fold_change: Math.round(e.fold_change * 1e2) / 1e2,
+      fold_change: Math.round(parseFloat(e.fold_change) * 1e2) / 1e2,
     };
   });
   return decimalsCut;

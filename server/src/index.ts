@@ -3,6 +3,10 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 import publicRouter from './routes/public';
 import webRouter from './routes/web';
@@ -24,6 +28,7 @@ app.use(
     origin: '*',
   })
 );
+app.use(compression());
 
 app.use('/api', publicRouter);
 app.use('/apiWeb', webRouter);
