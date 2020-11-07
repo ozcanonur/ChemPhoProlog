@@ -32,7 +32,7 @@ router.get('/phosphosites', async (req, res) => {
     const results = await db.query(query, fields);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -88,10 +88,9 @@ router.get('/observation', async (req, res) => {
 
   try {
     const results = await db.query(query, fields);
-
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -113,7 +112,7 @@ router.get('/knownPerturbagens', async (req, res) => {
 
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -134,7 +133,7 @@ router.get('/knownSubstrates', async (req, res) => {
 
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -146,10 +145,9 @@ router.get('/knownTargets', async (req, res) => {
 
   try {
     const results = await db.query(query, [perturbagen]);
-
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -173,7 +171,7 @@ router.get('/pdts', async (req, res) => {
     const results = await db.query(query, [kinase, cell_line, cell_line]);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -192,7 +190,7 @@ router.get('/pathway', async (req, res) => {
     const results = await db.query(query, [cellLine, perturbagen, substrate]);
     res.send(parsePaths(results.rows));
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 

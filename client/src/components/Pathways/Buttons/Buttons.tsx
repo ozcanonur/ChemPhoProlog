@@ -96,7 +96,7 @@ const ExtraButtons = ({ cy }: Props) => {
               disabled={disabled}
               className={classes.button}
               style={{
-                borderLeft: text === 'Legend' && state ? '5px solid #e5ad06' : 'inherit',
+                borderLeft: text === 'Legend' && state ? '5px solid #e5ad06' : '',
               }}
             >
               {text}

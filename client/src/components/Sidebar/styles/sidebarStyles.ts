@@ -2,7 +2,6 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import image from 'assets/img/dna.jpg';
 
 const sidebarStyle = createStyles({
-  // Sidebar
   drawerPaper: {
     border: 'none',
     position: 'fixed',
@@ -68,13 +67,17 @@ const sidebarStyle = createStyles({
   },
   itemLink: {
     width: 'auto',
-    transition: 'all 300ms linear',
+    transition: 'all 0.2s',
     margin: '10px 15px 0',
     borderRadius: '3px',
     position: 'relative',
     display: 'block',
     padding: '10px 15px',
     backgroundColor: 'transparent',
+
+    '&:hover': {
+      backgroundColor: 'rgba(242, 189, 31,0.25)',
+    },
   },
   orange: {
     backgroundColor: '#e5ad06',

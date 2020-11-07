@@ -47,22 +47,22 @@ export const getExplanationForPath = (
   return outputList;
 };
 
-export const formatObservation = (
-  phosphosites: Pathway.Phosphosites,
-  observationData: Observation[]
-): Pathway.PathwayObservation => {
-  const observationInCurrentPaths = observationData.filter((e: Observation) => phosphosites.includes(e.substrate));
+// export const formatObservation = (
+//   phosphosites: Pathway.Phosphosites,
+//   observationData: Observation[]
+// ): Pathway.PathwayObservation => {
+//   const observationInCurrentPaths = observationData.filter((e: Observation) => phosphosites.includes(e.substrate));
 
-  const formattedObservation: {
-    [key: string]: { fold_change: string; p_value: string };
-  } = {};
-  // eslint-disable-next-line camelcase
-  observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
-    formattedObservation[substrate] = {
-      fold_change: parseFloat(fold_change).toFixed(2),
-      p_value: parseFloat(p_value).toFixed(2),
-    };
-  });
+//   const formattedObservation: {
+//     [key: string]: { fold_change: string; p_value: string };
+//   } = {};
+//   // eslint-disable-next-line camelcase
+//   observationInCurrentPaths.forEach(({ substrate, fold_change, p_value }) => {
+//     formattedObservation[substrate] = {
+//       fold_change: parseFloat(fold_change).toFixed(2),
+//       p_value: parseFloat(p_value).toFixed(2),
+//     };
+//   });
 
-  return formattedObservation;
-};
+//   return formattedObservation;
+// };

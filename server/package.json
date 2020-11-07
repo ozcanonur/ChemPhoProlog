@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "db": "pg_ctl start",
     "start": "node build/index.js",
     "start:build": "tsc -w",
     "start:run": "nodemon build/index.js",

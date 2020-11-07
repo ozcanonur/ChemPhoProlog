@@ -61,9 +61,9 @@ export const elementsToAnimate = (
 
 export const inputs = (
   state = {
-    cellLine: '',
-    perturbagen: '',
-    substrate: '',
+    cellLine: 'MCF-7',
+    perturbagen: 'Torin',
+    substrate: 'AKT1(S473)',
     onlyKinaseEnds: true,
   },
   action: SetSelectedInputsAction

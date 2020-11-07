@@ -5,12 +5,12 @@ const router = express.Router();
 
 // Kinase List
 router.get('/getKinaseList', async (_req, res) => {
-  const query = `select * from Protein where kinase_name <> '' order by kinase_name`;
+  const query = `select * from protein where kinase_name <> '' order by kinase_name`;
   try {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -23,7 +23,7 @@ router.get('/kinaseInfo', async (req, res) => {
     const results = await db.query(query, [kinase]);
     res.send(results.rows[0]);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -35,7 +35,7 @@ router.get('/getAllKinases', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -47,7 +47,7 @@ router.get('/getPerturbagenList', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -59,7 +59,7 @@ router.get('/getAllSubstrates', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -78,7 +78,7 @@ router.get('/validObservation', async (req, res) => {
     });
     res.send(parsedRows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -99,7 +99,7 @@ router.get('/substratesWithPaths', async (req, res) => {
 
     res.send(parsedRows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
   }
 });
 
@@ -120,7 +120,24 @@ router.get('/phosphositesWithPaths', async (req, res) => {
 
     res.send(parsedRows);
   } catch (err) {
-    throw err;
+    res.status(500).send();
+  }
+});
+
+router.get('/observationForPathway', async (req, res) => {
+  const { cellLine, perturbagen, substrates } = req.query;
+
+  // @ts-ignore
+  const parsedSubstrates = substrates.map((substrate) => `'${substrate}'`).join(',');
+
+  const query = `Select substrate, fold_change, p_value from Observation where cell_line = $1 and perturbagen = $2 and substrate in (${parsedSubstrates})`;
+
+  try {
+    const results = await db.query(query, [cellLine, perturbagen]);
+
+    res.send(results.rows);
+  } catch (err) {
+    res.status(500).send();
   }
 });
 

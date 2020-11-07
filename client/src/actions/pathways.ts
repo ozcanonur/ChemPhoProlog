@@ -1,11 +1,10 @@
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { pick } from 'lodash';
 import { CollectionReturnValue } from 'cytoscape';
 
 import { store } from 'index';
 import { fetchFromApi } from 'utils/api';
-import { formatObservation, getExplanationForPath } from './util';
+import { getExplanationForPath } from './helpers';
 
 import {
   ACTION,
@@ -53,19 +52,18 @@ export const setCxtMenu = (cxtMenu: CxtMenu): SetCxtMenuAction => {
   };
 };
 
-const fetchPathwayData = async (params: {
-  cellLine: string;
-  perturbagen: string;
-  substrate: string;
-  onlyKinaseEnds: boolean;
-}) => {
-  const response = await fetchFromApi('/api/pathway', params);
-  return response;
-};
+const formatPathwayObservation = (resObservation: Observation[]) => {
+  const formattedObservation: {
+    [key: string]: { fold_change: string; p_value: string };
+  } = {};
+  resObservation.forEach(({ substrate: substrateObs, fold_change, p_value }) => {
+    formattedObservation[substrateObs] = {
+      fold_change: parseFloat(fold_change).toFixed(2),
+      p_value: parseFloat(p_value).toFixed(2),
+    };
+  });
 
-const fetchObservationData = async (params: { perturbagen: string; cellLine: string }) => {
-  const response = await fetchFromApi('/api/observation', params);
-  return response.map((row: Observation) => pick(row, ['substrate', 'fold_change', 'p_value']));
+  return formattedObservation;
 };
 
 export const getPathwayData = (
@@ -74,21 +72,19 @@ export const getPathwayData = (
   substrate: string,
   onlyKinaseEnds: boolean
 ): ThunkAction<void, RootState, unknown, GetPathwayDataAction> => async (dispatch: Dispatch) => {
-  const pathwayParams = { cellLine, perturbagen, substrate, onlyKinaseEnds };
-  const observationParams = { perturbagen, cellLine };
+  const resPathway = await fetchFromApi('/api/pathway', { cellLine, perturbagen, substrate, onlyKinaseEnds });
+  const resObservation: Observation[] = await fetchFromApi('/apiWeb/observationForPathway', {
+    perturbagen,
+    cellLine,
+    substrates: resPathway.phosphosites,
+  });
+  const formattedPathwayObservation = formatPathwayObservation(resObservation);
 
-  const [pathwayData, observationData] = await Promise.all([
-    fetchPathwayData(pathwayParams),
-    fetchObservationData(observationParams),
-  ]);
-
-  if (!pathwayData || !observationData) return;
-
-  const formattedObservation = formatObservation(pathwayData.phosphosites, observationData);
+  if (!resPathway || !formattedPathwayObservation) return;
 
   dispatch({
     type: ACTION.GET_PATHWAY_DATA,
-    payload: { observation: formattedObservation, ...pathwayData },
+    payload: { observation: formattedPathwayObservation, ...resPathway },
   });
 };
 

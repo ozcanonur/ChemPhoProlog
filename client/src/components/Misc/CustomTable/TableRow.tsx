@@ -42,7 +42,7 @@ const Row = (props: Props) => {
       <TableRow
         className={classes.tableBodyRow}
         style={{
-          backgroundColor: row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : 'inherit',
+          backgroundColor: row[0] === selectedItem ? 'rgba(229,173,6, 0.1)' : '',
         }}
       >
         {row.map((prop, key) => (
@@ -74,7 +74,7 @@ const Row = (props: Props) => {
       {RowExpandableContentLeft ? (
         <TableRow>
           <TableCell colSpan={12}>
-            <Collapse in={open} timeout='auto' mountOnEnter unmountOnExit>
+            <Collapse in={open} timeout='auto' mountOnEnter>
               <Box margin={1}>
                 <RowExpandableContentLeft row={row} />
               </Box>
