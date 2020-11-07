@@ -47,7 +47,7 @@ const NewFindings = ({ direction, cardTitle, cardCategory }: Props) => {
       <GridItem>
         <Card>
           <CardHeader color='warning' stats icon>
-            <CardIcon color='warning'>
+            <CardIcon color='warning' style={{ padding: '10px' }}>
               <NewReleases />
             </CardIcon>
             <p className={classes.cardCategory}>{cardCategory}</p>

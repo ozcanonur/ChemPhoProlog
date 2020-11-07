@@ -98,43 +98,41 @@ const SelectMenu = ({ type }: Props) => {
   const menuData = type === 'Substrate' ? Object.keys(data) : data;
 
   return (
-    <>
-      <FormControl className={classes.formControl}>
-        <InputLabel className={classes.inputLabel}>
-          {type === 'Cell Line' ? (
-            <LayersIcon />
-          ) : type === 'Perturbagen' ? (
-            <Healing />
-          ) : type === 'Substrate' ? (
-            <TrendingDownIcon />
-          ) : null}
-          <div className={classes.labelText}>{`${type} (${menuData.length.toString()})`}</div>
-        </InputLabel>
-        <Select
-          MenuProps={{ className: classes.list }}
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={variableName ? inputs[variableName] : ''}
-          onChange={handleChange}
-        >
-          <MenuItem value=''>
-            <em>None</em>
-          </MenuItem>
-          {type === 'Substrate'
-            ? menuData.map((e: string) => (
-                <MenuItem key={e} value={e}>
-                  {`${e}, fc: ${data[e].foldChange}, c: ${data[e].pathcount}`}
-                </MenuItem>
-              ))
-            : menuData.map((e: string) => (
-                <MenuItem key={e} value={e}>
-                  {e}
-                </MenuItem>
-              ))}
-        </Select>
-      </FormControl>
-    </>
+    <FormControl className={classes.formControl}>
+      <InputLabel className={classes.inputLabel}>
+        {type === 'Cell Line' ? (
+          <LayersIcon />
+        ) : type === 'Perturbagen' ? (
+          <Healing />
+        ) : type === 'Substrate' ? (
+          <TrendingDownIcon />
+        ) : null}
+        <div className={classes.labelText}>{`${type} (${menuData.length.toString()})`}</div>
+      </InputLabel>
+      <Select
+        MenuProps={{ className: classes.list }}
+        open={open}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        value={variableName ? inputs[variableName] : ''}
+        onChange={handleChange}
+      >
+        <MenuItem value=''>
+          <em>None</em>
+        </MenuItem>
+        {type === 'Substrate'
+          ? menuData.map((e: string) => (
+              <MenuItem key={e} value={e}>
+                {`${e}, fc: ${data[e].foldChange}, count: ${data[e].pathcount}`}
+              </MenuItem>
+            ))
+          : menuData.map((e: string) => (
+              <MenuItem key={e} value={e}>
+                {e}
+              </MenuItem>
+            ))}
+      </Select>
+    </FormControl>
   );
 };
 

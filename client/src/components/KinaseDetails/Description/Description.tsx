@@ -115,7 +115,7 @@ const Description = () => {
           onClick={handleClick}
           size='sm'
           style={{
-            backgroundColor: 'rgba(45, 65, 89, 0.7)',
+            backgroundColor: 'rgba(17, 59, 94, 0.7)',
             boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
           }}
         >

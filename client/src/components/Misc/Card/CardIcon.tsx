@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -10,6 +10,7 @@ interface Props {
   className?: string;
   children?: JSX.Element | JSX.Element[] | string;
   color?: string;
+  style?: CSSProperties;
 }
 
 const CardIcon = (props: Props) => {

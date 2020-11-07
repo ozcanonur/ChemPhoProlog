@@ -156,21 +156,14 @@ const cardStyles = createStyles({
   successCardHeader: {
     color: '#fff',
     '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, #2D4159, #2D4159)`,
-      boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(45, 65, 89,.4)`,
-    },
-  },
-  infoCardHeader: {
-    color: '#fff',
-    '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, #00acc1, #26c6da)`,
+      background: 'rgba(17, 59, 94, 0.9)',
       boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(45, 65, 89,.4)`,
     },
   },
   primaryCardHeader: {
     color: '#fff',
     '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, #2D4159, rgba(6,119,161, 0))`,
+      background: `linear-gradient(60deg, #113b5e, transparent)`,
       boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0, 18, 51,.4)`,
     },
   },

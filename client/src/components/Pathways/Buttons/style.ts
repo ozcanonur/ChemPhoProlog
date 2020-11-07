@@ -9,7 +9,7 @@ const buttonsStyles = createStyles({
   },
   button: {
     width: '100px',
-    backgroundColor: 'rgba(45,65,89, 0.7)',
+    backgroundColor: 'rgba(17, 59, 94, 0.7)',
   },
   legendContainer: {
     position: 'absolute',

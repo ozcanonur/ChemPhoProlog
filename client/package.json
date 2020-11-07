@@ -68,7 +68,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "build:deploy": "react-scripts build && rm -rf ../deployment/build && mv build ../deployment"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.5.0",

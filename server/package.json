@@ -9,7 +9,9 @@
     "start:run": "nodemon build/index.js",
     "client": "cd ../client && yarn start",
     "server": "nodemon index.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn:start:*\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn:start:*\" \"yarn client\"",
+    "build:deploy": "tsc --outDir ../deployment",
+    "deploy": "cd ../deployment && yarn deploy"
   },
   "dependencies": {
     "@types/body-parser": "^1.19.0",
@@ -28,8 +30,6 @@
     "helmet": "^4.2.0",
     "lodash": "^4.17.20",
     "pg": "^8.4.2",
-    "sqlite3": "^5.0.0",
-    "swipl": "^1.0.5",
     "typescript": "^4.0.3"
   },
   "devDependencies": {

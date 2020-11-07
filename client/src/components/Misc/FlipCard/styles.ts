@@ -32,7 +32,7 @@ const flipCardStyles = createStyles({
   },
   card_side_back: {
     transform: 'rotateY(180deg)',
-    backgroundImage: 'linear-gradient(60deg, #2D4159, rgba(6,119,161, 0))',
+    backgroundImage: 'linear-gradient(60deg, #113b5e, rgba(6,119,161, 0))',
   },
   card_picture: {
     backgroundSize: 'cover',
@@ -42,7 +42,7 @@ const flipCardStyles = createStyles({
     clipPath: 'polygon(0 0, 100% 0, 100% 70%, 0 100%)',
     borderTopLeftRadius: '3px',
     borderTopRightRadius: '3px',
-    backgroundImage: 'linear-gradient(60deg, #2D4159, rgba(6,119,161, 0))',
+    backgroundImage: 'linear-gradient(60deg, #113b5e, rgba(6,119,161, 0))',
   },
   card_heading: {
     fontSize: '1rem',

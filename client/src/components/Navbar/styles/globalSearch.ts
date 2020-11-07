@@ -41,7 +41,7 @@ const headerLinksStyle = createStyles({
     height: 'unset',
     minHeight: 'unset',
     '&:hover': {
-      backgroundColor: '#001233',
+      backgroundColor: '#113b5e',
       color: '#fff',
       boxShadow: `0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,18,51,.4)`,
     },
@@ -72,7 +72,7 @@ const headerLinksStyle = createStyles({
     border: `1px solid white`,
     right: '4px',
     fontSize: '9px',
-    background: '#001233',
+    background: '#113b5e',
     color: '#fff',
     minWidth: '16px',
     height: '16px',

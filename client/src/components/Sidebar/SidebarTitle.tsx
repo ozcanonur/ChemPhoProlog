@@ -15,12 +15,12 @@ const SidebarTitle = ({ title, logo }: Props) => {
 
   return (
     <div className={classes.logo}>
-      <a href='# ' className={classes.logoLink}>
+      <div className={classes.logoLink}>
         <div className={classes.logoImage}>
           <img src={logo} alt='logo' className={classes.img} />
         </div>
         {title}
-      </a>
+      </div>
     </div>
   );
 };

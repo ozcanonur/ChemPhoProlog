@@ -13,7 +13,7 @@ import webRouter from './routes/web';
 
 const app = express();
 
-const clientBuildPath = path.join(__dirname, '../../client/build');
+const clientBuildPath = path.join(__dirname, process.env.CLIENT_BUILD_PATH);
 
 app.use(express.static(clientBuildPath));
 app.use(bodyParser.json());

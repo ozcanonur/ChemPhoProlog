@@ -45,7 +45,7 @@ const headerStyle = createStyles({
     top: '8px',
   },
   primary: {
-    backgroundColor: '#001233',
+    backgroundColor: '#113b5e',
     color: '#fff',
     border: '0',
     borderRadius: '3px',
@@ -63,7 +63,7 @@ const headerStyle = createStyles({
     transition: 'all 150ms ease 0s',
   },
   success: {
-    backgroundColor: '#2D4159',
+    backgroundColor: '#113b5e',
     color: '#fff',
     border: '0',
     borderRadius: '3px',

@@ -22,7 +22,7 @@ const customInputStyles = createStyles({
   },
   underlineSuccess: {
     '&:after': {
-      borderColor: '#2D4159',
+      borderColor: '#113b5e',
     },
   },
   labelRoot: {
@@ -33,7 +33,7 @@ const customInputStyles = createStyles({
     letterSpacing: 'unset',
   },
   labelRootSuccess: {
-    color: '#2D4159',
+    color: '#113b5e',
   },
   feedback: {
     position: 'absolute',
