@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     height: '100vh',
   },
   mainPanel: {
-    width: `calc(100% - 260px)`,
+    width: `calc(100% - 240px)`,
     overflow: 'auto',
     position: 'relative',
     float: 'right',

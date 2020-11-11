@@ -150,7 +150,7 @@ const KinaseList = () => {
           color='primary'
           cardTitle='Kinase Specification'
           cardSubtitle='Details'
-          bodyStyle={{ minHeight: selectedKinase ? '40rem' : 0 }}
+          bodyStyle={{ minHeight: selectedKinase ? '40.78rem' : 0 }}
         >
           <Slide in={rightPanelOpen} direction='left' mountOnEnter unmountOnExit>
             <div>

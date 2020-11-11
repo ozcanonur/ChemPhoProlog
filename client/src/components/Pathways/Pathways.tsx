@@ -27,6 +27,7 @@ Cytoscape.use(cxtmenu);
 const PathwayIndex = () => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const [cy, setCy] = useState(Cytoscape());
+  console.log(data);
 
   const store = useStore();
   const dispatch = useDispatch();
@@ -54,9 +55,9 @@ const PathwayIndex = () => {
     };
   }, []);
 
-  useEffect(() => {
-    addResizeEventListener(cy, layout);
-  }, [cy]);
+  // useEffect(() => {
+  //   addResizeEventListener(cy, layout);
+  // }, [cy]);
 
   // Reset animation/tooltips when new data for the graph comes in
   useEffect(() => {
@@ -122,4 +123,4 @@ const PathwayIndex = () => {
   );
 };
 
-export default PathwayIndex;
+export default React.memo(PathwayIndex, () => true);

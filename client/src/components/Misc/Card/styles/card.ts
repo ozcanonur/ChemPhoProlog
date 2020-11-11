@@ -78,7 +78,7 @@ const cardStyles = createStyles({
     borderBottom: 'none',
     background: 'transparent',
     zIndex: 3,
-    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$infoCardHeader,&$primaryCardHeader': {
+    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$primaryCardHeader': {
       margin: '0 15px',
       padding: '0',
       position: 'relative',
@@ -87,7 +87,7 @@ const cardStyles = createStyles({
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0',
     },
-    '&$warningCardHeader,&$successCardHeader,&$infoCardHeader,&$primaryCardHeader': {
+    '&$warningCardHeader,&$successCardHeader,&$primaryCardHeader': {
       '&:not($cardHeaderIcon)': {
         borderRadius: '3px',
         marginTop: '-20px',
@@ -128,7 +128,7 @@ const cardStyles = createStyles({
     },
   },
   cardHeaderIcon: {
-    '&$warningCardHeader,&$successCardHeader,&$infoCardHeader,&$primaryCardHeader': {
+    '&$warningCardHeader,&$successCardHeader,&$primaryCardHeader': {
       background: 'transparent',
       boxShadow: 'none',
     },
@@ -168,7 +168,7 @@ const cardStyles = createStyles({
     },
   },
   cardIcon: {
-    '&$warningCardHeader,&$successCardHeader,&$infoCardHeader,&$primaryCardHeader': {
+    '&$warningCardHeader,&$successCardHeader,&$primaryCardHeader': {
       borderRadius: '3px',
       backgroundColor: '#999',
       padding: '15px',

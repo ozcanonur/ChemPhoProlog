@@ -11,15 +11,22 @@ const sidebarStyle = createStyles({
     zIndex: 1,
     boxShadow: '0 2rem 2rem rgba(0,0,0,0.2)',
     height: '100%',
-    width: 260,
+    width: '240px',
   },
   routesContainer: {
     position: 'relative',
     height: 'calc(100vh - 75px)',
     overflowY: 'auto',
     overflowX: 'hidden',
-    width: '260px',
+    width: '240px',
     zIndex: 4,
+    '&::-webkit-scrollbar-track': {
+      background: 'black !important',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#999',
+      border: '3px solid #040102',
+    },
   },
   list: {
     marginTop: '20px',
@@ -152,7 +159,7 @@ const sidebarStyle = createStyles({
     textTransform: 'uppercase',
     padding: '5px 0',
     display: 'block',
-    fontSize: '18px',
+    fontSize: '1rem',
     textAlign: 'left',
     fontWeight: 400,
     lineHeight: '30px',

@@ -112,7 +112,12 @@ const PDTTable = ({ cellLine }: Props) => {
   };
 
   return (
-    <CardGeneric color='primary' cardTitle={`Putative Downstream Targets of ${kinase}`} cardSubtitle='Select a substrate'>
+    <CardGeneric
+      color='primary'
+      cardTitle={`Putative Downstream Targets of ${kinase}`}
+      cardSubtitle='Select a substrate'
+      bodyStyle={{ minHeight: '40rem' }}
+    >
       {tableData.length === 0 && !loading ? (
         <div>No entries found.</div>
       ) : loading ? (

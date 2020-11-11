@@ -39,7 +39,7 @@ const PathsTable = () => {
     };
 
     return (
-      <Button onClick={addPathToInspection} size='sm' style={{ backgroundColor: 'rgba(45, 65, 89, 0.7)' }}>
+      <Button onClick={addPathToInspection} size='sm' style={{ backgroundColor: 'rgba(17, 59, 94, 0.7)' }}>
         <div>Add to inspection</div>
       </Button>
     );
