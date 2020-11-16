@@ -42,6 +42,7 @@ const Home = () => {
     <div className={classes.wrapper}>
       <Sidebar />
       <div className={classes.mainPanel}>
+        {/* @ts-ignore */}
         <Navbar routes={allRoutes} />
         <div className={classes.map}>
           <Switch>

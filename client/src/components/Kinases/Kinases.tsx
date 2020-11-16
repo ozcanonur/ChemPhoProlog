@@ -18,9 +18,14 @@ import { addSidebarRoute } from 'actions/main';
 import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
 
+interface KinaseData {
+  data: Kinase[];
+  kinasesWithPhosphosites: string[];
+}
+
 // Kinase List on the Home page
 const KinaseList = () => {
-  const [data, setData] = useState<Kinase[]>([]);
+  const [data, setData] = useState<KinaseData>({ data: [], kinasesWithPhosphosites: [] });
   const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +38,7 @@ const KinaseList = () => {
     let mounted = true;
     setLoading(true);
 
-    fetchFromApi('/apiWeb/getKinaseList').then((res) => {
+    fetchFromApi('/apiWeb/kinases').then((res) => {
       if (mounted && res) {
         setData(res);
         setLoading(false);
@@ -47,7 +52,7 @@ const KinaseList = () => {
 
   // Table data
   const tableData = useMemo(() => {
-    return formatTableData(data);
+    return formatTableData(data.data);
   }, [data]);
 
   // Right panel animation
@@ -63,7 +68,7 @@ const KinaseList = () => {
 
   // Get specific information about this kinase to display in the right panel
   const selectedInfo = useMemo(() => {
-    return findKinaseInfo(data, selectedKinase);
+    return findKinaseInfo(data.data, selectedKinase);
   }, [data, selectedKinase]);
 
   // Button on the right of the row
@@ -137,6 +142,7 @@ const KinaseList = () => {
               tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
               tableData={tableData}
               RowExpandableContentLeft={Phosphosites}
+              RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
               RowContentRight={RowContentRight}
               clickableCells={clickableCells}
               searchIndex={0}

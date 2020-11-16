@@ -4,13 +4,17 @@ import db from '../db';
 const router = express.Router();
 
 // Kinase List
-router.get('/getKinaseList', async (_req, res) => {
-  const query = `select * from protein where kinase_name <> '' order by kinase_name`;
+router.get('/kinases', async (_req, res) => {
+  const queryKinaseData = `select * from protein where kinase_name is not null order by kinase_name`;
+  const queryKinasesWithPhosphosites = `select distinct kinase_name from protein join substrate on kinase_name is not null and substrate.gene_name = protein.gene_name`;
   try {
-    const results = await db.query(query);
-    res.send(results.rows);
+    const resultsKinaseData = await db.query(queryKinaseData);
+    const resultsKinasesWithPhosphosites = await db.query(queryKinasesWithPhosphosites);
+
+    const parsedPhosphosites = resultsKinasesWithPhosphosites.rows.map((row) => row.kinase_name);
+    res.send({ data: resultsKinaseData.rows, kinasesWithPhosphosites: parsedPhosphosites });
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -23,7 +27,7 @@ router.get('/kinaseInfo', async (req, res) => {
     const results = await db.query(query, [kinase]);
     res.send(results.rows[0]);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -35,7 +39,7 @@ router.get('/getAllKinases', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -47,7 +51,7 @@ router.get('/getPerturbagenList', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -59,7 +63,7 @@ router.get('/getAllSubstrates', async (_req, res) => {
     const results = await db.query(query);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -78,7 +82,7 @@ router.get('/validObservation', async (req, res) => {
     });
     res.send(parsedRows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -99,7 +103,7 @@ router.get('/substratesWithPaths', async (req, res) => {
 
     res.send(parsedRows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -120,7 +124,7 @@ router.get('/phosphositesWithPaths', async (req, res) => {
 
     res.send(parsedRows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -137,7 +141,7 @@ router.get('/observationForPathway', async (req, res) => {
 
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 

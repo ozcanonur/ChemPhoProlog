@@ -27,6 +27,7 @@ interface Props {
   tableData: string[][];
   RowContentRight?: ({ row }: { row: string[] }) => JSX.Element;
   RowExpandableContentLeft?: ({ row }: { row: string[] }) => JSX.Element;
+  RowExpandableContentLeftFilter?: string[];
   clickableCells?: {
     [key: string]: (name: string) => void;
   };
@@ -43,6 +44,7 @@ const CustomTable = (props: Props) => {
     tableData,
     RowContentRight,
     RowExpandableContentLeft,
+    RowExpandableContentLeftFilter,
     clickableCells,
     searchIndex,
     selectedItem,
@@ -149,6 +151,7 @@ const CustomTable = (props: Props) => {
               row={row}
               RowContentRight={RowContentRight}
               RowExpandableContentLeft={RowExpandableContentLeft}
+              RowExpandableContentLeftFilter={RowExpandableContentLeftFilter}
               clickableCells={clickableCells}
               selectedItem={selectedItem}
             />

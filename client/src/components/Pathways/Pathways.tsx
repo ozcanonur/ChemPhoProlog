@@ -17,7 +17,7 @@ import ExtraButtons from './Buttons/Buttons';
 import PathSelectList from './PathSelectList';
 import PathwayInformation from './Information/Information';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/options';
-import { runLayout, clearAllTimeouts, resetPathwayVisuals, addResizeEventListener } from './utils/misc';
+import { runLayout, clearAllTimeouts, resetPathwayVisuals } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
 
 Cytoscape.use(COSEBilkent);
@@ -27,7 +27,7 @@ Cytoscape.use(cxtmenu);
 const PathwayIndex = () => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const [cy, setCy] = useState(Cytoscape());
-  console.log(data);
+  // console.log(data);
 
   const store = useStore();
   const dispatch = useDispatch();

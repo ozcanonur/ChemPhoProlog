@@ -19,6 +19,7 @@ interface Props {
   row: string[];
   RowContentRight?: ({ row }: { row: string[] }) => JSX.Element;
   RowExpandableContentLeft?: ({ row }: { row: string[] }) => JSX.Element;
+  RowExpandableContentLeftFilter?: string[];
   clickableCells?: {
     [key: string]: (name: string) => void;
   };
@@ -26,7 +27,7 @@ interface Props {
 }
 
 const Row = (props: Props) => {
-  const { row, RowContentRight, RowExpandableContentLeft, clickableCells, selectedItem } = props;
+  const { row, RowContentRight, RowExpandableContentLeft, RowExpandableContentLeftFilter, clickableCells, selectedItem } = props;
 
   const isExpandable = Boolean(RowExpandableContentLeft);
   const classes = useStyles(isExpandable);
@@ -49,9 +50,11 @@ const Row = (props: Props) => {
           <React.Fragment key={key}>
             {RowExpandableContentLeft && key === 0 ? (
               <TableCell className={classes.tableCell}>
-                <IconButton aria-label='expand row' size='small' onClick={handleExpandButton}>
-                  {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                </IconButton>
+                {RowExpandableContentLeftFilter?.includes(prop) ? (
+                  <IconButton aria-label='expand row' size='small' onClick={handleExpandButton}>
+                    {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                  </IconButton>
+                ) : null}
               </TableCell>
             ) : null}
             <TableCell className={classes.tableCell} key={key}>
