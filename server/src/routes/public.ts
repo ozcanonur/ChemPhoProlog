@@ -32,7 +32,7 @@ router.get('/phosphosites', async (req, res) => {
     const results = await db.query(query, fields);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -90,7 +90,7 @@ router.get('/observation', async (req, res) => {
     const results = await db.query(query, fields);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -112,7 +112,7 @@ router.get('/knownPerturbagens', async (req, res) => {
 
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -124,7 +124,10 @@ router.get('/knownSubstrates', async (req, res) => {
   const fields = [];
 
   if (KPa) {
-    query += 'where KPa = $1 order by PsT';
+    query = `select PsT, sources, every(fold_change is not null) as observation_exists from known_target 
+              left join Observation on PsT = Observation.substrate 
+              where KPa = $1 
+              group by PsT, sources order by PsT`;
     fields.push(KPa);
   }
 
@@ -133,7 +136,7 @@ router.get('/knownSubstrates', async (req, res) => {
 
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -147,7 +150,7 @@ router.get('/knownTargets', async (req, res) => {
     const results = await db.query(query, [perturbagen]);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -171,7 +174,7 @@ router.get('/pdts', async (req, res) => {
     const results = await db.query(query, [kinase, cell_line, cell_line]);
     res.send(results.rows);
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 
@@ -190,7 +193,7 @@ router.get('/pathway', async (req, res) => {
     const results = await db.query(query, [cellLine, perturbagen, substrate]);
     res.send(parsePaths(results.rows));
   } catch (err) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
 

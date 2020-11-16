@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
 import TableCell from '@material-ui/core/TableCell/TableCell';
@@ -32,10 +32,15 @@ const Row = (props: Props) => {
   const isExpandable = Boolean(RowExpandableContentLeft);
   const classes = useStyles(isExpandable);
 
-  const [open, setOpen] = useState(false);
+  const [expandableOpen, setExpandableOpen] = useState(false);
+
+  // To close the expandable row on pagination change (next page etc.)
+  useEffect(() => {
+    setExpandableOpen(false);
+  }, [row]);
 
   const handleExpandButton = () => {
-    setOpen(!open);
+    setExpandableOpen(!expandableOpen);
   };
 
   return (
@@ -50,9 +55,9 @@ const Row = (props: Props) => {
           <React.Fragment key={key}>
             {RowExpandableContentLeft && key === 0 ? (
               <TableCell className={classes.tableCell}>
-                {RowExpandableContentLeftFilter?.includes(prop) ? (
+                {!RowExpandableContentLeftFilter || RowExpandableContentLeftFilter?.includes(prop) ? (
                   <IconButton aria-label='expand row' size='small' onClick={handleExpandButton}>
-                    {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                    {expandableOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                   </IconButton>
                 ) : null}
               </TableCell>
@@ -77,7 +82,7 @@ const Row = (props: Props) => {
       {RowExpandableContentLeft ? (
         <TableRow>
           <TableCell colSpan={12}>
-            <Collapse in={open} timeout='auto' mountOnEnter>
+            <Collapse in={expandableOpen} timeout='auto' mountOnEnter>
               <Box margin={1}>
                 <RowExpandableContentLeft row={row} />
               </Box>

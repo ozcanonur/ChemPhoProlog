@@ -152,6 +152,10 @@ const Description = () => {
   // Table component wants it in this format :/
   const tableData = phosphosites.map(Object.values);
 
+  const rowExpandableContentLeftFilter = phosphosites
+    .filter((phosphosite) => phosphosite.detected_in)
+    .map((phosphosite) => phosphosite.location.toString());
+
   return (
     <GridContainer direction='column' style={{ padding: '2em' }}>
       <GridItem>
@@ -192,6 +196,7 @@ const Description = () => {
               ]}
               tableData={tableData}
               RowExpandableContentLeft={ObservationHeatMap(false)}
+              RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
               RowContentRight={RowContentRight}
               searchIndex={0}
             />

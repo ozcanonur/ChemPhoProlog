@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { pick } from 'lodash';
 
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -12,8 +13,9 @@ import { setSelectedInputs } from 'actions/pathways';
 import ObservationHeatMap from '../ObservationHeatMap';
 
 interface KnownSubstrate {
-  PsT: string;
+  pst: string;
   sources: string;
+  observation_exists: boolean;
 }
 
 interface SubstratesWithPaths {
@@ -122,7 +124,8 @@ const KnownSubstratesTable = () => {
     );
   };
 
-  const tableData = data.map(Object.values);
+  const tableData = data.map((e) => pick(e, ['pst', 'sources'])).map(Object.values);
+  const rowExpandableContentLeftFilter = data.filter((e) => e.observation_exists).map((e) => e.pst);
 
   return (
     <>
@@ -139,6 +142,7 @@ const KnownSubstratesTable = () => {
             searchIndex={0}
             RowContentRight={RowContentRight}
             RowExpandableContentLeft={ObservationHeatMap(true)}
+            RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
           />
         </CardGeneric>
       )}
