@@ -3,6 +3,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Slide from '@material-ui/core/Slide';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
+import { useLocalStorage } from 'utils/customHooks';
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -25,6 +27,11 @@ const KnownPerturbagens = () => {
   const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinaseKnownPerturbagensRightHelpVisible', true);
+
+  const disableRightHelp = () => {
+    setIsRightHelpVisible(false);
+  };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -66,9 +73,16 @@ const KnownPerturbagens = () => {
     };
 
     return (
-      <IconButton aria-label='expand row' size='small' onClick={selectRow}>
-        <KeyboardArrowRight />
-      </IconButton>
+      <>
+        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+          <KeyboardArrowRight />
+        </IconButton>
+        {perturbagenName === 'Amuvatinib' && isRightHelpVisible ? (
+          <HelperPopup style={{ position: 'absolute', right: 0, top: '22%' }} buttonOnClick={disableRightHelp}>
+            <div>Inspect this perturbagen</div>
+          </HelperPopup>
+        ) : null}
+      </>
     );
   };
 

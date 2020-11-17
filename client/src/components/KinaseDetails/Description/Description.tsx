@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -12,6 +13,7 @@ import Table from 'components/Misc/CustomTable/Table';
 import Button from 'components/Misc/CustomButton/Button';
 import Loading from 'components/Misc/Loading/Loading';
 
+import { useLocalStorage } from 'utils/customHooks';
 import { setSelectedInputs } from 'actions/pathways';
 import { fetchFromApi } from 'utils/api';
 import ObservationHeatMap from '../ObservationHeatMap';
@@ -50,6 +52,16 @@ const Description = () => {
   });
   const [phosphositesWithPaths, setPhosphositesWithPaths] = useState<PhosphositesWithPaths>({});
   const [loading, setLoading] = useState(false);
+  const [isLeftHelpVisible, setIsLeftHelpVisible] = useLocalStorage('kinaseDescriptionLeftHelpVisible', true);
+  const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinaseDescriptionRightHelpVisible', true);
+
+  const disableLeftHelp = () => {
+    setIsLeftHelpVisible(false);
+  };
+
+  const disableRightHelp = () => {
+    setIsRightHelpVisible(false);
+  };
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -183,24 +195,36 @@ const Description = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <Table
-              id={`${kinase}_PhosphositesOfInterest`}
-              tableHead={[
-                'Obs. Data',
-                'Location',
-                'Residue',
-                'Detected in',
-                'Pst_effect',
-                'Reported Substrate of',
-                'Reported PDT of',
-                'Go to Pathway',
-              ]}
-              tableData={tableData}
-              RowExpandableContentLeft={ObservationHeatMap(false)}
-              RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
-              RowContentRight={RowContentRight}
-              searchIndex={0}
-            />
+            <>
+              {isLeftHelpVisible ? (
+                <HelperPopup style={{ position: 'absolute', right: '16%', top: '22%' }} buttonOnClick={disableLeftHelp}>
+                  <div>Inspect pathways if present</div>
+                </HelperPopup>
+              ) : null}
+              {isRightHelpVisible ? (
+                <HelperPopup style={{ position: 'absolute', left: '3%', top: '22%' }} buttonOnClick={disableRightHelp}>
+                  <div>Check out observation data</div>
+                </HelperPopup>
+              ) : null}
+              <Table
+                id={`${kinase}_PhosphositesOfInterest`}
+                tableHead={[
+                  'Obs. Data',
+                  'Location',
+                  'Residue',
+                  'Detected in',
+                  'Pst_effect',
+                  'Reported Substrate of',
+                  'Reported PDT of',
+                  'Go to Pathway',
+                ]}
+                tableData={tableData}
+                RowExpandableContentLeft={ObservationHeatMap(false)}
+                RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
+                RowContentRight={RowContentRight}
+                searchIndex={0}
+              />
+            </>
           )}
         </CardGeneric>
       </GridItem>

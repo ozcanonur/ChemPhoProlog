@@ -19,15 +19,16 @@ const helperPopupStyles = createStyles({
     borderRadius: '0.5rem',
   },
   helperIcon: {
-    color: 'rgba(54, 57, 63, 0.9)',
+    color: 'rgba(54, 57, 63, 0.8)',
     fontSize: '2rem',
     transform: 'rotate(45deg)',
     opacity: 0.8,
   },
   helperButton: {
     marginTop: '1rem',
+    fontSize: '0.9rem',
     backgroundColor: 'rgba(255, 190, 0, 0.75)',
-    padding: '0.4rem 1.4rem',
+    padding: '0.2rem 1.4rem',
     display: 'inline-block',
     cursor: 'pointer',
     borderRadius: '4px',

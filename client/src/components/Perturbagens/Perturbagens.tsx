@@ -147,7 +147,7 @@ const PerturbagenList = () => {
                     tabIcon: PhotoCameraIcon,
                     tabContent: (
                       <>
-                        <CardHeader color='primary' style={{ margin: 0, marginBottom: '1.5rem', fontSize: '18.2px' }}>
+                        <CardHeader color='primary' style={{ margin: 0, marginBottom: '1rem', fontSize: '1.1rem' }}>
                           <div style={{ marginBottom: '3px' }}>{selectedPerturbagen}</div>
                         </CardHeader>
                         <div style={{ textAlign: 'center' }}>

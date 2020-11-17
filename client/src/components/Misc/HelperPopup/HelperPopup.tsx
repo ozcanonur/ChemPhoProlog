@@ -13,14 +13,16 @@ interface Props {
   style?: CSSProperties;
   buttonOnClick: () => void;
   children?: JSX.Element | JSX.Element[];
+  iconClassName?: string;
+  iconStyle?: CSSProperties;
 }
 
-const HelperPopup = ({ className, style, buttonOnClick, children }: Props) => {
+const HelperPopup = ({ className, style, buttonOnClick, children, iconClassName, iconStyle }: Props) => {
   const classes = useStyles();
 
   return (
     <div className={className} style={style}>
-      <ReplyIcon className={classes.helperIcon} />
+      <ReplyIcon className={`${classes.helperIcon} ${iconClassName}`} style={iconStyle} />
       <div className={classes.helperTextContainer}>
         {children}
         <div onClick={buttonOnClick} className={classes.helperButton}>

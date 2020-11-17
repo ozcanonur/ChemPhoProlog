@@ -5,6 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { pick } from 'lodash';
 
+import { useLocalStorage } from 'utils/customHooks';
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -29,6 +31,16 @@ const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
   const [loading, setLoading] = useState(false);
+  const [isLeftHelpVisible, setIsLeftHelpVisible] = useLocalStorage('kinaseKnownSubstratesLeftHelpVisible', true);
+  const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinaseKnownSubstratesRightHelpVisible', true);
+
+  const disableLeftHelp = () => {
+    setIsLeftHelpVisible(false);
+  };
+
+  const disableRightHelp = () => {
+    setIsRightHelpVisible(false);
+  };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -136,15 +148,27 @@ const KnownSubstratesTable = () => {
         <Loading />
       ) : (
         <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
-          <Table
-            id={`${kinase}_KnownSubstrates`}
-            tableHead={['Obs.Data', 'Substrate', 'Sources', 'Go to Pathway']}
-            tableData={tableData}
-            searchIndex={0}
-            RowContentRight={RowContentRight}
-            RowExpandableContentLeft={ObservationHeatMap(true)}
-            RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
-          />
+          <>
+            {isLeftHelpVisible ? (
+              <HelperPopup style={{ position: 'absolute', right: '16%', top: '22%' }} buttonOnClick={disableLeftHelp}>
+                <div>Inspect pathways if present</div>
+              </HelperPopup>
+            ) : null}
+            {isRightHelpVisible ? (
+              <HelperPopup style={{ position: 'absolute', left: '3%', top: '22%' }} buttonOnClick={disableRightHelp}>
+                <div>Check out observation data if present</div>
+              </HelperPopup>
+            ) : null}
+            <Table
+              id={`${kinase}_KnownSubstrates`}
+              tableHead={['Obs.Data', 'Substrate', 'Sources', 'Go to Pathway']}
+              tableData={tableData}
+              searchIndex={0}
+              RowContentRight={RowContentRight}
+              RowExpandableContentLeft={ObservationHeatMap(true)}
+              RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
+            />
+          </>
         </CardGeneric>
       )}
     </>
