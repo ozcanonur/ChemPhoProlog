@@ -36,7 +36,10 @@ const ExtraRouteTitle = ({ route, expanded, toggleExpand }: TitleProps) => {
   const history = useHistory();
 
   const redirectToDescription = () => {
-    if (history.location.pathname !== route.path) history.push(route.path);
+    if (history.location.pathname !== route.path) {
+      history.push(route.path);
+      if (!expanded) toggleExpand();
+    }
   };
 
   const currentTitle = route.path.split('/')[1];
@@ -76,7 +79,7 @@ const ExtraRoutes = ({ routes }: Props) => {
           window.location.href.indexOf(route.path) > -1 ? `${classes.itemLink} ${classes.orange}` : `${classes.itemLink}`;
 
         return (
-          <div key={route.path}>
+          <div key={route.path} style={{ display: 'flex', flexDirection: 'column' }}>
             {index === 0 ? <ExtraRouteTitle route={route} expanded={expanded} toggleExpand={toggleExpand} /> : null}
             <Collapse in={expanded} timeout='auto' mountOnEnter unmountOnExit>
               <NavLink to={route.path} className={classes.item}>

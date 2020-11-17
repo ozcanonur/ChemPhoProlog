@@ -37,8 +37,8 @@ const PathsTable = () => {
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
     const addPathToInspection = () => {
-      dispatch(addInspectPath(row));
       playToast(`PathAddedToInspectList_${row[1]}`, <PathAddedToInspectListToast item={row[1]} />);
+      dispatch(addInspectPath(row));
     };
 
     return (

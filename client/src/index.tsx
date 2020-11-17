@@ -13,6 +13,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
+import Loading from 'components/Misc/Loading/Loading';
 import reducers from 'reducers';
 import App from 'App';
 import 'style.css';
@@ -71,7 +72,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
         <Router history={hist}>
           <Switch>
             <Route path='/' component={App} />

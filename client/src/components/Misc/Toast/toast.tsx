@@ -18,7 +18,6 @@ export const playToast = (id: string, content: JSX.Element) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: false,
-    delay: 0,
     progress: undefined,
     type: 'dark',
     toastId: id,
@@ -37,7 +36,7 @@ export const RedirectedToPathwaysToast = ({ inputs }: { inputs: PathwayInputs })
   const { cellLine, perturbagen, substrate } = inputs;
 
   return (
-    <div className='pathwayGeneratedToastContainer'>
+    <div className='customToastContainer'>
       <div>
         <strong>Pathway inputs are set as:</strong>
       </div>
@@ -51,7 +50,7 @@ export const PathwayGeneratedToast = ({ inputs }: { inputs: PathwayInputs }) => 
   const { cellLine, perturbagen, substrate } = inputs;
 
   return (
-    <div className='pathwayGeneratedToastContainer'>
+    <div className='customToastContainer'>
       <div>
         <strong>Pathway generated for:</strong>
       </div>

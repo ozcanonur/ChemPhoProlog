@@ -112,12 +112,14 @@ const sidebarStyle = createStyles({
   titleListItem: {
     marginTop: '1em',
     textAlign: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: '4px',
+    border: '1px solid white',
+    alignSelf: 'center',
+    maxWidth: '90%',
   },
   removeIcon: {
     color: 'white',
     cursor: 'pointer',
-    marginLeft: '0.6em',
   },
   titleItemText: {
     margin: '0',

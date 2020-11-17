@@ -41,11 +41,11 @@ const Sidebar = () => {
       <div className={classes.routesContainer}>
         <List className={classes.list}>
           {standardRoutes.map((route) => (
+            // @ts-ignore
             <StandardRoute key={route.name} route={route} />
           ))}
           <Slide in={extraSidebarRoutes.length !== 0} direction='left' mountOnEnter unmountOnExit>
             <div className={classes.extraRoutesContainer}>
-              <SidebarTitle title='Kinases' logo={reactLogo} />
               {generatedKinaseSubRoutes.map((routes) => (
                 <ExtraRoutes key={routes[0].path} routes={routes} />
               ))}

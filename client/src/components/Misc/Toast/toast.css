@@ -532,6 +532,6 @@
 
 /*# sourceMappingURL=ReactToastify.css.map */
 
-.pathwayGeneratedToastContainer > div:not(:last-child) {
+.customToastContainer > div:not(:last-child) {
   margin-bottom: 0.5rem;
 }

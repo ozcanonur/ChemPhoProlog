@@ -13,20 +13,25 @@ router.get('/phosphosites', async (req, res) => {
   let query;
   const fields = [];
   if (kinase && detailed === 'true') {
-    query =
-      `select distinct x.location, x.residue, x.detected_in, coalesce(y.PsT_effect, 'unknown') as pst_effect, ` +
-      `x.reported_substrate_of, x.reported_pdt_of from ` +
-      `(select gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of ` +
-      `from substrates_detailed where gene_name=$1) as x ` +
-      `left join ` +
-      `(select TProtein, PsT_effect, residue_type, residue_offset from known_sign where TProtein = $2) as y ` +
-      `on x.residue = y.residue_type and x.location = y.residue_offset`;
+    query = `SELECT DISTINCT x.location, x.residue, x.detected_in, COALESCE(y.PsT_effect, 'unknown') AS pst_effect, x.reported_substrate_of, x.reported_pdt_of 
+              FROM 
+              (SELECT gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of 
+              FROM substrates_detailed where gene_name=$1) AS x 
+              LEFT JOIN 
+              (SELECT TProtein, PsT_effect, residue_type, residue_offset from known_sign where TProtein = $2) AS y 
+              ON x.residue = y.residue_type and x.location = y.residue_offset`;
     fields.push(kinase);
     fields.push(kinase);
   } else if (kinase) {
-    query = `select distinct substrate_id as substrate from Substrate where substrate_id like $1 order by substrate_id`;
+    query = `SELECT DISTINCT substrate_id AS substrate 
+              FROM Substrate 
+              WHERE substrate_id LIKE $1 
+              ORDER BY substrate_id`;
     fields.push(`%${kinase}(%`);
-  } else query = `select substrate_id as substrate from Substrate`;
+  } else {
+    query = `SELECT substrate_id AS substrate 
+              FROM Substrate`;
+  }
 
   try {
     const results = await db.query(query, fields);
@@ -39,7 +44,9 @@ router.get('/phosphosites', async (req, res) => {
 router.get('/observation', async (req, res) => {
   const { cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
 
-  let query = 'Select cell_line, perturbagen, substrate, fold_change, p_value, cv from Observation where ';
+  let query = `SELECT cell_line, perturbagen, substrate, fold_change, p_value, cv 
+                FROM Observation WHERE `;
+
   const fields = [];
 
   if (_.isEmpty(req.query)) {
@@ -49,37 +56,37 @@ router.get('/observation', async (req, res) => {
 
   let count = 1;
   if (cellLine) {
-    query += 'cell_line = $' + count + ' and ';
+    query += 'cell_line = $' + count + ' AND ';
     fields.push(cellLine);
     count += 1;
   }
   if (perturbagen) {
-    query += 'perturbagen = $' + count + ' and ';
+    query += 'perturbagen = $' + count + ' AND ';
     fields.push(perturbagen);
     count += 1;
   }
   if (substrate) {
-    query += 'substrate = $' + count + ' and ';
+    query += 'substrate = $' + count + ' AND ';
     fields.push(substrate);
     count += 1;
   }
   if (min_fold_change) {
-    query += 'cast(fold_change as float) > $' + count + ' and ';
+    query += 'cast(fold_change as float) > $' + count + ' AND ';
     fields.push(min_fold_change);
     count += 1;
   }
   if (max_fold_change) {
-    query += 'cast(fold_change as float) < $' + count + ' and ';
+    query += 'cast(fold_change as float) < $' + count + ' AND ';
     fields.push(max_fold_change);
     count += 1;
   }
   if (min_p_value) {
-    query += 'cast(p_value as float) > $' + count + ' and ';
+    query += 'cast(p_value as float) > $' + count + ' AND ';
     fields.push(min_p_value);
     count += 1;
   }
   if (max_p_value) {
-    query += 'cast(p_value as float) < $' + count + ' and ';
+    query += 'cast(p_value as float) < $' + count + ' AND ';
     fields.push(max_p_value);
   }
 
@@ -98,18 +105,20 @@ router.get('/observation', async (req, res) => {
 router.get('/knownPerturbagens', async (req, res) => {
   const { kinase } = req.query;
 
-  let query =
-    'select perturbagen, source, score, chemspider_id, action, synonyms from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
+  let query = `SELECT perturbagen, source, score, chemspider_id, action, synonyms 
+                FROM PK_relationship 
+                JOIN Perturbagen ON PK_relationship.perturbagen = Perturbagen.name `;
+
   const fields = [];
 
   if (kinase) {
-    query += 'where PK_relationship.kinase = $1 order by perturbagen';
+    query += `WHERE PK_relationship.kinase = $1 
+                ORDER BY perturbagen`;
     fields.push(kinase);
   }
 
   try {
     const results = await db.query(query, fields);
-
     res.send(results.rows);
   } catch (err) {
     res.sendStatus(500);
@@ -120,20 +129,21 @@ router.get('/knownPerturbagens', async (req, res) => {
 router.get('/knownSubstrates', async (req, res) => {
   const { KPa } = req.query;
 
-  let query = 'select PsT, sources from known_target ';
+  let query = `SELECT PsT, sources 
+                FROM known_target `;
   const fields = [];
 
   if (KPa) {
-    query = `select PsT, sources, every(fold_change is not null) as observation_exists from known_target 
-              left join Observation on PsT = Observation.substrate 
-              where KPa = $1 
-              group by PsT, sources order by PsT`;
+    query = `SELECT PsT, sources, EVERY(fold_change IS NOT NULL) AS observation_exists 
+              FROM known_target 
+              LEFT JOIN Observation ON PsT = Observation.substrate 
+              WHERE KPa = $1 
+              GROUP BY PsT, sources ORDER BY PsT`;
     fields.push(KPa);
   }
 
   try {
     const results = await db.query(query, fields);
-
     res.send(results.rows);
   } catch (err) {
     res.sendStatus(500);
@@ -144,7 +154,9 @@ router.get('/knownSubstrates', async (req, res) => {
 router.get('/knownTargets', async (req, res) => {
   const { perturbagen } = req.query;
 
-  const query = `select kinase, source, score from PK_relationship where perturbagen = $1 order by kinase`;
+  const query = `SELECT kinase, source, score FROM PK_relationship 
+                  WHERE perturbagen = $1 
+                  ORDER BY kinase`;
 
   try {
     const results = await db.query(query, [perturbagen]);
@@ -160,15 +172,18 @@ router.get('/pdts', async (req, res) => {
 
   if (!kinase || !cell_line) return res.status(400).send({ requiredFields: 'kinase, cell_line' });
 
-  const query =
-    `select main.substrate, substrate.uniprot_name, main.confidence, main.shared_with from ` +
-    `(select x.substrate, x.confidence, string_agg(y.kinase, ', ') as shared_with from ` +
-    `(select * from KS_relationship where kinase = $1 and source='PDT' and cell_line = $2 ` +
-    `and confidence <> '0.0' and confidence <> '-1.0') as x ` +
-    `left join ` +
-    `(select * from KS_relationship where source='PDT' and cell_line = $3 and confidence <> '0.0' and confidence <> '-1.0') as y ` +
-    `on x.substrate = y.substrate and x.kinase <> y.kinase group by x.substrate, x.confidence) as main ` +
-    `left join substrate on main.substrate = substrate.substrate_id order by main.substrate`;
+  const query = `SELECT main.substrate, substrate.uniprot_name, main.confidence, main.shared_with 
+      FROM 
+      (SELECT x.substrate, x.confidence, STRING_AGG(y.kinase, ', ') AS shared_with 
+        FROM 
+        (SELECT * FROM KS_relationship 
+          WHERE kinase = $1 AND source='PDT' AND cell_line = $2 AND confidence != '0.0' AND confidence != '-1.0') AS x 
+          LEFT JOIN 
+          (SELECT * FROM KS_relationship WHERE source='PDT' AND cell_line = $3 AND confidence != '0.0' AND confidence != '-1.0') AS y 
+          ON x.substrate = y.substrate AND x.kinase != y.kinase 
+        GROUP BY x.substrate, x.confidence) AS main 
+        LEFT JOIN substrate ON main.substrate = substrate.substrate_id 
+        ORDER BY main.substrate`;
 
   try {
     const results = await db.query(query, [kinase, cell_line, cell_line]);
@@ -187,7 +202,9 @@ router.get('/pathway', async (req, res) => {
     return res.status(400).send({ requiredFields });
   }
 
-  const query = `select path, explanation, inhibited from Paths where cellLine = $1 and perturbagen = $2 and substrate = $3`;
+  const query = `SELECT path, explanation, inhibited 
+                  FROM Paths 
+                  WHERE cellLine = $1 AND perturbagen = $2 AND substrate = $3`;
 
   try {
     const results = await db.query(query, [cellLine, perturbagen, substrate]);

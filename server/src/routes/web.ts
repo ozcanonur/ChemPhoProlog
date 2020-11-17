@@ -5,8 +5,12 @@ const router = express.Router();
 
 // Kinase List
 router.get('/kinases', async (_req, res) => {
-  const queryKinaseData = `select * from protein where kinase_name is not null order by kinase_name`;
-  const queryKinasesWithPhosphosites = `select distinct kinase_name from protein join substrate on kinase_name is not null and substrate.gene_name = protein.gene_name`;
+  const queryKinaseData = `SELECT * FROM protein 
+                            WHERE kinase_name IS NOT NULL 
+                            ORDER BY kinase_name`;
+  const queryKinasesWithPhosphosites = `SELECT DISTINCT kinase_name 
+                                          FROM protein 
+                                          JOIN substrate ON kinase_name IS NOT NULL AND substrate.gene_name = protein.gene_name`;
   try {
     const resultsKinaseData = await db.query(queryKinaseData);
     const resultsKinasesWithPhosphosites = await db.query(queryKinasesWithPhosphosites);
@@ -21,7 +25,9 @@ router.get('/kinases', async (_req, res) => {
 // Get specific kinase info
 router.get('/kinaseInfo', async (req, res) => {
   const { kinase } = req.query;
-  const query = 'select description, families, gene_synonyms, expressed_in from Protein where kinase_name = $1';
+  const query = `SELECT description, families, gene_synonyms, expressed_in 
+                  FROM Protein 
+                  WHERE kinase_name = $1`;
 
   try {
     const results = await db.query(query, [kinase]);
@@ -33,7 +39,9 @@ router.get('/kinaseInfo', async (req, res) => {
 
 // Global Search
 router.get('/getAllKinases', async (_req, res) => {
-  const query = 'select distinct kinase_name as kinase from protein where kinase_name is not null';
+  const query = `SELECT DISTINCT kinase_name AS kinase 
+                  FROM protein 
+                  WHERE kinase_name IS NOT NULL`;
 
   try {
     const results = await db.query(query);
@@ -45,7 +53,8 @@ router.get('/getAllKinases', async (_req, res) => {
 
 // Perturbagen List
 router.get('/getPerturbagenList', async (_req, res) => {
-  const query = 'select * from Perturbagen order by name';
+  const query = `SELECT * FROM Perturbagen 
+                  ORDER BY name`;
 
   try {
     const results = await db.query(query);
@@ -57,7 +66,8 @@ router.get('/getPerturbagenList', async (_req, res) => {
 
 // Global Search
 router.get('/getAllSubstrates', async (_req, res) => {
-  const query = 'select distinct substrate_id as substrate from substrate';
+  const query = `SELECT DISTINCT substrate_id AS substrate 
+                  FROM substrate`;
 
   try {
     const results = await db.query(query);
@@ -71,7 +81,10 @@ router.get('/getAllSubstrates', async (_req, res) => {
 router.get('/validObservation', async (req, res) => {
   const { cellLine, perturbagen } = req.query;
 
-  const query = 'select substrate, fold_change, pathcount from pathcounts where cellLine = $1 and perturbagen = $2 order by substrate';
+  const query = `SELECT substrate, fold_change, pathcount 
+                  FROM pathcounts 
+                  WHERE cellLine = $1 AND perturbagen = $2 
+                  ORDER BY substrate`;
 
   try {
     const results = await db.query(query, [cellLine, perturbagen]);
@@ -89,7 +102,10 @@ router.get('/validObservation', async (req, res) => {
 router.get('/substratesWithPaths', async (req, res) => {
   const { kinase } = req.query;
 
-  const query = `select x.substrate, x.cellLine, x.perturbagens from (select substrate, cellline, string_agg(perturbagen, ',') as perturbagens from pathcounts group by cellline, substrate) as x join known_target as y on x.substrate = y.PsT and y.KpA = $1`;
+  const query = `SELECT x.substrate, x.cellLine, x.perturbagens 
+                  FROM (SELECT substrate, cellline, STRING_AGG(perturbagen, ',') AS perturbagens 
+                    FROM pathcounts GROUP BY cellline, substrate) AS x 
+                    JOIN known_target AS y ON x.substrate = y.PsT AND y.KpA = $1`;
 
   try {
     const results = await db.query(query, [kinase]);
@@ -110,7 +126,10 @@ router.get('/substratesWithPaths', async (req, res) => {
 router.get('/phosphositesWithPaths', async (req, res) => {
   const { kinase } = req.query;
 
-  const query = `select substrate, cellline, string_agg(perturbagen, ',') as perturbagens from pathcounts where substrate like $1 group by cellline, substrate`;
+  const query = `SELECT substrate, cellline, STRING_AGG(perturbagen, ',') AS perturbagens 
+                  FROM pathcounts
+                  WHERE substrate LIKE $1 
+                  GROUP BY cellline, substrate`;
 
   try {
     const results = await db.query(query, [`%${kinase}(%`]);
@@ -134,7 +153,9 @@ router.get('/observationForPathway', async (req, res) => {
   // @ts-ignore
   const parsedSubstrates = substrates.map((substrate) => `'${substrate}'`).join(',');
 
-  const query = `Select substrate, fold_change, p_value from Observation where cell_line = $1 and perturbagen = $2 and substrate in (${parsedSubstrates})`;
+  const query = `SELECT substrate, fold_change, p_value 
+                  FROM Observation 
+                  WHERE cell_line = $1 AND perturbagen = $2 AND substrate IN (${parsedSubstrates})`;
 
   try {
     const results = await db.query(query, [cellLine, perturbagen]);
@@ -148,7 +169,9 @@ router.get('/observationForPathway', async (req, res) => {
 router.get('/observationForHeatmap', async (req, res) => {
   const { substrate } = req.query;
 
-  const query = 'Select perturbagen, substrate, cell_line, fold_change from Observation where substrate = $1 and cast(fold_change as float) > -888';
+  const query = `SELECT perturbagen, substrate, cell_line, fold_change 
+                  FROM Observation 
+                  WHERE substrate = $1 AND CAST(fold_change AS float) > -888`;
 
   try {
     const results = await db.query(query, [substrate]);
@@ -167,8 +190,8 @@ router.get('/observationForHeatmap', async (req, res) => {
 router.get('/observationForBarchart', async (req, res) => {
   const { cellLine, substrate } = req.query;
 
-  const query =
-    'Select perturbagen, fold_change, p_value from Observation where cell_line = $1 and substrate = $2 and cast(fold_change as float) > -888 and cast(p_value as float) > -888';
+  const query = `SELECT perturbagen, fold_change, p_value FROM Observation 
+                  WHERE cell_line = $1 AND substrate = $2 AND CAST(fold_change AS float) > -888 AND CAST(p_value AS float) > -888`;
 
   try {
     const results = await db.query(query, [cellLine, substrate]);
@@ -189,18 +212,19 @@ router.get('/observationForBarchart', async (req, res) => {
 router.get('/knownPerturbagens', async (req, res) => {
   const { kinase } = req.query;
 
-  let query =
-    'select perturbagen, source, score, chemspider_id from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
+  let query = `SELECT perturbagen, source, score, chemspider_id 
+                FROM PK_relationship 
+                JOIN Perturbagen ON PK_relationship.perturbagen = Perturbagen.name `;
   const fields = [];
 
   if (kinase) {
-    query += 'where PK_relationship.kinase = $1 order by perturbagen';
+    query += `WHERE PK_relationship.kinase = $1 
+                ORDER BY perturbagen`;
     fields.push(kinase);
   }
 
   try {
     const results = await db.query(query, fields);
-
     res.send(results.rows);
   } catch (err) {
     res.sendStatus(500);

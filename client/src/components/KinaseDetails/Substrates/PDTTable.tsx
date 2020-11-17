@@ -87,12 +87,12 @@ const PDTTable = ({ cellLine }: Props) => {
     };
 
     const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
-      setAnchorEl(null);
-      goToPathways(perturbagen);
       playToast(
         `RedirectedToPathways_${cellLine}${perturbagen}${substrate}`,
         <RedirectedToPathwaysToast inputs={{ cellLine, perturbagen, substrate }} />
       );
+      setAnchorEl(null);
+      goToPathways(perturbagen);
     };
 
     return (

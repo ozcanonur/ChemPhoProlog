@@ -87,8 +87,8 @@ const KinaseList = () => {
     const kinaseName = row[0];
 
     const addToSidebar = () => {
-      dispatch(addSidebarRoute(kinaseName));
       playToast(`Sidebar_${kinaseName}`, <SidebarRouteAddedToast kinase={kinaseName} />);
+      dispatch(addSidebarRoute(kinaseName));
     };
 
     const selectRow = () => {
