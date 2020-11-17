@@ -1,20 +1,15 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const kinasesStyles = createStyles({
+const perturbagenStyles = createStyles({
   container: {
     padding: '2rem',
     overflow: 'inherit',
     margin: '0 0 !important',
   },
-  leftHelperContainer: {
-    position: 'absolute',
-    top: '50%',
-    left: '6.7%',
-  },
   rightHelperContainer: {
     position: 'absolute',
     top: '50%',
-    right: '1%',
+    right: 0,
   },
   helperTextContainer: {
     position: 'absolute',
@@ -55,4 +50,4 @@ const kinasesStyles = createStyles({
   },
 });
 
-export default kinasesStyles;
+export default perturbagenStyles;

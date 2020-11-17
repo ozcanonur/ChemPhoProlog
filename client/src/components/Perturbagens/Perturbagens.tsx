@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from 'react';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -5,6 +7,8 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 import Loading from 'components/Misc/Loading/Loading';
 import CardHeader from 'components/Misc/Card/CardHeader';
@@ -17,7 +21,13 @@ import Table from 'components/Misc/CustomTable/Table';
 import { useLocalStorage } from 'utils/customHooks';
 import KnownTargets from './KnownTargets';
 
+import perturbagensStyles from './styles/perturbagens';
+
+const useStyles = makeStyles(perturbagensStyles);
+
 const PerturbagenList = () => {
+  const classes = useStyles();
+
   const [data, setData] = useState<Perturbagen[]>([]);
   const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage('selectedPerturbagen', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('perturbagenRightPanelOpen', false);
@@ -59,16 +69,35 @@ const PerturbagenList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
+    const [isRightHelpVisible, setIsRightHelpVisible] = useState(true);
+
     const perturbagenName = row[0];
 
     const selectRow = () => {
       setSelectedPerturbagen(perturbagenName);
     };
 
+    const disableRightHelp = () => {
+      setIsRightHelpVisible(false);
+    };
+
     return (
-      <IconButton aria-label='expand row' size='small' onClick={selectRow}>
-        <KeyboardArrowRight />
-      </IconButton>
+      <>
+        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+          <KeyboardArrowRight />
+        </IconButton>
+        {perturbagenName === 'AZD8055' && isRightHelpVisible ? (
+          <div className={classes.rightHelperContainer}>
+            <ReplyIcon className={classes.helperIcon} />
+            <div className={classes.helperTextContainer}>
+              <div>{`You can inspect with (>)`}</div>
+              <div onClick={disableRightHelp} className={classes.helperButton}>
+                Got it
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </>
     );
   };
 
