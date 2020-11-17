@@ -13,14 +13,14 @@ const Substrates = () => {
         headerColor='success'
         tabs={[
           {
-            tabName: 'Known Substrates',
-            tabIcon: TrendingDownIcon,
-            tabContent: <KnownSubstrates />,
-          },
-          {
             tabName: 'PDTs',
             tabIcon: Code,
             tabContent: <PDTs />,
+          },
+          {
+            tabName: 'Known Substrates',
+            tabIcon: TrendingDownIcon,
+            tabContent: <KnownSubstrates />,
           },
         ]}
       />

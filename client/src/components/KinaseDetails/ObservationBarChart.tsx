@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
+import Loading from 'components/Misc/Loading/Loading';
+// import * as d3 from 'd3';
 
 import { fetchFromApi } from 'utils/api';
-import { formatObservation, getBarChartLabel } from './Substrates/helpers';
+import { getBarChartLabel } from './Substrates/helpers';
 
 interface Props {
   row: string[];
@@ -35,16 +37,14 @@ const ObservationBarChart = (cellLine: string) => {
       setLoading(true);
 
       Promise.all([
-        fetchFromApi('/api/observation', {
-          substrate,
+        fetchFromApi('/apiWeb/observationForBarchart', {
           cellLine,
-          min_fold_change: -888,
-          min_p_value: -888,
+          substrate,
         }),
         fetchFromApi('/api/knownPerturbagens', { kinase }),
       ]).then(([resObs, resPk]) => {
         if (mounted && resObs && resPk) {
-          setObsData(formatObservation(resObs));
+          setObsData(resObs);
           setPkData(resPk);
           setLoading(false);
         }
@@ -60,7 +60,7 @@ const ObservationBarChart = (cellLine: string) => {
         {obsData.length === 0 && !loading ? (
           'No observation data'
         ) : loading ? (
-          'Loading...'
+          <Loading />
         ) : (
           <ResponsiveBar
             data={obsData}
@@ -69,12 +69,16 @@ const ObservationBarChart = (cellLine: string) => {
             margin={{ top: 20, right: 0, bottom: 100, left: 65 }}
             padding={0.3}
             colors={{ scheme: 'nivo' }}
+            // colorBy={(d) => {
+            //   console.log(d);
+            //   return d.data.p_value;
+            // }}
             borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             axisBottom={{
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 90,
-              legend: 'Perturbagen',
+              legend: 'Perturbagen, (*): Known Inhibitor',
               legendPosition: 'middle',
               legendOffset: 90,
             }}
@@ -87,6 +91,15 @@ const ObservationBarChart = (cellLine: string) => {
               legendOffset: -50,
             }}
             label={(d: BarDatum) => getBarChartLabel(d.indexValue.toString(), pkData)}
+            tooltip={({ data }) => (
+              <>
+                <p style={{ marginBottom: 0, marginTop: 0 }}>
+                  <strong>{data.perturbagen}</strong>
+                </p>
+                <p style={{ marginBottom: 0 }}>{`fold_change: ${data.fold_change}`}</p>
+                <p style={{ marginBottom: 0 }}>{`p_value: ${data.p_value}`}</p>
+              </>
+            )}
             labelTextColor='black'
             animate
             motionStiffness={90}

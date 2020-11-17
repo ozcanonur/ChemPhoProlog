@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { pick } from 'lodash';
 
 interface ObsData {
   perturbagen: string;
@@ -24,15 +23,4 @@ export const createHeatmapObject = (obsData: ObsData[], cellLine: string) => {
   });
 
   return result;
-};
-
-export const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e) => pick(e, ['perturbagen', 'substrate', 'cell_line', 'fold_change']));
-  const decimalsCut = relevantFieldsPicked.map((e) => {
-    return {
-      ...e,
-      fold_change: Math.round(parseFloat(e.fold_change) * 1e2) / 1e2,
-    };
-  });
-  return decimalsCut;
 };

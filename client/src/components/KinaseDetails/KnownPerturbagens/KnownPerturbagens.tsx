@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Slide from '@material-ui/core/Slide';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
@@ -96,7 +97,7 @@ const KnownPerturbagens = () => {
           {tableData.length === 0 && !loading ? (
             <div>No entries found</div>
           ) : loading ? (
-            <div>Loading...</div>
+            <Loading />
           ) : (
             <Table
               id={`${kinase}_KnownPerturbagens`}

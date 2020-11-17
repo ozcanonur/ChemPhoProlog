@@ -10,7 +10,7 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import Button from 'components/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { ReactComponent as Loading } from 'assets/img/loading.svg';
+import { ReactComponent as Loading } from 'assets/img/loading2.svg';
 import Cytoscape, { Core } from 'cytoscape';
 import Switch from '@material-ui/core/Switch';
 import { useSelector, useDispatch } from 'react-redux';

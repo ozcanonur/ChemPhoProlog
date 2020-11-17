@@ -145,4 +145,45 @@ router.get('/observationForPathway', async (req, res) => {
   }
 });
 
+router.get('/observationForHeatmap', async (req, res) => {
+  const { substrate } = req.query;
+
+  const query = 'Select perturbagen, substrate, cell_line, fold_change from Observation where substrate = $1 and cast(fold_change as float) > -888';
+
+  try {
+    const results = await db.query(query, [substrate]);
+    const decimalsCut = results.rows.map((e) => {
+      return {
+        ...e,
+        fold_change: Math.round(parseFloat(e.fold_change) * 1e3) / 1e3,
+      };
+    });
+    res.send(decimalsCut);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
+router.get('/observationForBarchart', async (req, res) => {
+  const { cellLine, substrate } = req.query;
+
+  const query =
+    'Select perturbagen, fold_change, p_value from Observation where cell_line = $1 and substrate = $2 and cast(fold_change as float) > -888 and cast(p_value as float) > -888';
+
+  try {
+    const results = await db.query(query, [cellLine, substrate]);
+    const decimalsCut = results.rows.map((e) => {
+      return {
+        ...e,
+        fold_change: Math.round(parseFloat(e.fold_change) * 1e2) / 1e2,
+        p_value: Math.round(parseFloat(e.p_value) * 1e4) / 1e4,
+      };
+    });
+
+    res.send(decimalsCut);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
 export default router;

@@ -38,7 +38,8 @@ const PathSelectList = ({ cy }: Props) => {
       color='primary'
       cardTitle='Inspect'
       cardSubtitle='And Animate!'
-      bodyStyle={{ maxHeight: '70vh', overflow: 'auto' }}
+      bodyStyle={{ overflow: 'auto' }}
+      style={{ maxHeight: '55rem' }}
     >
       <List>
         {pathsInspectList.map((path, key) => {

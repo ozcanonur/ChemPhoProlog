@@ -73,9 +73,9 @@ const CircularBarPlot = ({ cellLine }: Props) => {
   // set the dimensions and margins of the graph
   const margin = { top: 100, right: 0, bottom: 0, left: 0 };
   const width = 320 - margin.left - margin.right;
-  const height = 400 - margin.top - margin.bottom;
+  const height = 350 - margin.top - margin.bottom;
   const innerRadius = 70;
-  const outerRadius = Math.min(width, height) / 2;
+  const outerRadius = Math.min(width, height + 100) / 2;
 
   // append the svg object
   const svg = d3

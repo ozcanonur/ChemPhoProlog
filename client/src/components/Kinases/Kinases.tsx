@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -6,17 +8,24 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import ReplyIcon from '@material-ui/icons/Reply';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
+import Loading from 'components/Misc/Loading/Loading';
 import { useLocalStorage } from 'utils/customHooks';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
+
+import kinaseListPhosphositesStyles from './styles/kinases';
+
+const useStyles = makeStyles(kinaseListPhosphositesStyles);
 
 interface KinaseData {
   data: Kinase[];
@@ -25,6 +34,8 @@ interface KinaseData {
 
 // Kinase List on the Home page
 const KinaseList = () => {
+  const classes = useStyles();
+
   const [data, setData] = useState<KinaseData>({ data: [], kinasesWithPhosphosites: [] });
   const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
@@ -74,6 +85,11 @@ const KinaseList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
+    // const [isHelpVisible, setIsHelpVisible] = useLocalStorage('kinasesHelpVisible', true);
+
+    const [isLeftHelpVisible, setIsLeftHelpVisible] = useState(true);
+    const [isRightHelpVisible, setIsRightHelpVisible] = useState(true);
+
     const kinaseName = row[0];
 
     const addToSidebar = () => {
@@ -84,6 +100,14 @@ const KinaseList = () => {
       setSelectedKinase(kinaseName);
     };
 
+    const disableLeftHelp = () => {
+      setIsLeftHelpVisible(false);
+    };
+
+    const disableRightHelp = () => {
+      setIsRightHelpVisible(false);
+    };
+
     return (
       <>
         <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
@@ -92,6 +116,29 @@ const KinaseList = () => {
         <IconButton aria-label='expand row' size='small' onClick={selectRow}>
           <KeyboardArrowRight />
         </IconButton>
+        {kinaseName === 'AKT1' && isLeftHelpVisible ? (
+          <div className={classes.leftHelperContainer}>
+            <ReplyIcon className={classes.helperIcon} />
+            <div className={classes.helperTextContainer}>
+              <div>You can check out the phosphosites on this kinase</div>
+              <div onClick={disableLeftHelp} className={classes.helperButton}>
+                Got it
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {kinaseName === 'AKT1' && isRightHelpVisible ? (
+          <div className={classes.rightHelperContainer}>
+            <ReplyIcon className={classes.helperIcon} />
+            <div className={classes.helperTextContainer}>
+              <div>{`You can either inspect with (>)`}</div>
+              <div>Or add to sidebar with (+)</div>
+              <div onClick={disableRightHelp} className={classes.helperButton}>
+                Got it
+              </div>
+            </div>
+          </div>
+        ) : null}
       </>
     );
   };
@@ -129,25 +176,27 @@ const KinaseList = () => {
   };
 
   return (
-    <GridContainer direction='row' style={{ padding: '2em' }}>
+    <GridContainer direction='row' className={classes.container}>
       <GridItem xs={12} lg={6}>
         <CardGeneric color='primary' cardTitle='Kinases' cardSubtitle='Select a kinase'>
           {tableData.length === 0 && !loading ? (
             <div>Something went wrong.</div>
           ) : loading ? (
-            <div>Loading...</div>
+            <Loading />
           ) : (
-            <Table
-              id='Kinases'
-              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
-              tableData={tableData}
-              RowExpandableContentLeft={Phosphosites}
-              RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
-              RowContentRight={RowContentRight}
-              clickableCells={clickableCells}
-              searchIndex={0}
-              selectedItem={selectedKinase}
-            />
+            <>
+              <Table
+                id='Kinases'
+                tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
+                tableData={tableData}
+                RowExpandableContentLeft={Phosphosites}
+                RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
+                RowContentRight={RowContentRight}
+                clickableCells={clickableCells}
+                searchIndex={0}
+                selectedItem={selectedKinase}
+              />
+            </>
           )}
         </CardGeneric>
       </GridItem>

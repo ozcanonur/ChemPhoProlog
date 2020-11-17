@@ -151,7 +151,7 @@ export const getCytoLayout = (): LayoutOptions => {
     // Gravity range (constant)
     gravityRange: 1,
     // Initial cooling factor for incremental layout
-    initialEnergyOnIncremental: 0.1,
+    initialEnergyOnIncremental: 0.2,
     // Called on `layoutready`
     // ready: () => {},
     // // Called on `layoutstop`

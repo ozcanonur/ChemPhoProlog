@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import Button from 'components/Misc/CustomButton/Button';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -121,7 +122,7 @@ const PDTTable = ({ cellLine }: Props) => {
       {tableData.length === 0 && !loading ? (
         <div>No entries found.</div>
       ) : loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <Table
           id={`${cellLine}_${kinase}_PDTTable`}

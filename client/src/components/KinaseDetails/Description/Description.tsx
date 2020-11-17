@@ -10,6 +10,7 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import Button from 'components/Misc/CustomButton/Button';
+import Loading from 'components/Misc/Loading/Loading';
 
 import { setSelectedInputs } from 'actions/pathways';
 import { fetchFromApi } from 'utils/api';
@@ -180,7 +181,7 @@ const Description = () => {
           {tableData.length === 0 && !loading ? (
             <div>No entries found.</div>
           ) : loading ? (
-            <div>Loading...</div>
+            <Loading />
           ) : (
             <Table
               id={`${kinase}_PhosphositesOfInterest`}

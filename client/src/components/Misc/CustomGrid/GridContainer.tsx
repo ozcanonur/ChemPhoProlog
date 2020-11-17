@@ -11,9 +11,9 @@ const useStyles = makeStyles({
 
 const GridContainer = (props: any) => {
   const classes = useStyles();
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
-    <Grid container {...rest} className={classes.grid}>
+    <Grid container {...rest} className={`${classes.grid} ${className}`}>
       {children}
     </Grid>
   );

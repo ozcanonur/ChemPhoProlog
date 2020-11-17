@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { pick } from 'lodash';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
@@ -132,7 +133,7 @@ const KnownSubstratesTable = () => {
       {tableData.length === 0 && !loading ? (
         <div>No entries found.</div>
       ) : loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
           <Table

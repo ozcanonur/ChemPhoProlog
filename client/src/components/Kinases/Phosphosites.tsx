@@ -11,6 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { ReactComponent as MCFSVG } from 'assets/img/M.svg';
 import { ReactComponent as HLSVG } from 'assets/img/H.svg';
 import { ReactComponent as NTERASVG } from 'assets/img/N.svg';
@@ -121,7 +122,7 @@ const Phosphosites = ({ row }: Props) => {
       {phosphosites.length === 0 && !loading ? (
         <div>No phosphosites on this kinase.</div>
       ) : loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <Table size='small'>
           <TableHead className={classes.warningTableHeader}>

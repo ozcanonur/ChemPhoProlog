@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardHeader from 'components/Misc/Card/CardHeader';
 import Table from 'components/Misc/CustomTable/Table';
@@ -61,7 +62,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
       {tableData.length === 0 && !loading ? (
         <div style={{ marginTop: '1rem', marginLeft: '5px' }}>No Known Targets</div>
       ) : loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <Table
           id={`${perturbagen}_KnownTargets`}

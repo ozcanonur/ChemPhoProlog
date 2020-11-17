@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
+import Loading from 'components/Misc/Loading/Loading';
 import CardHeader from 'components/Misc/Card/CardHeader';
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
 import { fetchFromApi } from 'utils/api';
@@ -94,7 +95,7 @@ const PerturbagenList = () => {
           {tableData.length === 0 && !loading ? (
             <div>Something went wrong.</div>
           ) : loading ? (
-            <div>Loading...</div>
+            <Loading />
           ) : (
             <Table
               id='Perturbagens'

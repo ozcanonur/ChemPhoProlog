@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { pick } from 'lodash';
 
 interface PkData {
   kinase: string;
@@ -14,18 +13,6 @@ interface PDT {
   substrate: string;
   uniprot_name: string;
 }
-
-export const formatObservation = (data: Observation[]) => {
-  const relevantFieldsPicked = data.map((e) => pick(e, ['perturbagen', 'fold_change']));
-  const decimalsCutRes = relevantFieldsPicked.map((e) => {
-    return {
-      ...e,
-      fold_change: Math.round(parseFloat(e.fold_change) * 1e2) / 1e2,
-    };
-  });
-  return decimalsCutRes;
-};
-
 export const getBarChartLabel = (perturbagen: string, pkData: PkData[]) => {
   const hasIndicator = pkData.some((row) => row.perturbagen === perturbagen);
   return hasIndicator ? '*' : '';

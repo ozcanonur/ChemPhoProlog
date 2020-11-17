@@ -6,10 +6,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import * as d3 from 'd3';
 
+import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import perturbagens from 'variables/perturbagens';
 import observationHeatMapStyles from './observationHeatMapStyles';
-import { createHeatmapObject, formatObservation } from './helpers';
+import { createHeatmapObject } from './helpers';
 
 const useStyles = makeStyles(observationHeatMapStyles);
 
@@ -41,12 +42,11 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
       // row[1] = residue, row[0] = location
       const substrate = isKnownSubstrates ? row[0] : `${kinase}(${row[1]}${row[0]})`;
 
-      fetchFromApi('/api/observation', {
+      fetchFromApi('/apiWeb/observationForHeatmap', {
         substrate,
-        min_fold_change: -888,
       }).then((res) => {
         if (mounted && res) {
-          setObsData(formatObservation(res));
+          setObsData(res);
           setLoading(false);
         }
       });
@@ -63,7 +63,7 @@ const ObservationHeatMap = (isKnownSubstrates: boolean) => {
         {obsData.length === 0 && !loading ? (
           <div>No observation data for this site</div>
         ) : loading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : (
           <div>
             <div className={classes.container}>
