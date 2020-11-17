@@ -13,7 +13,7 @@ interface Props {
   color?: string;
   cardTitle?: string;
   cardSubtitle?: string;
-  children?: JSX.Element | JSX.Element[] | string;
+  children?: JSX.Element | JSX.Element[] | string | any;
   style?: CSSProperties;
   headerStyle?: CSSProperties;
   bodyStyle?: CSSProperties;

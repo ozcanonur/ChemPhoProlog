@@ -7,8 +7,6 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
-import { toast, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
@@ -22,12 +20,12 @@ import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/optio
 import { runLayout, clearAllTimeouts, resetPathwayVisuals } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
 import { HelperPopupGetPathway } from './HelperPopups';
+import { playToast, PathwayGeneratedToast } from './utils/toast';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
-toast.configure();
 const PathwayIndex = () => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const [cy, setCy] = useState(Cytoscape());
@@ -43,19 +41,9 @@ const PathwayIndex = () => {
 
   useEffect(() => {
     if (elements.length > 0) {
-      toast('Pathway generated, explore possible paths below in Paths Table', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        delay: 0,
-        progress: undefined,
-        transition: Slide,
-      });
+      playToast(<PathwayGeneratedToast />);
     }
-  }, [elements]);
+  }, [data]);
 
   // Cleanup listener, timeouts, tooltips
   // And current selected animation
