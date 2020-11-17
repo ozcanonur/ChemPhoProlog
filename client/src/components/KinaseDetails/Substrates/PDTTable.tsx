@@ -56,10 +56,10 @@ const PDTTable = ({ cellLine }: Props) => {
 
   // Button on the right of the row
   // row prop will come from the table component's row
-  const RowContentRight = ({ row }: { row: string[] }) => {
+  // eslint-disable-next-line
+  const DropdownMenu = ({ substrate, cellLine }: { substrate: string; cellLine: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const substrate = row[0];
     const substrateProps = substratesWithPaths[substrate];
 
     if (!substrateProps) return <div>No pathway available</div>;
@@ -108,6 +108,23 @@ const PDTTable = ({ cellLine }: Props) => {
             </MenuItem>
           ))}
         </Menu>
+      </>
+    );
+  };
+
+  // Button on the right of the row
+  // row prop will come from the table component's row
+  const RowContentRight = ({ row }: { row: string[] }) => {
+    const substrate = row[0];
+    const substrateProps = substratesWithPaths[substrate];
+
+    if (!substrateProps) return <div>No pathway available</div>;
+
+    return (
+      <>
+        {Object.keys(substrateProps).map((dropdownCellLine) => (
+          <DropdownMenu key={dropdownCellLine} substrate={substrate} cellLine={dropdownCellLine} />
+        ))}
       </>
     );
   };

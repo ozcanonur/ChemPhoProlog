@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,9 +6,9 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import ReplyIcon from '@material-ui/icons/Reply';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
@@ -115,28 +113,16 @@ const KinaseList = () => {
           <KeyboardArrowRight />
         </IconButton>
         {kinaseName === 'AKT1' && isLeftHelpVisible ? (
-          <div className={classes.leftHelperContainer}>
-            <ReplyIcon className={classes.helperIcon} />
-            <div className={classes.helperTextContainer}>
-              <div>Check out the phosphosites on this kinase</div>
-              <div>Get pathways for them</div>
-              <div onClick={disableLeftHelp} className={classes.helperButton}>
-                Got it
-              </div>
-            </div>
-          </div>
+          <HelperPopup className={classes.leftHelperPopup} buttonOnClick={disableLeftHelp}>
+            <div>Check out the phosphosites on this kinase</div>
+            <div>Get pathways for them</div>
+          </HelperPopup>
         ) : null}
         {kinaseName === 'AKT1' && isRightHelpVisible ? (
-          <div className={classes.rightHelperContainer}>
-            <ReplyIcon className={classes.helperIcon} />
-            <div className={classes.helperTextContainer}>
-              <div>{`Inspect this kinase with (>)`}</div>
-              <div>Add to sidebar with (+)</div>
-              <div onClick={disableRightHelp} className={classes.helperButton}>
-                Got it
-              </div>
-            </div>
-          </div>
+          <HelperPopup className={classes.rightHelperPopup} buttonOnClick={disableRightHelp}>
+            <div>{`Inspect this kinase with (>)`}</div>
+            <div>Add to sidebar with (+)</div>
+          </HelperPopup>
         ) : null}
       </>
     );

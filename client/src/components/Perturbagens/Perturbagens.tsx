@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useMemo } from 'react';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -8,8 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import ReplyIcon from '@material-ui/icons/Reply';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Loading from 'components/Misc/Loading/Loading';
 import CardHeader from 'components/Misc/Card/CardHeader';
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
@@ -86,16 +84,10 @@ const PerturbagenList = () => {
         <IconButton aria-label='expand row' size='small' onClick={selectRow}>
           <KeyboardArrowRight />
         </IconButton>
-        {perturbagenName === 'AZD8055' && isRightHelpVisible ? (
-          <div className={classes.rightHelperContainer}>
-            <ReplyIcon className={classes.helperIcon} />
-            <div className={classes.helperTextContainer}>
-              <div>Inspect this perturbagen</div>
-              <div onClick={disableRightHelp} className={classes.helperButton}>
-                Got it
-              </div>
-            </div>
-          </div>
+        {perturbagenName === 'AC220' && isRightHelpVisible ? (
+          <HelperPopup className={classes.rightHelperPopup} buttonOnClick={disableRightHelp}>
+            <div>Inspect this perturbagen</div>
+          </HelperPopup>
         ) : null}
       </>
     );
@@ -118,7 +110,7 @@ const PerturbagenList = () => {
     : '';
 
   return (
-    <GridContainer direction='row' style={{ padding: '2em' }}>
+    <GridContainer direction='row' className={classes.container}>
       <GridItem sm={12} lg={6}>
         <CardGeneric color='primary' cardTitle='Perturbagens' cardSubtitle='Select a perturbagen'>
           {tableData.length === 0 && !loading ? (
