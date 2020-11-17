@@ -11,6 +11,7 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import Button from 'components/Misc/CustomButton/Button';
 import Loading from 'components/Misc/Loading/Loading';
+import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toast';
 
 import { setSelectedInputs } from 'actions/pathways';
 import { fetchFromApi } from 'utils/api';
@@ -105,6 +106,10 @@ const Description = () => {
     const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
       setAnchorEl(null);
       goToPathways(perturbagen);
+      playToast(
+        `RedirectedToPathways_${cellLine}${perturbagen}${substrate}`,
+        <RedirectedToPathwaysToast inputs={{ cellLine, perturbagen, substrate }} />
+      );
     };
 
     const handleClick = (event: any) => {

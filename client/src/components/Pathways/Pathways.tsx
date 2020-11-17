@@ -8,6 +8,7 @@ import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
 
+import { playToast, PathwayGeneratedToast } from 'components/Misc/Toast/toast';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import PathwayInputs from 'components/Pathways/Inputs/Inputs';
@@ -20,7 +21,6 @@ import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/optio
 import { runLayout, clearAllTimeouts, resetPathwayVisuals } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
 import { HelperPopupGetPathway } from './HelperPopups';
-import { playToast, PathwayGeneratedToast } from './utils/toast';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
@@ -33,7 +33,8 @@ const PathwayIndex = () => {
   const store = useStore();
   const dispatch = useDispatch();
 
-  const { cellLine, perturbagen, substrate } = store.getState().pathwayInputs;
+  const { pathwayInputs } = store.getState();
+  const { cellLine, perturbagen, substrate } = pathwayInputs;
 
   const elements = getCytoElements(data, substrate);
   const stylesheet = getCytoStylesheet(data.observation, data.regulatory, substrate);
@@ -41,7 +42,7 @@ const PathwayIndex = () => {
 
   useEffect(() => {
     if (elements.length > 0) {
-      playToast(<PathwayGeneratedToast />);
+      playToast(`PathwayGenerated_${cellLine}${perturbagen}${substrate}`, <PathwayGeneratedToast inputs={pathwayInputs} />);
     }
   }, [data]);
 

@@ -5,8 +5,8 @@ import { addInspectPath } from 'actions/pathways';
 import Table from 'components/Misc/CustomTable/Table';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
+import { playToast, PathAddedToInspectListToast } from 'components/Misc/Toast/toast';
 import { HelperPopupPathsTable } from '../HelperPopups';
-import { playToast, PathAddedToInspectListToast } from '../utils/toast';
 
 const parsePathsToTableData = (paths: Pathway.Paths, stoppingReasons: Pathway.StoppingReasons) => {
   const tableData = paths.map((path, key) => {
@@ -38,7 +38,7 @@ const PathsTable = () => {
   const RowContentRight = ({ row }: { row: string[] }) => {
     const addPathToInspection = () => {
       dispatch(addInspectPath(row));
-      playToast(<PathAddedToInspectListToast item={row[1]} />);
+      playToast(`PathAddedToInspectList_${row[1]}`, <PathAddedToInspectListToast item={row[1]} />);
     };
 
     return (

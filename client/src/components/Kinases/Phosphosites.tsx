@@ -11,6 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toast';
 import Loading from 'components/Misc/Loading/Loading';
 import { ReactComponent as MCFSVG } from 'assets/img/M.svg';
 import { ReactComponent as HLSVG } from 'assets/img/H.svg';
@@ -93,6 +94,10 @@ const Phosphosites = ({ row }: Props) => {
     const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
       setAnchorEl(null);
       goToPathways(perturbagen);
+      playToast(
+        `RedirectToPathways_${cellLine}${perturbagen}${substrate}`,
+        <RedirectedToPathwaysToast inputs={{ cellLine, perturbagen, substrate }} />
+      );
     };
 
     return (

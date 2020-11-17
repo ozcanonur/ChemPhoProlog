@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { pick } from 'lodash';
 
+import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toast';
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -84,6 +85,10 @@ const KnownSubstratesTable = () => {
     const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
       setAnchorEl(null);
       goToPathways(perturbagen);
+      playToast(
+        `RedirectedToPathways_${cellLine}${perturbagen}${substrate}`,
+        <RedirectedToPathwaysToast inputs={{ cellLine, perturbagen, substrate }} />
+      );
     };
 
     return (

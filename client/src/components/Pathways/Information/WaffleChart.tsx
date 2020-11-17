@@ -18,6 +18,7 @@ const Waffle = () => {
     loop: 0,
     unexpectedFC: 0,
     known_inhibitor: 0,
+    double_auto_phosphorylation: 0,
   };
 
   paths.forEach((path) => {
@@ -47,7 +48,7 @@ const Waffle = () => {
           columns={50}
           fillDirection='left'
           margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
-          colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233']}
+          colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233', '#ffbac2']}
           borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
           animate={false}
           // @ts-ignore

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toast';
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import Button from 'components/Misc/CustomButton/Button';
@@ -88,6 +89,10 @@ const PDTTable = ({ cellLine }: Props) => {
     const handleSelect = (_e: React.MouseEvent<HTMLElement>, perturbagen: string) => {
       setAnchorEl(null);
       goToPathways(perturbagen);
+      playToast(
+        `RedirectedToPathways_${cellLine}${perturbagen}${substrate}`,
+        <RedirectedToPathwaysToast inputs={{ cellLine, perturbagen, substrate }} />
+      );
     };
 
     return (

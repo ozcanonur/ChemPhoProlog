@@ -27,6 +27,8 @@ const KnownPerturbagens = () => {
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(data);
+
   const kinase = window.location.href.split('/')[3];
 
   // Fetch the data
@@ -34,7 +36,7 @@ const KnownPerturbagens = () => {
     let mounted = true;
     setLoading(true);
 
-    fetchFromApi('/api/knownPerturbagens', { kinase }).then((res) => {
+    fetchFromApi('/apiWeb/knownPerturbagens', { kinase }).then((res) => {
       if (mounted) {
         setData(res);
         setLoading(false);

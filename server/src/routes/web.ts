@@ -186,4 +186,25 @@ router.get('/observationForBarchart', async (req, res) => {
   }
 });
 
+router.get('/knownPerturbagens', async (req, res) => {
+  const { kinase } = req.query;
+
+  let query =
+    'select perturbagen, source, score, chemspider_id from PK_relationship join Perturbagen on PK_relationship.perturbagen = Perturbagen.name ';
+  const fields = [];
+
+  if (kinase) {
+    query += 'where PK_relationship.kinase = $1 order by perturbagen';
+    fields.push(kinase);
+  }
+
+  try {
+    const results = await db.query(query, fields);
+
+    res.send(results.rows);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
 export default router;

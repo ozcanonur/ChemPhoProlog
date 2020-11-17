@@ -8,6 +8,7 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import { playToast, SidebarRouteAddedToast } from 'components/Misc/Toast/toast';
 import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
@@ -87,6 +88,7 @@ const KinaseList = () => {
 
     const addToSidebar = () => {
       dispatch(addSidebarRoute(kinaseName));
+      playToast(`Sidebar_${kinaseName}`, <SidebarRouteAddedToast kinase={kinaseName} />);
     };
 
     const selectRow = () => {
