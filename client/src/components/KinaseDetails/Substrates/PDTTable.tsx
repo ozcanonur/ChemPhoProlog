@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { useLocalStorage } from 'utils/customHooks';
-import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import Button from 'components/Misc/CustomButton/Button';
@@ -13,6 +11,7 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
 import ObservationBarChart from '../ObservationBarChart';
+import HelperPopups from './PDTTableHelperPopups';
 
 interface Props {
   cellLine: string;
@@ -28,16 +27,6 @@ const PDTTable = ({ cellLine }: Props) => {
   const [PDTs, setPDTs] = useState([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
   const [loading, setLoading] = useState(false);
-  const [isLeftHelpVisible, setIsLeftHelpVisible] = useLocalStorage('kinasePDTsLeftHelpVisible', true);
-  const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinasePDTsRightHelpVisible', true);
-
-  const disableLeftHelp = () => {
-    setIsLeftHelpVisible(false);
-  };
-
-  const disableRightHelp = () => {
-    setIsRightHelpVisible(false);
-  };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -154,16 +143,7 @@ const PDTTable = ({ cellLine }: Props) => {
         <Loading />
       ) : (
         <>
-          {isLeftHelpVisible ? (
-            <HelperPopup style={{ position: 'absolute', right: '16%', top: '22%' }} buttonOnClick={disableLeftHelp}>
-              <div>Inspect pathways if present</div>
-            </HelperPopup>
-          ) : null}
-          {isRightHelpVisible ? (
-            <HelperPopup style={{ position: 'absolute', left: '3%', top: '22%' }} buttonOnClick={disableRightHelp}>
-              <div>Check out observation data</div>
-            </HelperPopup>
-          ) : null}
+          <HelperPopups />
           <Table
             id={`${cellLine}_${kinase}_PDTTable`}
             tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with', 'Go to Pathway']}

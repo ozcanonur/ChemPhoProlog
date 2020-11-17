@@ -8,7 +8,6 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { fetchFromApi } from 'utils/api';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
@@ -20,6 +19,7 @@ import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
+import HelperPopups from './HelperPopups';
 
 import kinaseListPhosphositesStyles from './styles/kinases';
 
@@ -83,9 +83,6 @@ const KinaseList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
-    const [isLeftHelpVisible, setIsLeftHelpVisible] = useLocalStorage('kinasesLeftHelpVisible', true);
-    const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinasesRightHelpVisible', true);
-
     const kinaseName = row[0];
 
     const addToSidebar = () => {
@@ -96,14 +93,6 @@ const KinaseList = () => {
       setSelectedKinase(kinaseName);
     };
 
-    const disableLeftHelp = () => {
-      setIsLeftHelpVisible(false);
-    };
-
-    const disableRightHelp = () => {
-      setIsRightHelpVisible(false);
-    };
-
     return (
       <>
         <IconButton aria-label='expand row' size='small' onClick={addToSidebar}>
@@ -112,18 +101,6 @@ const KinaseList = () => {
         <IconButton aria-label='expand row' size='small' onClick={selectRow}>
           <KeyboardArrowRight />
         </IconButton>
-        {kinaseName === 'AKT1' && isLeftHelpVisible ? (
-          <HelperPopup className={classes.leftHelperPopup} buttonOnClick={disableLeftHelp}>
-            <div>Check out the phosphosites on this kinase</div>
-            <div>Get pathways for them</div>
-          </HelperPopup>
-        ) : null}
-        {kinaseName === 'AKT1' && isRightHelpVisible ? (
-          <HelperPopup className={classes.rightHelperPopup} buttonOnClick={disableRightHelp}>
-            <div>{`Inspect this kinase with (>)`}</div>
-            <div>Add to sidebar with (+)</div>
-          </HelperPopup>
-        ) : null}
       </>
     );
   };
@@ -169,17 +146,20 @@ const KinaseList = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <Table
-              id='Kinases'
-              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
-              tableData={tableData}
-              RowExpandableContentLeft={Phosphosites}
-              RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
-              RowContentRight={RowContentRight}
-              clickableCells={clickableCells}
-              searchIndex={0}
-              selectedItem={selectedKinase}
-            />
+            <>
+              <HelperPopups />
+              <Table
+                id='Kinases'
+                tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
+                tableData={tableData}
+                RowExpandableContentLeft={Phosphosites}
+                RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
+                RowContentRight={RowContentRight}
+                clickableCells={clickableCells}
+                searchIndex={0}
+                selectedItem={selectedKinase}
+              />
+            </>
           )}
         </CardGeneric>
       </GridItem>

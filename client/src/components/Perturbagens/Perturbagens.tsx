@@ -7,7 +7,6 @@ import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Loading from 'components/Misc/Loading/Loading';
 import CardHeader from 'components/Misc/Card/CardHeader';
 import CustomTabs from 'components/Misc/CustomTabs/CustomTabs';
@@ -18,6 +17,7 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { useLocalStorage } from 'utils/customHooks';
 import KnownTargets from './KnownTargets';
+import HelperPopups from './HelperPopups';
 
 import perturbagensStyles from './styles/perturbagens';
 
@@ -67,29 +67,16 @@ const PerturbagenList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
-    const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('perturbagensRightHelpVisible', true);
-
     const perturbagenName = row[0];
 
     const selectRow = () => {
       setSelectedPerturbagen(perturbagenName);
     };
 
-    const disableRightHelp = () => {
-      setIsRightHelpVisible(false);
-    };
-
     return (
-      <>
-        <IconButton aria-label='expand row' size='small' onClick={selectRow}>
-          <KeyboardArrowRight />
-        </IconButton>
-        {perturbagenName === 'AC220' && isRightHelpVisible ? (
-          <HelperPopup className={classes.rightHelperPopup} buttonOnClick={disableRightHelp}>
-            <div>Inspect this perturbagen</div>
-          </HelperPopup>
-        ) : null}
-      </>
+      <IconButton aria-label='expand row' size='small' onClick={selectRow}>
+        <KeyboardArrowRight />
+      </IconButton>
     );
   };
 
@@ -118,15 +105,18 @@ const PerturbagenList = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <Table
-              id='Perturbagens'
-              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
-              tableData={tableData}
-              RowContentRight={RowContentRight}
-              clickableCells={clickableCells}
-              selectedItem={selectedPerturbagen}
-              searchIndex={0}
-            />
+            <>
+              <HelperPopups />
+              <Table
+                id='Perturbagens'
+                tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+                tableData={tableData}
+                RowContentRight={RowContentRight}
+                clickableCells={clickableCells}
+                selectedItem={selectedPerturbagen}
+                searchIndex={0}
+              />
+            </>
           )}
         </CardGeneric>
       </GridItem>
