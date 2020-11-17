@@ -69,7 +69,7 @@ const PerturbagenList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
-    const [isRightHelpVisible, setIsRightHelpVisible] = useState(true);
+    const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('perturbagensRightHelpVisible', true);
 
     const perturbagenName = row[0];
 
@@ -90,7 +90,7 @@ const PerturbagenList = () => {
           <div className={classes.rightHelperContainer}>
             <ReplyIcon className={classes.helperIcon} />
             <div className={classes.helperTextContainer}>
-              <div>{`You can inspect with (>)`}</div>
+              <div>Inspect this perturbagen</div>
               <div onClick={disableRightHelp} className={classes.helperButton}>
                 Got it
               </div>

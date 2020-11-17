@@ -41,12 +41,12 @@ const kinasesStyles = createStyles({
   },
   helperButton: {
     marginTop: '1rem',
-    backgroundColor: 'rgba(255, 190, 0, 0.8)',
+    backgroundColor: 'rgba(255, 190, 0, 0.75)',
     padding: '0.4rem 1.4rem',
     display: 'inline-block',
     cursor: 'pointer',
     borderRadius: '4px',
-    // boxShadow: '0 10px 10px 0 rgba(0, 0, 0, 0.2)',
+    boxShadow: '0 5px 1rem 0 rgba(0, 0, 0, 0.2)',
     transition: 'all .2s ease-out',
 
     '&:hover': {

@@ -85,10 +85,8 @@ const KinaseList = () => {
   // Button on the right of the row
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
-    // const [isHelpVisible, setIsHelpVisible] = useLocalStorage('kinasesHelpVisible', true);
-
-    const [isLeftHelpVisible, setIsLeftHelpVisible] = useState(true);
-    const [isRightHelpVisible, setIsRightHelpVisible] = useState(true);
+    const [isLeftHelpVisible, setIsLeftHelpVisible] = useLocalStorage('kinasesLeftHelpVisible', true);
+    const [isRightHelpVisible, setIsRightHelpVisible] = useLocalStorage('kinasesRightHelpVisible', true);
 
     const kinaseName = row[0];
 
@@ -120,7 +118,8 @@ const KinaseList = () => {
           <div className={classes.leftHelperContainer}>
             <ReplyIcon className={classes.helperIcon} />
             <div className={classes.helperTextContainer}>
-              <div>You can check out the phosphosites on this kinase</div>
+              <div>Check out the phosphosites on this kinase</div>
+              <div>Get pathways for them</div>
               <div onClick={disableLeftHelp} className={classes.helperButton}>
                 Got it
               </div>
@@ -131,8 +130,8 @@ const KinaseList = () => {
           <div className={classes.rightHelperContainer}>
             <ReplyIcon className={classes.helperIcon} />
             <div className={classes.helperTextContainer}>
-              <div>{`You can either inspect with (>)`}</div>
-              <div>Or add to sidebar with (+)</div>
+              <div>{`Inspect this kinase with (>)`}</div>
+              <div>Add to sidebar with (+)</div>
               <div onClick={disableRightHelp} className={classes.helperButton}>
                 Got it
               </div>
@@ -184,19 +183,17 @@ const KinaseList = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <>
-              <Table
-                id='Kinases'
-                tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
-                tableData={tableData}
-                RowExpandableContentLeft={Phosphosites}
-                RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
-                RowContentRight={RowContentRight}
-                clickableCells={clickableCells}
-                searchIndex={0}
-                selectedItem={selectedKinase}
-              />
-            </>
+            <Table
+              id='Kinases'
+              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
+              tableData={tableData}
+              RowExpandableContentLeft={Phosphosites}
+              RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
+              RowContentRight={RowContentRight}
+              clickableCells={clickableCells}
+              searchIndex={0}
+              selectedItem={selectedKinase}
+            />
           )}
         </CardGeneric>
       </GridItem>
