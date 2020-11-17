@@ -2,24 +2,31 @@ import express from 'express';
 import db from '../db';
 import _ from 'lodash';
 
-import { parsePaths } from './util';
+import parsePaths from './parsePaths';
 
 const router = express.Router();
 
-// Kinase List > Sites
+// Kinases > Sites
 router.get('/phosphosites', async (req, res) => {
   const { kinase, detailed } = req.query;
 
   let query;
   const fields = [];
   if (kinase && detailed === 'true') {
-    query = `SELECT DISTINCT x.location, x.residue, x.detected_in, COALESCE(y.PsT_effect, 'unknown') AS pst_effect, x.reported_substrate_of, x.reported_pdt_of 
-              FROM 
-              (SELECT gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of 
-              FROM substrates_detailed where gene_name=$1) AS x 
-              LEFT JOIN 
-              (SELECT TProtein, PsT_effect, residue_type, residue_offset from known_sign where TProtein = $2) AS y 
+    query = `WITH x AS (
+              SELECT gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of 
+              FROM substrates_detailed 
+              WHERE gene_name = $1
+            ), y AS (
+              SELECT TProtein, PsT_effect, residue_type, residue_offset 
+              FROM known_sign 
+              WHERE TProtein = $2
+            )
+            SELECT DISTINCT x.location, x.residue, x.detected_in, COALESCE(y.PsT_effect, 'unknown') AS pst_effect, x.reported_substrate_of, x.reported_pdt_of
+              FROM
+              x LEFT JOIN y 
               ON x.residue = y.residue_type and x.location = y.residue_offset`;
+
     fields.push(kinase);
     fields.push(kinase);
   } else if (kinase) {
@@ -45,7 +52,8 @@ router.get('/observation', async (req, res) => {
   const { cellLine, perturbagen, substrate, min_fold_change, max_fold_change, min_p_value, max_p_value } = req.query;
 
   let query = `SELECT cell_line, perturbagen, substrate, fold_change, p_value, cv 
-                FROM Observation WHERE `;
+                FROM Observation 
+                WHERE `;
 
   const fields = [];
 
@@ -71,26 +79,26 @@ router.get('/observation', async (req, res) => {
     count += 1;
   }
   if (min_fold_change) {
-    query += 'cast(fold_change as float) > $' + count + ' AND ';
+    query += 'CAST(fold_change AS float) > $' + count + ' AND ';
     fields.push(min_fold_change);
     count += 1;
   }
   if (max_fold_change) {
-    query += 'cast(fold_change as float) < $' + count + ' AND ';
+    query += 'CAST(fold_change AS float) < $' + count + ' AND ';
     fields.push(max_fold_change);
     count += 1;
   }
   if (min_p_value) {
-    query += 'cast(p_value as float) > $' + count + ' AND ';
+    query += 'CAST(p_value AS float) > $' + count + ' AND ';
     fields.push(min_p_value);
     count += 1;
   }
   if (max_p_value) {
-    query += 'cast(p_value as float) < $' + count + ' AND ';
+    query += 'CAST(p_value AS float) < $' + count + ' AND ';
     fields.push(max_p_value);
   }
 
-  // Removing ' and' at the end
+  // Removing ' AND' at the end
   query = query.slice(0, -4);
 
   try {
@@ -138,7 +146,8 @@ router.get('/knownSubstrates', async (req, res) => {
               FROM known_target 
               LEFT JOIN Observation ON PsT = Observation.substrate 
               WHERE KPa = $1 
-              GROUP BY PsT, sources ORDER BY PsT`;
+              GROUP BY PsT, sources 
+              ORDER BY PsT`;
     fields.push(KPa);
   }
 
@@ -154,7 +163,8 @@ router.get('/knownSubstrates', async (req, res) => {
 router.get('/knownTargets', async (req, res) => {
   const { perturbagen } = req.query;
 
-  const query = `SELECT kinase, source, score FROM PK_relationship 
+  const query = `SELECT kinase, source, score 
+                  FROM PK_relationship 
                   WHERE perturbagen = $1 
                   ORDER BY kinase`;
 
@@ -172,18 +182,24 @@ router.get('/pdts', async (req, res) => {
 
   if (!kinase || !cell_line) return res.status(400).send({ requiredFields: 'kinase, cell_line' });
 
-  const query = `SELECT main.substrate, substrate.uniprot_name, main.confidence, main.shared_with 
-      FROM 
-      (SELECT x.substrate, x.confidence, STRING_AGG(y.kinase, ', ') AS shared_with 
-        FROM 
-        (SELECT * FROM KS_relationship 
-          WHERE kinase = $1 AND source='PDT' AND cell_line = $2 AND confidence != '0.0' AND confidence != '-1.0') AS x 
-          LEFT JOIN 
-          (SELECT * FROM KS_relationship WHERE source='PDT' AND cell_line = $3 AND confidence != '0.0' AND confidence != '-1.0') AS y 
-          ON x.substrate = y.substrate AND x.kinase != y.kinase 
-        GROUP BY x.substrate, x.confidence) AS main 
-        LEFT JOIN substrate ON main.substrate = substrate.substrate_id 
-        ORDER BY main.substrate`;
+  const query = ` WITH x AS (
+                    SELECT * 
+                    FROM KS_relationship 
+                    WHERE kinase = $1 AND source='PDT' AND cell_line = $2 AND confidence != '0.0' AND confidence != '-1.0'
+                  ), y AS (
+                    SELECT * 
+                    FROM KS_relationship 
+                    WHERE source='PDT' AND cell_line = $3 AND confidence != '0.0' AND confidence != '-1.0'
+                  ), xy as (
+                    SELECT x.substrate, x.confidence, STRING_AGG(y.kinase, ', ') AS shared_with 
+                    FROM x LEFT JOIN y 
+                    ON x.substrate = y.substrate AND x.kinase != y.kinase 
+                    GROUP BY x.substrate, x.confidence
+                  )
+                  SELECT xy.substrate, substrate.uniprot_name, xy.confidence, xy.shared_with 
+                  FROM xy
+                  LEFT JOIN substrate ON xy.substrate = substrate.substrate_id 
+                  ORDER BY xy.substrate`;
 
   try {
     const results = await db.query(query, [kinase, cell_line, cell_line]);

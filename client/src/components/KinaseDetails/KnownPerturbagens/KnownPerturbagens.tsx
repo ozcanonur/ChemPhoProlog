@@ -27,8 +27,6 @@ const KnownPerturbagens = () => {
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(data);
-
   const kinase = window.location.href.split('/')[3];
 
   // Fetch the data

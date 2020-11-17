@@ -12,7 +12,7 @@ import { toggleTooltips } from 'components/Pathways/utils/tooltip';
 import { animatePath } from 'components/Pathways/utils/animation';
 import { resetPathwayVisuals, clearAllTimeouts } from 'components/Pathways/utils/misc';
 import { changeSelectedPath } from 'actions/pathways';
-import buttonsStyles from './style';
+import buttonsStyles from './styles';
 import Legend from './Legend/Legend';
 
 const useStyles = makeStyles(buttonsStyles);

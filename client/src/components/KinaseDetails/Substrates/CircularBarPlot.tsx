@@ -130,6 +130,7 @@ const CircularBarPlot = ({ cellLine }: Props) => {
         .padRadius(innerRadius)
     );
 
+  console.log(PDTs);
   // Add the labels
   svg
     .append('g')
@@ -159,7 +160,8 @@ const CircularBarPlot = ({ cellLine }: Props) => {
       cardTitle={`PDT Commonality in ${cellLine}`}
       cardSubtitle={`Between ${kinase} and other kinases`}
     >
-      <div style={{ textAlign: 'center' }} ref={chart} />;
+      <div>{data.length === 0 ? 'No entries found.' : null}</div>
+      <div style={{ textAlign: 'center' }} ref={chart} />
     </CardGeneric>
   );
 };

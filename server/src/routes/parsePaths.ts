@@ -6,7 +6,7 @@ interface dbResult {
   inhibited: string;
 }
 
-export const parsePaths = (pathsFromDB: dbResult[]) => {
+const parsePaths = (pathsFromDB: dbResult[]) => {
   const paths: string[][] = []; // Legit paths Root > KPa > PsonKPa > KPa...
   const relations: { [key: string]: string[] } = {}; // KPa affects phosphosites
   let phosphosites: string[] = []; // Phosphosites that just EXIST
@@ -22,15 +22,7 @@ export const parsePaths = (pathsFromDB: dbResult[]) => {
     for (let i = 0; i < path.length; i++) {
       let step = path[i].split(',');
 
-      const [
-        affected,
-        affectedObs,
-        affectedRegulatory,
-        affecting,
-        psOnAffecting,
-        psOnAffectingObs,
-        psOnAffectingRegulatory,
-      ] = step;
+      const [affected, affectedObs, affectedRegulatory, affecting, psOnAffecting, psOnAffectingObs, psOnAffectingRegulatory] = step;
 
       // If we are at the last step
       if (i === path.length - 1) {
@@ -71,3 +63,5 @@ export const parsePaths = (pathsFromDB: dbResult[]) => {
 
   return { paths, relations, phosphosites, regulatory, stoppingReasons };
 };
+
+export default parsePaths;

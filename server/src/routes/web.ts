@@ -5,7 +5,8 @@ const router = express.Router();
 
 // Kinase List
 router.get('/kinases', async (_req, res) => {
-  const queryKinaseData = `SELECT * FROM protein 
+  const queryKinaseData = `SELECT * 
+                            FROM protein 
                             WHERE kinase_name IS NOT NULL 
                             ORDER BY kinase_name`;
   const queryKinasesWithPhosphosites = `SELECT DISTINCT kinase_name 
@@ -53,7 +54,8 @@ router.get('/getAllKinases', async (_req, res) => {
 
 // Perturbagen List
 router.get('/getPerturbagenList', async (_req, res) => {
-  const query = `SELECT * FROM Perturbagen 
+  const query = `SELECT * 
+                  FROM Perturbagen 
                   ORDER BY name`;
 
   try {
@@ -102,10 +104,14 @@ router.get('/validObservation', async (req, res) => {
 router.get('/substratesWithPaths', async (req, res) => {
   const { kinase } = req.query;
 
-  const query = `SELECT x.substrate, x.cellLine, x.perturbagens 
-                  FROM (SELECT substrate, cellline, STRING_AGG(perturbagen, ',') AS perturbagens 
-                    FROM pathcounts GROUP BY cellline, substrate) AS x 
-                    JOIN known_target AS y ON x.substrate = y.PsT AND y.KpA = $1`;
+  const query = `WITH x as (
+                  SELECT substrate, cellline, STRING_AGG(perturbagen, ',') AS perturbagens 
+                  FROM pathcounts 
+                  GROUP BY cellline, substrate
+                )
+                SELECT x.substrate, x.cellLine, x.perturbagens 
+                FROM x JOIN known_target 
+                ON x.substrate = known_target.PsT AND known_target.KpA = $1`;
 
   try {
     const results = await db.query(query, [kinase]);
@@ -190,7 +196,8 @@ router.get('/observationForHeatmap', async (req, res) => {
 router.get('/observationForBarchart', async (req, res) => {
   const { cellLine, substrate } = req.query;
 
-  const query = `SELECT perturbagen, fold_change, p_value FROM Observation 
+  const query = `SELECT perturbagen, fold_change, p_value 
+                  FROM Observation 
                   WHERE cell_line = $1 AND substrate = $2 AND CAST(fold_change AS float) > -888 AND CAST(p_value AS float) > -888`;
 
   try {

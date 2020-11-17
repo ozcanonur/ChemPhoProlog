@@ -16,7 +16,7 @@ export const playToast = (id: string, content: JSX.Element) => {
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
-    pauseOnHover: true,
+    pauseOnHover: false,
     draggable: false,
     progress: undefined,
     type: 'dark',

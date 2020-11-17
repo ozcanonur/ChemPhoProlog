@@ -1,0 +1,39 @@
+import createStyles from '@material-ui/core/styles/createStyles';
+
+const informationStyles = createStyles({
+  waffleContainer: {
+    height: '9rem',
+    position: 'relative',
+  },
+  legendContainer: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '0.8rem',
+    flexWrap: 'wrap',
+
+    '& > div:not(:last-child)': {
+      marginRight: '1rem',
+    },
+  },
+  legendItem: {
+    display: 'flex',
+    alignItems: 'center',
+
+    '& div': {
+      display: 'inline-block',
+    },
+  },
+  legendIcon: {
+    height: '10px',
+    width: '10px',
+    display: 'inline-block',
+    marginRight: '0.2rem',
+  },
+  addInspectionButton: {
+    backgroundColor: 'rgba(17, 59, 94, 0.7)',
+  },
+});
+
+export default informationStyles;

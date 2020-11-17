@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,33 +12,9 @@ import Healing from '@material-ui/icons/Healing';
 import perturbagens from 'variables/perturbagens';
 import { fetchFromApi } from 'utils/api';
 import { setSelectedInputs } from 'actions/pathways';
+import inputsStyles from './styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      display: 'block',
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: '15rem',
-    },
-    list: {
-      maxHeight: '30rem',
-    },
-    inputLabel: {
-      display: 'flex',
-      alignItems: 'center',
-
-      '& > svg': {
-        width: '0.85em',
-        height: '0.85em',
-      },
-    },
-    labelText: {
-      marginLeft: '0.5rem',
-    },
-  })
-);
+const useStyles = makeStyles(inputsStyles);
 
 interface Props {
   type: string;

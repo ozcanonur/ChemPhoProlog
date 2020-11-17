@@ -1,12 +1,17 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addInspectPath } from 'actions/pathways';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Table from 'components/Misc/CustomTable/Table';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import { playToast, PathAddedToInspectListToast } from 'components/Misc/Toast/toast';
 import { HelperPopupPathsTable } from '../HelperPopups';
+
+import informationStyles from './styles';
+
+const useStyles = makeStyles(informationStyles);
 
 const parsePathsToTableData = (paths: Pathway.Paths, stoppingReasons: Pathway.StoppingReasons) => {
   const tableData = paths.map((path, key) => {
@@ -22,6 +27,8 @@ const parsePathsToTableData = (paths: Pathway.Paths, stoppingReasons: Pathway.St
 };
 
 const PathsTable = () => {
+  const classes = useStyles();
+
   const { cellLine, perturbagen, substrate } = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
 
@@ -42,8 +49,8 @@ const PathsTable = () => {
     };
 
     return (
-      <Button onClick={addPathToInspection} size='sm' style={{ backgroundColor: 'rgba(17, 59, 94, 0.7)' }}>
-        <div>Add to inspection</div>
+      <Button onClick={addPathToInspection} size='sm' className={classes.addInspectionButton}>
+        Add to inspection
       </Button>
     );
   };

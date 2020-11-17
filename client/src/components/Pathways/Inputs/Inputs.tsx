@@ -15,7 +15,7 @@ import Cytoscape, { Core } from 'cytoscape';
 import Switch from '@material-ui/core/Switch';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
-import inputsStyles from './style';
+import inputsStyles from './styles';
 import SelectMenu from './SelectMenu';
 
 interface Props {
@@ -79,7 +79,7 @@ const Inputs = ({ cy }: Props) => {
             <>
               {loading ? (
                 <div>
-                  <Loading style={{ height: '5rem', width: '10rem' }} />
+                  <Loading className={classes.loading} />
                 </div>
               ) : (
                 <p>Get pathway</p>

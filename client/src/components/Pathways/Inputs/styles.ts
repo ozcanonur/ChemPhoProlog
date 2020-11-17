@@ -18,6 +18,32 @@ const inputsStyles = createStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  loading: {
+    height: '5rem',
+    width: '10rem',
+  },
+  inputsButton: {
+    display: 'block',
+  },
+  formControl: {
+    margin: '3px',
+    minWidth: '15rem',
+  },
+  list: {
+    maxHeight: '30rem',
+  },
+  inputLabel: {
+    display: 'flex',
+    alignItems: 'center',
+
+    '& > svg': {
+      width: '0.85em',
+      height: '0.85em',
+    },
+  },
+  labelText: {
+    marginLeft: '0.5rem',
+  },
 });
 
 export default inputsStyles;

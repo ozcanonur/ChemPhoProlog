@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import buttonsStyles from '../style';
+import buttonsStyles from '../styles';
 
 interface Props {
   color: string;

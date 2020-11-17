@@ -6,7 +6,6 @@ import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';
 
 import bezzLabLogo from 'assets/img/bezzlab.png';
-import reactLogo from 'assets/img/reactlogo.png';
 import generateSubRoutes from 'variables/generateSubRoutes';
 import standardRoutes from 'variables/standardRoutes';
 

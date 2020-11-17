@@ -1,10 +1,50 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import { ResponsiveWaffle } from '@nivo/waffle';
 
+import informationStyles from './styles';
+
+const useStyles = makeStyles(informationStyles);
+
+const waffleColors = ['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233', '#ffbac2'];
+
+const WaffleLegend = () => {
+  const classes = useStyles();
+
+  const legendItemNames = [
+    'no_data',
+    'no_prior_knowledge',
+    'loop',
+    'unexpectedFC',
+    'known_inhibitor',
+    'double_auto_phosphorylation',
+  ];
+
+  const legendItems = legendItemNames.map((name, index) => {
+    return {
+      name,
+      color: waffleColors[index],
+    };
+  });
+
+  return (
+    <div className={classes.legendContainer}>
+      {legendItems.map(({ name, color }) => (
+        <div key={name} className={classes.legendItem}>
+          <div className={classes.legendIcon} style={{ backgroundColor: color }} />
+          <div>{name}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Waffle = () => {
+  const classes = useStyles();
+
   const { cellLine, perturbagen, substrate } = useSelector((state: RootState) => state.pathwayInputs);
 
   const data = useSelector((state: RootState) => state.pathwayData);
@@ -40,7 +80,8 @@ const Waffle = () => {
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
       style={{ height: '16rem', marginTop: '3rem' }}
     >
-      <div style={{ height: '9rem' }}>
+      <div className={classes.waffleContainer}>
+        <WaffleLegend />
         <ResponsiveWaffle
           data={waffleData}
           total={totalCount}
@@ -48,26 +89,9 @@ const Waffle = () => {
           columns={50}
           fillDirection='left'
           margin={{ top: 50, right: 0, bottom: 0, left: 0 }}
-          colors={['#2D4159', '#00acc1', '#B55560', '#e5ad06', '#4F0EAB', '#001233', '#ffbac2']}
+          colors={waffleColors}
           borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
           animate={false}
-          // @ts-ignore
-          legends={[
-            {
-              anchor: 'top',
-              direction: 'row',
-              justify: false,
-              translateX: 10,
-              translateY: -50,
-              itemsSpacing: 1,
-              itemWidth: 100,
-              itemHeight: 10,
-              itemDirection: 'left-to-right',
-              itemOpacity: 0.8,
-              itemTextColor: '#777',
-              symbolSize: 10,
-            },
-          ]}
         />
       </div>
     </CardGeneric>
