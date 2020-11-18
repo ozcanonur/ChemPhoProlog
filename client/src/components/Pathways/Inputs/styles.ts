@@ -18,10 +18,6 @@ const inputsStyles = createStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loading: {
-    height: '5rem',
-    width: '10rem',
-  },
   inputsButton: {
     display: 'block',
   },

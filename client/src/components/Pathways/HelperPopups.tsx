@@ -12,8 +12,9 @@ export const HelperPopupGetPathway = () => {
   return (
     <>
       {isVisible ? (
-        <HelperPopup style={{ position: 'absolute', right: '20%', bottom: 0 }} buttonOnClick={disableHelp}>
-          <div>Get pathway for selected inputs!</div>
+        <HelperPopup style={{ position: 'absolute', right: '23%', bottom: 0 }} buttonOnClick={disableHelp}>
+          <div>Get pathway for selected inputs.</div>
+          <div>You can run again until you like the view!</div>
         </HelperPopup>
       ) : null}
     </>

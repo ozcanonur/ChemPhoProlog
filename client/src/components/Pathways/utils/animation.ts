@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable consistent-return */
 import phosphatases from 'variables/phosphatases';
-import { Core, Collection, SingularElementArgument, SingularElementReturnValue, CollectionReturnValue } from 'cytoscape';
+import { Core, Collection, SingularElementArgument, SingularElementReturnValue } from 'cytoscape';
 import { addTooltip } from './tooltip';
 
 export const getElementsToAnimate = (cy: Core | null, selectedPath: string[]) => {
@@ -24,7 +24,7 @@ export const getElementsToAnimate = (cy: Core | null, selectedPath: string[]) =>
   });
 
   // Do not include the starting KPa in fade list (because it looks better)
-  let elementsToFade: CollectionReturnValue = cy.collection();
+  let elementsToFade = cy.collection();
   if (elementsToShow.length !== 0)
     elementsToFade = cy
       .elements()
@@ -79,7 +79,7 @@ export const animatePath = (
   duration: number,
   showTooltips: boolean,
   showParentActivity: boolean
-): void => {
+) => {
   if (!elementsToAnimate) return;
 
   const { regulatory, observation } = data;

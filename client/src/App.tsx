@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Home = () => {
+const App = () => {
   const classes = useStyles();
 
   const extraSidebarRoutes = useSelector((state: RootState) => state.extraSidebarRoutes);
@@ -41,7 +41,7 @@ const Home = () => {
   return (
     <div className={classes.wrapper}>
       <Sidebar />
-      <div className={classes.mainPanel}>
+      <div className={classes.mainPanel} id='mainPanel'>
         {/* @ts-ignore */}
         <Navbar routes={allRoutes} />
         <div className={classes.map}>
@@ -57,4 +57,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default App;

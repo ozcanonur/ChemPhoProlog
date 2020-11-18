@@ -79,7 +79,7 @@ const Inputs = ({ cy }: Props) => {
             <>
               {loading ? (
                 <div>
-                  <Loading className={classes.loading} />
+                  <Loading style={{ height: '5rem', width: '10rem' }} />
                 </div>
               ) : (
                 <p>Get pathway</p>

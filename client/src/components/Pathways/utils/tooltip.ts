@@ -73,7 +73,7 @@ const addEndKPaTooltip = (element: NodeSingular, stoppingReason: string) => {
   setupTooltip(element, content);
 };
 
-export const addTooltip = (data: Pathway.PathwayData, element: NodeSingular, isStartNode: boolean, isLastNode: boolean): void => {
+export const addTooltip = (data: Pathway.PathwayData, element: NodeSingular, isStartNode: boolean, isLastNode: boolean) => {
   const { stoppingReasons, observation } = data;
   const { id } = element.data();
 
@@ -96,7 +96,7 @@ export const addTooltip = (data: Pathway.PathwayData, element: NodeSingular, isS
 export const toggleTooltips = (
   data: Pathway.PathwayData,
   elementsToAnimate: { elementsToShow: Collection; elementsToFade: Collection }
-): void => {
+) => {
   clearAllTimeouts();
 
   if (document.getElementsByClassName('tippy-popper').length !== 0) hideTooltips();

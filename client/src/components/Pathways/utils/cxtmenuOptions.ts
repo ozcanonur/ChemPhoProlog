@@ -34,7 +34,7 @@ const openUniprot = (ele: NodeSingular) => {
   window.open(`https://www.uniprot.org/uniprot/${id}`, '_blank');
 };
 
-const cxtmenuOptions = (dispatch: Dispatch<any>): any => {
+const cxtmenuOptions = (dispatch: Dispatch<any>) => {
   return {
     menuRadius: 120,
     selector: '.KPa, .phosphosite',

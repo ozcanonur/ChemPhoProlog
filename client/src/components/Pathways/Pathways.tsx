@@ -18,7 +18,7 @@ import ExtraButtons from './Buttons/Buttons';
 import PathSelectList from './PathSelectList';
 import PathwayInformation from './Information/Information';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/options';
-import { runLayout, clearAllTimeouts, resetPathwayVisuals } from './utils/misc';
+import { runLayout, clearAllTimeouts, resetPathwayVisuals, fadeTooltipsOnScroll } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
 import { HelperPopupGetPathway } from './HelperPopups';
 
@@ -40,6 +40,18 @@ const PathwayIndex = () => {
   const stylesheet = getCytoStylesheet(data.observation, data.regulatory, substrate);
   const layout = getCytoLayout();
 
+  // Listener to hide tooltips when the user scrolls way down
+  // Normally they stick to the top of the screen
+  useEffect(() => {
+    const mainPanel = document.getElementById('mainPanel');
+    if (mainPanel) mainPanel.addEventListener('scroll', fadeTooltipsOnScroll);
+
+    return () => {
+      if (mainPanel) mainPanel.removeEventListener('scroll', fadeTooltipsOnScroll);
+    };
+  }, []);
+
+  // Toast
   useEffect(() => {
     if (elements.length > 0) {
       playToast(`PathwayGenerated_${cellLine}${perturbagen}${substrate}`, <PathwayGeneratedToast inputs={pathwayInputs} />);
@@ -62,10 +74,6 @@ const PathwayIndex = () => {
       );
     };
   }, []);
-
-  // useEffect(() => {
-  //   addResizeEventListener(cy, layout);
-  // }, [cy]);
 
   // Reset animation/tooltips when new data for the graph comes in
   useEffect(() => {
