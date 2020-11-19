@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable consistent-return */
 import phosphatases from 'variables/phosphatases';
@@ -7,6 +8,8 @@ import { addTooltip } from './tooltip';
 export const getElementsToAnimate = (cy: Core | null, selectedPath: string[]) => {
   if (!cy) return;
 
+  // Need to keep id list as well because we need the order of elements
+  // WOOP check back again to cleanup maybe
   const elementsToShow: SingularElementReturnValue[] = [];
   const elementsToShowIds: string[] = [];
   selectedPath.forEach((node, index) => {
@@ -96,12 +99,14 @@ export const animatePath = (
       const isEdge = element.data().target !== undefined;
       const isPhosphosite = element.data().id.includes('(') && !element.data().target;
 
+      // Add animation styles
       if (isEdge) addEdgeStyle(element);
       else if (isPhosphosite) {
         addPhosphositeStyle(element);
         if (showParentActivity) addPhosphositeParentStyle(element, observation, regulatory);
       }
 
+      // Add tooltips
       if (showTooltips && element.isNode()) {
         const isStartNode = i === 0;
         const isLastNode = i === elementsToShow.length - 1;

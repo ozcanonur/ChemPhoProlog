@@ -130,7 +130,6 @@ const CircularBarPlot = ({ cellLine }: Props) => {
         .padRadius(innerRadius)
     );
 
-  console.log(PDTs);
   // Add the labels
   svg
     .append('g')

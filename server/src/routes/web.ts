@@ -108,10 +108,10 @@ router.get('/substratesWithPaths', async (req, res) => {
                   SELECT substrate, cellline, STRING_AGG(perturbagen, ',') AS perturbagens 
                   FROM pathcounts 
                   GROUP BY cellline, substrate
-                )
-                SELECT x.substrate, x.cellLine, x.perturbagens 
-                FROM x JOIN known_target 
-                ON x.substrate = known_target.PsT AND known_target.KpA = $1`;
+                  )
+                  SELECT x.substrate, x.cellLine, x.perturbagens 
+                  FROM x JOIN known_target 
+                  ON x.substrate = known_target.PsT AND known_target.KpA = $1`;
 
   try {
     const results = await db.query(query, [kinase]);

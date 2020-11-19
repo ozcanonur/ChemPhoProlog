@@ -29,6 +29,7 @@ const tableStyle = createStyles({
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
     maxWidth: '50rem',
+    position: 'relative',
   },
   tableResponsive: {
     width: '100%',
@@ -58,6 +59,15 @@ const tableStyle = createStyles({
   button: {
     background: 'rgba(229,173,6)',
     color: 'white',
+  },
+  helpButton: {
+    background: 'rgba(229,173,6)',
+    color: 'white',
+    fontWeight: 300,
+    position: 'absolute',
+    top: '2.3%',
+    left: '3.3%',
+    fontSize: '1.2rem',
   },
 });
 

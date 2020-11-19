@@ -36,6 +36,7 @@ module.exports = {
     'no-console': 'off',
     'linebreak-style': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'prettier/prettier': [
       'error',
       {

@@ -21,6 +21,11 @@ import Head from './TableHead';
 
 const useStyles = makeStyles(styles);
 
+interface Helper {
+  position: { row: number; column: number };
+  component: JSX.Element;
+}
+
 interface Props {
   id: string;
   tableHead: string[];
@@ -33,6 +38,9 @@ interface Props {
   };
   searchIndex: number;
   selectedItem?: string;
+  helpers?: Helper[];
+  helpersOpen?: boolean;
+  toggleHelpers?: () => void;
 }
 
 const CustomTable = (props: Props) => {
@@ -48,6 +56,9 @@ const CustomTable = (props: Props) => {
     clickableCells,
     searchIndex,
     selectedItem,
+    helpers,
+    helpersOpen,
+    toggleHelpers,
   } = props;
 
   const [filteredList, setFilteredList] = useState<string[][]>([]);
@@ -126,6 +137,11 @@ const CustomTable = (props: Props) => {
 
   return (
     <div className={classes.tableResponsive}>
+      <div>
+        <Button className={classes.helpButton} aria-label='edit' justIcon round onClick={toggleHelpers}>
+          ?
+        </Button>
+      </div>
       <div style={{ textAlign: 'right' }}>
         <CustomInput
           formControlProps={{}}
@@ -154,6 +170,7 @@ const CustomTable = (props: Props) => {
               RowExpandableContentLeftFilter={RowExpandableContentLeftFilter}
               clickableCells={clickableCells}
               selectedItem={selectedItem}
+              helper={helpers && helpersOpen ? helpers.find((helper) => helper.position.row === key) : undefined}
             />
           ))}
         </TableBody>

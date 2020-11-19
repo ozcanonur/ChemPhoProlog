@@ -1,6 +1,4 @@
 /* eslint-disable consistent-return */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 

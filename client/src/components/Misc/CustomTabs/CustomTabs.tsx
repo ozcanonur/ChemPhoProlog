@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import classNames from 'classnames';
 import Tabs from '@material-ui/core/Tabs';
@@ -30,7 +30,7 @@ interface Props {
 const CustomTab = (props: Props) => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (_event: Event, index: number) => {
+  const handleChange = (_event: ChangeEvent<unknown>, index: number) => {
     setValue(index);
   };
 
@@ -46,7 +46,6 @@ const CustomTab = (props: Props) => {
         {title ? <div className={cardTitle}>{title}</div> : undefined}
         <Tabs
           value={value}
-          // @ts-ignore
           onChange={handleChange}
           classes={{
             root: classes.tabsRoot,

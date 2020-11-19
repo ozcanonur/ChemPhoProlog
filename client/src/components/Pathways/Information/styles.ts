@@ -23,13 +23,14 @@ const informationStyles = createStyles({
 
     '& div': {
       display: 'inline-block',
+      letterSpacing: '0.3px !important',
     },
   },
   legendIcon: {
     height: '10px',
     width: '10px',
     display: 'inline-block',
-    marginRight: '0.2rem',
+    marginRight: '0.4rem',
   },
   addInspectionButton: {
     backgroundColor: 'rgba(17, 59, 94, 0.7)',

@@ -8,19 +8,20 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { playToast, SidebarRouteAddedToast } from 'components/Misc/Toast/toast';
 import { fetchFromApi } from 'utils/api';
+import Button from 'components/Misc/CustomButton/Button';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import Loading from 'components/Misc/Loading/Loading';
+import { playToast, SidebarRouteAddedToast } from 'components/Misc/Toast/toast';
 import { useLocalStorage } from 'utils/customHooks';
 import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
-import HelperPopups from './HelperPopups';
+import { helpers } from './HelperPopups';
 
 import kinaseListPhosphositesStyles from './styles/kinases';
 
@@ -39,6 +40,7 @@ const KinaseList = () => {
   const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(true);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -139,6 +141,10 @@ const KinaseList = () => {
     ) : null;
   };
 
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
   return (
     <GridContainer direction='row' className={classes.container}>
       <GridItem xs={12} lg={6}>
@@ -148,20 +154,20 @@ const KinaseList = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <>
-              <HelperPopups />
-              <Table
-                id='Kinases'
-                tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
-                tableData={tableData}
-                RowExpandableContentLeft={Phosphosites}
-                RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
-                RowContentRight={RowContentRight}
-                clickableCells={clickableCells}
-                searchIndex={0}
-                selectedItem={selectedKinase}
-              />
-            </>
+            <Table
+              id='Kinases'
+              tableHead={['Sites', 'Name', 'Expressed in', 'Uniprot ID', '']}
+              tableData={tableData}
+              RowExpandableContentLeft={Phosphosites}
+              RowExpandableContentLeftFilter={data.kinasesWithPhosphosites}
+              RowContentRight={RowContentRight}
+              clickableCells={clickableCells}
+              searchIndex={0}
+              selectedItem={selectedKinase}
+              helpers={helpers}
+              helpersOpen={helpersOpen}
+              toggleHelpers={toggleHelpers}
+            />
           )}
         </CardGeneric>
       </GridItem>

@@ -17,15 +17,15 @@ router.get('/phosphosites', async (req, res) => {
               SELECT gene_name, residue, location, detected_in, reported_substrate_of, reported_pdt_of 
               FROM substrates_detailed 
               WHERE gene_name = $1
-            ), y AS (
-              SELECT TProtein, PsT_effect, residue_type, residue_offset 
-              FROM known_sign 
-              WHERE TProtein = $2
-            )
-            SELECT DISTINCT x.location, x.residue, x.detected_in, COALESCE(y.PsT_effect, 'unknown') AS pst_effect, x.reported_substrate_of, x.reported_pdt_of
-              FROM
-              x LEFT JOIN y 
-              ON x.residue = y.residue_type and x.location = y.residue_offset`;
+              ), y AS (
+                SELECT TProtein, PsT_effect, residue_type, residue_offset 
+                FROM known_sign 
+                WHERE TProtein = $2
+              )
+              SELECT DISTINCT x.location, x.residue, x.detected_in, COALESCE(y.PsT_effect, 'unknown') AS pst_effect, x.reported_substrate_of, x.reported_pdt_of
+                FROM
+                x LEFT JOIN y 
+                ON x.residue = y.residue_type and x.location = y.residue_offset`;
 
     fields.push(kinase);
     fields.push(kinase);
@@ -186,20 +186,20 @@ router.get('/pdts', async (req, res) => {
                     SELECT * 
                     FROM KS_relationship 
                     WHERE kinase = $1 AND source='PDT' AND cell_line = $2 AND confidence != '0.0' AND confidence != '-1.0'
-                  ), y AS (
-                    SELECT * 
-                    FROM KS_relationship 
-                    WHERE source='PDT' AND cell_line = $3 AND confidence != '0.0' AND confidence != '-1.0'
-                  ), xy as (
-                    SELECT x.substrate, x.confidence, STRING_AGG(y.kinase, ', ') AS shared_with 
-                    FROM x LEFT JOIN y 
-                    ON x.substrate = y.substrate AND x.kinase != y.kinase 
-                    GROUP BY x.substrate, x.confidence
-                  )
-                  SELECT xy.substrate, substrate.uniprot_name, xy.confidence, xy.shared_with 
-                  FROM xy
-                  LEFT JOIN substrate ON xy.substrate = substrate.substrate_id 
-                  ORDER BY xy.substrate`;
+                    ), y AS (
+                      SELECT * 
+                      FROM KS_relationship 
+                      WHERE source='PDT' AND cell_line = $3 AND confidence != '0.0' AND confidence != '-1.0'
+                    ), xy as (
+                      SELECT x.substrate, x.confidence, STRING_AGG(y.kinase, ', ') AS shared_with 
+                      FROM x LEFT JOIN y 
+                      ON x.substrate = y.substrate AND x.kinase != y.kinase 
+                      GROUP BY x.substrate, x.confidence
+                    )
+                    SELECT xy.substrate, substrate.uniprot_name, xy.confidence, xy.shared_with 
+                    FROM xy
+                    LEFT JOIN substrate ON xy.substrate = substrate.substrate_id 
+                    ORDER BY xy.substrate`;
 
   try {
     const results = await db.query(query, [kinase, cell_line, cell_line]);
