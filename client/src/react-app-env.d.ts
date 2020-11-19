@@ -94,4 +94,5 @@ interface RootState {
   };
   cxtMenu: CxtMenu;
   pathExplanation: string[][];
+  pathwayHelpersOpen: boolean;
 }

@@ -138,12 +138,15 @@ const CustomTable = (props: Props) => {
   return (
     <div className={classes.tableResponsive}>
       <div className={classes.topBarContainer}>
-        <Button className={classes.helpButton} onClick={helpers?.toggleHelpers} aria-label='edit' justIcon round>
-          ?
-        </Button>
+        {helpers ? (
+          <Button className={classes.helpButton} onClick={helpers?.toggleHelpers} aria-label='edit' justIcon round>
+            ?
+          </Button>
+        ) : (
+          <div />
+        )}
         <div>
           <CustomInput
-            formControlProps={{}}
             inputProps={{
               placeholder: 'Search',
               inputProps: {

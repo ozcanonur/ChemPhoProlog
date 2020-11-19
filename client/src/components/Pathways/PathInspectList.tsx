@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Core } from 'cytoscape';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
 import { resetPathwayVisuals, clearAllTimeouts } from './utils/misc';
@@ -18,8 +19,10 @@ interface Props {
 const PathSelectList = ({ cy }: Props) => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
+  const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
 
   const dispatch = useDispatch();
+
   const pathOnClick = (id: string) => {
     const selectedPath = data.paths[parseInt(id, 10)];
     dispatch(changeSelectedPath(selectedPath));
@@ -34,25 +37,33 @@ const PathSelectList = ({ cy }: Props) => {
   };
 
   return (
-    <CardGeneric
-      color='primary'
-      cardTitle='Inspect'
-      cardSubtitle='And Animate!'
-      bodyStyle={{ overflow: 'auto' }}
-      style={{ maxHeight: '55rem' }}
-    >
-      <List>
-        {pathsInspectList.map((path, key) => {
-          const [id, node, stopReason] = path;
-          const text = `${node}, ${stopReason}`;
-          return (
-            <ListItem button key={key} onClick={() => pathOnClick(id)}>
-              <ListItemText primary={text} />
-            </ListItem>
-          );
-        })}
-      </List>
-    </CardGeneric>
+    <>
+      <CardGeneric
+        color='primary'
+        cardTitle='Inspect'
+        cardSubtitle='And Animate!'
+        bodyStyle={{ overflow: 'auto' }}
+        style={{ maxHeight: '55rem', position: 'relative' }}
+      >
+        <List>
+          {pathsInspectList.map((path, key) => {
+            const [id, node, stopReason] = path;
+            const text = `${node}, ${stopReason}`;
+            return (
+              <ListItem button key={key} onClick={() => pathOnClick(id)}>
+                <ListItemText primary={text} />
+              </ListItem>
+            );
+          })}
+        </List>
+      </CardGeneric>
+      {helpersOpen ? (
+        <HelperPopup style={{ left: '-7rem' }}>
+          <div>Generate a pathway first</div>
+          <div>Then add paths from the paths table below</div>
+        </HelperPopup>
+      ) : null}
+    </>
   );
 };
 

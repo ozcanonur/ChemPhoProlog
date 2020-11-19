@@ -8,11 +8,18 @@ import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import Button from 'components/Misc/CustomButton/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { ReactComponent as Loading } from 'assets/img/loading2.svg';
 import Cytoscape, { Core } from 'cytoscape';
 import Switch from '@material-ui/core/Switch';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedInputs, getPathwayData, removeAllInspectPaths, setElementsToAnimate } from 'actions/pathways';
+import {
+  setSelectedInputs,
+  getPathwayData,
+  removeAllInspectPaths,
+  setElementsToAnimate,
+  togglePathwayHelpers,
+} from 'actions/pathways';
 import inputsStyles from './styles';
 import SelectMenu from './SelectMenu';
 
@@ -30,8 +37,13 @@ const Inputs = ({ cy }: Props) => {
   const [error, setError] = useState('');
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
+  const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
 
   const dispatch = useDispatch();
+
+  const toggleHelpers = () => {
+    dispatch(togglePathwayHelpers());
+  };
 
   useEffect(() => {
     setLoading(false);
@@ -66,7 +78,11 @@ const Inputs = ({ cy }: Props) => {
 
   return (
     <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer direction='row' alignItems='center'>
+      <GridContainer
+        direction='row'
+        alignItems='center'
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
         {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType) => (
           <GridItem key={inputType}>
             <SelectMenu type={inputType} />
@@ -84,6 +100,16 @@ const Inputs = ({ cy }: Props) => {
               )}
               {error ? <div className={classes.error}>{error}</div> : undefined}
             </>
+          </Button>
+          {helpersOpen ? (
+            <HelperPopup>
+              <div>Go back up to the pathway</div>
+              <div>To see the items added</div>
+              <div>Watch the path animation!</div>
+            </HelperPopup>
+          ) : null}
+          <Button className={classes.helpButton} onClick={toggleHelpers} aria-label='edit' justIcon round>
+            ?
           </Button>
         </GridItem>
         <GridItem className={classes.switchContainer} style={{ display: 'none' }}>

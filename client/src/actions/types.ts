@@ -14,6 +14,7 @@ export enum ACTION {
   SET_ELEMENTS_TO_ANIMATE,
   SET_PATH_EXPLANATION,
   SET_SELECTED_INPUTS,
+  TOGGLE_PATHWAY_HELPERS,
 }
 
 export type AddSidebarRouteAction = {
@@ -71,4 +72,8 @@ export type SetSelectedInputsAction = {
     substrate: string;
     onlyKinaseEnds: boolean;
   };
+};
+
+export type TogglePathwayHelpersAction = {
+  type: ACTION.TOGGLE_PATHWAY_HELPERS;
 };

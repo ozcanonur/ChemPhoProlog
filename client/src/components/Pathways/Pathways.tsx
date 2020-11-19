@@ -15,12 +15,11 @@ import PathwayInputs from 'components/Pathways/Inputs/Inputs';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import { setElementsToAnimate, setCxtMenu } from 'actions/pathways';
 import ExtraButtons from './Buttons/Buttons';
-import PathSelectList from './PathSelectList';
+import PathSelectList from './PathInspectList';
 import PathwayInformation from './Information/Information';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/options';
 import { runLayout, clearAllTimeouts, resetPathwayVisuals, fadeTooltipsOnScroll } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
-import { HelperPopupGetPathway } from './HelperPopups';
 
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
@@ -97,7 +96,6 @@ const PathwayIndex = () => {
       <GridContainer direction='column'>
         <GridItem style={{ position: 'relative' }}>
           <PathwayInputs cy={cy} />
-          <HelperPopupGetPathway />
         </GridItem>
         <GridItem>
           <GridContainer direction='row'>

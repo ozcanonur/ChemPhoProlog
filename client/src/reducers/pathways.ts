@@ -11,6 +11,7 @@ import {
   SetElementsToAnimateAction,
   SetPathExplanationAction,
   SetSelectedInputsAction,
+  TogglePathwayHelpersAction,
 } from 'actions/types';
 
 export const cxtMenu = (state = null, action: SetCxtMenuAction): CxtMenu => {
@@ -109,6 +110,15 @@ export const selectedPath = (state = [], action: ChangeSelectedPathAction): stri
   switch (action.type) {
     case ACTION.CHANGE_SELECTED_PATH:
       return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const pathwayHelpersOpen = (state = false, action: TogglePathwayHelpersAction) => {
+  switch (action.type) {
+    case ACTION.TOGGLE_PATHWAY_HELPERS:
+      return !state;
     default:
       return state;
   }

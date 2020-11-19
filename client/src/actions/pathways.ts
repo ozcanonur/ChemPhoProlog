@@ -16,6 +16,7 @@ import {
   SetElementsToAnimateAction,
   SetPathExplanationAction,
   SetSelectedInputsAction,
+  TogglePathwayHelpersAction,
 } from './types';
 
 export const addInspectPath = (path: string[]): AddInspectPathAction => {
@@ -113,5 +114,11 @@ export const setSelectedInputs = (inputs: {
   return {
     type: ACTION.SET_SELECTED_INPUTS,
     payload: inputs,
+  };
+};
+
+export const togglePathwayHelpers = (): TogglePathwayHelpersAction => {
+  return {
+    type: ACTION.TOGGLE_PATHWAY_HELPERS,
   };
 };

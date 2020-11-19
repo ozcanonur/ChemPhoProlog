@@ -30,7 +30,7 @@ const PerturbagenList = () => {
   const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage('selectedPerturbagen', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('perturbagenRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
-  const [helpersOpen, setHelpersOpen] = useState(true);
+  const [helpersOpen, setHelpersOpen] = useState(false);
 
   const toggleHelpers = () => {
     setHelpersOpen(!helpersOpen);

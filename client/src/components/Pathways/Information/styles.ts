@@ -4,6 +4,10 @@ const informationStyles = createStyles({
   waffleContainer: {
     height: '9rem',
     position: 'relative',
+
+    '& div > div > svg': {
+      maxWidth: '100% !important',
+    },
   },
   legendContainer: {
     position: 'absolute',
@@ -12,6 +16,7 @@ const informationStyles = createStyles({
     alignItems: 'center',
     fontSize: '0.8rem',
     flexWrap: 'wrap',
+    width: '100%',
 
     '& > div:not(:last-child)': {
       marginRight: '1rem',

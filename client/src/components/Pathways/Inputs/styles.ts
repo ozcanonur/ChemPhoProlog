@@ -40,6 +40,13 @@ const inputsStyles = createStyles({
   labelText: {
     marginLeft: '0.5rem',
   },
+  helpButton: {
+    background: 'rgba(229,173,6)',
+    color: 'white',
+    fontWeight: 300,
+    fontSize: '1.2rem',
+    marginLeft: '1rem',
+  },
 });
 
 export default inputsStyles;

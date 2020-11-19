@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addInspectPath } from 'actions/pathways';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
+import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import Table from 'components/Misc/CustomTable/Table';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Button from 'components/Misc/CustomButton/Button';
 import { playToast, PathAddedToInspectListToast } from 'components/Misc/Toast/toast';
-import { HelperPopupPathsTable } from '../HelperPopups';
 
 import informationStyles from './styles';
 
@@ -31,6 +31,35 @@ const PathsTable = () => {
 
   const { cellLine, perturbagen, substrate } = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = {
+    helpers: [
+      {
+        position: { row: 2, column: 3 },
+        component: (
+          <HelperPopup>
+            <div>Add paths to inspect list above</div>
+          </HelperPopup>
+        ),
+      },
+      {
+        position: { row: 0, column: 1 },
+        component: (
+          <HelperPopup>
+            <div>Each stop node represents</div>
+            <div>a single path starting from selected substrate</div>
+          </HelperPopup>
+        ),
+      },
+    ],
+    helpersOpen,
+    toggleHelpers,
+  };
 
   const dispatch = useDispatch();
 
@@ -57,13 +86,13 @@ const PathsTable = () => {
 
   return (
     <CardGeneric color='primary' cardTitle='Paths found' cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}>
-      {tableData.length > 0 ? <HelperPopupPathsTable /> : undefined}
       <Table
         id={`${cellLine}${perturbagen}${substrate}_PathsTable`}
         tableHead={['Path ID', 'Stop Node', 'Stop reason', 'Length', '']}
         tableData={tableData}
         RowContentRight={RowContentRight}
         searchIndex={1}
+        helpers={helpers}
       />
     </CardGeneric>
   );
