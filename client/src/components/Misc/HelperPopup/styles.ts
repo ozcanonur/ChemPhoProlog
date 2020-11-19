@@ -5,7 +5,7 @@ const helperPopupStyles = createStyles({
     position: 'absolute',
     display: 'flex',
     alignItems: 'center',
-    top: '10px',
+    top: '5px',
   },
   helperTextContainer: {
     backgroundColor: 'rgba(54, 57, 63, 0.8)',

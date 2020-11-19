@@ -9,7 +9,6 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { fetchFromApi } from 'utils/api';
-import Button from 'components/Misc/CustomButton/Button';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
@@ -21,7 +20,7 @@ import NewFindingsCard from 'components/Misc/NewFindings/NewFindingsCard';
 import { addSidebarRoute } from 'actions/main';
 import Phosphosites from './Phosphosites';
 import { formatTableData, findKinaseInfo } from './helpers';
-import { helpers } from './HelperPopups';
+import { helperPopups } from './HelperPopups';
 
 import kinaseListPhosphositesStyles from './styles/kinases';
 
@@ -40,7 +39,13 @@ const KinaseList = () => {
   const [selectedKinase, setSelectedKinase] = useLocalStorage('selectedKinase', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('kinaseRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
-  const [helpersOpen, setHelpersOpen] = useState(true);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -141,10 +146,6 @@ const KinaseList = () => {
     ) : null;
   };
 
-  const toggleHelpers = () => {
-    setHelpersOpen(!helpersOpen);
-  };
-
   return (
     <GridContainer direction='row' className={classes.container}>
       <GridItem xs={12} lg={6}>
@@ -165,8 +166,6 @@ const KinaseList = () => {
               searchIndex={0}
               selectedItem={selectedKinase}
               helpers={helpers}
-              helpersOpen={helpersOpen}
-              toggleHelpers={toggleHelpers}
             />
           )}
         </CardGeneric>

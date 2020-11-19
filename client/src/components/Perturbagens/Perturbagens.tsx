@@ -17,8 +17,8 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { useLocalStorage } from 'utils/customHooks';
 import KnownTargets from './KnownTargets';
-import HelperPopups from './HelperPopups';
 
+import { helperPopups } from './HelperPopups';
 import perturbagensStyles from './styles/perturbagens';
 
 const useStyles = makeStyles(perturbagensStyles);
@@ -30,6 +30,13 @@ const PerturbagenList = () => {
   const [selectedPerturbagen, setSelectedPerturbagen] = useLocalStorage('selectedPerturbagen', '');
   const [rightPanelOpen, setRightPanelOpen] = useLocalStorage('perturbagenRightPanelOpen', false);
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(true);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   // Fetch data on render
   useEffect(() => {
@@ -105,18 +112,16 @@ const PerturbagenList = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <>
-              <HelperPopups />
-              <Table
-                id='Perturbagens'
-                tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
-                tableData={tableData}
-                RowContentRight={RowContentRight}
-                clickableCells={clickableCells}
-                selectedItem={selectedPerturbagen}
-                searchIndex={0}
-              />
-            </>
+            <Table
+              id='Perturbagens'
+              tableHead={['Name', 'Chemspider ID', 'Action', 'Synonyms', '']}
+              tableData={tableData}
+              RowContentRight={RowContentRight}
+              clickableCells={clickableCells}
+              selectedItem={selectedPerturbagen}
+              searchIndex={0}
+              helpers={helpers}
+            />
           )}
         </CardGeneric>
       </GridItem>

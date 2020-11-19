@@ -1,7 +1,5 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import range from 'lodash/range';
 import Table from '@material-ui/core/Table';
@@ -21,9 +19,15 @@ import Head from './TableHead';
 
 const useStyles = makeStyles(styles);
 
-interface Helper {
+interface HelperPopup {
   position: { row: number; column: number };
   component: JSX.Element;
+}
+
+interface Helper {
+  helpers: HelperPopup[];
+  helpersOpen: boolean;
+  toggleHelpers: () => void;
 }
 
 interface Props {
@@ -38,9 +42,7 @@ interface Props {
   };
   searchIndex: number;
   selectedItem?: string;
-  helpers?: Helper[];
-  helpersOpen?: boolean;
-  toggleHelpers?: () => void;
+  helpers?: Helper;
 }
 
 const CustomTable = (props: Props) => {
@@ -57,8 +59,6 @@ const CustomTable = (props: Props) => {
     searchIndex,
     selectedItem,
     helpers,
-    helpersOpen,
-    toggleHelpers,
   } = props;
 
   const [filteredList, setFilteredList] = useState<string[][]>([]);
@@ -138,7 +138,7 @@ const CustomTable = (props: Props) => {
   return (
     <div className={classes.tableResponsive}>
       <div>
-        <Button className={classes.helpButton} aria-label='edit' justIcon round onClick={toggleHelpers}>
+        <Button className={classes.helpButton} onClick={helpers?.toggleHelpers} aria-label='edit' justIcon round>
           ?
         </Button>
       </div>
@@ -170,7 +170,7 @@ const CustomTable = (props: Props) => {
               RowExpandableContentLeftFilter={RowExpandableContentLeftFilter}
               clickableCells={clickableCells}
               selectedItem={selectedItem}
-              helper={helpers && helpersOpen ? helpers.find((helper) => helper.position.row === key) : undefined}
+              helper={helpers && helpers.helpersOpen ? helpers.helpers.find((helper) => helper.position.row === key) : undefined}
             />
           ))}
         </TableBody>

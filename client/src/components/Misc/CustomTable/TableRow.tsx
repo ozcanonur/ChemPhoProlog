@@ -43,8 +43,6 @@ const Row = (props: Props) => {
     helper,
   } = props;
 
-  console.log(helper);
-
   const isExpandable = Boolean(RowExpandableContentLeft);
   const classes = useStyles(isExpandable);
 
@@ -59,7 +57,6 @@ const Row = (props: Props) => {
     setExpandableOpen(!expandableOpen);
   };
 
-  console.log(row);
   return (
     <>
       <TableRow
@@ -89,15 +86,13 @@ const Row = (props: Props) => {
                 ) : (
                   prop
                 )}
-                {helper && helper.position.column === key && helper.position.column !== 0 && helper.position.column !== 4
-                  ? helper.component
-                  : null}
+                {helper && helper.position.column === key && helper.position.column !== 0 ? helper.component : null}
               </>
             </TableCell>
             {RowContentRight && key === row.length - 1 ? (
               <TableCell style={{ textAlign: 'center' }}>
                 <RowContentRight row={row} />
-                {helper && helper.position.column === 4 ? helper.component : null}
+                {helper && helper.position.column === row.length + 1 ? helper.component : null}
               </TableCell>
             ) : null}
           </React.Fragment>

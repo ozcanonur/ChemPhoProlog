@@ -29,7 +29,6 @@ const tableStyle = createStyles({
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
     maxWidth: '50rem',
-    position: 'relative',
   },
   tableResponsive: {
     width: '100%',
