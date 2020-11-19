@@ -15,9 +15,9 @@ const PDTs = () => {
   return (
     <GridContainer direction='column'>
       <GridItem md>
-        <GridContainer direction='row'>
+        <GridContainer direction='row' style={{ justifyContent: 'center' }}>
           {cellLines.map((cellLine) => (
-            <GridItem md key={cellLine}>
+            <GridItem key={cellLine}>
               <CircularBarPlot cellLine={cellLine} />
             </GridItem>
           ))}

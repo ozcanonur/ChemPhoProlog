@@ -137,24 +137,24 @@ const CustomTable = (props: Props) => {
 
   return (
     <div className={classes.tableResponsive}>
-      <div>
+      <div className={classes.topBarContainer}>
         <Button className={classes.helpButton} onClick={helpers?.toggleHelpers} aria-label='edit' justIcon round>
           ?
         </Button>
-      </div>
-      <div style={{ textAlign: 'right' }}>
-        <CustomInput
-          formControlProps={{}}
-          inputProps={{
-            placeholder: 'Search',
-            inputProps: {
-              onChange: (event: React.ChangeEvent<HTMLInputElement>) => filterByTermAndSetTableData(event.target.value),
-            },
-          }}
-        />
-        <Button justIcon round className={classes.button}>
-          <Search />
-        </Button>
+        <div>
+          <CustomInput
+            formControlProps={{}}
+            inputProps={{
+              placeholder: 'Search',
+              inputProps: {
+                onChange: (event: React.ChangeEvent<HTMLInputElement>) => filterByTermAndSetTableData(event.target.value),
+              },
+            }}
+          />
+          <Button justIcon round className={classes.button}>
+            <Search />
+          </Button>
+        </div>
       </div>
       <Table className={classes.table}>
         <TableHead className={classes.primaryTableHeader}>

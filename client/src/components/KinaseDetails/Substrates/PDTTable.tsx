@@ -12,7 +12,7 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
 import ObservationBarChart from '../ObservationBarChart';
-import HelperPopups from './PDTTableHelperPopups';
+import { helperPopups } from './PDTTableHelperPopups';
 
 interface Props {
   cellLine: string;
@@ -28,6 +28,13 @@ const PDTTable = ({ cellLine }: Props) => {
   const [PDTs, setPDTs] = useState([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -147,17 +154,15 @@ const PDTTable = ({ cellLine }: Props) => {
       ) : loading ? (
         <Loading />
       ) : (
-        <>
-          <HelperPopups />
-          <Table
-            id={`${cellLine}_${kinase}_PDTTable`}
-            tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with', 'Go to Pathway']}
-            tableData={tableData}
-            RowContentRight={RowContentRight}
-            RowExpandableContentLeft={ObservationBarChart(cellLine)}
-            searchIndex={0}
-          />
-        </>
+        <Table
+          id={`${cellLine}_${kinase}_PDTTable`}
+          tableHead={['Obs.Data', 'Substrate', 'Protein', 'Confidence', 'Shared with', 'Go to Pathway']}
+          tableData={tableData}
+          RowContentRight={RowContentRight}
+          RowExpandableContentLeft={ObservationBarChart(cellLine)}
+          searchIndex={0}
+          helpers={helpers}
+        />
       )}
     </CardGeneric>
   );

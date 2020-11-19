@@ -13,7 +13,7 @@ import Button from 'components/Misc/CustomButton/Button';
 import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
 import ObservationHeatMap from '../ObservationHeatMap';
-import HelperPopups from './KnownSubstratesHelperPopups';
+import { helperPopups } from './KnownSubstratesHelperPopups';
 
 interface KnownSubstrate {
   pst: string;
@@ -31,6 +31,13 @@ const KnownSubstratesTable = () => {
   const [data, setData] = useState<KnownSubstrate[]>([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -142,18 +149,16 @@ const KnownSubstratesTable = () => {
         <Loading />
       ) : (
         <CardGeneric color='primary' cardTitle='Known Substrates' cardSubtitle='Select a substrate'>
-          <>
-            <HelperPopups />
-            <Table
-              id={`${kinase}_KnownSubstrates`}
-              tableHead={['Obs.Data', 'Substrate', 'Sources', 'Go to Pathway']}
-              tableData={tableData}
-              searchIndex={0}
-              RowContentRight={RowContentRight}
-              RowExpandableContentLeft={ObservationHeatMap(true)}
-              RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
-            />
-          </>
+          <Table
+            id={`${kinase}_KnownSubstrates`}
+            tableHead={['Obs.Data', 'Substrate', 'Sources', 'Go to Pathway']}
+            tableData={tableData}
+            searchIndex={0}
+            RowContentRight={RowContentRight}
+            RowExpandableContentLeft={ObservationHeatMap(true)}
+            RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
+            helpers={helpers}
+          />
         </CardGeneric>
       )}
     </>

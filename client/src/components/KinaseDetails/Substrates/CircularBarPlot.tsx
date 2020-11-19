@@ -159,7 +159,7 @@ const CircularBarPlot = ({ cellLine }: Props) => {
       cardTitle={`PDT Commonality in ${cellLine}`}
       cardSubtitle={`Between ${kinase} and other kinases`}
     >
-      <div>{data.length === 0 ? 'No entries found.' : null}</div>
+      {data.length === 0 ? 'No entries found.' : null}
       <div style={{ textAlign: 'center' }} ref={chart} />
     </CardGeneric>
   );

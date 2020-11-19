@@ -10,7 +10,7 @@ import Table from 'components/Misc/CustomTable/Table';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import { findPerturbagenInfo, formatDataForTable } from './helpers';
-import HelperPopups from './HelperPopups';
+import { helperPopups } from './HelperPopups';
 
 interface KnownPerturbagen {
   perturbagen: string;
@@ -26,6 +26,13 @@ const KnownPerturbagens = () => {
   const [selectedPerturbagen, setSelectedPerturbagen] = useState('');
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   const kinase = window.location.href.split('/')[3];
 
@@ -100,18 +107,16 @@ const KnownPerturbagens = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <>
-              <HelperPopups />
-              <Table
-                id={`${kinase}_KnownPerturbagens`}
-                tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID', '']}
-                tableData={tableData}
-                searchIndex={0}
-                clickableCells={clickableCells}
-                RowContentRight={RowContentRight}
-                selectedItem={selectedPerturbagen}
-              />
-            </>
+            <Table
+              id={`${kinase}_KnownPerturbagens`}
+              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID', '']}
+              tableData={tableData}
+              searchIndex={0}
+              clickableCells={clickableCells}
+              RowContentRight={RowContentRight}
+              selectedItem={selectedPerturbagen}
+              helpers={helpers}
+            />
           )}
         </CardGeneric>
       </GridItem>

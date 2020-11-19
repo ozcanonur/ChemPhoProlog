@@ -17,6 +17,7 @@ const tableStyle = createStyles({
     fontWeight: 300,
     lineHeight: '1.5em',
     cursor: 'pointer',
+    paddingRight: '0.5rem !important',
     '&, &$tableCell': {
       fontSize: '1.05em',
     },
@@ -24,11 +25,12 @@ const tableStyle = createStyles({
   tableCell: {
     fontWeight: 300,
     lineHeight: '1.5em',
-    minHeight: '1.72857143',
+    minHeight: '1.7',
     padding: 0,
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
     maxWidth: '50rem',
+    paddingRight: '0.5rem !important',
   },
   tableResponsive: {
     width: '100%',
@@ -63,10 +65,12 @@ const tableStyle = createStyles({
     background: 'rgba(229,173,6)',
     color: 'white',
     fontWeight: 300,
-    position: 'absolute',
-    top: '2.3%',
-    left: '3.3%',
     fontSize: '1.2rem',
+  },
+  topBarContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

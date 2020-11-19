@@ -16,7 +16,7 @@ import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toas
 import { setSelectedInputs } from 'actions/pathways';
 import { fetchFromApi } from 'utils/api';
 import ObservationHeatMap from '../ObservationHeatMap';
-import HelperPopups from './HelperPopups';
+import { helperPopups } from './HelperPopups';
 
 interface PhosphositeOnKinase {
   detected_in: string;
@@ -52,6 +52,13 @@ const Description = () => {
   });
   const [phosphositesWithPaths, setPhosphositesWithPaths] = useState<PhosphositesWithPaths>({});
   const [loading, setLoading] = useState(false);
+  const [helpersOpen, setHelpersOpen] = useState(false);
+
+  const toggleHelpers = () => {
+    setHelpersOpen(!helpersOpen);
+  };
+
+  const helpers = { helpers: helperPopups, helpersOpen, toggleHelpers };
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -189,27 +196,25 @@ const Description = () => {
           ) : loading ? (
             <Loading />
           ) : (
-            <>
-              <HelperPopups />
-              <Table
-                id={`${kinase}_PhosphositesOfInterest`}
-                tableHead={[
-                  'Obs. Data',
-                  'Location',
-                  'Residue',
-                  'Detected in',
-                  'Pst_effect',
-                  'Reported Substrate of',
-                  'Reported PDT of',
-                  'Go to Pathway',
-                ]}
-                tableData={tableData}
-                RowExpandableContentLeft={ObservationHeatMap(false)}
-                RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
-                RowContentRight={RowContentRight}
-                searchIndex={0}
-              />
-            </>
+            <Table
+              id={`${kinase}_PhosphositesOfInterest`}
+              tableHead={[
+                'Obs. Data',
+                'Location',
+                'Residue',
+                'Detected in',
+                'Pst_effect',
+                'Reported Substrate of',
+                'Reported PDT of',
+                'Go to Pathway',
+              ]}
+              tableData={tableData}
+              RowExpandableContentLeft={ObservationHeatMap(false)}
+              RowExpandableContentLeftFilter={rowExpandableContentLeftFilter}
+              RowContentRight={RowContentRight}
+              searchIndex={0}
+              helpers={helpers}
+            />
           )}
         </CardGeneric>
       </GridItem>
