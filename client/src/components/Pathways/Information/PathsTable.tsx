@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addInspectPath } from 'actions/pathways';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -37,6 +37,8 @@ const PathsTable = () => {
     setHelpersOpen(!helpersOpen);
   };
 
+  const ref = useRef(null);
+
   const helpers = {
     helpers: [
       {
@@ -73,7 +75,12 @@ const PathsTable = () => {
   // row prop will come from the table component's row
   const RowContentRight = ({ row }: { row: string[] }) => {
     const addPathToInspection = () => {
-      playToast(`PathAddedToInspectList_${row[1]}`, <PathAddedToInspectListToast item={row[1]} />);
+      playToast(`PathAddedToInspectList_${row[1]}`, <PathAddedToInspectListToast item={row[1]} />, {
+        onClick: () => {
+          const pathInspectList = document.getElementById('pathwayInputs');
+          if (pathInspectList) pathInspectList.scrollIntoView({ behavior: 'smooth' });
+        },
+      });
       dispatch(addInspectPath(row));
     };
 

@@ -10,7 +10,7 @@ interface PathwayInputs {
 
 toast.configure();
 
-export const playToast = (id: string, content: JSX.Element) => {
+export const playToast = (id: string, content: JSX.Element, extras?: any) => {
   toast(content, {
     position: 'top-right',
     autoClose: 5000,
@@ -21,6 +21,7 @@ export const playToast = (id: string, content: JSX.Element) => {
     progress: undefined,
     type: 'dark',
     toastId: id,
+    ...extras,
   });
 };
 
@@ -63,8 +64,10 @@ export const PathwayGeneratedToast = ({ inputs }: { inputs: PathwayInputs }) => 
 
 export const PathAddedToInspectListToast = ({ item }: { item: string }) => {
   return (
-    <div>
-      <div>{`${item} added to Inspect List.`}</div>
+    <div className='customToastContainer pathAddedToastContainer'>
+      <div>{`${item} added to the Inspect List.`}</div>
+      <div>Visualise the path from the Inspect List.</div>
+      <div>Take me to the Inspect List</div>
     </div>
   );
 };

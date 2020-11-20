@@ -535,3 +535,12 @@
 .customToastContainer > div:not(:last-child) {
   margin-bottom: 0.5rem;
 }
+
+.pathAddedToastContainer > div:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5ad06;
+  padding: 0.4rem 1rem;
+  display: inline-block;
+}

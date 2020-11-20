@@ -15,7 +15,7 @@ import PathwayInputs from 'components/Pathways/Inputs/Inputs';
 import CardGeneric from 'components/Misc/Card/CardGeneric';
 import { setElementsToAnimate, setCxtMenu } from 'actions/pathways';
 import ExtraButtons from './Buttons/Buttons';
-import PathSelectList from './PathInspectList';
+import PathInspectList from './PathInspectList';
 import PathwayInformation from './Information/Information';
 import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/options';
 import { runLayout, clearAllTimeouts, resetPathwayVisuals, fadeTooltipsOnScroll } from './utils/misc';
@@ -53,7 +53,9 @@ const PathwayIndex = () => {
   // Toast
   useEffect(() => {
     if (elements.length > 0) {
-      playToast(`PathwayGenerated_${cellLine}${perturbagen}${substrate}`, <PathwayGeneratedToast inputs={pathwayInputs} />);
+      playToast(`PathwayGenerated_${cellLine}${perturbagen}${substrate}`, <PathwayGeneratedToast inputs={pathwayInputs} />, {
+        autoClose: 10000,
+      });
     }
   }, [data]);
 
@@ -97,38 +99,32 @@ const PathwayIndex = () => {
         <GridItem style={{ position: 'relative' }}>
           <PathwayInputs cy={cy} />
         </GridItem>
-        <GridItem>
-          <GridContainer direction='row'>
-            <GridItem xs={10}>
-              <CardGeneric
-                color='primary'
-                cardTitle='Pathway'
-                cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
-                style={{ height: '55rem', position: 'relative' }}
-              >
-                <CytoscapeComponent
-                  cy={(_cy) => {
-                    // Need this to get a reference to cy object in the component
-                    // Also need to run layout here, doing on useEffect doesn't work
-                    setCy(_cy);
-                    runLayout(_cy, layout);
-                  }}
-                  elements={elements}
-                  stylesheet={stylesheet}
-                  style={{ height: '100%' }}
-                  minZoom={0.3}
-                  maxZoom={1.2}
-                  boxSelectionEnabled
-                  // @ts-ignore
-                  wheelSensitivity={0.1}
-                />
-                <ExtraButtons cy={cy} />
-              </CardGeneric>
-            </GridItem>
-            <GridItem xs={2}>
-              <PathSelectList cy={cy} />
-            </GridItem>
-          </GridContainer>
+        <GridItem style={{ display: 'flex', maxWidth: '100%' }}>
+          <CardGeneric
+            color='primary'
+            cardTitle='Pathway'
+            cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
+            style={{ height: '55rem', position: 'relative' }}
+          >
+            <CytoscapeComponent
+              cy={(_cy) => {
+                // Need this to get a reference to cy object in the component
+                // Also need to run layout here, doing on useEffect doesn't work
+                setCy(_cy);
+                runLayout(_cy, layout);
+              }}
+              elements={elements}
+              stylesheet={stylesheet}
+              style={{ height: '100%', width: '100%' }}
+              minZoom={0.3}
+              maxZoom={1.2}
+              boxSelectionEnabled
+              // @ts-ignore
+              wheelSensitivity={0.1}
+            />
+            <ExtraButtons cy={cy} />
+          </CardGeneric>
+          <PathInspectList cy={cy} />
         </GridItem>
         <GridItem>
           <PathwayInformation />

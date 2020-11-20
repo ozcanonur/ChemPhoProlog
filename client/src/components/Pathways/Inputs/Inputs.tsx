@@ -77,49 +77,51 @@ const Inputs = ({ cy }: Props) => {
   };
 
   return (
-    <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
-      <GridContainer
-        direction='row'
-        alignItems='center'
-        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
-        {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType) => (
-          <GridItem key={inputType}>
-            <SelectMenu type={inputType} />
+    <div id='pathwayInputs'>
+      <CardGeneric color='primary' cardTitle='Select inputs' cardSubtitle='Cell Line / Perturbagen / Substrate'>
+        <GridContainer
+          direction='row'
+          alignItems='center'
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          {['Cell Line', 'Perturbagen', 'Substrate'].map((inputType) => (
+            <GridItem key={inputType}>
+              <SelectMenu type={inputType} />
+            </GridItem>
+          ))}
+          <GridItem>
+            <Button onClick={onSubmit} className={classes.button}>
+              <>
+                {loading ? (
+                  <div>
+                    <Loading style={{ height: '5rem', width: '10rem' }} />
+                  </div>
+                ) : (
+                  <p>Get pathway</p>
+                )}
+                {error ? <div className={classes.error}>{error}</div> : undefined}
+              </>
+            </Button>
+            {helpersOpen ? (
+              <HelperPopup>
+                <div>Go back up to the pathway</div>
+                <div>To see the items added</div>
+                <div>Watch the path animation!</div>
+              </HelperPopup>
+            ) : null}
+            <Button className={classes.helpButton} onClick={toggleHelpers} aria-label='edit' justIcon round>
+              ?
+            </Button>
           </GridItem>
-        ))}
-        <GridItem>
-          <Button onClick={onSubmit} className={classes.button}>
-            <>
-              {loading ? (
-                <div>
-                  <Loading style={{ height: '5rem', width: '10rem' }} />
-                </div>
-              ) : (
-                <p>Get pathway</p>
-              )}
-              {error ? <div className={classes.error}>{error}</div> : undefined}
-            </>
-          </Button>
-          {helpersOpen ? (
-            <HelperPopup>
-              <div>Go back up to the pathway</div>
-              <div>To see the items added</div>
-              <div>Watch the path animation!</div>
-            </HelperPopup>
-          ) : null}
-          <Button className={classes.helpButton} onClick={toggleHelpers} aria-label='edit' justIcon round>
-            ?
-          </Button>
-        </GridItem>
-        <GridItem className={classes.switchContainer} style={{ display: 'none' }}>
-          <FormControlLabel
-            control={<Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />}
-            label='Only paths ending with a KPa'
-          />
-        </GridItem>
-      </GridContainer>
-    </CardGeneric>
+          <GridItem className={classes.switchContainer} style={{ display: 'none' }}>
+            <FormControlLabel
+              control={<Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />}
+              label='Only paths ending with a KPa'
+            />
+          </GridItem>
+        </GridContainer>
+      </CardGeneric>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Core } from 'cytoscape';
 
-import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
+// import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
 import { resetPathwayVisuals, clearAllTimeouts } from './utils/misc';
@@ -16,10 +16,10 @@ interface Props {
   cy: Core;
 }
 
-const PathSelectList = ({ cy }: Props) => {
+const PathInspectList = ({ cy }: Props) => {
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
-  const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
+  // const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
 
   const dispatch = useDispatch();
 
@@ -36,35 +36,41 @@ const PathSelectList = ({ cy }: Props) => {
     animatePath(elementsToAnimate, data, 50, true, true);
   };
 
+  // {helpersOpen ? (
+  //   <HelperPopup style={{ left: '-7rem' }}>
+  //     <div>Generate a pathway first</div>
+  //     <div>Then add paths from the paths table below</div>
+  //   </HelperPopup>
+  // ) : null}
+
   return (
     <>
-      <CardGeneric
-        color='primary'
-        cardTitle='Inspect'
-        cardSubtitle='And Animate!'
-        bodyStyle={{ overflow: 'auto' }}
-        style={{ maxHeight: '55rem', position: 'relative' }}
-      >
-        <List>
-          {pathsInspectList.map((path, key) => {
-            const [id, node, stopReason] = path;
-            const text = `${node}, ${stopReason}`;
-            return (
-              <ListItem button key={key} onClick={() => pathOnClick(id)}>
-                <ListItemText primary={text} />
-              </ListItem>
-            );
-          })}
-        </List>
-      </CardGeneric>
-      {helpersOpen ? (
-        <HelperPopup style={{ left: '-7rem' }}>
-          <div>Generate a pathway first</div>
-          <div>Then add paths from the paths table below</div>
-        </HelperPopup>
+      {pathsInspectList.length > 0 ? (
+        <div style={{ maxWidth: '15%', marginLeft: '2rem' }}>
+          <CardGeneric
+            color='primary'
+            cardTitle='Inspect'
+            cardSubtitle='And Animate!'
+            bodyStyle={{ overflow: 'auto' }}
+            style={{ height: '100%', maxHeight: '55rem' }}
+          >
+            <List>
+              {pathsInspectList.map((path, key) => {
+                const [id, node] = path;
+                const text = `${node}`;
+                // const text = `${node}, ${stopReason}`;
+                return (
+                  <ListItem button key={key} onClick={() => pathOnClick(id)}>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          </CardGeneric>
+        </div>
       ) : null}
     </>
   );
 };
 
-export default PathSelectList;
+export default PathInspectList;

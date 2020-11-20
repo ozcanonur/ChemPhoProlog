@@ -76,7 +76,7 @@ const Waffle = () => {
   return (
     <CardGeneric
       color='primary'
-      cardTitle='Stopping Reasons'
+      cardTitle='Stopping reasons'
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
       style={{ height: '16rem', marginTop: '3rem' }}
     >
