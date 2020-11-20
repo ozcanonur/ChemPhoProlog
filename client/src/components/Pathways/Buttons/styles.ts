@@ -7,9 +7,13 @@ const buttonsStyles = createStyles({
     top: 0,
     right: 0,
   },
+  gridContainer: {
+    width: '400px',
+  },
   button: {
     width: '100px',
     backgroundColor: 'rgba(17, 59, 94, 0.7)',
+    transition: 'none',
   },
   legendContainer: {
     position: 'absolute',

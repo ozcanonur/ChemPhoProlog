@@ -11,6 +11,9 @@ import CardIcon from 'components/Misc/Card/CardIcon';
 import NewReleases from '@material-ui/icons/NewReleases';
 
 const useStyles = makeStyles({
+  container: {
+    flexWrap: 'inherit',
+  },
   cardCategory: {
     color: '#999',
     margin: '0',
@@ -31,6 +34,9 @@ const useStyles = makeStyles({
       lineHeight: '1',
     },
   },
+  warningIcon: {
+    padding: '10px',
+  },
 });
 
 interface Props {
@@ -43,11 +49,11 @@ const NewFindings = ({ direction, cardTitle, cardCategory }: Props) => {
   const classes = useStyles();
 
   return (
-    <GridContainer direction='column' style={{ flexWrap: 'inherit', flexDirection: direction }}>
+    <GridContainer direction='column' className={classes.container} style={{ flexDirection: direction }}>
       <GridItem>
         <Card>
           <CardHeader color='warning' stats icon>
-            <CardIcon color='warning' style={{ padding: '10px' }}>
+            <CardIcon color='warning' className={classes.warningIcon}>
               <NewReleases />
             </CardIcon>
             <p className={classes.cardCategory}>{cardCategory}</p>

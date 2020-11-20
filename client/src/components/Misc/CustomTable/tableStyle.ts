@@ -58,18 +58,30 @@ const tableStyle = createStyles({
     display: 'inline',
   },
   button: {
-    background: 'rgba(229,173,6)',
+    backgroundColor: 'rgb(229,173,6)',
     color: 'white',
+    cursor: 'default',
+
+    '& > span > svg:hover': {
+      fill: 'white !important',
+      transform: 'none',
+    },
+
+    '&:hover': {
+      backgroundColor: 'rgb(229,173,6)',
+      boxShadow: '0 3px 5px 0 rgba(0,0,0,0.2)',
+    },
   },
   helpButton: {
-    background: 'rgba(229,173,6)',
+    background: 'rgb(229,173,6)',
     color: 'white',
     fontWeight: 300,
     fontSize: '1.2rem',
+    marginLeft: '1rem',
   },
   topBarContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
   },
 });

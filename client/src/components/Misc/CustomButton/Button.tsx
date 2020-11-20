@@ -12,9 +12,9 @@ interface Props {
   color?: string;
   round?: boolean;
   children?: JSX.Element | JSX.Element[] | string;
+  className?: string;
   size?: string;
   justIcon?: boolean;
-  className?: string;
   style?: CSSProperties;
   onClick?: (x: any) => void;
   disabled?: boolean;

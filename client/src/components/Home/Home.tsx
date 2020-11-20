@@ -2,6 +2,7 @@ import React from 'react';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import FlipCard from 'components/Misc/FlipCard/FlipCard';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import flipCardContents from 'variables/flipCardContents';
 import TopText from './TopText';
@@ -9,15 +10,26 @@ import MidTextFindings from './MidTextFindings';
 import HowToNavigate from './HowToNavigate';
 import BezzLab from './BezzLab';
 
+const useStyles = makeStyles({
+  container: {
+    padding: '2em',
+  },
+  gridItem: {
+    marginTop: '2rem',
+  },
+});
+
 const Welcome = () => {
+  const classes = useStyles();
+
   const [pathwayCard1, pathwayCard2, browseCard1, browseCard2, detailsCard1, detailsCard2] = flipCardContents;
 
   return (
-    <GridContainer direction='column' style={{ padding: '2em' }}>
+    <GridContainer direction='column' className={classes.container}>
       <GridItem>
         <TopText />
       </GridItem>
-      <GridItem style={{ marginTop: '2rem' }}>
+      <GridItem className={classes.gridItem}>
         <GridContainer direction='row'>
           <GridItem md>
             <FlipCard content={pathwayCard1} />
@@ -30,7 +42,7 @@ const Welcome = () => {
       <GridItem>
         <MidTextFindings />
       </GridItem>
-      <GridItem style={{ marginTop: '2rem' }}>
+      <GridItem className={classes.gridItem}>
         <GridContainer direction='row'>
           <GridItem md>
             <FlipCard content={browseCard1} />
@@ -40,10 +52,10 @@ const Welcome = () => {
           </GridItem>
         </GridContainer>
       </GridItem>
-      <GridItem style={{ marginTop: '2rem' }}>
+      <GridItem className={classes.gridItem}>
         <HowToNavigate />
       </GridItem>
-      <GridItem style={{ marginTop: '2rem' }}>
+      <GridItem className={classes.gridItem}>
         <GridContainer direction='row'>
           <GridItem md>
             <FlipCard content={detailsCard1} />
@@ -53,7 +65,7 @@ const Welcome = () => {
           </GridItem>
         </GridContainer>
       </GridItem>
-      <GridItem style={{ marginTop: '2rem' }}>
+      <GridItem className={classes.gridItem}>
         <BezzLab />
       </GridItem>
     </GridContainer>

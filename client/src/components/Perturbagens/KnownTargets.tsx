@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Loading from 'components/Misc/Loading/Loading';
 import { fetchFromApi } from 'utils/api';
 import CardHeader from 'components/Misc/Card/CardHeader';
 import Table from 'components/Misc/CustomTable/Table';
 import { addSidebarRoute } from 'actions/main';
+
+const useStyles = makeStyles({
+  cardHeader: {
+    margin: 0,
+    marginBottom: '1.5rem',
+    fontSize: '18.2px',
+  },
+  cardHeaderText: {
+    marginBottom: '3px',
+  },
+  notFoundText: {
+    marginTop: '1rem',
+    marginLeft: '5px',
+  },
+});
 
 interface KnownTarget {
   kinase: string;
@@ -19,6 +35,8 @@ interface Props {
 }
 
 const KnownTargets = ({ perturbagen }: Props) => {
+  const classes = useStyles();
+
   const [data, setData] = useState<KnownTarget[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -56,11 +74,11 @@ const KnownTargets = ({ perturbagen }: Props) => {
 
   return (
     <>
-      <CardHeader color='primary' style={{ margin: 0, marginBottom: '1.5rem', fontSize: '18.2px' }}>
-        <div style={{ marginBottom: '3px' }}>{`Known targets of ${perturbagen}`}</div>
+      <CardHeader color='primary' className={classes.cardHeader}>
+        <div className={classes.cardHeaderText}>{`Known targets of ${perturbagen}`}</div>
       </CardHeader>
       {tableData.length === 0 && !loading ? (
-        <div style={{ marginTop: '1rem', marginLeft: '5px' }}>No Known Targets</div>
+        <div className={classes.notFoundText}>No Known Targets</div>
       ) : loading ? (
         <Loading />
       ) : (

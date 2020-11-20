@@ -25,7 +25,6 @@ const ExtraButtons = ({ cy }: Props) => {
   const classes = useStyles();
 
   const data = useSelector((state: RootState) => state.pathwayData);
-
   const elementsToAnimate = useSelector((state: RootState) => state.elementsToAnimate);
 
   const [legendOpen, setLegendOpen] = useState(false);

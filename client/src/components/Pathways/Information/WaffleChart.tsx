@@ -78,7 +78,7 @@ const Waffle = () => {
       color='primary'
       cardTitle='Stopping reasons'
       cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate}`}
-      style={{ height: '16rem', marginTop: '3rem' }}
+      className={classes.waffleCard}
     >
       <div className={classes.waffleContainer}>
         <WaffleLegend />

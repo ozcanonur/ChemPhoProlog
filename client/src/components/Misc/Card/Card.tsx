@@ -8,10 +8,10 @@ const useStyles = makeStyles(cardStyles);
 const Card = (props: any) => {
   const classes = useStyles();
 
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
 
   return (
-    <div className={classes.card} {...rest}>
+    <div className={`${classes.card} ${className}`} {...rest}>
       {children}
     </div>
   );

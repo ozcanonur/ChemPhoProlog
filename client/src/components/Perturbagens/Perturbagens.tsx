@@ -142,10 +142,10 @@ const PerturbagenList = () => {
                     tabIcon: PhotoCameraIcon,
                     tabContent: (
                       <>
-                        <CardHeader color='primary' style={{ margin: 0, marginBottom: '1rem', fontSize: '1.1rem' }}>
-                          <div style={{ marginBottom: '3px' }}>{selectedPerturbagen}</div>
+                        <CardHeader className={classes.visualTabCardHeader} color='primary'>
+                          <div className={classes.visualTabCardHeaderText}>{selectedPerturbagen}</div>
                         </CardHeader>
-                        <div style={{ textAlign: 'center' }}>
+                        <div className={classes.imgContainer}>
                           <img src={chemspiderId} alt='Perturbagen' />
                         </div>
                       </>

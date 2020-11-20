@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Core } from 'cytoscape';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 // import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,11 +13,24 @@ import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
 import { resetPathwayVisuals, clearAllTimeouts } from './utils/misc';
 import { getElementsToAnimate, animatePath } from './utils/animation';
 
+const useStyles = makeStyles({
+  container: {
+    maxWidth: '15%',
+    marginLeft: '2rem',
+  },
+  card: {
+    height: '100%',
+    maxHeight: '50rem',
+  },
+});
+
 interface Props {
   cy: Core;
 }
 
 const PathInspectList = ({ cy }: Props) => {
+  const classes = useStyles();
+
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
   // const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
@@ -46,13 +60,13 @@ const PathInspectList = ({ cy }: Props) => {
   return (
     <>
       {pathsInspectList.length > 0 ? (
-        <div style={{ maxWidth: '15%', marginLeft: '2rem' }}>
+        <div className={classes.container}>
           <CardGeneric
             color='primary'
             cardTitle='Inspect'
             cardSubtitle='And Animate!'
             bodyStyle={{ overflow: 'auto' }}
-            style={{ height: '100%', maxHeight: '55rem' }}
+            className={classes.card}
           >
             <List>
               {pathsInspectList.map((path, key) => {

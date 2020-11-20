@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { playToast, RedirectedToPathwaysToast } from 'components/Misc/Toast/toast';
 import Loading from 'components/Misc/Loading/Loading';
@@ -13,6 +14,16 @@ import Table from 'components/Misc/CustomTable/Table';
 import { setSelectedInputs } from 'actions/pathways';
 import ObservationBarChart from '../ObservationBarChart';
 import { helperPopups } from './PDTTableHelperPopups';
+
+const useStyles = makeStyles({
+  button: {
+    backgroundColor: 'rgba(17, 59, 94, 0.7)',
+    boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
+  },
+  menu: {
+    maxHeight: '30rem',
+  },
+});
 
 interface Props {
   cellLine: string;
@@ -25,6 +36,8 @@ interface SubstratesWithPaths {
 }
 
 const PDTTable = ({ cellLine }: Props) => {
+  const classes = useStyles();
+
   const [PDTs, setPDTs] = useState([]);
   const [substratesWithPaths, setSubstratesWithPaths] = useState<SubstratesWithPaths>({});
   const [loading, setLoading] = useState(false);
@@ -104,17 +117,10 @@ const PDTTable = ({ cellLine }: Props) => {
 
     return (
       <>
-        <Button
-          onClick={handleClick}
-          size='sm'
-          style={{
-            backgroundColor: 'rgba(17, 59, 94, 0.7)',
-            boxShadow: '0,3px,5px,0,rgba(0,0,0,0.2)',
-          }}
-        >
+        <Button onClick={handleClick} size='sm' className={classes.button}>
           <div>{cellLine}</div>
         </Button>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} style={{ maxHeight: '30rem' }}>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} className={classes.menu}>
           {substrateProps[cellLine].split(',').map((perturbagen) => (
             <MenuItem key={perturbagen} onClick={(e) => handleSelect(e, perturbagen)}>
               {perturbagen}

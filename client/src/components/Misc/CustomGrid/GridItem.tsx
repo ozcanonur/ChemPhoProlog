@@ -10,9 +10,9 @@ const useStyles = makeStyles({
 
 const GridItem = (props: any) => {
   const classes = useStyles();
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
-    <Grid item {...rest} className={classes.grid}>
+    <Grid item {...rest} className={`${classes.grid} ${className}`}>
       {children}
     </Grid>
   );

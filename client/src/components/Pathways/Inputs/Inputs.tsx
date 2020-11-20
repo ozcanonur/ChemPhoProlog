@@ -104,9 +104,8 @@ const Inputs = ({ cy }: Props) => {
             </Button>
             {helpersOpen ? (
               <HelperPopup>
-                <div>Go back up to the pathway</div>
-                <div>To see the items added</div>
-                <div>Watch the path animation!</div>
+                <div>Generate pathway from selected inputs</div>
+                <div>Possible paths are listed below the pathway in the Paths table</div>
               </HelperPopup>
             ) : null}
             <Button className={classes.helpButton} onClick={toggleHelpers} aria-label='edit' justIcon round>

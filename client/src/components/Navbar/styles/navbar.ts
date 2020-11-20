@@ -80,6 +80,9 @@ const headerStyle = createStyles({
     padding: '10px 0',
     transition: 'all 150ms ease 0s',
   },
+  navbarGridContainer: {
+    width: '100%',
+  },
 });
 
 export default headerStyle;

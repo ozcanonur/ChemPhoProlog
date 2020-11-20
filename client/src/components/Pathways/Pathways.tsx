@@ -7,6 +7,7 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import popper from 'cytoscape-popper';
 import cxtmenu from 'cytoscape-cxtmenu';
 import { hideAll as hideTooltips } from 'tippy.js';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { playToast, PathwayGeneratedToast } from 'components/Misc/Toast/toast';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
@@ -21,11 +22,19 @@ import { getCytoStylesheet, getCytoLayout, getCytoElements } from './utils/optio
 import { runLayout, clearAllTimeouts, resetPathwayVisuals, fadeTooltipsOnScroll } from './utils/misc';
 import cxtmenuOptions from './utils/cxtmenuOptions';
 
+const useStyles = makeStyles({
+  container: {
+    padding: '2em',
+  },
+});
+
 Cytoscape.use(COSEBilkent);
 Cytoscape.use(popper);
 Cytoscape.use(cxtmenu);
 
 const PathwayIndex = () => {
+  const classes = useStyles();
+
   const data = useSelector((state: RootState) => state.pathwayData);
   const [cy, setCy] = useState(Cytoscape());
 
@@ -94,7 +103,7 @@ const PathwayIndex = () => {
   }, [elements]);
 
   return (
-    <div style={{ padding: '2em' }}>
+    <div className={classes.container}>
       <GridContainer direction='column'>
         <GridItem style={{ position: 'relative' }}>
           <PathwayInputs cy={cy} />
@@ -104,7 +113,7 @@ const PathwayIndex = () => {
             color='primary'
             cardTitle='Pathway'
             cardSubtitle={`${cellLine} / ${perturbagen} / ${substrate} `}
-            style={{ height: '55rem', position: 'relative' }}
+            style={{ height: '50rem', position: 'relative' }}
           >
             <CytoscapeComponent
               cy={(_cy) => {

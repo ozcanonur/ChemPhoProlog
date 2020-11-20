@@ -40,6 +40,10 @@ const informationStyles = createStyles({
   addInspectionButton: {
     backgroundColor: 'rgba(17, 59, 94, 0.7)',
   },
+  waffleCard: {
+    height: '16rem',
+    marginTop: '3rem',
+  },
 });
 
 export default informationStyles;

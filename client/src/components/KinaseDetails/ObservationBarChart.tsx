@@ -2,10 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
 import Loading from 'components/Misc/Loading/Loading';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
 // import * as d3 from 'd3';
 
 import { fetchFromApi } from 'utils/api';
 import { getBarChartLabel } from './Substrates/helpers';
+
+const useStyles = makeStyles({
+  container: {
+    height: '400px',
+  },
+  tooltip: {
+    '& p': {
+      marginBottom: 0,
+    },
+    '&:first-child': {
+      marginTop: 0,
+    },
+  },
+});
 
 interface Props {
   row: string[];
@@ -24,6 +40,8 @@ interface PkData {
 }
 
 const ObservationBarChart = (cellLine: string) => {
+  const classes = useStyles();
+
   return ({ row }: Props) => {
     const [obsData, setObsData] = useState<ObsData[]>([]);
     const [pkData, setPkData] = useState<PkData[]>([]);
@@ -56,7 +74,7 @@ const ObservationBarChart = (cellLine: string) => {
     }, [substrate, kinase]);
 
     return (
-      <div style={{ height: '400px' }}>
+      <div className={classes.container}>
         {obsData.length === 0 && !loading ? (
           'No observation data'
         ) : loading ? (
@@ -92,13 +110,13 @@ const ObservationBarChart = (cellLine: string) => {
             }}
             label={(d: BarDatum) => getBarChartLabel(d.indexValue.toString(), pkData)}
             tooltip={({ data }) => (
-              <>
-                <p style={{ marginBottom: 0, marginTop: 0 }}>
+              <div className={classes.tooltip}>
+                <p>
                   <strong>{data.perturbagen}</strong>
                 </p>
-                <p style={{ marginBottom: 0 }}>{`fold_change: ${data.fold_change}`}</p>
-                <p style={{ marginBottom: 0 }}>{`p_value: ${data.p_value}`}</p>
-              </>
+                <p>{`fold_change: ${data.fold_change}`}</p>
+                <p>{`p_value: ${data.p_value}`}</p>
+              </div>
             )}
             labelTextColor='black'
             animate

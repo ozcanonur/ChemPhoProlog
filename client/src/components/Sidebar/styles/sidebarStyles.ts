@@ -37,6 +37,10 @@ const sidebarStyle = createStyles({
     listStyle: 'none',
     position: 'unset',
   },
+  routeContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   extraRoutesContainer: {
     marginTop: '1em',
     borderTop: '1px solid white',

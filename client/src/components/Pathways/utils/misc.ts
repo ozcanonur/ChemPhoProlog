@@ -52,6 +52,6 @@ export const fadeTooltipsOnScroll = () => {
 
   for (let i = 0; i < tooltips.length; i += 1) {
     const tooltip = tooltips[i];
-    tooltip.style.display = mainPanel.scrollTop < 1000 ? 'inherit' : 'none';
+    tooltip.style.display = mainPanel.scrollTop < 800 ? 'inherit' : 'none';
   }
 };
