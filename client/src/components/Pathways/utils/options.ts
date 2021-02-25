@@ -28,9 +28,8 @@ export const getCytoStylesheet = (
       height: (e: NodeSingular) => (e.data().id === start ? 60 : 30),
       backgroundColor: (e: NodeSingular) => {
         if (e.data().id === start) {
-          const fc = parseFloat(observation[e.data().id].fold_change);
-          if (fc < 0) return '#006400';
-          if (fc > 0) return '#650000';
+          const foldChange = parseFloat(observation[e.data().id].fold_change);
+          return foldChange > 0 ? '#006400' : '#650000';
         }
         return '#e5ad06';
       },
@@ -66,14 +65,15 @@ export const getCytoStylesheet = (
   {
     selector: '.highlightedPhosphosite',
     style: {
-      backgroundColor: (e: NodeSingular) => (parseFloat(observation[e.data().id].fold_change) > 0 ? 'red' : 'green'),
+      backgroundColor: (e: NodeSingular) => {
+        const foldChange = parseFloat(observation[e.data().id].fold_change);
+        return foldChange > 0 ? 'red' : 'green';
+      },
       'border-width': 10,
       'border-style': 'dashed',
       'border-color': (e: NodeSingular) => {
         const reg = regulatory[e.data().id];
-        if (reg === 'p_inc') return '#006400';
-        if (reg === 'p_dec') return '#650000';
-        return '#505050';
+        return reg === 'p_inc' ? '#006400' : reg === 'p_dec' ? '#650000' : '#505050';
       },
       width: (e: NodeSingular) => (e.data().id === start ? 60 : 40),
       height: (e: NodeSingular) => (e.data().id === start ? 60 : 40),
@@ -161,8 +161,8 @@ export const getCytoLayout = (): LayoutOptions => {
 
 export const getCytoElements = (data: Pathway.PathwayData, substrate: string): ElementDefinition[] => {
   // KPas
-  const nodes = Object.keys(data.relations).map((e) => {
-    return { data: { id: e }, classes: 'KPa', selectable: false };
+  const nodes = Object.keys(data.relations).map((key) => {
+    return { data: { id: key }, classes: 'KPa', selectable: false };
   });
 
   // Need to put the start node OUTSIDE a compound or the diff() in Cytoscape-react messes up
@@ -176,8 +176,8 @@ export const getCytoElements = (data: Pathway.PathwayData, substrate: string): E
     };
   });
 
-  // Avoiding self phosphorylation nodes with indexOf, messes up the layout for some reason?
-  // Add them as KPa > KPa though, KPa > self phosphosite doesn't work.
+  // Avoiding self phosphorylation nodes with indexOf, messes up the layout for some reason
+  // Add them as KPa -> KPa though, KPa -> self phosphosite doesn't work.
   const edges = Object.keys(data.relations)
     .map((key) => {
       return data.relations[key].map((e) => {

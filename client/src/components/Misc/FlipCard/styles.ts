@@ -6,14 +6,14 @@ const flipCardStyles = createStyles({
     MozPerspective: '150rem',
     position: 'relative',
     height: '20rem',
-    '&:hover': {
-      '& $card_side_front': {
-        transform: 'rotateY(-180deg)',
-      },
-      '& $card_side_back': {
-        transform: 'rotateY(0)',
-      },
-    },
+    // '&:hover': {
+    //   '& $card_side_front': {
+    //     transform: 'rotateY(-180deg)',
+    //   },
+    //   '& $card_side_back': {
+    //     transform: 'rotateY(0)',
+    //   },
+    // },
   },
   card_side: {
     height: '20rem',

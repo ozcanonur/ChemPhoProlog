@@ -7,7 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Core } from 'cytoscape';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-// import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSelectedPath, setElementsToAnimate } from 'actions/pathways';
 import { resetPathwayVisuals, clearAllTimeouts } from './utils/misc';
@@ -33,7 +32,6 @@ const PathInspectList = ({ cy }: Props) => {
 
   const data = useSelector((state: RootState) => state.pathwayData);
   const pathsInspectList = useSelector((state: RootState) => state.pathsInspectList);
-  // const helpersOpen = useSelector((state: RootState) => state.pathwayHelpersOpen);
 
   const dispatch = useDispatch();
 
@@ -49,13 +47,6 @@ const PathInspectList = ({ cy }: Props) => {
     clearAllTimeouts();
     animatePath(elementsToAnimate, data, 50, true, true);
   };
-
-  // {helpersOpen ? (
-  //   <HelperPopup style={{ left: '-7rem' }}>
-  //     <div>Generate a pathway first</div>
-  //     <div>Then add paths from the paths table below</div>
-  //   </HelperPopup>
-  // ) : null}
 
   return (
     <>

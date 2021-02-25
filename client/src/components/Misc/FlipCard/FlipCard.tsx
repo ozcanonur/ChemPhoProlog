@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Divider from '@material-ui/core/Divider';
 
-import spiral from 'assets/img/spiral.gif';
+// import spiral from 'assets/img/spiral.gif';
 import flipCardStyles from './styles';
 
 const useStyles = makeStyles(flipCardStyles);
@@ -39,11 +39,11 @@ const FlipCard = ({ content, ...rest }: Props) => {
           </ul>
         </div>
       </div>
-      <div className={`${classes.card_side} ${classes.card_side_back}`}>
+      {/* <div className={`${classes.card_side} ${classes.card_side_back}`}>
         <div className={classes.card_cta}>
           <img src={spiral} alt='Card back' className={classes.img} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

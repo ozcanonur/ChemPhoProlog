@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addInspectPath } from 'actions/pathways';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -36,8 +36,6 @@ const PathsTable = () => {
   const toggleHelpers = () => {
     setHelpersOpen(!helpersOpen);
   };
-
-  const ref = useRef(null);
 
   const helpers = {
     helpers: [

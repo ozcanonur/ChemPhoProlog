@@ -22,7 +22,15 @@ const parsePaths = (pathsFromDB: dbResult[]) => {
     for (let i = 0; i < path.length; i++) {
       let step = path[i].split(',');
 
-      const [affected, affectedObs, affectedRegulatory, affecting, psOnAffecting, psOnAffectingObs, psOnAffectingRegulatory] = step;
+      const [
+        affected,
+        affectedObs,
+        affectedRegulatory,
+        affecting,
+        psOnAffecting,
+        psOnAffectingObs,
+        psOnAffectingRegulatory,
+      ] = step;
 
       // If we are at the last step
       if (i === path.length - 1) {

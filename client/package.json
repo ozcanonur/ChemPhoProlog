@@ -72,7 +72,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "build:deploy": "react-scripts build && rm -rf ../deployment/build && mv build ../deployment"
+    "build:deploy": "react-scripts build && rm -rf ../deployment/build && mv build ../deployment",
+    "sloc": "sloc src/ --format cli-table"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.4.1",

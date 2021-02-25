@@ -32,7 +32,7 @@ interface KinaseData {
 }
 
 // Kinase List on the Home page
-const KinaseList = () => {
+const Kinases = () => {
   const classes = useStyles();
 
   const [data, setData] = useState<KinaseData>({ data: [], kinasesWithPhosphosites: [] });
@@ -202,4 +202,4 @@ const KinaseList = () => {
   );
 };
 
-export default KinaseList;
+export default Kinases;

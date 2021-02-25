@@ -1,7 +1,7 @@
 import Home from 'components/Home/Home';
 import Kinases from 'components/Kinases/Kinases';
 import Perturbagens from 'components/Perturbagens/Perturbagens';
-import Pathways from 'components/Pathways/Pathways';
+import Pathways from 'components/Pathways';
 import API from 'components/API/API';
 
 import HomeIcon from '@material-ui/icons/Home';

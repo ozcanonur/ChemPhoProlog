@@ -23,7 +23,7 @@ import perturbagensStyles from './styles/perturbagens';
 
 const useStyles = makeStyles(perturbagensStyles);
 
-const PerturbagenList = () => {
+const Perturbagens = () => {
   const classes = useStyles();
 
   const [data, setData] = useState<Perturbagen[]>([]);
@@ -166,4 +166,4 @@ const PerturbagenList = () => {
   );
 };
 
-export default PerturbagenList;
+export default Perturbagens;

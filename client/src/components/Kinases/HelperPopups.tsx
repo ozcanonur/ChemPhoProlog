@@ -29,14 +29,4 @@ export const helperPopups = [
       </HelperPopup>
     ),
   },
-  // {
-  //   position: { row: 5, column: 2 },
-  //   component: (
-  //     <div style={{ position: 'absolute' }}>
-  //       <HelperPopup arrowPosition='left'>
-  //         <div>Go to Kinase details</div>
-  //       </HelperPopup>
-  //     </div>
-  //   ),
-  // },
 ];

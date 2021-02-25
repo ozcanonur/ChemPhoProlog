@@ -6,20 +6,14 @@ import CardGeneric from 'components/Misc/Card/CardGeneric';
 import GridItem from 'components/Misc/CustomGrid/GridItem';
 import GridContainer from 'components/Misc/CustomGrid/GridContainer';
 import Button from 'components/Misc/CustomButton/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import HelperPopup from 'components/Misc/HelperPopup/HelperPopup';
 import { ReactComponent as Loading } from 'assets/img/loading2.svg';
 import Cytoscape, { Core } from 'cytoscape';
-import Switch from '@material-ui/core/Switch';
+// import Switch from '@material-ui/core/Switch';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setSelectedInputs,
-  getPathwayData,
-  removeAllInspectPaths,
-  setElementsToAnimate,
-  togglePathwayHelpers,
-} from 'actions/pathways';
+import { getPathwayData, removeAllInspectPaths, setElementsToAnimate, togglePathwayHelpers } from 'actions/pathways';
 import inputsStyles from './styles';
 import SelectMenu from './SelectMenu';
 
@@ -33,7 +27,7 @@ const Inputs = ({ cy }: Props) => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
-  const [switchChecked, setSwitchChecked] = useState(false);
+  // const [switchChecked, setSwitchChecked] = useState(false);
   const [error, setError] = useState('');
   const inputs = useSelector((state: RootState) => state.pathwayInputs);
   const data = useSelector((state: RootState) => state.pathwayData);
@@ -49,11 +43,11 @@ const Inputs = ({ cy }: Props) => {
     setLoading(false);
   }, [data]);
 
-  const handleSwitch = () => {
-    setSwitchChecked(!switchChecked);
-    const newInputs = { ...inputs, onlyKinaseEnds: !switchChecked };
-    dispatch(setSelectedInputs(newInputs));
-  };
+  // const handleSwitch = () => {
+  //   setSwitchChecked(!switchChecked);
+  //   const newInputs = { ...inputs, onlyKinaseEnds: !switchChecked };
+  //   dispatch(setSelectedInputs(newInputs));
+  // };
 
   const onSubmit = () => {
     if (!cy) return;
@@ -64,7 +58,8 @@ const Inputs = ({ cy }: Props) => {
     // Have to move starting phosphosite out of the parent
     // Or cytoscape diff crashes again, same issue with @cxtmenuOptions/submitPathwayFromSelectedEle
     cy.$(`[id='${substrate}']`).move({ parent: null });
-    dispatch(getPathwayData(cellLine, perturbagen, substrate, switchChecked));
+    // WOOP switch checked hardcoded
+    dispatch(getPathwayData(cellLine, perturbagen, substrate, false));
     dispatch(removeAllInspectPaths());
     dispatch(
       setElementsToAnimate({
@@ -112,12 +107,12 @@ const Inputs = ({ cy }: Props) => {
               ?
             </Button>
           </GridItem>
-          <GridItem className={classes.switchContainer} style={{ display: 'none' }}>
+          {/* <GridItem className={classes.switchContainer}>
             <FormControlLabel
               control={<Switch checked={switchChecked} onChange={handleSwitch} name='onlyKinaseEnds' color='primary' />}
               label='Only paths ending with a KPa'
             />
-          </GridItem>
+          </GridItem> */}
         </GridContainer>
       </CardGeneric>
     </div>
