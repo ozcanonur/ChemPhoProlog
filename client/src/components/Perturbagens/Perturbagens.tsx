@@ -142,7 +142,7 @@ const Perturbagens = () => {
                     tabIcon: PhotoCameraIcon,
                     tabContent: (
                       <>
-                        <CardHeader className={classes.visualTabCardHeader} color='primary'>
+                        <CardHeader className={classes.visualTabCardHeader} color='primary' style={{ marginTop: '1rem' }}>
                           <div className={classes.visualTabCardHeaderText}>{selectedPerturbagen}</div>
                         </CardHeader>
                         <div className={classes.imgContainer}>
