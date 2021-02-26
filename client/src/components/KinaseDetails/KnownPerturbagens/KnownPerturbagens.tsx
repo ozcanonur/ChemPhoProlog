@@ -109,7 +109,7 @@ const KnownPerturbagens = () => {
           ) : (
             <Table
               id={`${kinase}_KnownPerturbagens`}
-              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID', '']}
+              tableHead={['Perturbagen', 'Source', 'Score', 'Chemspider ID', 'Action', 'Alternative names', '']}
               tableData={tableData}
               searchIndex={0}
               clickableCells={clickableCells}
@@ -145,7 +145,7 @@ const KnownPerturbagens = () => {
                         {perturbagenInfo.chemspider_id}
                       </p>
                       <p>
-                        <strong>Families: </strong>
+                        <strong>Action: </strong>
                         {perturbagenInfo.action}
                       </p>
                       <p>
