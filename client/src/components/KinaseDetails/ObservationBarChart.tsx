@@ -40,9 +40,9 @@ interface PkData {
 }
 
 const ObservationBarChart = (cellLine: string) => {
-  const classes = useStyles();
-
   return ({ row }: Props) => {
+    const classes = useStyles();
+
     const [obsData, setObsData] = useState<ObsData[]>([]);
     const [pkData, setPkData] = useState<PkData[]>([]);
     const [loading, setLoading] = useState(false);

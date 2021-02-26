@@ -74,7 +74,7 @@ const KnownTargets = ({ perturbagen }: Props) => {
 
   return (
     <>
-      <CardHeader color='primary' className={classes.cardHeader}>
+      <CardHeader color='primary' className={classes.cardHeader} style={{ marginTop: '1rem' }}>
         <div className={classes.cardHeaderText}>{`Known targets of ${perturbagen}`}</div>
       </CardHeader>
       {tableData.length === 0 && !loading ? (
@@ -82,13 +82,15 @@ const KnownTargets = ({ perturbagen }: Props) => {
       ) : loading ? (
         <Loading />
       ) : (
-        <Table
-          id={`${perturbagen}_KnownTargets`}
-          tableHead={['Kinase', 'Source', 'Score', '']}
-          tableData={tableData}
-          clickableCells={clickableCells}
-          searchIndex={0}
-        />
+        <div style={{ marginTop: '1rem' }}>
+          <Table
+            id={`${perturbagen}_KnownTargets`}
+            tableHead={['Kinase', 'Source', 'Score', '']}
+            tableData={tableData}
+            clickableCells={clickableCells}
+            searchIndex={0}
+          />
+        </div>
       )}
     </>
   );

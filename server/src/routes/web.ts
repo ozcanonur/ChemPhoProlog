@@ -219,7 +219,7 @@ router.get('/observationForBarchart', async (req, res) => {
 router.get('/knownPerturbagens', async (req, res) => {
   const { kinase } = req.query;
 
-  let query = `SELECT perturbagen, source, score, chemspider_id 
+  let query = `SELECT perturbagen, source, score, chemspider_id, action, synonyms 
                 FROM PK_relationship 
                 JOIN Perturbagen ON PK_relationship.perturbagen = Perturbagen.name `;
   const fields = [];
