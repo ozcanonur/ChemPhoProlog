@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 
+// DATABASE_URL comes from heroku
 const db = new Pool({
-  user: process.env.PG_USERNAME,
-  password: process.env.PG_PASSWORD,
-  host: process.env.PG_HOST,
-  port: parseInt(process.env.PG_PORT),
-  database: process.env.PG_DATABASE,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export default db;
